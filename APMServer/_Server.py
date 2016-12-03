@@ -1,6 +1,4 @@
-"""
-DEPRECATED
-"""
+#DEPRECATED
 import ardupilot,time
 import sys, traceback, Ice, random
 import jderobot
