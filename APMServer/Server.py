@@ -29,7 +29,7 @@ class Server:
         self.gpsStatus = 0
         self.lastSentHeartbeat = 0
         self.pose3D = jderobot.Pose3DData()
-
+        #TODO cambiar el Pose3DData por un Pose 3D
 
         '''Conectar al Ardupilot'''
         self.master = mavutil.mavlink_connection(port, baudrate, autoreconnect=True)
@@ -38,7 +38,7 @@ class Server:
         self.master.wait_heartbeat()
         print("Heartbeat Recieved")
 
-        T = threading.Thread(target=self.mavMsgHandler, args=(self.master))
+        T = threading.Thread(target=self.mavMsgHandler, args=(self.master,))
         print('Initiating server...')
         T.start()
 
