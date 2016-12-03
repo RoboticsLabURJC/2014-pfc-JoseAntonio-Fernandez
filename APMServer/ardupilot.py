@@ -1,8 +1,5 @@
-"""
-DEPRECATED
-"""
 import sys,time, threading
-
+#DEPRECATED
 from pymavlink import mavlinkv10 as mavlink, mavutil
 
 class ArduPilot:
