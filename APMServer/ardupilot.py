@@ -1,3 +1,6 @@
+"""
+DEPRECATED
+"""
 import sys,time, threading
 
 from pymavlink import mavlinkv10 as mavlink, mavutil
