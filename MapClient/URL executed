@@ -1,0 +1,1 @@
+http://www.ign.es/wms-inspire/pnoa-ma?SERVICE=WMS&&bgcolor=0xFFFFFF&request=GetMap&styles=default&format=image%2Fjpeg&height=250&layers=OI.MosaicElement&transparent=TRUE&width=300&version=1.3.0&exceptions=XML&crs=EPSG%3A25829&service=WMS&bbox=-2.0%2C2.0%2C6.0%2C5.0
