@@ -16,6 +16,7 @@ x = 10/1112 = 0,008992806 aprox 0,009
 
 0,009441376
 0,006125093
+¿Por que esta relación != longitud en ecuador q en polos?
 
 40,416876952149
 40,423002044655
@@ -25,5 +26,9 @@ coord plaza mayor 40.4153774,-3.708283
 Related
 http://stackoverflow.com/questions/238260/how-to-calculate-the-bounding-box-for-a-given-lat-lng-location
 https://joseguerreroa.wordpress.com/2012/11/13/distancia-entre-dos-puntos-de-la-superficie-terrestre-mediante-la-formula-de-haversine-con-python/
+http://blog.jorgeivanmeza.com/2011/06/convertir-coordenadas-geograficas-grados-minutos-segundos-a-notacional-decimal-3/
+https://wiki.python.org/moin/PyQt/Tutorials
+http://pyqt.sourceforge.net/Docs/PyQt5/
+http://www.thehackeruniversity.com/2014/01/23/pyqt5-beginner-tutorial/
 
 
