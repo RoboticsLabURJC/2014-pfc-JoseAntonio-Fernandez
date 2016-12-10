@@ -2,5 +2,7 @@ http://www.ign.es/wms-inspire/pnoa-ma?SERVICE=WMS&&bgcolor=0xFFFFFF&request=GetM
 
 URl that works
 http://www.ign.es/wms-inspire/pnoa-ma?TRANSPARENT=true&FORMAT=image/png&VERSION=1.3.0&EXCEPTIONS=XML&SERVICE=WMS&REQUEST=GetMap&STYLES=default&LAYERS=OI.OrthoimageCoverage&BGCOLOR=0xFFFFFF&CRS=EPSG:4326&BBOX=40.416876952149,-3.6934474484697,40.423002044655,-3.6840060727373&WIDTH=1760&HEIGHT=1141
+Bounding box wrong
 http://www.ign.es/wms-inspire/pnoa-ma?SERVICE=WMS&exceptions=XML&version=1.3.0&transparent=TRUE&crs=EPSG:4326&request=GetMap&height=250&width=300&format=image/jpeg&layers=OI.OrthoimageCoverage&styles=default&bgcolor=0xFFFFFF&bbox=-3.6934474484697,40.416876952149,-3.6840060727373,40.423002044655
 http://www.ign.es/wms-inspire/pnoa-ma?SERVICE=WMS&exceptions=XML&version=1.3.0&transparent=TRUE&crs=EPSG%3A4326&request=GetMap&height=250&width=300&format=image%2Fjpeg&layers=OI.OrthoimageCoverage&styles=default&bgcolor=0xFFFFFF&service=WMS&bbox=-3.6934474484697%2C40.416876952149%2C-3.6840060727373%2C40.423002044655
+

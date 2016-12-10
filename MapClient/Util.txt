@@ -1,0 +1,29 @@
+-3.6934474484697,40.416876952149,-3.6840060727373,40.423002044655
+
+Grados          Precisión
+0,1 	    1 	11 kilómetros
+0,01 	    2 	1.112 metros
+0,001 	    3 	111 metros
+0,0001 	    4 	11,12 metros
+0,00001 	5 	1,11 metros
+0,000001 	6 	11,2 centímetros
+
+1112 m      -       0,01
+1000 m      -       X
+
+x = 10/1112 = 0,008992806 aprox 0,009
+
+
+0,009441376
+0,006125093
+
+40,416876952149
+40,423002044655
+
+coord plaza mayor 40.4153774,-3.708283
+
+Related
+http://stackoverflow.com/questions/238260/how-to-calculate-the-bounding-box-for-a-given-lat-lng-location
+https://joseguerreroa.wordpress.com/2012/11/13/distancia-entre-dos-puntos-de-la-superficie-terrestre-mediante-la-formula-de-haversine-con-python/
+
+
