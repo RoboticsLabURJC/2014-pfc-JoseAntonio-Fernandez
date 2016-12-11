@@ -79,16 +79,15 @@ class Form(QWidget):
         item.font()
         self.table.insertRow(currentRowCount)
         self.table.setItem(currentRowCount, 0, item)
-        #ImageUtils.addWayPointImg(x, y, self.imageMetadata["bytes"])
+        self.image2show = ImageUtils.addWayPointImg(self.image2show,x, y)
+
+        #TODO ver si se puede hacer mejor
+        pixmap = QPixmap()
+        pixmap.loadFromData(self.image2show)
+        self.imageLabel.setPixmap(pixmap)
 
 
 
-        # TODO implementar función que a partir de unos pixeles pinte la cruceta de otro color en esa posición
-
-
-
-            #TODO Interfaz grafico
 #TODO ver como muestro el recorrido de la aeronave
 
 #TODO Ver actitud, mapa y posteriormente imagen
-#TODO Marcar en un mapa waypoints para generar un path a la aeronave

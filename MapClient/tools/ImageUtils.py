@@ -26,11 +26,12 @@ def refreshPosition(arrByte, x, y):
 def addWayPointImg(arrByte, x, y):
     image = Image.open(io.BytesIO(arrByte))
     draw = ImageDraw.Draw(image)
-    draw.line((x-10, y, x+10, y), fill=255, width=2, color='red')
-    draw.line((x, y-10, x, y+10), fill=255, width=2, color='red')
-
-    None
-    # TODO implementar función que a partir de la imagen dibuje mi posicion
+    draw.line((x-10, y, x+10, y), fill=(255,0,0), width=2)
+    draw.line((x, y-10, x, y+10), fill=(255,0,0), width=2)
+    imgByteArr = io.BytesIO()
+    image.save(imgByteArr, format='PNG')
+    imgByteArr = imgByteArr.getvalue()
+    return imgByteArr
 
 def posImage2Coords(x, y, tamImageX, tamImageY, latMin, lonMin, latMax, lonMax):
     '''
