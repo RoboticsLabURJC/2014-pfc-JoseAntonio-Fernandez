@@ -1,16 +1,16 @@
-from PyQt5.QtCore import *
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPixmap
 
 class Form(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, uri, parent=None):
         super(Form, self).__init__(parent)
 
 
         self.submitButton = QPushButton("Nop button")
 
         self.label = QLabel()
-        pixmap = QPixmap("plazaMayor500x500.png")
+        pixmap = QPixmap(uri)
         self.label.setPixmap(pixmap)
 
 
@@ -34,12 +34,9 @@ class Form(QWidget):
         x = 0
 
 
-if __name__ == '__main__':
-    import sys
 
-    app = QApplication(sys.argv)
+#TODO Interfaz grafico
+#TODO ver como muestro el recorrido de la aeronave
 
-    screen = Form()
-    screen.show()
-
-    sys.exit(app.exec_())
+#TODO Ver actitud, mapa y posteriormente imagen
+#TODO Marcar en un mapa waypoints para generar un path a la aeronave

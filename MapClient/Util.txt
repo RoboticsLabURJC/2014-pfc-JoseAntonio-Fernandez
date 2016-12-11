@@ -23,12 +23,39 @@ x = 10/1112 = 0,008992806 aprox 0,009
 
 coord plaza mayor 40.4153774,-3.708283
 
+--------------------------------------------------------------------------------------------
+EJEMPLO sin owslib y con google maps -------------------------------------------------------
+http://stackoverflow.com/questions/8328198/pil-valueerror-not-enough-image-data
+
+from urllib2 import urlopen
+import Image
+import sys
+import StringIO
+
+url = "http://maps.googleapis.com/maps/api/staticmap?center=Narita+International+Airport,Narita,Chiba+Prefecture,+Japan&zoom=18&size=512x512&maptype=roadmap&markers=color:blue|label:S|40.702147,-74.015794&markers=color:green|label:G|40.711614,-74.012318&markers=color:red|color:red|label:C|40.718217,-73.998284&sensor=false"
+result = urlopen(url=url)
+if result.getcode() != 200:
+  print "errrrrr"
+  sys.exit(1)
+
+imgdata = result.read()
+# As the URL above tells, its size is 512x512
+img = Image.open(StringIO.StringIO(imgdata))
+print img.size
+
+
+-------------------------------------------------------------------------------------------
+
+
 Related
 http://stackoverflow.com/questions/238260/how-to-calculate-the-bounding-box-for-a-given-lat-lng-location
 https://joseguerreroa.wordpress.com/2012/11/13/distancia-entre-dos-puntos-de-la-superficie-terrestre-mediante-la-formula-de-haversine-con-python/
 http://blog.jorgeivanmeza.com/2011/06/convertir-coordenadas-geograficas-grados-minutos-segundos-a-notacional-decimal-3/
 https://wiki.python.org/moin/PyQt/Tutorials
 http://pyqt.sourceforge.net/Docs/PyQt5/
-http://www.thehackeruniversity.com/2014/01/23/pyqt5-beginner-tutorial/
+http://recursospython.com/guias-y-manuales/anadir-texto-imagen-pillow/
+http://www.thehackeruniversity.com/2014/01/23/pyqt5-beginner-tutorial/http://python-para-impacientes.blogspot.com.es/2014/12/fundamentos-para-procesar-imagenes-con_18.html
+http://stackoverflow.com/questions/8328198/pil-valueerror-not-enough-image-data
+
 
 
