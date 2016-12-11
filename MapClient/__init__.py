@@ -10,7 +10,7 @@ bbox = GeoUtils.getBoundingBox(-3.708283, 40.4153774, 500) # plaza mayor
 img = wms.getmap(layers=['OI.OrthoimageCoverage'],
                  styles=['default'],
                  srs='EPSG:4326',
-                 bbox=bbox,
+                 bbox=(bbox),
                  size=(770, 500),
                  format='image/png',
                  transparent=True)
@@ -18,7 +18,7 @@ img = wms.getmap(layers=['OI.OrthoimageCoverage'],
 
 #image = Image.open('images/plazaMayor500x500.png')
 
-
+image = {'bytes': img.read(), 'bbox': bbox, 'size': (770,500)}
 
 
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
 
-    screen = Form(ImageUtils.prepareInitialImage(img.read()))
+    screen = Form(image)
     screen.show()
 
     sys.exit(app.exec_())

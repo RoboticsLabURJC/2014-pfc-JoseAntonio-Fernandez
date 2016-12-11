@@ -14,7 +14,7 @@ def getBoundingBox(lat, lon, distance):
     '''
     normlat = (distance * 0.0000094413)
     normlon = (distance * 0.0000061250)
-    return (round(lat-normlat,7), round(lon-normlon,7), round(lat+normlat,7), round(lon+normlon,7))
+    return round(lat-normlat,7), round(lon-normlon,7), round(lat+normlat,7), round(lon+normlon,7)
 
 # a partir de una latitud y longitud obtener el encuadre para que quede en medio
 #TODO Mejorar con la fórmula exacta y con los metros que deseemos

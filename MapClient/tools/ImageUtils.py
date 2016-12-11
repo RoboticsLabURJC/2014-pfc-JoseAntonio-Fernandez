@@ -12,16 +12,42 @@ def prepareInitialImage(arrByte):
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/OpenSans-Bold.ttf", 11)
     draw.text((420, 482), "PNOA cedido por © Instituto Geográfico Nacional de España", font=font, fill="white")
-    draw.line((385, 240, 385, 260), fill=255, width=2)
-    draw.line((375, 250, 395, 250), fill=255, width=2)
-
+    imgByteArr = io.BytesIO()
+    image.save(imgByteArr, format='PNG')
+    imgByteArr = imgByteArr.getvalue()
     image.save("images/imageWithDisclaimer.png")
-    return "images/imageWithDisclaimer.png"
+    return imgByteArr
+
 
 def refreshPosition(arrByte, x, y):
     None
     #TODO implementar función que a partir de unos pixeles pinte la cruceta
 
-def addWayPoint(arrByte, x, y):
+def addWayPointImg(arrByte, x, y):
+    image = Image.open(io.BytesIO(arrByte))
+    draw = ImageDraw.Draw(image)
+    draw.line((x-10, y, x+10, y), fill=255, width=2, color='red')
+    draw.line((x, y-10, x, y+10), fill=255, width=2, color='red')
+
     None
-    # TODO implementar función que a partir de unos pixeles pinte la cruceta de otro color en esa posición
+    # TODO implementar función que a partir de la imagen dibuje mi posicion
+
+def posImage2Coords(x, y, tamImageX, tamImageY, latMin, lonMin, latMax, lonMax):
+    '''
+    Obtains the coords referenced at a position over the image
+    :param x: image x position
+    :param y: image y position
+    :param tamImageX: width of the image
+    :param tamImageY: height of the image
+    :param latMin: latitude on the y axis at the bottom left corner
+    :param lonMin: longitude on the x axis at the bottom left corner
+    :param latMax: latitude on the y axis at the upper right corner
+    :param lonMax: longitude on the x axis at the upper right corner
+    :return: lat, lon who correspond to the point in the image
+    '''
+    distCoordY = round(latMax - latMin,7)
+    distCoordX = round(lonMax - lonMin, 7)
+
+    lat = latMin + (y * (distCoordY/tamImageY))
+    lon = lonMin + (x * (distCoordX / tamImageX))
+    return round(lat,7), round(lon,7)
