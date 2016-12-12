@@ -1,7 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont
 import io
 
-def prepareInitialImage(arrByte):
+DISCLAIMER_WIDTH = 345
+DISCLAIMER_HEIGHT = 20
+
+def prepareInitialImage(arrByte,width , height):
     '''
     Prepare the image recieved from PNOA to be showed in the app
     :param arrByte: array of bytes of the image
@@ -11,7 +14,7 @@ def prepareInitialImage(arrByte):
 
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/OpenSans-Bold.ttf", 11)
-    draw.text((420, 482), "PNOA cedido por © Instituto Geográfico Nacional de España", font=font, fill="white")
+    draw.text((width-DISCLAIMER_WIDTH, height-DISCLAIMER_HEIGHT), "PNOA cedido por © Instituto Geográfico Nacional de España", font=font, fill="white")
     imgByteArr = io.BytesIO()
     image.save(imgByteArr, format='PNG')
     imgByteArr = imgByteArr.getvalue()

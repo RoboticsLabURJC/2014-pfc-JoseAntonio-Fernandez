@@ -11,7 +11,7 @@ class Form(QWidget):
         self.imageMetadata = imageInput
 
         #Prepare the image to be showed
-        self.image2show = ImageUtils.prepareInitialImage(self.imageMetadata["bytes"])
+        self.image2show = ImageUtils.prepareInitialImage(self.imageMetadata["bytes"], self.imageMetadata["size"][0],self.imageMetadata["size"][1])
         pixmap = QPixmap()
         pixmap.loadFromData(self.image2show)
 
