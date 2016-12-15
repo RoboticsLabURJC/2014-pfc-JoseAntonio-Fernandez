@@ -10,6 +10,7 @@ from pymavlink.dialects.v10 import ardupilotmega as mavlink
 from APMServer.interfaces.Pose3DI import  Pose3DI
 
 
+
 class Server:
 
     def __init__(self, port, baudrate):
@@ -28,7 +29,7 @@ class Server:
         self.altitudeStatus = 0
         self.gpsStatus = 0
         self.lastSentHeartbeat = 0
-        self.pose3D = jderobot.Pose3DData()
+        self.pose3D = Pose3DI(0,0,0,0,0,0,0,0)
         #TODO cambiar el Pose3DData por un Pose 3D
 
         '''Conectar al Ardupilot'''
@@ -42,7 +43,8 @@ class Server:
         print('Initiating server...')
         T.start()
 
-        PoseTheading = threading.Thread(target=self.openPose3DChannel)
+
+        PoseTheading = threading.Thread(target=self.openPose3DChannel, args=(self.pose3D,), name='Pose_Theading')
         PoseTheading.daemon = True
         PoseTheading.start()
 
@@ -86,6 +88,7 @@ class Server:
         #get attitude of APM
         if 'ATTITUDE' not in self.master.messages:
             self.attitudeStatus = 1
+            q=[0,0,0,0]
         else:
             attitude = self.master.messages['ATTITUDE']
             #print(attitude)
@@ -113,38 +116,49 @@ class Server:
             self.GPS_fix_type = getattr(gps,"fix_type")
 
         # refresh the pose3D
-        self.pose3D.x = latitude
-        self.pose3D.y = longitude
-        self.pose3D.z = altitude
-        self.pose3D.q0 = q.__getitem__(0)
-        self.pose3D.q1 = q.__getitem__(1)
-        self.pose3D.q2 = q.__getitem__(2)
-        self.pose3D.q3 = q.__getitem__(3)
+        data = jderobot.Pose3DData
+        data.x = latitude
+        data.y = longitude
+        data.z = altitude
+        data.h = altitude
+        data.q0 = q.__getitem__(0)
+        data.q1 = q.__getitem__(1)
+        data.q2 = q.__getitem__(2)
+        data.q3 = q.__getitem__(3)
+        self.pose3D.setPose3DData(data)
 
-
-    def openPose3DChannel(self):
-        """
+    def openPose3DChannel(self, pose3D):
+        '''
         Open a Ice Server to serv Pose3D objects
-        :return: none
-        """
+        :param pose3D: the pose to serv
+        :return: None
+        '''
 
         status = 0
         ic = None
         # recovering the attitude
-        Pose2Tx = Pose3DI(0,0,0,0,0,0,0,0)
-        Pose2Tx.setPose3DData(self.pose3D)
+        Pose2Tx = pose3D
         print('Open the Ice Server Channel')
         try:
             ic = Ice.initialize(sys.argv)
             adapter = ic.createObjectAdapterWithEndpoints("Pose3DAdapter", "default -p 9998")
             object = Pose2Tx
             # print object.getPose3DData()
-            adapter.add(object, ic.stringToIdentity("Pose3D"))
+            adapter.add(object, ic.stringToIdentity("ardrone_pose3d")) #ardrone_pose3d  Pose3D
             adapter.activate()
             ic.waitForShutdown()
         except:
             traceback.print_exc()
             status = 1
+        if ic:
+            # Clean up
+            try:
+                ic.destroy()
+            except:
+                traceback.print_exc()
+                status = 1
+
+        sys.exit(status)
 
     #TODO revisar actuacion hay que poner puntos y luego empezar o se debe ir uno a uno
     # funcion GotoXY(Pose3D)
