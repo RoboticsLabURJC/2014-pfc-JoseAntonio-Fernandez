@@ -1,13 +1,13 @@
 from __future__ import print_function
 __author__ = 'Jose Antonio Fernandez Casillas'
-
+#Version 1.0
 
 
 import threading,time,sys,traceback
 import jderobot,Ice
-from pymavlink import mavutil, quaternion
+from pymavlink import mavutil, quaternion, mavwp
 from pymavlink.dialects.v10 import ardupilotmega as mavlink
-from APMServer.interfaces.Pose3DI import  Pose3DI
+from interfaces.Pose3DI import  Pose3DI
 
 
 
@@ -39,9 +39,10 @@ class Server:
         self.master.wait_heartbeat()
         print("Heartbeat Recieved")
 
-        T = threading.Thread(target=self.mavMsgHandler, args=(self.master,))
+        MsgHandler = threading.Thread(target=self.mavMsgHandler, args=(self.master,), name='msg_Handler')
         print('Initiating server...')
-        T.start()
+        #MsgHandler.daemon = True
+        MsgHandler.start()
 
 
         PoseTheading = threading.Thread(target=self.openPose3DChannel, args=(self.pose3D,), name='Pose_Theading')
@@ -73,7 +74,7 @@ class Server:
                 self.setDataStreams(mavlink.MAV_DATA_STREAM_EXTENDED_STATUS)
                 self.setDataStreams(mavlink.MAV_DATA_STREAM_EXTRA2)
                 self.setDataStreams(mavlink.MAV_DATA_STREAM_POSITION)
-
+                #self._master.mav.request_data_stream_send(0, 0, mavutil.mavlink.MAV_DATA_STREAM_ALL,4, 1)
 
             #refresh the attitude
             self.refreshAPMPose3D()
@@ -128,11 +129,10 @@ class Server:
         self.pose3D.setPose3DData(data)
 
     def openPose3DChannel(self, pose3D):
-        '''
+        """
         Open a Ice Server to serv Pose3D objects
-        :param pose3D: the pose to serv
-        :return: None
-        '''
+        :return: none
+        """
 
         status = 0
         ic = None
@@ -160,9 +160,42 @@ class Server:
 
         sys.exit(status)
 
-    #TODO revisar actuacion hay que poner puntos y luego empezar o se debe ir uno a uno
-    # funcion GotoXY(Pose3D)
 
-    def flyTo(self, lat, lon, alt): #TODO revisar con el codigo de Jorge Cano/Vela
+    def flyTo(self, lat, lon, alt):
+        #TODO revisar con el codigo de Jorge Cano/Vela
+        #TODO cambiar signatura por navigateTo(self, pose3D)
         #																				seqfrm cmd                          cur at p1 p2 p3 p4  x    y    z
         self.master.mav.mission_item_send(self.mav.target_system, self.mav.target_component, 0, 0, mavlink.MAV_CMD_NAV_WAYPOINT, 2, 0, 5, 0, 0, 0, lat, lon, alt)
+
+    def setMission(self, pose3Dwaypoints):
+        '''
+        SetUp a mission with a list of waypoints, based on Colorado University Boulder Code
+        http://www.colorado.edu/recuv/2015/05/25/mavlink-protocol-waypoints
+        :param pose3Dwaypoints: list of waypoints to the mission
+        :return: None
+        '''
+        wp = mavwp.MAVWPLoader()
+        frame = mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT
+        radius = 20
+        N = pose3Dwaypoints.length
+        for i in range(N):
+            navData = jderobot.Pose3DData()
+            navData.setPose3DData(pose3Dwaypoints[i].getPose3DData)
+            wp.add(mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
+                                                                self.master.target_component,
+                                                                i,
+                                                                frame,
+                                                                mavutil.mavlink.MAV_CMD_NAV_WAYPOINT,
+                                                                0, 0, 0, radius, 0, 0,
+                                                                navData.x, navData.y, navData.h))
+        self.master.waypoint_clear_all_send()
+        self.master.waypoint_count_send(wp.count())
+
+
+        for i in range(wp.count()):
+            msg = self.master.recv_match(type=['MISSION_REQUEST'], blocking=True)
+            self.master.mav.send(wp.wp(msg.seq))
+            print ('Sending waypoint {0}'.format(msg.seq))
+
+        self.master.set_mode_auto() # arms and start mission I thought
+        
