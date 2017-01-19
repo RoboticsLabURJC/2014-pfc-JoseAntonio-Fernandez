@@ -57,7 +57,7 @@ class Server:
         :return: none
         """
         while True:
-            msg = str(m.recv_msg())
+            msg = m.recv_msg()
             # print msg
             # send heartbeats to autopilot
             if time.time() - self.lastSentHeartbeat > 1.0:
