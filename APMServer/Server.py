@@ -57,7 +57,7 @@ class Server:
         :return: none
         """
         while True:
-            msg = m.recv_msg()
+            msg = str(m.recv_msg())
             # print msg
             # send heartbeats to autopilot
             if time.time() - self.lastSentHeartbeat > 1.0:
@@ -67,7 +67,7 @@ class Server:
             if msg is None or msg.get_type() == "BAD_DATA":
                 time.sleep(0.01)
                 continue
-
+            '''
             # enable data streams after start up - can't see another way of doing this.
             if msg.get_type() == "STATUSTEXT" and "START" in msg.text:
                 self.setDataStreams(mavlink.MAV_DATA_STREAM_EXTRA1)
@@ -75,7 +75,7 @@ class Server:
                 self.setDataStreams(mavlink.MAV_DATA_STREAM_EXTRA2)
                 self.setDataStreams(mavlink.MAV_DATA_STREAM_POSITION)
                 #self._master.mav.request_data_stream_send(0, 0, mavutil.mavlink.MAV_DATA_STREAM_ALL,4, 1)
-
+            '''
             #refresh the attitude
             self.refreshAPMPose3D()
 
