@@ -17,3 +17,4 @@ http://python.dronekit.io/examples/mission_basic.html
 SITL
 http://ardupilot.org/dev/docs/setting-up-sitl-on-linux.html
 https://www.rcgroups.com/forums/showthread.php?2190616-Ardupilot-Setting-up-and-using-Simulation-with-SITL-and-HIL
+export PATH=/usr/lib/ccache:$PATHhttp://askubuntu.com/questions/789302/install-python-wxgtk2-8-on-ubuntu-16-04

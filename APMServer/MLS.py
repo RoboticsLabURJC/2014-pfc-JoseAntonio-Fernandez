@@ -1,6 +1,5 @@
 __author__ = 'Jose Antonio Fernandez Casillas'
 
-
 import Server
 
-test = Server("/dev/ttyUSB0", 57600)
+test = Server("udp:192.168.1.135:14550")

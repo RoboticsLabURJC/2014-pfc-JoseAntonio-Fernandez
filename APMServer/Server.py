@@ -8,6 +8,7 @@ import jderobot,Ice
 from pymavlink import mavutil, quaternion, mavwp
 from pymavlink.dialects.v10 import ardupilotmega as mavlink
 from interfaces.Pose3DI import  Pose3DI
+from interfaces.NavdataI import NavdataI
 
 
 
@@ -29,25 +30,44 @@ class Server:
         self.altitudeStatus = 0
         self.gpsStatus = 0
         self.lastSentHeartbeat = 0
+        self.battery_remainingStatus = 0
+        self.rawIMUStatus = 0
+        self.scaled_presureStatus = 0
+
         self.pose3D = Pose3DI(0,0,0,0,0,0,0,0)
+        self.navdata = NavdataI()
+
         #TODO cambiar el Pose3DData por un Pose 3D
 
-        '''Conectar al Ardupilot'''
+        #connect to tu the APM
         self.master = mavutil.mavlink_connection(port, baudrate, autoreconnect=True)
         print('Connection established to device')
 
         self.master.wait_heartbeat()
         print("Heartbeat Recieved")
 
+        #Thread to mannage the AMP messages
         MsgHandler = threading.Thread(target=self.mavMsgHandler, args=(self.master,), name='msg_Handler')
         print('Initiating server...')
         #MsgHandler.daemon = True
         MsgHandler.start()
 
-
+        #Thread to serve Pose3D with the attitude
         PoseTheading = threading.Thread(target=self.openPose3DChannel, args=(self.pose3D,), name='Pose_Theading')
         PoseTheading.daemon = True
         PoseTheading.start()
+
+        '''
+        #Thread to recieve Pose3D with a waypoint
+        PoseTheading = threading.Thread(target=self.openPose3DChannelWP, name='WayPoint_client')
+        PoseTheading.daemon = True
+        PoseTheading.start()
+        '''
+
+        # Thread to serve Navdata with the all navigation info
+        CMDVelTheading = threading.Thread(target=self.openNavdataChannel, args=(self.navdata,), name='Navdata_Theading')
+        CMDVelTheading.daemon = True
+        CMDVelTheading.start()
 
 
     def mavMsgHandler(self, m):
@@ -67,7 +87,9 @@ class Server:
             if msg is None or msg.get_type() == "BAD_DATA":
                 time.sleep(0.01)
                 continue
+
             '''
+            legacy seems don't needed
             # enable data streams after start up - can't see another way of doing this.
             if msg.get_type() == "STATUSTEXT" and "START" in msg.text:
                 self.setDataStreams(mavlink.MAV_DATA_STREAM_EXTRA1)
@@ -78,6 +100,7 @@ class Server:
             '''
             #refresh the attitude
             self.refreshAPMPose3D()
+            self.refreshAPMnavdata()
 
     def refreshAPMPose3D(self):
         """
@@ -128,44 +151,140 @@ class Server:
         data.q3 = q.__getitem__(3)
         self.pose3D.setPose3DData(data)
 
-    def openPose3DChannel(self, pose3D):
+    def refreshAPMnavdata(self):
         """
-        Open a Ice Server to serv Pose3D objects
+        Funtion to refresh the Pose3D class atribute
+        The altitude is recovered to but already is not used
         :return: none
         """
+        battery_remaining = 0
+        rawIMU = {}
+        scaled_presure = {}
+        wind = {}
+        global_position = {}
 
-        status = 0
-        ic = None
-        # recovering the attitude
-        Pose2Tx = pose3D
-        print('Open the Ice Server Channel')
+
+        #get battery_remaining
+        if 'SYS_STATUS' not in self.master.messages:
+            self.battery_remainingStatus = 1
+        else:
+            stats = self.master.messages['SYS_STATUS']
+            battery_remaining = getattr(stats,"battery_remaining")
+            print("Battery lebel " +str(battery_remaining)+ " %")
+
+        #get RAW_IMU
+        if 'RAW_IMU' not in self.master.messages:
+            self.rawIMUStatus = 1
+        else:
+            rawIMU = self.master.messages['RAW_IMU']
+
+        #get SCALED PRESSURE
+        if 'SCALED_PRESSURE' not in self.master.messages:
+            self.scaled_presureStatus = 1
+        else:
+            scaled_presure = self.master.messages['SCALED_PRESSURE']
+
+        #get WIND
+        if 'WIND' not in self.master.messages:
+            self.gpsStatus = 1
+        else:
+            wind = self.master.messages['WIND']
+
+        #get GLOBAL_POSITION_INT
+        if 'GLOBAL_POSITION_INT' not in self.master.messages:
+            self.gpsStatus = 1
+        else:
+            global_position = self.master.messages['GLOBAL_POSITION_INT']
+
+        # refresh the navdata
+        ndata = jderobot.NavdataData()
+        #TODO setear los valores del NavData
+        ndata.batteryPercent = battery_remaining
         try:
-            ic = Ice.initialize(sys.argv)
-            adapter = ic.createObjectAdapterWithEndpoints("Pose3DAdapter", "default -p 9998")
-            object = Pose2Tx
-            # print object.getPose3DData()
-            adapter.add(object, ic.stringToIdentity("ardrone_pose3d")) #ardrone_pose3d  Pose3D
-            adapter.activate()
-            ic.waitForShutdown()
+            ndata.pressure = getattr(scaled_presure, "press_abs")
         except:
-            traceback.print_exc()
-            status = 1
-        if ic:
-            # Clean up
-            try:
-                ic.destroy()
-            except:
-                traceback.print_exc()
-                status = 1
+            print (str(scaled_presure))
+        try:
+            ndata.temp = getattr(scaled_presure, "temperature")/100
+        except:
+            print(str(scaled_presure))
+        try:
+            ndata.windSpeed = getattr(wind, "speed")
+        except:
+            print(str(wind))
+        try:
+            ndata.windAngle = getattr(wind, "direction")
+        except:
+            print(str(wind))
+        try:
+            ndata.vx = getattr(global_position, "vx")
+        except:
+            print(str(global_position))
+        try:
+            ndata.vy = getattr(global_position, "vy")
+        except:
+            print(str(global_position))
+        try:
+            ndata.vz = getattr(global_position, "vz")
+        except:
+            print(str(global_position))
+        try:
+            ndata.rotx = getattr(rawIMU, "xgyro")
+        except:
+            print(str(rawIMU))
+        try:
+            ndata.roty = getattr(rawIMU, "ygyro")
+        except:
+            print(str(rawIMU))
+        try:
+            ndata.rotz = getattr(rawIMU, "zgyro")
+        except:
+            print(str(rawIMU))
+        try:
+            ndata.ax = getattr(rawIMU, "xacc")
+        except:
+            print(str(rawIMU))
+        try:
+            ndata.ay = getattr(rawIMU, "yacc")
+        except:
+            print(str(rawIMU))
+        try:
+            ndata.az = getattr(rawIMU, "zacc")
+        except:
+            print(str(rawIMU))
+        try:
+            ndata.magx = getattr(rawIMU, "xmag")
+        except:
+            print(str(rawIMU))
+        try:
+            ndata.magy = getattr(rawIMU, "ymag")
+        except:
+            print(str(rawIMU))
+        try:
+            ndata.magz = getattr(rawIMU, "zmag")
+        except:
+            print(str(rawIMU))
+        self.navdata.setNavdata(ndata)
 
-        sys.exit(status)
 
-
+    '''FROZEN
     def flyTo(self, lat, lon, alt):
         #TODO revisar con el codigo de Jorge Cano/Vela
         #TODO cambiar signatura por navigateTo(self, pose3D)
         #																				seqfrm cmd                          cur at p1 p2 p3 p4  x    y    z
         self.master.mav.mission_item_send(self.mav.target_system, self.mav.target_component, 0, 0, mavlink.MAV_CMD_NAV_WAYPOINT, 2, 0, 5, 0, 0, 0, lat, lon, alt)
+    '''
+
+    def oneWaypointMission(self, pose3D):
+        '''
+        Create a list os one pose3D. This funtion was created to support mission when only a pose3D is recieved.
+        At the moment Jderobot does not support a list of Pose3D served in Ice we need another interface
+        :param pose3D: a waypoint recieved in Pose3D interface
+        :return: none
+        '''
+        listM = []
+        listM.append(pose3D)
+        self.setMission(listM)
 
     def setMission(self, pose3Dwaypoints):
         '''
@@ -198,4 +317,109 @@ class Server:
             print ('Sending waypoint {0}'.format(msg.seq))
 
         self.master.set_mode_auto() # arms and start mission I thought
-        
+
+
+    # ------------ Ice clients servers ---------------
+
+    def openPose3DChannel(self, pose3D):
+        """
+        Open a Ice Server to serve Pose3D objects
+        :return: none
+        """
+
+        status = 0
+        ic = None
+        # recovering the attitude
+        Pose2Tx = pose3D
+        print('Open the Ice Server Channel')
+        try:
+            ic = Ice.initialize(sys.argv)
+            adapter = ic.createObjectAdapterWithEndpoints("Pose3DAdapter", "default -p 9998")
+            object = Pose2Tx
+            # print object.getPose3DData()
+            adapter.add(object, ic.stringToIdentity("ardrone_pose3d")) #ardrone_pose3d  Pose3D
+            adapter.activate()
+            ic.waitForShutdown()
+        except:
+            traceback.print_exc()
+            status = 1
+        if ic:
+            # Clean up
+            try:
+                ic.destroy()
+            except:
+                traceback.print_exc()
+                status = 1
+
+        sys.exit(status)
+
+
+    def openPose3DChannelWP(self):
+        '''
+        Open a Pose3D client to recieve Pose3D with a waypoint
+        :return:  mone
+        '''
+        status = 0
+        ic = None
+        try:
+            ic = Ice.initialize(sys.argv)
+            base = ic.stringToProxy("Pose3D:default -p 9998")
+            datos = jderobot.Pose3DPrx.checkedCast(base)
+            print(datos)
+            if not datos:
+                raise RuntimeError("Invalid proxy")
+
+            while True:
+                time.sleep(1)
+                data = datos.getPose3DData()
+                print(data)
+                self.oneWaypointMission(data)
+        except:
+            traceback.print_exc()
+            status = 1
+
+        if ic:
+            # Clean up
+            try:
+                ic.destroy()
+            except:
+                traceback.print_exc()
+                status = 1
+
+        sys.exit(status)
+
+
+
+    def openNavdataChannel(self, navdata):
+        '''
+        Open a Ice Server to serve all the navigation data
+        :return:
+        '''
+        status = 0
+        ic = None
+        Navdata2Tx = navdata
+
+        try:
+            ic = Ice.initialize(sys.argv)
+            adapter = ic.createObjectAdapterWithEndpoints("navdata_adapter", "default -p 9996")
+            object = Navdata2Tx
+            adapter.add(object, ic.stringToIdentity("ardrone_navdata"))
+            adapter.activate()
+            ic.waitForShutdown()
+        except:
+            traceback.print_exc()
+            status = 1
+
+        if ic:
+            # Clean up
+            try:
+                ic.destroy()
+            except:
+                traceback.print_exc()
+                status = 1
+
+        sys.exit(status)
+
+
+
+
