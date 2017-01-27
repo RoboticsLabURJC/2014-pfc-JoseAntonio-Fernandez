@@ -10,7 +10,7 @@ from pymavlink.dialects.v10 import ardupilotmega as mavlink
 from interfaces.Pose3DI import  Pose3DI
 from interfaces.NavdataI import NavdataI
 
-
+RATE = 50
 
 class Server:
 
@@ -37,7 +37,6 @@ class Server:
         self.pose3D = Pose3DI(0,0,0,0,0,0,0,0)
         self.navdata = NavdataI()
 
-        #TODO cambiar el Pose3DData por un Pose 3D
 
         #connect to tu the APM
         self.master = mavutil.mavlink_connection(port, baudrate, autoreconnect=True)
@@ -45,6 +44,12 @@ class Server:
 
         self.master.wait_heartbeat()
         print("Heartbeat Recieved")
+
+        # Set the complete set of commands
+        self.master.mav.request_data_stream_send(self.master.target_system,
+                                                 self.master.target_component,
+                                                 mavutil.mavlink.MAV_DATA_STREAM_ALL,
+                                                 RATE, 1)
 
         #Thread to mannage the AMP messages
         MsgHandler = threading.Thread(target=self.mavMsgHandler, args=(self.master,), name='msg_Handler')
@@ -57,12 +62,12 @@ class Server:
         PoseTheading.daemon = True
         PoseTheading.start()
 
-        '''
+
         #Thread to recieve Pose3D with a waypoint
         PoseTheading = threading.Thread(target=self.openPose3DChannelWP, name='WayPoint_client')
         PoseTheading.daemon = True
         PoseTheading.start()
-        '''
+
 
         # Thread to serve Navdata with the all navigation info
         CMDVelTheading = threading.Thread(target=self.openNavdataChannel, args=(self.navdata,), name='Navdata_Theading')
@@ -88,16 +93,7 @@ class Server:
                 time.sleep(0.01)
                 continue
 
-            '''
-            legacy seems don't needed
-            # enable data streams after start up - can't see another way of doing this.
-            if msg.get_type() == "STATUSTEXT" and "START" in msg.text:
-                self.setDataStreams(mavlink.MAV_DATA_STREAM_EXTRA1)
-                self.setDataStreams(mavlink.MAV_DATA_STREAM_EXTENDED_STATUS)
-                self.setDataStreams(mavlink.MAV_DATA_STREAM_EXTRA2)
-                self.setDataStreams(mavlink.MAV_DATA_STREAM_POSITION)
-                #self._master.mav.request_data_stream_send(0, 0, mavutil.mavlink.MAV_DATA_STREAM_ALL,4, 1)
-            '''
+
             #refresh the attitude
             self.refreshAPMPose3D()
             self.refreshAPMnavdata()
@@ -105,7 +101,6 @@ class Server:
     def refreshAPMPose3D(self):
         """
         Funtion to refresh the Pose3D class atribute
-        The altitude is recovered to but already is not used
         :return: none
         """
 
@@ -153,8 +148,7 @@ class Server:
 
     def refreshAPMnavdata(self):
         """
-        Funtion to refresh the Pose3D class atribute
-        The altitude is recovered to but already is not used
+        Function that update the navdata information
         :return: none
         """
         battery_remaining = 0
@@ -267,14 +261,6 @@ class Server:
         self.navdata.setNavdata(ndata)
 
 
-    '''FROZEN
-    def flyTo(self, lat, lon, alt):
-        #TODO revisar con el codigo de Jorge Cano/Vela
-        #TODO cambiar signatura por navigateTo(self, pose3D)
-        #																				seqfrm cmd                          cur at p1 p2 p3 p4  x    y    z
-        self.master.mav.mission_item_send(self.mav.target_system, self.mav.target_component, 0, 0, mavlink.MAV_CMD_NAV_WAYPOINT, 2, 0, 5, 0, 0, 0, lat, lon, alt)
-    '''
-
     def oneWaypointMission(self, pose3D):
         '''
         Create a list os one pose3D. This funtion was created to support mission when only a pose3D is recieved.
@@ -363,12 +349,11 @@ class Server:
         ic = None
         try:
             ic = Ice.initialize(sys.argv)
-            base = ic.stringToProxy("Pose3D:default -p 9998")
+            base = ic.stringToProxy("Pose3D:default -p 9994")
             datos = jderobot.Pose3DPrx.checkedCast(base)
             print(datos)
             if not datos:
                 raise RuntimeError("Invalid proxy")
-
             while True:
                 time.sleep(1)
                 data = datos.getPose3DData()
