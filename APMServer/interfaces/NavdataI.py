@@ -1,4 +1,6 @@
-import jderobot
+import jderobot, threading
+
+lock = threading.Lock()
 
 class NavdataI(jderobot.Navdata):
 
@@ -6,7 +8,11 @@ class NavdataI(jderobot.Navdata):
         self.data = jderobot.NavdataData()
 
     def getNavdata(self, current=None):
+        lock.acquire()
         return self.data
+        lock.release()
 
     def setNavdata(self, data):
+        lock.acquire()
         self.data=data
+        lock.release()
