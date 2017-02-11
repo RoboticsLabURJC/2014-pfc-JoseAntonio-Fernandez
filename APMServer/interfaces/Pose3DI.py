@@ -17,7 +17,6 @@ class Pose3DI(jderobot.Pose3D):
         self.q2 = _q2
         self.q3 = _q3
 
-        print ("Pose3D start")
 
     def setPose3DData(self, data, current=None):
 
@@ -55,3 +54,12 @@ class Pose3DI(jderobot.Pose3D):
         lock.release()
 
         return data
+
+    def isEmpty(self):
+        return (self.x==self.y==self.z==self.h==self.q0==self.q1==self.q2==self.q3==0)
+
+    def equals(self, pose):
+        data = pose.getPose3DData()
+        return ((data.x==self.x) & (data.y==self.y) & (data.z ==self.z) &
+                (data.q0==self.q0) & (data.q1 == self.q1) &
+                (data.q2 == self.q2) & (data.q3 == self.q3))
