@@ -26,11 +26,13 @@ def refreshPosition(arrByte, x, y):
     None
     #TODO implementar función que a partir de unos pixeles pinte la cruceta
 
-def addWayPointImg(arrByte, x, y):
+def addWayPointImg(arrByte, x, y, count = 0):
     image = Image.open(io.BytesIO(arrByte))
     draw = ImageDraw.Draw(image)
     draw.line((x-10, y, x+10, y), fill=(255,0,0), width=2)
     draw.line((x, y-10, x, y+10), fill=(255,0,0), width=2)
+    font = ImageFont.truetype("fonts/OpenSans-Bold.ttf", 11)
+    draw.text((x+5, y-10), str(count))
     imgByteArr = io.BytesIO()
     image.save(imgByteArr, format='PNG')
     imgByteArr = imgByteArr.getvalue()
