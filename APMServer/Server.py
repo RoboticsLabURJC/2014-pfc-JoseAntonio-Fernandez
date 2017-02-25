@@ -73,20 +73,21 @@ class Server:
 
 
         # Thread to recieve Pose3D with a waypoint
-        PoseTheading = threading.Thread(target=self.openPose3DChannelWP, name='WayPoint_client')
-        PoseTheading.daemon = True
-        PoseTheading.start()
+        PoseTheadingwP = threading.Thread(target=self.openPose3DChannelWP, name='WayPoint_client')
+        PoseTheadingwP.daemon = True
+        PoseTheadingwP.start()
 
 
         # Thread to serve Navdata with the all navigation info
-        CMDVelTheading = threading.Thread(target=self.openNavdataChannel, args=(self.navdata,), name='Navdata_Theading')
-        CMDVelTheading.daemon = True
-        CMDVelTheading.start()
+        NavDataTheading = threading.Thread(target=self.openNavdataChannel, args=(self.navdata,), name='Navdata_Theading')
+        NavDataTheading.daemon = True
+        NavDataTheading.start()
+
 
         # Thread to recieve a missin plano
-        CMDVelTheading = threading.Thread(target=self.openMissionChannel(), args=(self.mission,), name='Mission_Theading')
-        CMDVelTheading.daemon = True
-        CMDVelTheading.start()
+        MissionTheading = threading.Thread(target=self.openMissionChannel(), args=(self.mission,), name='Mission_Theading')
+        MissionTheading.daemon = True
+        MissionTheading.start()
 
         '''
         # WP listener
@@ -95,16 +96,16 @@ class Server:
         WPListener.start()
         '''
 
-
+        '''
         WPListener = threading.Thread(target=self.missionListener(), name='MissionListener')
         WPListener.daemon = True
         WPListener.start()
 
         #  Open the Extra channel in a thread
-        CMDVelTheading = threading.Thread(target=self.openExtraChannel(), args=(self.extra,), name='Extra_Theading')
-        CMDVelTheading.daemon = True
-        CMDVelTheading.start()
-
+        ExtraTheading = threading.Thread(target=self.openExtraChannel(), args=(self.extra,), name='Extra_Theading')
+        ExtraTheading.daemon = True
+        ExtraTheading.start()
+        '''
 
     def mavMsgHandler(self, m):
         """
@@ -224,6 +225,7 @@ class Server:
         ndata = jderobot.NavdataData()
 
         ndata.batteryPercent = battery_remaining
+        print(str(ndata.batteryPercent))
         try:
             ndata.pressure = getattr(scaled_presure, "press_abs")
         except:
@@ -288,6 +290,18 @@ class Server:
             ndata.magz = getattr(rawIMU, "zmag")
         except:
             print(str(rawIMU))
+
+        ndata.tagsCount = 0
+        ndata.tagsType
+        ndata.tagsXc
+        ndata.tagsYc
+        ndata.tagsWidth
+        ndata.tagsHeight
+        ndata.tagsOrientation
+        ndata.tagsDistance
+        ndata.vehicle = 1
+        ndata.state = 1
+
         self.navdata.setNavdata(ndata)
 
 
@@ -384,7 +398,7 @@ class Server:
         ic = None
         # recovering the attitude
         Pose2Tx = pose3D
-        print('Open the Ice Server Channel')
+        print('Open the Pose3D Ice Server Channel')
         try:
             ic = Ice.initialize(sys.argv)
             adapter = ic.createObjectAdapterWithEndpoints("Pose3DAdapter", "default -p 9998")
@@ -417,7 +431,7 @@ class Server:
         pose2Rx = self.poseWP
         try:
             ic = Ice.initialize(sys.argv)
-            adapter = ic.createObjectAdapterWithEndpoints("WPAdapter", "default -p 9994")
+            adapter = ic.createObjectAdapterWithEndpoints("WPAdapter", "default -p 9992")
             object = pose2Rx
             # print object.getPose3DData()
             adapter.add(object, ic.stringToIdentity("WP_pose3d"))
@@ -479,7 +493,7 @@ class Server:
 
         try:
             ic = Ice.initialize(sys.argv)
-            adapter = ic.createObjectAdapterWithEndpoints("navdata_adapter", "default -p 9996")
+            adapter = ic.createObjectAdapterWithEndpoints("NavdataAdapter", "default -p 8805")
             object = navdata2Tx
             adapter.add(object, ic.stringToIdentity("ardrone_navdata"))
             adapter.activate()
@@ -505,7 +519,7 @@ class Server:
         extra_tx = extra
         try:
             ic = Ice.initialize(sys.argv)
-            adapter = ic.createObjectAdapterWithEndpoints("ExtraAdapter", "default -p 9995")
+            adapter = ic.createObjectAdapterWithEndpoints("ardrone_extra", "default -p 9994")
             object = extra_tx
             adapter.add(object, ic.stringToIdentity("Extra"))
             adapter.activate()
