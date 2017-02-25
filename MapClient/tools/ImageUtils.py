@@ -23,8 +23,14 @@ def prepareInitialImage(arrByte,width , height):
 
 
 def refreshPosition(arrByte, x, y):
-    None
-    #TODO implementar función que a partir de unos pixeles pinte la cruceta
+    # TODO implementar función que a partir de unos pixeles pinte la cruceta
+    image = Image.open(io.BytesIO(arrByte))
+    draw = ImageDraw.Draw(image)
+    draw.point([x,y],fill=(0,0,255))
+    imgByteArr = io.BytesIO()
+    image.save(imgByteArr, format='PNG')
+    imgByteArr = imgByteArr.getvalue()
+    return imgByteArr
 
 def addWayPointImg(arrByte, x, y, count = 0):
     image = Image.open(io.BytesIO(arrByte))
@@ -37,6 +43,7 @@ def addWayPointImg(arrByte, x, y, count = 0):
     image.save(imgByteArr, format='PNG')
     imgByteArr = imgByteArr.getvalue()
     return imgByteArr
+
 
 def posImage2Coords(x, y, tamImageX, tamImageY, latMin, lonMin, latMax, lonMax):
     '''
@@ -57,3 +64,4 @@ def posImage2Coords(x, y, tamImageX, tamImageY, latMin, lonMin, latMax, lonMax):
     lat = latMin + (y * (distCoordY/tamImageY))
     lon = lonMin + (x * (distCoordX / tamImageX))
     return round(lat,7), round(lon,7)
+

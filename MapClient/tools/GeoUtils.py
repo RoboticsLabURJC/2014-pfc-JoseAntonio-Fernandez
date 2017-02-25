@@ -1,5 +1,9 @@
 
 from math import *
+from PIL import Image
+from owslib.wms import WebMapService
+import numpy as np
+import io
 
 '''
 Utility functions to operate with coordinates
@@ -58,7 +62,6 @@ def getBoundingBox(lat, lon, distance):
     return southWestPoint[1], southWestPoint[0], northEastpoint[1], northEastpoint[0]
 
 
-
 def from_degrees(deg_lat, deg_lon):
     '''
     Converts from degrees to radians
@@ -104,3 +107,25 @@ def distance_to(valores, other ):
         cos(radValuesOther[0]) *
         cos(radValuesIni[1] - radValuesOther[1])
     )
+
+
+def retrieve_new_map(lat, lon, radius, width, heigth):
+
+    wms = WebMapService('http://www.ign.es/wms-inspire/pnoa-ma', version='1.3.0')
+    bbox = getBoundingBox(lat, lon, radius)
+
+    img = wms.getmap(layers=['OI.OrthoimageCoverage'],
+                     styles=['default'],
+                     srs='EPSG:4326',
+                     bbox=(bbox),
+                     size=(width, heigth),
+                     format='image/png',
+                     transparent=True)
+
+    image = Image.open(io.BytesIO(img.read()))
+    image.load()
+
+    numpy_image = np.asarray(image.getdata(), dtype='uint8')
+
+
+    return {'numpy' : numpy_image, 'bytes': img.read(), 'bbox': bbox, 'size': (width,heigth)}

@@ -1,18 +1,29 @@
-
-from PyQt5.QtWidgets import *
-from PyQt5 import QtCore
-from PyQt5.QtGui import QPixmap
-from MapClient.tools import ImageUtils, GeoUtils, WayPoint
-from MapClient.ice import ice_init
 import jderobot
-import threading
+
+from MapClient.GUI.sensorsWidget import SensorsWidget
+from PyQt5 import QtCore
+from PyQt5.QtCore import QSize
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QImage
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import *
+
+from MapClient.GUI.cameraWidget import CameraWidget
+from MapClient.tools import ImageUtils, WayPoint
 
 LEFT =1
 
 
-class Form(QWidget):
+class MainGUI(QWidget):
+    updGUI = pyqtSignal()
+    udpMap = pyqtSignal()
+
+
     def __init__(self, imageInput, parent=None):
-        super(Form, self).__init__(parent)
+        super(MainGUI, self).__init__(parent)
+
+        self.updGUI.connect(self.updateGUI)
+        #self.udpMap.connect(self.updatePosition())
 
         #Set the image Metadata
         self.imageMetadata = imageInput
@@ -72,7 +83,10 @@ class Form(QWidget):
         self.send2APM.clicked.connect(lambda: self.sendWP(self.send2APM))
         self.send2APM.setFixedSize(140,100)
         self.cameraCheck = QCheckBox("Camera")
+        self.cameraCheck.stateChanged.connect(self.showCameraWidget)
         self.attitudeCheck = QCheckBox("Attitude")
+        self.attitudeCheck.stateChanged.connect(self.showSensorsWidget)
+
 
         self.buttonLayout.addSpacing(2)
         self.labelAltitude = QLabel("Default altitude:")
@@ -103,6 +117,12 @@ class Form(QWidget):
 
         self.setLayout(mainLayout)
         self.setWindowTitle("AUVCommander")
+
+        # Widgets
+        self.cameraWidget = CameraWidget(self)
+        self.sensorsWidget = SensorsWidget(self)
+
+
 
 
 
@@ -169,6 +189,7 @@ class Form(QWidget):
             #TODO call to takeOff over Ice
 
     def sendWP(self, send2APM):
+        '''HARDCODED
         item = self.table.item(0,0)
         pose = jderobot.Pose3DData()
         pose.x = -35.362938
@@ -179,11 +200,165 @@ class Form(QWidget):
         pose.q1 = 0
         pose.q2 = 0
         pose.q3 = 0
-        PoseTheading = threading.Thread(target=ice_init.sendWP, args=(pose,), name='Pose_Theading')
-        PoseTheading.daemon = True
-        PoseTheading.start()
+        '''
+        colCount = self.table.rowCount()
+        mission = jderobot.PoseSequence()
+        mission = jderobot.MissionData()
+        i = 0
+        for row in range(colCount):
+            pose = jderobot.Pose3DData
+            text = self.table.item(row, 0).text()
+            pos_lat = text.find("lat:")
+            pos_lon = text.find("lon:")
+            if pos_lat != -1:
+                lat = (text[pos_lat + 4:pos_lon])
+                pose.x = float(lat)
+                print(lat)
+                lon = (text[pos_lon + 4:])
+                pose.y = float(lon)
+                print(lon)
+            else:
+                if "LAND in " in text:
+                    pos = text.find("LAND in ") + 8
+                    position = text[pos:].split(" ")
+                    lat = position[0]
+                    lon = position[1]
+                    pose.x = float(lat)
+                    pose.y = float(lon)
+                else:
+                    pos = text.find("TAKE OFF to ") + 12
+                    position = text[pos:].split(" ")
+                    lat = position[0]
+                    lon = position[1]
+                    pose.x = float(lat)
+                    pose.y = float(lon)
+
+            alt = self.table.item(row, 1)
+            pose.h = int(alt.text())
+            mission[i] = pose
+            i += 1
+
+            print(text + alt.text())
+
+
+
+        #send the mission
+        #PoseTheading = threading.Thread(target=ice_init.sendWP, args=(pose,), name='Pose_Theading')
+        #PoseTheading.daemon = True
+        #PoseTheading.start()
         #ice_init.sendWP(pose)
 
-#TODO ver como muestro el recorrido de la aeronave
+    def setFirstLocation(self, imageInput):
+        '''
+        Set the image of the location
+        :param imageInput: Georeferenced image and bbox and center GPS position
+        :return:
+        '''
+        self.imageMetadata = imageInput
 
-#TODO Ver actitud, mapa y posteriormente imagen
+
+    def getCamera(self):
+        return self.camera
+
+    def setCamera(self, camera):
+        self.camera = camera
+
+    def getNavData(self):
+        return self.navdata
+
+    def setNavData(self, navdata):
+        self.navdata = navdata
+
+    def getPose3D(self):
+        return self.pose
+
+    def setPose3D(self, pose):
+        self.pose = pose
+
+    def getCMDVel(self):
+        return self.cmdvel
+
+    def setCMDVel(self, cmdvel):
+        self.cmdvel = cmdvel
+
+    def getExtra(self):
+        return self.extra
+
+    def setExtra(self, extra):
+        self.extra = extra
+
+
+    def updateGUI(self):
+        '''
+        Update the position of the UAV in the map and the attitude and camera image in it's own widgets
+        :return:
+        '''
+
+        '''
+        if not (self.pose.getPose3D() == None):
+            data = self.pose.getPose3D()
+            img_to_show = ImageUtils.refreshPosition(self.image2show,data.x, data.y)
+            # TODO ver si se puede hacer mejor
+            pixmap = QPixmap()
+            pixmap.loadFromData(img_to_show)
+            self.imageLabel.setPixmap(pixmap)
+        '''
+        # HARDCODED
+        self.updateImage()
+
+        # HARDCODED
+
+        self.cameraWidget.imageUpdate.emit()
+        self.sensorsWidget.sensorsUpdate.emit()
+
+    # inherit from Alberto Martin Florido UAV Viewer with a few little changes
+
+
+
+    def showCameraWidget(self, state):
+        if self.cameraCheck.isChecked():
+            self.cameraWidget.show()
+        else:
+            self.cameraWidget.close()
+
+    def closeCameraWidget(self):
+        self.cameraCheck.setChecked(False)
+
+    def showSensorsWidget(self, state):
+        if self.attitudeCheck.isChecked():
+            self.sensorsWidget.show()
+        else:
+            self.sensorsWidget.close()
+
+    def closeSensorsWidget(self):
+        self.attitudeCheck.setChecked(False)
+
+
+    def closeEvent(self, event):
+        self.camera.stop()
+        self.navdata.stop()
+        self.pose.stop()
+        event.accept()
+
+    # Testing
+    def updateImage(self):
+
+        img = self.imageMetadata.get("numpy")
+        if img is not None:
+            image = QImage(img.data, img.shape[1], img.shape[0], img.shape[1] * img.shape[2], QImage.Format_RGB888);
+            if img.shape[1] == self.IMAGE_COLS_MAX:
+                x = 20
+            else:
+                x = (self.IMAGE_COLS_MAX + 20) / 2 - (img.shape[1] / 2)
+            if img.shape[0] == self.IMAGE_ROWS_MAX:
+                y = 40
+            else:
+                y = (self.IMAGE_ROWS_MAX + 40) / 2 - (img.shape[0] / 2)
+            img_to_show = ImageUtils.refreshPosition(self.image2show, 40.4153774, -3.708283)
+            size = QSize(img.shape[1], img.shape[0])
+            self.imageLabel.move(x, y)
+            self.imageLabel.resize(size)
+            self.imageLabel.setPixmap(QPixmap.fromImage(image))
+
+
+#TODO ver como muestro el recorrido de la aeronave
