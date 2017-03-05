@@ -66,46 +66,54 @@ class Server:
         # MsgHandler.daemon = True
         MsgHandler.start()
 
+
         # Thread to serve Pose3D with the attitude
+        print("- Pose3D Ice Server...")
         PoseTheading = threading.Thread(target=self.openPose3DChannel, args=(self.pose3D,), name='Pose_Theading')
         PoseTheading.daemon = True
         PoseTheading.start()
+        print("Pose3D Ice Server Up")
 
-
+        # DEPRECATED
         # Thread to recieve Pose3D with a waypoint
-        PoseTheadingwP = threading.Thread(target=self.openPose3DChannelWP, name='WayPoint_client')
-        PoseTheadingwP.daemon = True
-        PoseTheadingwP.start()
+        # PoseTheadingwP = threading.Thread(target=self.openPose3DChannelWP, name='WayPoint_client')
+        # PoseTheadingwP.daemon = True
+        # PoseTheadingwP.start()
 
 
         # Thread to serve Navdata with the all navigation info
+        print("- navData Ice Server...")
         NavDataTheading = threading.Thread(target=self.openNavdataChannel, args=(self.navdata,), name='Navdata_Theading')
         NavDataTheading.daemon = True
         NavDataTheading.start()
+        print("Navdata Ice Server Up")
 
-
+        print("- Mission Ice Server...")
         # Thread to recieve a missin plano
-        MissionTheading = threading.Thread(target=self.openMissionChannel(), args=(self.mission,), name='Mission_Theading')
+        MissionTheading = threading.Thread(target=self.openMissionChannel, args=(self.mission,), name='Mission_Theading')
         MissionTheading.daemon = True
         MissionTheading.start()
+        print("Mission Ice Server Up")
 
-        '''
-        # WP listener
-        WPListener = threading.Thread(target=self.wpListener, name='WPListener')
-        WPListener.daemon = True
-        WPListener.start()
-        '''
+        # WP listener DEPRECATED
+        # WPListener = threading.Thread(target=self.wpListener, name='WPListener')
+        # WPListener.daemon = True
+        # WPListener.start()
 
-        '''
-        WPListener = threading.Thread(target=self.missionListener(), name='MissionListener')
-        WPListener.daemon = True
-        WPListener.start()
+
+        print("- Mission listener")
+        MissionListener = threading.Thread(target=self.missionListener, name='MissionListener')
+        MissionListener.daemon = True
+        MissionListener.start()
+        print("Mission listener up")
 
         #  Open the Extra channel in a thread
-        ExtraTheading = threading.Thread(target=self.openExtraChannel(), args=(self.extra,), name='Extra_Theading')
+        print("- Extra Ice Server...")
+        ExtraTheading = threading.Thread(target=self.openExtraChannel, args=(self.extra,), name='Extra_Theading')
         ExtraTheading.daemon = True
         ExtraTheading.start()
-        '''
+        print("Extra Ice Server Up")
+
 
     def mavMsgHandler(self, m):
         """
@@ -124,7 +132,7 @@ class Server:
                 time.sleep(0.01)
                 continue
 
-
+            #print(self.mission.getMissionData())
             #refresh the attitude
             self.refreshAPMPose3D()
             self.refreshAPMnavdata()
@@ -225,7 +233,7 @@ class Server:
         ndata = jderobot.NavdataData()
 
         ndata.batteryPercent = battery_remaining
-        print(str(ndata.batteryPercent))
+        #print(str(ndata.batteryPercent))
         try:
             ndata.pressure = getattr(scaled_presure, "press_abs")
         except:
@@ -316,7 +324,7 @@ class Server:
         listM.append(pose3D)
         self.setMission(listM)
 
-    def setMission(self, pose3Dwaypoints):
+    def setMission(self, mission):
         '''
         SetUp a mission with a list of waypoints, based on Colorado University Boulder Code
         http://www.colorado.edu/recuv/2015/05/25/mavlink-protocol-waypoints
@@ -327,14 +335,15 @@ class Server:
         seq = 0
         frame = mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT
         radius = 10
+        pose3Dwaypoints = mission.mission
         print(len(pose3Dwaypoints))
-        print(pose3Dwaypoints[0].getPose3DData())
+        print(pose3Dwaypoints[0])
         N = len(pose3Dwaypoints)
         i=0
         # Look if a Take Off message has been recieved to set up in the mission too, Take off must to be
         # the fist so if we have the TOFF message we have to create the message and start the loop in 1
         if (self.extra.takeOff()):
-            navData = pose3Dwaypoints[i].getPose3DData()
+            navData = pose3Dwaypoints[i]
             wp.add(mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
                                                                 self.master.target_component,
                                                                 seq,
@@ -347,7 +356,7 @@ class Server:
 
         for i in range(N):
 
-            navData = pose3Dwaypoints[i].getPose3DData()
+            navData = pose3Dwaypoints[i]
             wp.add(mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
                                                                 self.master.target_component,
                                                                 seq,
@@ -360,7 +369,7 @@ class Server:
         # Look if a land message has been recieved to set up in the mission too, Land must to be
         # the last so if we have the land message we have to create the message and append to the mission
         if (self.extra.land()):
-            navData = pose3Dwaypoints[N].getPose3DData()
+            navData = pose3Dwaypoints[N]
             wp.add(mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
                                                                 self.master.target_component,
                                                                 seq,
@@ -370,7 +379,7 @@ class Server:
                                                                 navData.x, navData.y, navData.h))
             seq += 1
             i += 1
-
+        '''
         self.master.waypoint_clear_all_send()
         self.master.waypoint_count_send(wp.count())
 
@@ -383,7 +392,10 @@ class Server:
 
         self.master.arducopter_arm()
         self.master.set_mode_auto() # arms and start mission I thought
+        '''
         print('SENDED')
+        empty_mission = jderobot.MissionData()
+        self.mission.setMissionData(empty_mission)
 
 
     # ------------ Ice clients servers ---------------
@@ -398,7 +410,6 @@ class Server:
         ic = None
         # recovering the attitude
         Pose2Tx = pose3D
-        print('Open the Pose3D Ice Server Channel')
         try:
             ic = Ice.initialize(sys.argv)
             adapter = ic.createObjectAdapterWithEndpoints("Pose3DAdapter", "default -p 9998")
@@ -452,21 +463,25 @@ class Server:
         sys.exit(status)
 
 
-    def openMissionChannel(self):
+    def openMissionChannel(self, mission):
         '''
         Open a Mission client to recieve Mission with a waypoint
         :return:  mone
         '''
+        print("mission Ice Server")
         status = 0
         ic = None
-        pose2Rx = self.mission
+        pose2Rx = mission
+
         try:
             ic = Ice.initialize(sys.argv)
-            adapter = ic.createObjectAdapterWithEndpoints("MissionAdapter", "default -p 9990")
+            adapter = ic.createObjectAdapterWithEndpoints("MissionAdapter", "default -p 10008")
             object = pose2Rx
-            adapter.add(object, ic.stringToIdentity("mision"))
+            adapter.add(object, ic.stringToIdentity("ardrone_mission"))
             adapter.activate()
             ic.waitForShutdown()
+            print("3")
+
         except:
             traceback.print_exc()
             status = 1
@@ -493,7 +508,7 @@ class Server:
 
         try:
             ic = Ice.initialize(sys.argv)
-            adapter = ic.createObjectAdapterWithEndpoints("NavdataAdapter", "default -p 8805")
+            adapter = ic.createObjectAdapterWithEndpoints("NavdataAdapter", "default -p 9996")
             object = navdata2Tx
             adapter.add(object, ic.stringToIdentity("ardrone_navdata"))
             adapter.activate()
@@ -519,9 +534,9 @@ class Server:
         extra_tx = extra
         try:
             ic = Ice.initialize(sys.argv)
-            adapter = ic.createObjectAdapterWithEndpoints("ardrone_extra", "default -p 9994")
+            adapter = ic.createObjectAdapterWithEndpoints("extra_adapter", "default -p 9994")
             object = extra_tx
-            adapter.add(object, ic.stringToIdentity("Extra"))
+            adapter.add(object, ic.stringToIdentity("ardrone_extra"))
             adapter.activate()
             ic.waitForShutdown()
         except:
@@ -557,7 +572,11 @@ class Server:
         :return: None
         '''
         while True:
-            if not self.mission.equals(self.lastMission):
+            if not self.mission.is_empty():
+                print("got mission")
+                print(str(self.mission.getMissionData()))
                 self.lastMission = self.mission
                 self.setMission(self.mission.getMissionData())
-                time.sleep(1)
+            else:
+                print("Mission empty")
+            time.sleep(1)

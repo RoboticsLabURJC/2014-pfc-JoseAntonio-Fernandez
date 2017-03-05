@@ -9,8 +9,9 @@ class NavdataI(jderobot.Navdata):
 
     def getNavdata(self, current=None):
         lock.acquire()
-        return self.data
+        dta = self.data
         lock.release()
+        return dta
 
     def setNavdata(self, data):
         lock.acquire()

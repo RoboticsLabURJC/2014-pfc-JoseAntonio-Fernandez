@@ -10,23 +10,26 @@ class MissionI(jderobot.Mission):
 
     def getMissionData(self, current=None):
         lock.acquire()
-        return self.data
+        print("getting Mission")
+        dta = self.data
         lock.release()
+        return dta
 
-    def setMissionData(self, data):
+    def setMissionData(self, data, current=None):
         lock.acquire()
+        print("setting Mission"+ str(data.mission))
         self.data=data
         lock.release()
 
 
-    def equals(self, mission):
-        poses = mission.getMissionData()
-        pose = Pose3DI(0, 0 ,0 ,0 ,0 ,0 ,0, 0)
-        poseaux = Pose3DI(0, 0, 0, 0, 0, 0, 0, 0)
-        pose.setPose3DData(poses(0))
-        i=1
-        for i in range(len(poses)):
-            poseaux.setPose3DData(poses(i))
-            if not(pose.equals(poseaux)):
-                return False
-        return True
+    def is_empty(self):
+
+        seq = self.data.mission
+        if seq == None:
+            return True
+        if len(seq)>0:
+
+            return False
+        else:
+            return True
+
