@@ -1,21 +1,24 @@
 import threading,time,sys,traceback
 import jderobot,Ice
-from MapClient.classes import Pose3DI
+from MapClient.classes import MissionI
 
-def sendWP(pose):
+def send_mission(mission):
     '''
-    Open a Pose3D client to recieve Pose3D with a waypoint
+    Open a Mission client to send a Mission with waypoints
     :return:  mone
     '''
     status = 0
     ic = None
 
     try:
+        print("Recibido la mision")
+        print(mission)
+        print("send")
         ic = Ice.initialize(sys.argv)
-        base = ic.stringToProxy("WP_pose3d:default -p 9994")
-        prx = jderobot.Pose3DPrx.checkedCast(base)
-        prx.setPose3DData(pose)
-        print(str(pose) + "\n mandado")
+        base = ic.stringToProxy("mision:default -p 9990")
+        prx = jderobot.MissionPrx.checkedCast(base)
+        prx.mission=(mission.getMissionData())
+        print(str(mission) + "\n mandado")
     except:
         traceback.print_exc()
         status = 1

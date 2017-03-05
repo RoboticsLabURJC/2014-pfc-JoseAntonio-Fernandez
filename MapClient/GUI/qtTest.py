@@ -7,9 +7,12 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
+import threading
 
 from MapClient.GUI.cameraWidget import CameraWidget
 from MapClient.tools import ImageUtils, WayPoint
+
+from MapClient.ice import ice_init
 
 LEFT =1
 
@@ -202,21 +205,20 @@ class MainGUI(QWidget):
         pose.q3 = 0
         '''
         colCount = self.table.rowCount()
-        mission = jderobot.PoseSequence()
         mission = jderobot.MissionData()
+        mission.mission = []
+        print(mission)
         i = 0
         for row in range(colCount):
-            pose = jderobot.Pose3DData
+            pose = jderobot.Pose3DData(0,0,0,0,0,0,0,0)
             text = self.table.item(row, 0).text()
             pos_lat = text.find("lat:")
             pos_lon = text.find("lon:")
             if pos_lat != -1:
                 lat = (text[pos_lat + 4:pos_lon])
                 pose.x = float(lat)
-                print(lat)
                 lon = (text[pos_lon + 4:])
                 pose.y = float(lon)
-                print(lon)
             else:
                 if "LAND in " in text:
                     pos = text.find("LAND in ") + 8
@@ -235,18 +237,22 @@ class MainGUI(QWidget):
 
             alt = self.table.item(row, 1)
             pose.h = int(alt.text())
-            mission[i] = pose
+            print(mission.mission)
+            mission.mission.append(pose)
             i += 1
 
             print(text + alt.text())
 
 
-
+        self.mission.setMissionData(mission)
         #send the mission
-        #PoseTheading = threading.Thread(target=ice_init.sendWP, args=(pose,), name='Pose_Theading')
-        #PoseTheading.daemon = True
-        #PoseTheading.start()
-        #ice_init.sendWP(pose)
+        print("sending... " + str(self.mission.getMissionData()))
+
+        MissionTheading = threading.Thread(target=ice_init.send_mission, args=(mission_to_send,), name='Mission_Theading')
+        MissionTheading.daemon = True
+        MissionTheading.start()
+
+        #ice_init.send_mission(mission_to_send)
 
     def setFirstLocation(self, imageInput):
         '''
@@ -286,6 +292,12 @@ class MainGUI(QWidget):
 
     def setExtra(self, extra):
         self.extra = extra
+
+    def getMission(self):
+        return self.mission
+
+    def setMission(self, mission):
+        self.mission = mission
 
 
     def updateGUI(self):
@@ -336,7 +348,7 @@ class MainGUI(QWidget):
 
     def closeEvent(self, event):
         self.camera.stop()
-        self.navdata.stop()
+#        self.navdata.stop()
         self.pose.stop()
         event.accept()
 

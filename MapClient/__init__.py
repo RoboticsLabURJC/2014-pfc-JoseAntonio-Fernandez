@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import *
 
 from MapClient.GUI.threadMap import ThreadMap
 from MapClient.classes.navDataClient import NavDataClient
+from MapClient.classes.MissionI import MissionI
 from MapClient.tools import GeoUtils, ImageUtils
 
 IMAGE_WIDTH = 600
@@ -57,6 +58,7 @@ if __name__ == '__main__':
     pose = Pose3DClient(ic, "UavViewer.Pose3D", True)
     cmdvel = CMDVel(ic, "UavViewer.CMDVel")
     extra = Extra(ic, "UavViewer.Extra")
+    mission = MissionI(ic, "UavViewer.Mission")
 
     app = QApplication(sys.argv)
 
@@ -67,6 +69,7 @@ if __name__ == '__main__':
     screen.setNavData(navdata)
     screen.setCMDVel(cmdvel) # Not used yet
     screen.setExtra(extra)
+    screen.setMission(mission)
     screen.show()
 
 

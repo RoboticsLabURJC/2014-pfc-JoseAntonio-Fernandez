@@ -35,8 +35,8 @@ class ThreadGUI(threading.Thread):
             start_time = datetime.now()
             self.gui.updGUI.emit()
 
-            data = self.gui.navdata.getNavdata()
-            print(str(data))
+            #data = self.gui.navdata.getNavdata()
+            #print(str(data))
 
             
             finish_Time = datetime.now()

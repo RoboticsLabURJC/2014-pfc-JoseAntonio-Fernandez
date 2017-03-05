@@ -178,7 +178,7 @@ class SensorsWidget(QWidget):
             self.drawYawValues(self.quatToYaw(qw, qx, qy, qz) * 180 / math.pi)
             self.drawPitchRollValues(self.quatToPitch(qw, qx, qy, qz) * 180 / math.pi,
                                      self.quatToRoll(qw, qx, qy, qz) * 180 / math.pi)
-        '''
+
         navdata = self.winParent.getNavData().getNavdata()
 
 
@@ -187,7 +187,7 @@ class SensorsWidget(QWidget):
             self.batteryValueLabel.setText(str(navdata.batteryPercent))
             self.drawVelocities(navdata.vx, navdata.vy, navdata.vz)
 
-        '''
+
     def drawYawValues(self, degress):
         value = "{0:.2f}".format(degress)
         self.yawValueLabel.setText(value)
