@@ -18,21 +18,38 @@
 #
 import threading, time
 from datetime import datetime
+import random
+
+from builtins import print
 
 time_cycle = 1000;
 
 class ThreadMap(threading.Thread):
     def __init__(self, gui):
         self.gui = gui  
-        time.sleep(3)
 
         threading.Thread.__init__(self)  
  
     def run(self):  
+
         while(True):
             
             start_time = datetime.now()
-            self.gui.updMap.emit()
+            self.gui.updGUI.emit()
+
+
+            # x = round(random.random()*10 + 300)
+            # y = round(random.random()*10 + 300)
+
+            # angle = round(random.random()*100)
+
+            # self.gui.setPosition(x,y,angle)
+            # data = self.gui.navdata.getNavdata()
+            # print(str(data))
+
+            self.gui.update_map.emit()
+
+
             
             finish_Time = datetime.now()
             

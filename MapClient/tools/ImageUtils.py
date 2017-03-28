@@ -11,7 +11,6 @@ def prepareInitialImage(arrByte,width , height):
     :return: URI of the saved image
     '''
     image = Image.open(io.BytesIO(arrByte))
-
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/OpenSans-Bold.ttf", 11)
     draw.text((width-DISCLAIMER_WIDTH, height-DISCLAIMER_HEIGHT), "PNOA cedido por © Instituto Geográfico Nacional de España", font=font, fill="white")
@@ -21,7 +20,7 @@ def prepareInitialImage(arrByte,width , height):
     image.save("images/imageWithDisclaimer.png")
     return imgByteArr
 
-
+# DEPRECATED for CPU consumption
 def refreshPosition(arrByte, x, y):
     # TODO implementar función que a partir de unos pixeles pinte la cruceta
     image = Image.open(io.BytesIO(arrByte))
@@ -32,6 +31,7 @@ def refreshPosition(arrByte, x, y):
     imgByteArr = imgByteArr.getvalue()
     return imgByteArr
 
+# DEPRECATED for CPU consumption
 def addWayPointImg(arrByte, x, y, count = 0):
     image = Image.open(io.BytesIO(arrByte))
     draw = ImageDraw.Draw(image)
@@ -43,7 +43,6 @@ def addWayPointImg(arrByte, x, y, count = 0):
     image.save(imgByteArr, format='PNG')
     imgByteArr = imgByteArr.getvalue()
     return imgByteArr
-
 
 def posImage2Coords(x, y, tamImageX, tamImageY, latMin, lonMin, latMax, lonMax):
     '''
@@ -58,10 +57,38 @@ def posImage2Coords(x, y, tamImageX, tamImageY, latMin, lonMin, latMax, lonMax):
     :param lonMax: longitude on the x axis at the upper right corner
     :return: lat, lon who correspond to the point in the image
     '''
-    distCoordY = round(latMax - latMin,7)
-    distCoordX = round(lonMax - lonMin, 7)
 
-    lat = latMin + (y * (distCoordY/tamImageY))
-    lon = lonMin + (x * (distCoordX / tamImageX))
+    distCoordX = round(latMax - latMin,7)
+    distCoordY = round(lonMax - lonMin, 7)
+
+    lat = latMin + (x * (distCoordX/tamImageX))
+    lon = lonMin + (y * (distCoordY / tamImageY))
     return round(lat,7), round(lon,7)
+
+def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY):
+    '''
+    Obtains position in the image the coords referenced for
+    :param latMin: latitude on the y axis at the bottom left corner
+    :param lonMin: longitude on the x axis at the bottom left corner
+    :param latMax: latitude on the y axis at the upper right corner
+    :param lonMax: longitude on the x axis at the upper right corner
+    :param lat: latitude to covert
+    :param lon: longitude to convert
+    :return: x, y who correspond to the point in the image
+
+    '''
+
+
+    distCoordX = round(latMax - latMin,7)
+    distCoordY = round(lonMax - lonMin, 7)
+
+    correction = 1
+    if (lon <0):
+        correction = -1
+
+    x = ((latMax-lat) *(tamImageX))/distCoordX
+    y = ((lon-lonMin) *(tamImageY))/distCoordY
+
+
+    return round(y), round(x)
 

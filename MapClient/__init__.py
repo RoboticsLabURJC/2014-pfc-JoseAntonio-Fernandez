@@ -6,12 +6,13 @@ from parallelIce.pose3dClient import Pose3DClient
 
 from MapClient.GUI.qtTest import MainGUI
 from MapClient.GUI.threadGUI import ThreadGUI
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication
 
 from MapClient.GUI.threadMap import ThreadMap
 from MapClient.classes.navDataClient import NavDataClient
 from MapClient.classes.MissionI import MissionI
 from MapClient.tools import GeoUtils, ImageUtils
+import cv2
 
 IMAGE_WIDTH = 600
 IMAGE_HEIGTH = 600
@@ -21,8 +22,8 @@ import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 
-lat = 40.4153774
-lon = -3.708283
+lat = 40.333285
+lon = -3.797859
 
 '''
 lat =-35.363261
@@ -34,19 +35,23 @@ lon = -3.798212
 '''
 
 
-h = 0.3 # radius in kilometers
+h = 0.5 # radius in kilometers
 
-
-'''
-with open('images/plazaMayor600x600.png', 'wb') as f:
-    f.write(img.read())
-'''
-
-img = open('images/plazaMayor600x600.png','rb')
 bbox = GeoUtils.getBoundingBox(lat,lon, h)
-#image = GeoUtils.retrieve_new_map(lat, lon, h, IMAGE_WIDTH, IMAGE_HEIGTH)
+#im = GeoUtils.retrieve_new_map(lat, lon, h, IMAGE_WIDTH, IMAGE_HEIGTH)
 
-image = {'bytes': img.read(), 'bbox': bbox, 'size': (IMAGE_WIDTH,IMAGE_HEIGTH)}
+'''
+with open('images/tmp.png', 'wb') as f:
+    f.write(im.read())
+
+
+im = open('images/tmp.png','rb')
+ImageUtils.prepareInitialImage(im.read(),IMAGE_WIDTH,IMAGE_HEIGTH)
+'''
+opencv_image = cv2.imread('images/imageWithDisclaimer.png',1);
+
+
+image = {'bytes': opencv_image, 'bbox': bbox, 'size': (IMAGE_WIDTH,IMAGE_HEIGTH)}
 
 
 if __name__ == '__main__':
@@ -76,11 +81,11 @@ if __name__ == '__main__':
     t2 = ThreadGUI(screen)
     t2.daemon = True
     t2.start()
-    '''
+
     t3 = ThreadMap(screen)
     t3.daemon = True
     t3.start()
-    '''
+
     sys.exit(app.exec_())
 
 #TODO ¿prescindo de owslib?

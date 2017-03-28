@@ -8,6 +8,9 @@ from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 import threading
+import cv2
+import numpy as np
+import math
 
 from MapClient.GUI.cameraWidget import CameraWidget
 from MapClient.tools import ImageUtils, WayPoint
@@ -19,26 +22,40 @@ LEFT =1
 
 class MainGUI(QWidget):
     updGUI = pyqtSignal()
-    udpMap = pyqtSignal()
+    update_map = pyqtSignal()
 
 
     def __init__(self, imageInput, parent=None):
         super(MainGUI, self).__init__(parent)
 
+        self.pose = None
         self.updGUI.connect(self.updateGUI)
-        #self.udpMap.connect(self.updatePosition())
+        self.update_map.connect(self.update_position)
 
         #Set the image Metadata
         self.imageMetadata = imageInput
-        self.wayPoints = list
+        self.wayPoints = []
 
         #Prepare the image to be showed
-        self.image2show = ImageUtils.prepareInitialImage(self.imageMetadata["bytes"], self.imageMetadata["size"][0],self.imageMetadata["size"][1])
-        pixmap = QPixmap()
-        pixmap.loadFromData(self.image2show)
+        image = self.imageMetadata["bytes"]
+        cvRGBImg = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+        #self.image2show = ImageUtils.prepareInitialImage(self.imageMetadata["bytes"], self.imageMetadata["size"][0],self.imageMetadata["size"][1])
+        self.cvImage = cvRGBImg.copy()
+        self.cvImageShadow = cvRGBImg.copy()
+        self.im_to_show = cvRGBImg.copy()
+
+        height, width, channel = self.cvImage.shape
+        bytesPerLine = 3 * width
+
+
+        qimg = QImage(cvRGBImg, width, height, bytesPerLine, QImage.Format_RGB888)
+        qpm = QPixmap.fromImage(qimg)
+
 
         self.imageLabel = QLabel()
-        self.imageLabel.setPixmap(pixmap)
+        self.imageLabel.setFixedSize(600,600)
+        self.imageLabel.setPixmap(qpm)
         self.imageLabel.setMouseTracking(True)
         self.imageLabel.mouseMoveEvent = self.getPos
         self.imageLabel.mousePressEvent= self.addWayPoint
@@ -84,6 +101,10 @@ class MainGUI(QWidget):
         self.toffButton.setFixedSize(140,100)
         self.send2APM = QPushButton("Send")
         self.send2APM.clicked.connect(lambda: self.sendWP(self.send2APM))
+        self.clear_mission_button = QPushButton("Clear Mission")
+        self.clear_mission_button.clicked.connect(lambda: self.clear_mission())
+        self.add_waypoint_button = QPushButton("Add waypoint")
+        self.add_waypoint_button.clicked.connect(lambda: self.add_waypoint_table())
         self.send2APM.setFixedSize(140,100)
         self.cameraCheck = QCheckBox("Camera")
         self.cameraCheck.stateChanged.connect(self.showCameraWidget)
@@ -96,10 +117,12 @@ class MainGUI(QWidget):
         self.buttonLayout.addWidget(self.labelAltitude)
         self.buttonLayout.addWidget(self.altitudeText)
         self.buttonLayout.addWidget(self.frameType)
+        self.buttonLayout.addWidget(self.add_waypoint_button)
+        self.buttonLayout.addWidget(self.clear_mission_button)
         self.planeFrame.setChecked(True)
 
 
-        self.buttonLayout.addSpacing(210)
+        self.buttonLayout.addSpacing(160)
         self.buttonLayout.addWidget(self.toffButton)
         self.buttonLayout.addWidget(self.send2APM)
         self.buttonLayout.addWidget(self.cameraCheck)
@@ -125,9 +148,19 @@ class MainGUI(QWidget):
         self.cameraWidget = CameraWidget(self)
         self.sensorsWidget = SensorsWidget(self)
 
+    def clear_mission(self):
+        self.cvImageShadow = self.cvImage.copy()
+        self.im_to_show = self.im_to_show
+        self.refreshImage()
+        self.wayPoints = []
+        self.table.setRowCount(0)
+        self.table.clearContents()
 
-
-
+    def add_waypoint_table(self):
+        dialog = MyDialog(self)
+        print('add')
+        lat,lon,alt = dialog.exec()
+        print(lat)
 
     def getPos(self, event):
         '''
@@ -137,23 +170,24 @@ class MainGUI(QWidget):
         '''
         x = event.pos().x()
         y = event.pos().y()
-        latMin, lonMin, latMax, lonMax = self.imageMetadata['bbox']
+        lonMin, latMin, lonMax, latMax = self.imageMetadata['bbox']
         sizeX, sizeY = self.imageMetadata['size']
         lat, lon = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
-        #self.labelXY.setText(str(x)+ " " + str(y))
-        self.labelGP.setText("lat: " + str(lat) + ' lon: ' +str(lon))
+        self.labelGP.setText("lat: " + str(lat) + ' lon: ' +str(lon) + " X: " + str(x)+ " Y: " + str(y))
 
     def addWayPoint(self, event):
         x = event.pos().x()
         y = event.pos().y()
+        point = (x,y)
+        print(point)
+        self.wayPoints.append(point)
 
         if (event.button() == QtCore.Qt.LeftButton):
             latMin, lonMin, latMax, lonMax = self.imageMetadata['bbox']
             sizeX, sizeY = self.imageMetadata['size']
-            lat, lon = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
+            lon, lat = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
 
             currentRowCount = self.table.rowCount()
-            wayPoint = WayPoint.WayPoint(x,y,lat,lon)
             item = QTableWidgetItem()
             alt = QTableWidgetItem()
             if self.toffButton.isChecked():
@@ -171,13 +205,7 @@ class MainGUI(QWidget):
             self.table.insertRow(currentRowCount)
             self.table.setItem(currentRowCount, 0, item)
             self.table.setItem(currentRowCount, 1, alt)
-            self.image2show = ImageUtils.addWayPointImg(self.image2show,x, y, currentRowCount)
-            #self.wayPoints.insert(wayPoint)
 
-            #TODO ver si se puede hacer mejor
-            pixmap = QPixmap()
-            pixmap.loadFromData(self.image2show)
-            self.imageLabel.setPixmap(pixmap)
 
     def setTakeOffLand(self, button):
         if self.planeFrame.isChecked():
@@ -372,5 +400,128 @@ class MainGUI(QWidget):
             self.imageLabel.resize(size)
             self.imageLabel.setPixmap(QPixmap.fromImage(image))
 
+    def refreshImage(self):
+        height, width, channel = self.cvImage.shape
+        bytesPerLine = 3 * width
+        qimg = QImage(self.im_to_show.data, width, height, bytesPerLine, QImage.Format_RGB888)
+        qpm = QPixmap.fromImage(qimg)
+        self.imageLabel.setPixmap(qpm)
 
-#TODO ver como muestro el recorrido de la aeronave
+    def setPosition(self, x, y,angle):
+        self.refresh_shadow(x,y)
+        self.set_waypoints(self.wayPoints)
+        self.draw_triangle(x, y, angle)
+        self.refreshImage()
+
+
+    def set_waypoints(self, wayPoints):
+        n=0
+        pts = np.array(wayPoints, np.int32)
+        pts = pts.reshape((-1, 1, 2))
+        cv2.polylines(self.cvImageShadow, [pts], False, (250, 250, 250), thickness=1)
+        for waypoint in wayPoints:
+            n+=1
+            s = str(n)
+            print(wayPoints)
+            cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
+            cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
+        self.refreshImage()
+
+
+    def refreshImage(self):
+        height, width, channel = self.cvImage.shape
+        bytesPerLine = 3 * width
+        qimg = QImage(self.im_to_show.data, width, height, bytesPerLine, QImage.Format_RGB888)
+        qpm = QPixmap.fromImage(qimg)
+        self.imageLabel.setPixmap(qpm)
+
+    def change_coordinate_system(self, points, origin, toCartsian=True):
+        points_transformed = []
+        if toCartsian:
+            for corner in points:
+                x = corner[0] - origin[0]
+                y = origin[1] - corner[1]
+                points_transformed.append([x, y])
+        else:
+            for corner in points:
+                x = corner[0] + origin[0]
+                y = origin[1] + corner[1]
+                points_transformed.append([x, y])
+
+        return points_transformed
+
+    def rotate_polygon(self, polygon, angle):
+        """Rotates the given polygon which consists of corners represented as (x,y),
+        around the ORIGIN, clock-wise, theta degrees"""
+        #theta = math.radians(angle)
+        theta = angle
+        rotatedPolygon = []
+        for corner in polygon:
+            rotatedPolygon.append((corner[0] * math.cos(theta) - corner[1] * math.sin(theta),
+                                   corner[0] * math.sin(theta) + corner[1] * math.cos(theta)))
+        return rotatedPolygon
+
+    def draw_triangle(self, x, y, angle):
+        triangle = [[x-5,y-7],[x,y+7],[x+5,y-7]]
+        center = self.center_of_triangle(triangle)
+        triangleCartesian = self.change_coordinate_system(triangle, center,True)
+        rotated_triangleCartesian = self.rotate_polygon(triangleCartesian,angle)
+        image_center = [x,y]
+        rotated_triangle = self.change_coordinate_system(rotated_triangleCartesian,image_center ,False)
+        pts = np.array(rotated_triangle, np.int32)
+        pts = pts.reshape((-1,1,2))
+        self.im_to_show = self.cvImageShadow.copy()
+        cv2.fillPoly(self.im_to_show, [pts], (250,0,0))
+        cv2.polylines(self.im_to_show,[pts],True,(250,0,0),thickness=1)
+
+    def refresh_shadow(self,x,y):
+        cv2.circle(self.cvImageShadow, (x, y), 1, [50, 50, 50], thickness=-1, lineType=8, shift=0)
+
+    def center_of_triangle(self, triangle):
+        center_x = (triangle[0][0] + triangle[1][0] + triangle[2][0]) / 3;
+        center_y = (triangle[0][1]+ triangle[1][1] + triangle[2][1]) / 3;
+        return [center_x,center_y]
+
+    def update_position(self):
+
+        if self.pose != None:
+            pose = self.getPose3D().getPose3D()
+            lat = pose.x
+            lon = pose.y
+            bbox = self.imageMetadata["bbox"]
+            imagesize = self.imageMetadata["size"]
+            x, y = ImageUtils.posCoords2Image(bbox[0], bbox[1], bbox[2], bbox[3], lat, lon, imagesize[0], imagesize[1])
+            angle = self.sensorsWidget.quatToYaw(pose.q0, pose.q1, pose.q2, pose.q3)
+            self.setPosition(x, y, angle)
+
+
+
+class MyDialog(QDialog):
+    def __init__(self, parent=None):
+        super(MyDialog, self).__init__(parent)
+
+        self.buttonBox = QDialogButtonBox(self)
+        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+
+        self.label_lat = QLabel("Introduce Latitude:")
+        self.input_lat = QLineEdit()
+
+        self.label_lon = QLabel("Introduce Longitude:")
+        self.input_lon = QLineEdit()
+        self.label_alt = QLabel("Introduce Altitude:")
+        self.input_alt = QLineEdit()
+
+        self.grid_layout = QGridLayout(self)
+        self.grid_layout.addWidget(self.label_lat,0,0)
+        self.grid_layout.addWidget(self.input_lat,0,1)
+        self.grid_layout.addWidget(self.label_lon,1,0)
+        self.grid_layout.addWidget(self.input_lon,1,1)
+        self.grid_layout.addWidget(self.label_alt,2,0)
+        self.grid_layout.addWidget(self.input_alt,2,1)
+        self.grid_layout.addWidget(self.buttonBox,3,0)
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+
+        def get_waypoint_to_add(self):
+            return self.input_lat.text(), self.input_lon.text(), self.input_alt.text()

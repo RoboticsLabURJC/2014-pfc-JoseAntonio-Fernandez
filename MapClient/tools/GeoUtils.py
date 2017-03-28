@@ -122,10 +122,4 @@ def retrieve_new_map(lat, lon, radius, width, heigth):
                      format='image/png',
                      transparent=True)
 
-    image = Image.open(io.BytesIO(img.read()))
-    image.load()
-
-    numpy_image = np.asarray(image.getdata(), dtype='uint8')
-
-
-    return {'numpy' : numpy_image, 'bytes': img.read(), 'bbox': bbox, 'size': (width,heigth)}
+    return img
