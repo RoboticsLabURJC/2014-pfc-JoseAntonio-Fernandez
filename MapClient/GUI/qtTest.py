@@ -183,9 +183,9 @@ class MainGUI(QWidget):
         self.wayPoints.append(point)
 
         if (event.button() == QtCore.Qt.LeftButton):
-            latMin, lonMin, latMax, lonMax = self.imageMetadata['bbox']
+            lonMin, latMin, lonMax, latMax = self.imageMetadata['bbox']
             sizeX, sizeY = self.imageMetadata['size']
-            lon, lat = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
+            lat, lon = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
 
             currentRowCount = self.table.rowCount()
             item = QTableWidgetItem()
@@ -523,5 +523,9 @@ class MyDialog(QDialog):
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
 
-        def get_waypoint_to_add(self):
-            return self.input_lat.text(), self.input_lon.text(), self.input_alt.text()
+    def get_waypoint_to_add(self):
+        self.accept()
+        return self.input_lat.text(), self.input_lon.text(), self.input_alt.text()
+
+    def accept(self):
+        return self.input_lat.text(), self.input_lon.text(), self.input_alt.text()
