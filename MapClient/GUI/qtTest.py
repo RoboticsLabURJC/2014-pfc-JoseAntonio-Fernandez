@@ -179,7 +179,6 @@ class MainGUI(QWidget):
         x = event.pos().x()
         y = event.pos().y()
         point = (x,y)
-        print(point)
         self.wayPoints.append(point)
 
         if (event.button() == QtCore.Qt.LeftButton):
@@ -243,30 +242,39 @@ class MainGUI(QWidget):
             pos_lat = text.find("lat:")
             pos_lon = text.find("lon:")
             if pos_lat != -1:
+                print("WP")
                 lat = (text[pos_lat + 4:pos_lon])
                 pose.x = float(lat)
                 lon = (text[pos_lon + 4:])
                 pose.y = float(lon)
             else:
                 if "LAND in " in text:
+                    print("LAND")
                     pos = text.find("LAND in ") + 8
                     position = text[pos:].split(" ")
                     lat = position[0]
                     lon = position[1]
                     pose.x = float(lat)
                     pose.y = float(lon)
+                    self.extra.land()
                 else:
                     pos = text.find("TAKE OFF to ") + 12
+                    print("Take of detected")
                     position = text[pos:].split(" ")
                     lat = position[0]
                     lon = position[1]
                     pose.x = float(lat)
                     pose.y = float(lon)
+                    self.extra.takeoff()
 
             alt = self.table.item(row, 1)
             pose.h = int(alt.text())
             print(mission.mission)
             mission.mission.append(pose)
+            # Workaround to avoid the fist waypoint un-understanded
+            if i==0:
+                mission.mission.append(pose)
+            # end Workaround
             i += 1
 
             print(text + alt.text())
@@ -346,7 +354,6 @@ class MainGUI(QWidget):
         # HARDCODED
         self.updateImage()
 
-        # HARDCODED
 
         self.cameraWidget.imageUpdate.emit()
         self.sensorsWidget.sensorsUpdate.emit()
@@ -422,7 +429,6 @@ class MainGUI(QWidget):
         for waypoint in wayPoints:
             n+=1
             s = str(n)
-            print(wayPoints)
             cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
             cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
         self.refreshImage()
@@ -475,7 +481,7 @@ class MainGUI(QWidget):
         cv2.polylines(self.im_to_show,[pts],True,(250,0,0),thickness=1)
 
     def refresh_shadow(self,x,y):
-        cv2.circle(self.cvImageShadow, (x, y), 1, [50, 50, 50], thickness=-1, lineType=8, shift=0)
+        cv2.circle(self.cvImageShadow, (x, y), 1, [255,255,102], thickness=-1, lineType=8, shift=0)
 
     def center_of_triangle(self, triangle):
         center_x = (triangle[0][0] + triangle[1][0] + triangle[2][0]) / 3;
