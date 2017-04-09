@@ -332,67 +332,75 @@ class Server:
         :return: None
         '''
         wp = mavwp.MAVWPLoader()
-        seq = 0
+        seq = 1
         frame = mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT
         radius = 10
         pose3Dwaypoints = mission.mission
-        print(len(pose3Dwaypoints))
-        print(pose3Dwaypoints[0])
+        print("waypoints received {0}" ,len(pose3Dwaypoints))
+        print(self.extra.takeOffDecision)
         N = len(pose3Dwaypoints)
-        i=0
         # Look if a Take Off message has been recieved to set up in the mission too, Take off must to be
         # the fist so if we have the TOFF message we have to create the message and start the loop in 1
-        if (self.extra.takeOff()):
-            navData = pose3Dwaypoints[i]
-            wp.add(mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
+        if (self.extra.takeOffDecision):
+            navData = pose3Dwaypoints[seq-1]
+            toff = mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
                                                                 self.master.target_component,
                                                                 seq,
                                                                 frame,
                                                                 mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, # 22
                                                                 0, 0, 0, radius, 0, 0,
-                                                                navData.x, navData.y, navData.h))
+                                                                navData.x, navData.y, navData.h)
+            wp.add(toff)
+            # Workaround
+            wp.add(toff)
+            print(toff)
             seq += 1
-            i += 1
+            self.extra.setTakeOff(False)
+        self.extra.setTakeOff(False)
 
         for i in range(N):
-
             navData = pose3Dwaypoints[i]
-            wp.add(mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
+            wayPoint_tmp =mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
                                                                 self.master.target_component,
                                                                 seq,
                                                                 frame,
-                                                                mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, # 18
+                                                                mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, # 16
                                                                 0, 0, 0, radius, 0, 0,
-                                                                navData.x, navData.y, navData.h))
+                                                                navData.x, navData.y, navData.h)
+            wp.add(wayPoint_tmp)
             seq += 1
+            print(wayPoint_tmp)
 
         # Look if a land message has been recieved to set up in the mission too, Land must to be
         # the last so if we have the land message we have to create the message and append to the mission
-        if (self.extra.land()):
-            navData = pose3Dwaypoints[N]
-            wp.add(mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
+        print("Land ", self.extra.landDecision)
+        if (self.extra.landDecision):
+            navData = pose3Dwaypoints[N-1]
+            land = mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
                                                                 self.master.target_component,
                                                                 seq,
                                                                 frame,
                                                                 mavutil.mavlink.MAV_CMD_NAV_LAND, # 21
                                                                 0, 0, 0, radius, 0, 0,
-                                                                navData.x, navData.y, navData.h))
+                                                                navData.x, navData.y, navData.h)
             seq += 1
             i += 1
-        '''
+            wp.add(land)
+            print(land)
+
+
         self.master.waypoint_clear_all_send()
         self.master.waypoint_count_send(wp.count())
 
-        print(seq)
         for i in range(wp.count()):
             msg = self.master.recv_match(type=['MISSION_REQUEST'], blocking=True)
             print(msg)
-            self.master.mav.send(wp.wp(msg.seq))
+            self.master.mav.send(wp.wp(i))
             print ('Sending waypoint {0}'.format(i) + format(wp.wp(msg.seq)))
 
         self.master.arducopter_arm()
         self.master.set_mode_auto() # arms and start mission I thought
-        '''
+
         print('SENDED')
         empty_mission = jderobot.MissionData()
         self.mission.setMissionData(empty_mission)
@@ -480,7 +488,6 @@ class Server:
             adapter.add(object, ic.stringToIdentity("ardrone_mission"))
             adapter.activate()
             ic.waitForShutdown()
-            print("3")
 
         except:
             traceback.print_exc()
@@ -563,7 +570,6 @@ class Server:
             if not self.poseWP.equals(self.oldPoseWP):
                 self.oldPoseWP.setPose3DData(self.poseWP.getPose3DData())
                 self.oneWaypointMission(self.poseWP)
-                print (self.poseWP)
                 time.sleep(1)
 
     def missionListener(self):
@@ -573,10 +579,7 @@ class Server:
         '''
         while True:
             if not self.mission.is_empty():
-                print("got mission")
-                print(str(self.mission.getMissionData()))
                 self.lastMission = self.mission
                 self.setMission(self.mission.getMissionData())
-            else:
-                print("Mission empty")
+
             time.sleep(1)

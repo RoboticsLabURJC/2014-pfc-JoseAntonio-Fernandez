@@ -10,14 +10,14 @@ class MissionI(jderobot.Mission):
 
     def getMissionData(self, current=None):
         lock.acquire()
-        print("getting Mission")
+        # print("getting Mission")
         dta = self.data
         lock.release()
         return dta
 
     def setMissionData(self, data, current=None):
         lock.acquire()
-        print("setting Mission"+ str(data.mission))
+        # print("setting Mission"+ str(data.mission))
         self.data=data
         lock.release()
 
