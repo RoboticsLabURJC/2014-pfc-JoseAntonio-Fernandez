@@ -236,6 +236,7 @@ El objetivo de este trabajo final es poner en valor y asentar el uso de un tipo 
 \label{sec:tipos_aeronaves}
 
 Las aeronaves son la base sobre las que se asienta la inteligencia que permite que nuestro robot vuele de ahí que convenga dedicar unas líneas a entender la base de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC los llamados aerodinos.
+
 Existen principalmente 2 tipos de aeronaves si atendemos al modo en que generan su sustentaci\'on con sus alas, de ala fija y las de ala rotatoria.
 
 Dentro de la tipificaci\'on de ala fija tenemos aquellas aeronaves que tienes sus alas fijas al fuselaje.
@@ -315,20 +316,200 @@ En esta secci\'on se deber\'ia introducir la esctura de la memoria. As\'i:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% OBJETIVOS %
+% INFRAESTRUCTURA %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \cleardoublepage
-\chapter{Objetivos}
-\label{chap:objetivos}
+\chapter{Infraestructura utilizada}
+\label{chap:infraestructura_utilizada}
 
-\section{Objetivo general}
-label{sec:objetivo-general}
+\section{Hardware}
+\label{sec:hardware}
+
+Este PFC se apoya principalmente en 3 piezas hardware:
 
 
-\section{Objetivos espec\'ificos}
-label{sec:objetivos-especificos}
+\begin{itemize}
+\item El avión a radio-control. Para este desarrollo hemos elegido el avión Bix3 distribuido por la empresa china \url{www.hobbyking.com}, hemos elegido este modelo por ser un avión muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Para poder cargar con el equipo necesario nos ha sido necesario cambiar el motor, el variador y las baterías de serie por otras de mayor rendimiento que nos permiten volar con tanta carga de pago.
+\item El estabilizador/piloto automático, para este desarrollo hemos optado por un Ardupilot que trae incoorporados en su placa los giróscopos y acerelómetros para su estabilizaci\'on y que trae de serie un receptor GPS con brújula.
+\item Una raspberry PI3 que es nuestro ordenador de abordo y en el que instalaremos la infraestructura necesaria para que podamos dotarle de inteligencia. Hemos elegido éste dispositivo debido al compromiso peso/potencia que nos otorga así como porque se trata de un hardware muy asequible  y extendido.
+\end{itemize} 
 
+\section{Software}
+label{sec:software}
+
+En este apartada trataremos las capas de software sobre las que nuestro desarrollo se apoya para lograr nuestros objetivos, vamos a agrupar las mismas en los dispositivos hardware sobre las que se apoyan o el las que estarán instaladas.
+\begin{enumerate}
+\item Placa estabilizadora/piloto automático Ardupilot. Esta placa accede directamente a los actuadores del avión (los servos y el motor) a través de señales PWM. Esta y otras placas similares como Pikhawnk ofrecen un interfaz que se apoya en comandos llamado MAVLink. A través de comandos MAVLink se puede acceder a los sensores, a los que incoorpora la placa o a los que le añadamos a la misma como el GPS o sensores de velocidad del aire. A través de estos comandos se le puede también enviar ordenes al piloto automático quien las ejecutará.
+Un ejemplo de comando MAVLink sería:
+{\small
+\begin{verbatim}
+type GpsStatus struct {
+    SatellitesVisible  uint8      Número de satélites visibles
+    SatellitePrn       [20]uint8  Id Global de cada satélite
+    SatelliteUsed      [20]uint8  Lista con el uso de cada satélite 0: no se utiliza, 1: en uso
+    SatelliteElevation [20]uint8  Elevación, nos da el ángulo sobre el horizonte de cada satélite 0: justo encima, 90: en el horizonte
+    SatelliteAzimuth   [20]uint8  Dirección del satélite, 0: 0 grados, 255: 360 grados.
+    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los satélites
+}
+\end{verbatim}}
+Este mensaje trae la información del enlace actual con el GPS y se envía periódicamente en ciclos que decidimos en parámetros de conexión con el dispositivo.
+Otro parámetro, esta vez vinculado a la actuación sería:
+{\small
+\begin{verbatim}
+type MissionItem struct {
+    Param1          float32    parámetro variable en función del comando.
+    Param2          float32    parámetro variable en función del comando.
+    Param3          float32    parámetro variable en función del comando.
+    Param4          float32    parámetro variable en función del comando.
+    X               float32    latitud
+    Y               float32    longitud
+    Z               float32    altitud
+    Seq             uint16     Número del item en la misión
+    Command         uint16     Tipo de comando de navegación por ejemplo 16 es un waypoint y 22 es despegue
+    TargetSystem    uint8      ID del sistema
+    TargetComponent uint8      
+    Frame           uint8      Sistema de coordenadas que se utiliza
+    Current         uint8      Misión actual no:0, si:1
+    Autocontinue    uint8      Autocontinuar al siguiente objeto de misión tras alcanzar el actual
+}
+\end{verbatim}}
+
+\item Raspberry PI. Dentro del dispositivo instalaremos la distribución linux Ubuntu en su versión 14.04 sobre la que instalaremos el framework Jderobot. Jderobot es un framework desarollado por el departamento de robótica de la Universidad rey Juan Carlos que nos expone un interfaz sobre el que recoger/servir datos recogidos por sensores así como de actuar sobre los actuadores del robot. Se apoya en el interfaz de ZeroC Ice\footnote{algo} para la distribución es estos interfaces aislando por tanto el lenguaje de programación utilizado pudiendo utilizar el lenguaje mas apropiado para cada tarea. Expone varios interfaces, pero en este capítulo explicaremos los que durante nuestro desarrollo hemos implementado:
+\begin{itemize}
+\item Pose3D. Utilizado para recoger los datos de actitud y la posición de la aeronave.
+\begin{verbatim}
+Pose3DData
+  {
+	float x;  /* x coord */
+	float y;  /* y coord */
+	float z;  /* z coord */
+  	float h;  /* */
+	float q0; /* qw */
+	float q1; /* qx */
+	float q2; /* qy */
+	float q3; /* qz */
+  };
+\end{verbatim}
+\item Camera. Utilizado para servir imágenes.
+
+\begin{verbatim}
+  class CameraDescription
+  {
+    string name;
+    string shortDescription;
+    string streamingUri;
+    float fdistx;
+    float fdisty;
+    float u0;
+    float v0;
+    float skew;
+    float posx;
+    float posy;
+    float posz;
+    float foax;
+    float foay;
+    float foaz;
+    float roll;
+  };
+
+\end{verbatim}
+\item NavData. Utilizado para servir datos secundarios de actuación como velocidades lineales o angulares o el estado de la batería.
+\begin{verbatim}
+class NavdataData 
+{
+ int vehicle; //0-> ArDrone1, 1-> ArDrone2
+ int state; // landed, flying,...
+ float batteryPercent; //The remaing charge of baterry %
+		
+ //Magnetometer ArDrone 2.0
+ int magX;
+ int magY;
+ int magZ;
+		
+ int pressure; //Barometer ArDrone 2.0
+ int temp;     //Temperature sensor ArDrone 2.0
+ float windSpeed; //Estimated wind speed ArDrone 2.0		
+		
+ float windAngle;
+ float windCompAngle;
+ 
+ float rotX; //rotation about the X axis
+ float rotY; //rotation about the Y axis		
+ float rotZ; //rotation about the Z axis
+ 
+ int altd; //Estimated altitude (mm) 
+
+ //linear velocities (mm/sec)
+ float vx;
+ float vy;
+ float vz;
+		
+ //linear accelerations (unit: g) ¿ArDrone 2.0?
+ float ax;
+ float ay;
+ float az;
+
+ //Tags in Vision Detectoion
+ //Should be unsigned
+ int tagsCount;
+ arrayInt tagsType;
+ arrayInt tagsXc;
+ arrayInt tagsYc;
+ arrayInt tagsWidth;
+ arrayInt tagsHeight;
+ arrayFloat tagsOrientation;
+ arrayFloat tagsDistance;
+
+ float tm; //time stamp
+};
+\end{verbatim}
+\item Extra. Utilizado principalmente para las órdenes de despegue y aterrizaje.
+\begin{verbatim}
+    void land() - land drone. 
+    void takeoff() - takeoff drone. 
+    void reset() 
+    void recordOnUsb(bool record) 
+    void ledAnimation(int type,float duration, float req) 
+    void flightAnimation(int type, float duration) 
+    void flatTrim() 
+    void toggleCam() - switch camera. 
+\end{verbatim}
+
+\item Misión. Hemos desarrollado el interfaz misión para poder dar cabida a este tipo de actución que Jderobot no soportaba hasta el momento
+\begin{verbatim}
+class Pose3DData  //we consumes Pose3DData
+  {
+		float x;
+		float y;
+		float z;
+  	float h;
+		float q0;
+		float q1;
+		float q2;
+		float q3;
+  };
+
+  ["python:seq:list"] sequence<Pose3DData> PoseSequence;
+  /**
+  * Mission data information 
+  */
+  class MissionData
+  {
+    PoseSequence mission;
+  };
+
+  /** 
+   * Interface to the Mission.
+   */
+  interface Mission
+  {
+    idempotent MissionData getMissionData();
+    int setMissionData(MissionData data);
+  };
+\end{verbatim}
+\end{itemize}
+\end{enumerate}
 
 \section{Planificaci\'on temporal}
 label{sec:planificacion-temporal}
