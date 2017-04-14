@@ -3,33 +3,35 @@
 %%
 %% Por Gregorio Robles <grex arroba gsyc.urjc.es>
 %%     Grupo de Sistemas y Comunicaciones
-%%     Escuela Técnica Superior de Ingenieros de Telecomunicación
+%%     Escuela T\'ecnica Superior de Ingenieros de Telecomunicaci\'on
 %%     Universidad Rey Juan Carlos
 %% (muchas ideas tomadas de Internet, colegas del GSyC, antiguos alumnos...
 %%  etc. Muchas gracias a todos)
 %%
-%% La última versión de esta plantilla está siempre disponible en:
+%% La \'ultima versi\'on de esta plantilla est\'a siempre disponible en:
 %%     https://github.com/gregoriorobles/plantilla-memoria
 %%
 %% Para obtener PDF, ejecuta en la shell:
 %%   make
-%% (las imágenes deben ir en PNG o JPG)
+%% (las im\'agenes deben ir en PNG o JPG)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[a4paper, 12pt]{book}
-%\usepackage[T1]{fontenc}
+\usepackage[T1]{fontenc}
 
 \usepackage[a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
 \usepackage{times}
 \usepackage[latin1]{inputenc}
-\usepackage[spanish]{babel} % Comenta esta línea si tu memoria es en inglés
+\usepackage[spanish]{babel} % Comenta esta l\'inea si tu memoria es en ingl\'es
 \usepackage{url}
+\usepackage{nicefrac}
 %\usepackage[dvipdfm]{graphicx}
 \usepackage{graphicx}
 \usepackage{float}  %% H para posicionar figuras
-\usepackage[nottoc, notlot, notlof, notindex]{tocbibind} %% Opciones de índice
+\usepackage[nottoc, notlot, notlof, notindex]{tocbibind} %% Opciones de \'indice
 \usepackage{latexsym}  %% Logo LaTeX
+
 
 \title{Memoria del Proyecto}
 \author{Nombre del autor}
@@ -38,8 +40,8 @@
 
 \begin{document}
 
-\renewcommand{\refname}{Bibliografía}  %% Renombrando
-\renewcommand{\appendixname}{Apéndice}
+\renewcommand{\refname}{Bibliograf\'ia}  %% Renombrando
+\renewcommand{\appendixname}{Ap\'endice}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PORTADA
@@ -61,21 +63,21 @@
 \vspace{3cm}
 
 \Large
-TITULACIÓN EN MAYÚSCULAS
+TITULACI\'oN EN MAY\'uSCULAS
 
 \vspace{0.4cm}
 
 \large
-Curso Académico 2020/2021
+Curso Acad\'emico 2020/2021
 
 \vspace{0.8cm}
 
-Trabajo Fin de Carrera/Grado/Máster
+Trabajo Fin de Carrera/Grado/M\'aster
 
 \vspace{2.5cm}
 
 \LARGE
-TÍTULO DEL TRABAJO EN MAYÚSCULAS
+T\'iTULO DEL TRABAJO EN MAY\'uSCULAS
 
 \vspace{4cm}
 
@@ -103,17 +105,17 @@ Tutor : Dr. Gregorio Robles
 
 \vspace{1cm}
 \large
-FIXME: Título
+FIXME: T\'itulo
 
 \vspace{1cm}
 \large
 \textbf{Autor :} FIXME \\
-\textbf{Tutor :} Dr. Gregorio Robles Martínez
+\textbf{Tutor :} Dr. Gregorio Robles Mart\'inez
 
 \end{center}
 
 \vspace{1cm}
-La defensa del presente Proyecto Fin de Carrera se realizó el día \qquad$\;\,$ de \qquad\qquad\qquad\qquad \newline de 20XX, siendo calificada por el siguiente tribunal:
+La defensa del presente Proyecto Fin de Carrera se realiz\'o el d\'ia \qquad$\;\,$ de \qquad\qquad\qquad\qquad \newline de 20XX, siendo calificada por el siguiente tribunal:
 
 
 \vspace{0.5cm}
@@ -127,10 +129,10 @@ La defensa del presente Proyecto Fin de Carrera se realizó el día \qquad$\;\,$ d
 
 
 \vspace{1.2cm}
-y habiendo obtenido la siguiente calificación:
+y habiendo obtenido la siguiente calificaci\'on:
 
 \vspace{1cm}
-\textbf{Calificación:}
+\textbf{Calificaci\'on:}
 
 
 \vspace{1cm}
@@ -152,39 +154,39 @@ mi familia / mi abuelo / mi abuela}
 %%%% Agradecimientos
 
 \chapter*{Agradecimientos}
-%\addcontentsline{toc}{chapter}{Agradecimientos} % si queremos que aparezca en el índice
+%\addcontentsline{toc}{chapter}{Agradecimientos} % si queremos que aparezca en el \'indice
 \markboth{AGRADECIMIENTOS}{AGRADECIMIENTOS} % encabezado 
 
-Aquí vienen los agradecimientos\ldots Aunque está bien acordarse de la pareja,
+Aqu\'i vienen los agradecimientos\ldots Aunque est\'a bien acordarse de la pareja,
 no hay que olvidarse de dar las gracias a tu madre, que aunque a veces no lo 
-parezca disfrutará tanto de tus logros como tú\ldots Además, la pareja quizás
-no sea para siempre, pero tu madre sí.
+parezca disfrutar\'a tanto de tus logros como t\'u\ldots Adem\'as, la pareja quiz\'as
+no sea para siempre, pero tu madre s\'i.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Resumen
 
 \chapter*{Resumen}
-%\addcontentsline{toc}{chapter}{Resumen} % si queremos que aparezca en el índice
+%\addcontentsline{toc}{chapter}{Resumen} % si queremos que aparezca en el \'indice
 \markboth{RESUMEN}{RESUMEN} % encabezado
 
-Aquí viene un resumen del proyecto. Ha de constar de tres o cuatro párrafos,
-donde se presente de manera clara y concisa de qué va el proyecto. Han
+Aqu\'i viene un resumen del proyecto. Ha de constar de tres o cuatro p\'arrafos,
+donde se presente de manera clara y concisa de qu\'e va el proyecto. Han
 de quedar respondidas las siguientes preguntas:
 
 \begin{itemize}
-  \item ¿De qué va este proyecto? ¿Cuál es su objetivo principal?
-  \item ¿Cómo se ha realizado? ¿Qué tecnologías están involucradas?
-  \item ¿En qué contexto se ha realizado el proyecto? ¿Es un proyecto
+  \item ¿De qu\'e va este proyecto? ¿Cu\'al es su objetivo principal?
+  \item ¿C\'omo se ha realizado? ¿Qu\'e tecnolog\'ias est\'an involucradas?
+  \item ¿En qu\'e contexto se ha realizado el proyecto? ¿Es un proyecto
 dentro de un marco general?
 \end{itemize}
 
 Lo mejor es escribir el resumen al final.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Resumen en inglés
+%%%% Resumen en ingl\'es
 
 \chapter*{Summary}
-%\addcontentsline{toc}{chapter}{Summary} % si queremos que aparezca en el índice
+%\addcontentsline{toc}{chapter}{Summary} % si queremos que aparezca en el \'indice
 \markboth{SUMMARY}{SUMMARY} % encabezado
 
 Here comes a translation of the ``Resumen'' into English. Please, double check
@@ -195,20 +197,20 @@ just before submitting.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ÍNDICES %
+% \'iNDICES %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Las buenas noticias es que los índices se generan automáticamente.
-% Lo único que tienes que hacer es elegir cuáles quieren que se generen,
-% y comentar/descomentar esa instrucción de LaTeX.
+% Las buenas noticias es que los \'indices se generan autom\'aticamente.
+% Lo \'unico que tienes que hacer es elegir cu\'ales quieren que se generen,
+% y comentar/descomentar esa instrucci\'on de LaTeX.
 
-%%%% Índice de contenidos
+%%%% \'indice de contenidos
 \tableofcontents 
-%%%% Índice de figuras
+%%%% \'indice de figuras
 \cleardoublepage
 %\addcontentsline{toc}{chapter}{Lista de figuras} % para que aparezca en el indice de contenidos
 \listoffigures % indice de figuras
-%%%% Índice de tablas
+%%%% \'indice de tablas
 %\cleardoublepage
 %\addcontentsline{toc}{chapter}{Lista de tablas} % para que aparezca en el indice de contenidos
 %\listoftables % indice de tablas
@@ -216,85 +218,95 @@ just before submitting.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% INTRODUCCIÓN %
+% INTRODUCCI\'oN %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \cleardoublepage
-\chapter{Introducción}
+\chapter{Introducci\'on}
 \label{sec:intro} % etiqueta para poder referenciar luego en el texto con ~\ref{sec:intro}
-\pagenumbering{arabic} % para empezar la numeración de página con números
+\pagenumbering{arabic} % para empezar la numeraci\'on de p\'agina con n\'umeros
 
-Los UAV o Drones se han popularizado en los últimos años hasta es punto de formar parte de nuestro día a día con aplicaciones en muchos ambitos de nuestra vida. 
+Los UAV o Drones se han popularizado en los \'ultimos años hasta es punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ambitos de nuestra vida. 
 
-Si bien se estan utlizando ya de forma habitual en sectores como el cine o la ingeniería civil, aún se están explorando muchas de las posibles utilidades que estos robots pueden llegar a ofrecer.
+Si bien se est\'an utilizando ya de forma habitual en sectores como el cine o la ingenier\'ia civil, a\'un se est\'an explorando muchas de las posibles utilidades que estos robots pueden llegar a ofrecer.
 
-El objetivo de este trabajo final es poner en valor y asentar el uso de un tipo de UAV que no está hoy muy representado en el ámbito civil y que aventaja en varios aspectos al mas popularizado quadracoptero, se trata del avión.
+El objetivo de este trabajo final es poner en valor y asentar el uso de un tipo de UAV que no est\'a hoy muy representado en el \'ambito civil y que aventaja en varios aspectos al mas popularizado quadrac\'optero, se trata del avi\'on.
 
+\section{Tipos de aeronaves}
+\label{sec:tipos_aeronaves}
 
+Las aeronaves son la base sobre las que se asienta la inteligencia que permite que nuestro robot vuele de ahí que convenga dedicar unas líneas a entender la base de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC los llamados aerodinos.
+Existen principalmente 2 tipos de aeronaves si atendemos al modo en que generan su sustentaci\'on con sus alas, de ala fija y las de ala rotatoria.
+
+Dentro de la tipificaci\'on de ala fija tenemos aquellas aeronaves que tienes sus alas fijas al fuselaje.
+Seg\'un la definici\'on de la OACI, es un «Aerodino propulsado por motor, que debe su sustentaci\'on en vuelo principalmente a reacciones aerodin\'amicas ejercidas sobre superficies que permanecen fijas en determinadas condiciones de vuelo»
+Algunos ejemplos de aeronaves de ala fija son los aeroplanos, planeadores/veleros, aladeltas, parapentes, paramotores y ultraligeros.
+
+Este tipo de aerodinos los conocemos mas com\'unmente como avienes y tienen como principal ventaja de que la carga de aire que necesitan en sus alas puede ser producida de muchas formas distinta (los veleros no tienen ning\'un tipo de propulsi\'on). Esta carga es variable en funci\'on de la superficie alar del mismo y permite por tanto cargas mas grandes que si instal\'asemos el mismo propulsor en un ala rotatoria.
+Pongamos como ejemplo el A380 de Airbus, es el avi\'on de pasajeros mas grande del mundo y cuenta con 4 motores que producen un empuje de entre 70.000 y 80.000lbs, unas 32-36 toneladas de empuje cada uno generando por  tanto entre los 4 a m\'aximo rendimiento y optimas condiciones alrededor de 144 toneladas de empuje. Este avi\'on tiene un peso m\'aximo al despegue\footnote{Peso m\'aximo que es capaz de soportar un avi\'on en su maniobra de despegue}\ de entre 560 y 590 toneladas. Tenemos por tanto que necesitamos en este caso \nicefrac{1}{4} del peso total en empuje para despegar este avi\'on.
+Si hici\'esemos este mismo ejercicio con un aerodino de ala rotatoria como el Boing AH-64 o Apache con un peso m\'aximo al despegue de 9,5 toneladas necesitar\'iamos que la combinaci\'on que realizan empuje y palas superase esos 9,5 toneladas para siguiera levantar del suelo.
+Este tipo de aerodinos son por tanto mas eficientes, r\'apidos, con mayor carga de pago, mayor alcance debido a su menor consumo y mas estables.
+
+Dentro de la tipificaci\'on de ala rotatoria tenemos aquellas aeronaves que producen su sustentaci\'on con el movimiento (rotaci\'on) de sus alas. En este tipo de aeronaves las alas, tambi\'en llamadas "palas" en este tipo de aerodinos, giran en torno a un eje produciendo con este giro la sustentaci\'on necesaria para despegar del suelo.
+Algunos ejemplos de este tipo de aeronaves son los helic\'opteros, autogiros, convertibles o los ampliamente conocidos en robotica aerea los quadrac\'opteros.
+Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su versatilidad a la hora de realizar las maniobras de despegue y aterrizaje que pueden realizarse de forma vertical (VTOL\footnote{Vertical take off and landing }) adem\'as de la capacidad de realizar vuelo estacionario\footnote{Mantenerse est\'aticamente en un punto elevado} que le hacen imprescindible en escenarios poco accesibles o donde nos es posible aterrizar como el rescate mar\'itimo.
 
 
 \section{Origenes}
 \label{sec:origenes}
 
 
-Los orígenes de la robótica aerea tienen origen militar y su avance ha estado intrinsecamente ligado a este ambito durante todo el siglo XX.
+Los or\'igenes de la rob\'otica aerea tienen origen militar y su avance ha estado intr\'insecamente ligado a este \'ambito durante todo el siglo XX.
 
-Se consideran el origen de los aviones no tripulados los experimentos llevados a cabo a principios del siglo XX durante la 1ª guerra mundial como el ?Aerial Target? desarrollado por el capitán A.H Lowpara para su uso como blanco aereo. Si bien eran vehiculos no tripulados (Unmaned Aereal Vehicles) no eran autonomos y eran manejados desde tierra a traves de una radio. 
-No es hasta el final del siglo XX cuando bajo el escenario de la guerra de Vietnam y ante la creciente perdida de vidas de los pilotos estos vehículos vuelvan de nuevo a ser objeto de desarrollo y se conviertan en vehículos autónomos.
+Se consideran el origen de los aviones no tripulados los experimentos llevados a cabo a principios del siglo XX durante la 1ª guerra mundial como el "Aerial Target" desarrollado por el capit\'an A. H. Lowpara para su uso como blanco a\'ereo. Si bien eran veh\'iculos no tripulados (Unmaned Aereal Vehicles) no eran aut\'onomos y eran manejados desde tierra a trav\'es de una radio. 
+No es hasta el final del siglo XX cuando bajo el escenario de la guerra de Vietnam y ante la creciente perdida de vidas de los pilotos estos veh\'iculos vuelvan de nuevo a ser objeto de desarrollo y se conviertan en veh\'iculos aut\'onomos.
 
-Desde ese momento y hasta nuestros días se utilizan de forma habitual en el ámbito militar en misiones de reconocimiento, bombardeos o apoyo sin arriesgar vidas humanas.
+Desde ese momento y hasta nuestros d\'ias se utilizan de forma habitual en el \'ambito militar en misiones de reconocimiento, bombardeos o apoyo sin arriesgar vidas humanas.
 
-A los largo de los primeros años de este siglo debido al abaratamiento de los componentes electrónicos y a su miniaturización y potencia, la robotica aerea se ha "desmilitarizado" y esta experimentado un enorme crecimiento en el ambito de las aplicaciones civiles.
+A los largo de los primeros años de este siglo debido al abaratamiento de los componentes electr\'onicos y a su minituarizaci\'on y potencia, la rob\'otica a\'erea se ha "desmilitarizado" y esta experimentado un enorme crecimiento en el \'ambito de las aplicaciones civiles.
 
-Hoy en día es común encontrar en cualquier juguetería quadracópetros radiopilotados por poco menos de 30 euros y en tiendas especialiazadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma autónoma por poco mas de 200?.
+Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco mas de 200?.
 
 Por ello se ha popularizado su uso en aplicaciones civiles como:
-Fotografía aerea. Para por ejemplo usos topográficos o educativose incluso tambien recaudatorios\footnote{El ministerio de hacienda español tiene varios drones para cotejar los datos catastrales con la vivienda física}
-Cine y televisión. Hoy en día es raro encontrar una producción que no haya hecho uso de ellos y es que permite la captura de tomas que de otra forma serían extremadamente complicadas o imposibles o bien factibles pero económicamente inviables.
-Vigilancia y protección. Las principales fuerzas y cuerpos de seguridad de una gran cantidad de paises los utilizan.
+Fotograf\'ia a\'erea. Para por ejemplo usos topogr\'aficos o educativos e incluso recaudatorios\footnote{El ministerio de hacienda español tiene varios drones para cotejar los datos catastrales con la vivienda f\'isica}
+Cine y televisi\'on. Hoy en d\'ia es raro encontrar una producci\'on que no haya hecho uso de ellos y es que permite la captura de tomas que de otra forma ser\'ian extremadamente complicadas o imposibles o bien factibles pero econ\'omicamente inviables.
+Vigilancia y protecci\'on. Las principales fuerzas y cuerpos de seguridad de una gran cantidad de pa\'ises los utilizan.
 
-Se esta experimentando su uso en otros ámbitos como el logístico\footnote{Amazon plantea utlizarlo en algunas entregas}, sanitario o salvamento.
+Se esta experimentando su uso en otros \'ambitos como el log\'istico\footnote{Amazon plantea utilizarlo en algunas entregas}, sanitario o salvamento.
 
-\section{Tipos de aeronaves}
-\label{sec:tipos_aeronaves}
-
-Las aeronaves son la base sobre las que se asienta la inteligencia que permite que nuestro robot vuele.
-Existen principalmente 2 tipos de aeronaves si atendemos al modo en que generan su sutentación con sus alas, de ala fija y las de ala rotatoria.
-
-Dentro de la tipificación de ala fija tenemos aquellas aeronaves que tienes sus alas fijas al fuselaje.
-Según la definición de la OACI, es un «Aerodino propulsado por motor, que debe su sustentación en vuelo principalmente a reacciones aerodinámicas ejercidas sobre superficies que permanecen fijas en determinadas condiciones de vuelo»
-Algunos ejemplos de aeronaves de ala fija son los aeroplanos, planeadores/veleros, aladeltas, parapentes, paramotores y ultraligeros.
-
-Este tipo de aerodinos los conocemos mas comunmente como avienes y tienen como principal ventaja de que la carga de aire que necesitan en sus alas puede ser producida de muchas formas distinta (los veleros no tienen ningun tipo de propulsión). Esta carga es variable en función de la superficie alar del mismo y permite por tanto cargas mas grandes que si instalásemos el mismo propulsor en un ala rotatoria.
-Pongamos como ejemplo el A380 de Airbus, es el avión de pasajeros mas grande del mundo y cuenta con 4 motores que producen un empuje de entre 70.000 y 80.000lbs, unas 32-36 toneladas de empuje cada uno generando por  tanto entre los 4 a máximo rendimiento y optimas condiciones alrededor de 144 toneladas de empuje. Este avión tiene un peso máximo al desplegue\footnote{Peso máximo que es capaz de soportar un avion en su maniobra de despegue} de entre 560 y 590 toneladas. Tenemos por tanto que necesitamos en este caso \frac{1}{4} del peso total en empuje para despegar este avión.
-Si hiciésemos este mismo ejercicio con un aerodino de ala rotatoria como el Boing AH-64 o Apache con un peso máximo al despegue de 9,5 toneladas necesitaríamos que la combinación que realizan empuje y palas supoerase esos 9,5 toneladas para siguiera levantar del suelo.
-Este tipo de aerodinos son por tanto mas eficientes, rápidos, con mayor carga de pago, mayor alcance debido a su menor consumo y mas estables.
-
-Dentro de la tipificación de ala rotatoria tenemos aquellas aeronaves que producen su sustentación con el movimiento (rotacion) de sus alas. En este tipo de aeronaves las alas, tambien llamadas "palas" en este tipo de aerodinos, giran en torno a un eje produciendo con este giro la ustentación necesaria para despegar del suelo.
-Algunos ejemplos de este tipo de aeronaves son los helicópteros, autogiros, convertibles o los ampliamente conocidos en robotica aerea los quadracópteros.
-Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su versatilidad a la hora de realizar las maniobras de despegue y aterrizaje que pueden realizarse de forma vertical (VTOL\footnote{Vertical take off and landing }) además de la capacidad de realizar vuelo estacionario\footnote{Mantenerse estaticamente en un punto elevado} que le hacen imprescindible en escenarios poco accesibles o donde nos es posible aterrizar como el rescate marítimo.
  
 \section{Estado del arte}
 \label{sec:estado_arte}
 
-En la actualidad el uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que mas ha crecido su inversión, y es que según la empresa analista especianizada en dones Droneii con sede en Hamburgo en un estudio sobre la inversión en el sector\footnote{http://www.droneii.com/drone-investment-trends-2016} en europa se invirtió en en proyectos domésticos en 2016 cerca de 65 millones de dólares incrementandose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
-Estas datos se asientan en un mercado cada vez mas extendido y con una gran proyección de crecimiento,la publicación BI Intelligence\footcite{http://www.businessinsider.com/the-drones-report-research-use-cases-regulations-and-issues-2016-4} espera que las ventas de drones alcancen los 12.000 millones en 2021.
+En la actualidad el uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que mas ha crecido su inversi\'on, y es que seg\'un la empresa analista especializada en dones Droneii con sede en Hamburgo en un estudio sobre la inversi\'on en el sector\footnote{\url{http://www.droneii.com/drone-investment-trends-2016}} en europa se invirti\'o en en proyectos dom\'esticos en 2016 cerca de 65 millones de d\'olares increment\'andose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
+Estas datos se asientan en un mercado cada vez mas extendido y con una gran proyecci\'on de crecimiento,la publicaci\'on BI Intelligence\footnote{\url{http://www.businessinsider.com/the-drones-report-research-use-cases-regulations-and-issues-2016-4}} espera que las ventas de drones alcancen los 12.000 millones en 2021.
 
-Con su uso ya ampliamente extendido en sectores como el cine, la televisión, fotografía, agropecuario, educativo, forestal, ingeniería civil y presencia en sectores como el sanitario, salvamento o seguridad y protección el nicho de mercado de los UAV esta lejos de su cima y se investigan dia a dia nuevos usos en sectores como la logística.
+Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, educativo, forestal, ingenier\'ia civil y presencia en sectores como el sanitario, salvamento o seguridad y protecci\'on el nicho de mercado de los UAV esta lejos de su cima y se investigan dia a dia nuevos usos en sectores como la log\'istica.
 
-Dentro del laboratorio de robótica de la Universidad Rey Juan Carlos cabe destacar los trabajos de Alberto Martinez Florido quien desarrollo un driver para poder utilizar desde jderobot el drone comercial parrot, desarrollado por la empresa francesa con mismo nombre, y el software de control UAV Viewer.
+Dentro del laboratorio de rob\'otica de la Universidad Rey Juan Carlos cabe destacar los trabajos realizados para profundizar investigar y experimentar con ellos.
+Trabajos como el de Alberto Mart\'inez Florido quien desarrollo un driver para poder utilizar desde jderobot el ar-drone comercial, desarrollado por la empresa francesa parrot, y el software de control UAV Viewer. Y mas adelante Daniel Yague que realiz\'o un driver para utilizar el ar-drone de forma simulada en gazebo.
+O los trabajos de Jorge Cano quien construyo propio su drone utilizando como base un quadrac\'optero y dando soporte a jderobot de muchas de las intruciones de MAVLink.
+Son destacables también los trabajos que se están llevando a cabo por Diego Jimenez adaptando el interfaz SoloDrone de la empresa 3DR\footnote{Empresa norteamericana con sede en California especializada en robótica aérea. Se sitúa en 2017 como la 3ª empresa del sector} o Jorge Vela quien se encuentra desarrollando como realizar la maniobra de aterrizaje de forma automática.
+
+\section{Objetivos}
+\label{sec:objetivos}
+
+Los objetivos de este PFC son arrojar luz sobre el uso de drones de ala fija poniendo en valor éstos en situaciones donde la carga de pago, la autonomía, velocidad o consumo desaconsejan el uso de los mas extendidos quadrac\'opteros.
+
+Para ésto hemos adaptado un avión de radio-control comercial añadiéndole toda la aviónica necesaria para que puede operar como drone. Hemos desarrollado un driver para jderobot del interfaz MAVLink que nos permite recoger actitud, velocidades lineales y angulares, altura, posición y otros parámetros como la batería restante. Nos permite también la actuación con el seguimiento de misiones que no sólo incluyen el paso por ciertos puntos de control o waypoints sino que también soporta las maniobras de despegue y aterrizaje en drones de ala fija.
+Hemos desarrollado también un software de control que da soporte a este tipo de actuación de mas alto nivel, las misiones.
 
 \section{Estructura de la memoria}
 \label{sec:estructura}
 
-En esta sección se debería introducir la esctura de la memoria. Así:
+En esta secci\'on se deber\'ia introducir la esctura de la memoria. As\'i:
 
 \begin{itemize}
-  \item En el primer capítulo se hace una intro al proyecto.
+  \item En el primer cap\'itulo se hace una intro al proyecto.
   
-  \item En el capítulo~\ref{chap:objetivos} se muestran los objetivos del proyecto.
+  \item En el cap\'itulo~\ref{chap:objetivos} se muestran los objetivos del proyecto.
   
-  \item A continuación se presenta el estado del arte.
+  \item A continuaci\'on se presenta el estado del arte.
   
   \item \ldots
 \end{itemize}
@@ -314,11 +326,11 @@ En esta sección se debería introducir la esctura de la memoria. Así:
 label{sec:objetivo-general}
 
 
-\section{Objetivos específicos}
+\section{Objetivos espec\'ificos}
 label{sec:objetivos-especificos}
 
 
-\section{Planificación temporal}
+\section{Planificaci\'on temporal}
 label{sec:planificacion-temporal}
 
 
@@ -331,27 +343,27 @@ label{sec:planificacion-temporal}
 \cleardoublepage
 \chapter{Estado del arte}
 
-Descripción de las tecnologías que utilizas en tu trabajo. Con dos o tres párrafos por cada tecnología, vale.
+Descripci\'on de las tecnolog\'ias que utilizas en tu trabajo. Con dos o tres p\'arrafos por cada tecnolog\'ia, vale.
 
 
-Puedes citar libros, como el de Bonabeau et al. sobre procesos estigmérgicos~\cite{bonabeau:_swarm}. % Nota que el ~ añade un espacio en blanco, pero no deja que exista un salto de línea. Imprescindible ponerlo para las citas.
+Puedes citar libros, como el de Bonabeau et al. sobre procesos estigm\'ergicos~\cite{bonabeau:_swarm}. % Nota que el ~ añade un espacio en blanco, pero no deja que exista un salto de l\'inea. Imprescindible ponerlo para las citas.
 
-También existe la posibilidad de poner notas al pie de página, por ejemplo, 
-una para indicarte que visite la página de 
+Tambi\'en existe la posibilidad de poner notas al pie de p\'agina, por ejemplo, 
+una para indicarte que visite la p\'agina de 
 LibreSoft\footnote{\url{http://www.libresoft.es}}.
 
-\section{Sección 1} 
+\section{Secci\'on 1} 
 \label{sec:seccion1}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% DISEÑO E IMPLEMENTACIÓN %
+% DISEÑO E IMPLEMENTACI\'oN %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \cleardoublepage
-\chapter{Diseño e implementación}
+\chapter{Diseño e implementaci\'on}
 
 \section{Arquitectura general} 
 \label{sec:arquitectura}
@@ -361,7 +373,7 @@ figura~\ref{fig:arquitectura}.
 \begin{figure}
   \centering
   \includegraphics[width=9cm, keepaspectratio]{img/arquitectura}
-  \caption{Estructura del parser básico}
+  \caption{Estructura del parser b\'asico}
   \label{fig:arquitectura}
 \end{figure}
 
@@ -387,23 +399,23 @@ figura~\ref{fig:arquitectura}.
 \label{chap:conclusiones}
 
 
-\section{Consecución de objetivos}
+\section{Consecuci\'on de objetivos}
 \label{sec:consecucion-objetivos}
 
-Esta sección es la sección espejo de las dos primeras del capítulo de objetivos,
-donde se planteaba el objetivo general y se elaboraban los específicos.
+Esta secci\'on es la secci\'on espejo de las dos primeras del cap\'itulo de objetivos,
+donde se planteaba el objetivo general y se elaboraban los espec\'ificos.
 
-Es aquí donde hay que debatir qué se ha conseguido y qué no. Cuando algo no
-se ha conseguido, se ha de justificar, en términos de qué problemas se han
-encontrado y qué medidas se han tomado para mitigar esos problemas.
+Es aqu\'i donde hay que debatir qu\'e se ha conseguido y qu\'e no. Cuando algo no
+se ha conseguido, se ha de justificar, en t\'erminos de qu\'e problemas se han
+encontrado y qu\'e medidas se han tomado para mitigar esos problemas.
 
 
-\section{Aplicación de lo aprendido}
+\section{Aplicaci\'on de lo aprendido}
 \label{sec:aplicacion}
 
-Aquí viene lo que has aprendido durante el Grado/Máster y que has aplicado
-en el TFG/TFM. Una buena idea es poner las asignaturas más relacionadas y
-comentar en un párrafo los conocimientos y habilidades puestos en práctica.
+Aqu\'i viene lo que has aprendido durante el Grado/M\'aster y que has aplicado
+en el TFG/TFM. Una buena idea es poner las asignaturas m\'as relacionadas y
+comentar en un p\'arrafo los conocimientos y habilidades puestos en pr\'actica.
 
 \begin{enumerate}
   \item a
@@ -414,7 +426,7 @@ comentar en un párrafo los conocimientos y habilidades puestos en práctica.
 \section{Lecciones aprendidas}
 \label{sec:lecciones_aprendidas}
 
-Aquí viene lo que has aprendido en el Trabajo Fin de Grado/Máster.
+Aqu\'i viene lo que has aprendido en el Trabajo Fin de Grado/M\'aster.
 
 \begin{enumerate}
   \item a
@@ -425,24 +437,24 @@ Aquí viene lo que has aprendido en el Trabajo Fin de Grado/Máster.
 \section{Trabajos futuros}
 \label{sec:trabajos_futuros}
 
-Ningún software se termina, así que aquí vienen ideas y funcionalidades
-que estaría bien tener implementadas en el futuro.
+Ning\'un software se termina, as\'i que aqu\'i vienen ideas y funcionalidades
+que estar\'ia bien tener implementadas en el futuro.
 
 Es un apartado que sirve para dar ideas de cara a futuros TFGs/TFMs.
 
 
-\section{Valoración personal}
+\section{Valoraci\'on personal}
 \label{sec:valoracion}
 
 Finalmente (y de manera opcional), hay gente que se anima a dar su punto de
-vista sobre el proyecto, lo que ha aprendido, lo que le gustaría haber aprendido,
-las tecnologías utilizadas y demás.
+vista sobre el proyecto, lo que ha aprendido, lo que le gustar\'ia haber aprendido,
+las tecnolog\'ias utilizadas y dem\'as.
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% APÉNDICE(S) %
+% AP\'eNDICE(S) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \cleardoublepage
@@ -462,11 +474,11 @@ las tecnologías utilizadas y demás.
 % para incluir las citas en la memoria
 \bibliographystyle{abbrv}
 \bibliography{memoria}  % memoria.bib es el nombre del fichero que contiene
-% las referencias bibliográficas. Abre ese fichero y mira el formato que tiene,
+% las referencias bibliogr\'aficas. Abre ese fichero y mira el formato que tiene,
 % que se conoce como BibTeX. Hay muchos sitios que exportan referencias en
 % formato BibTeX. Prueba a buscar en http://scholar.google.com por referencias
-% y verás que lo puedes hacer de manera sencilla.
-% Más información: 
+% y ver\'as que lo puedes hacer de manera sencilla.
+% M\'as informaci\'on: 
 % http://texblog.org/2014/04/22/using-google-scholar-to-download-bibtex-citations/
 
 \end{document}
