@@ -1,6 +1,7 @@
 import jderobot
 
 from MapClient.GUI.sensorsWidget import SensorsWidget
+from MapClient.tools import GeoUtils
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import pyqtSignal
@@ -18,6 +19,10 @@ from MapClient.tools import ImageUtils, WayPoint
 from MapClient.ice import ice_init
 
 LEFT =1
+RADIUS = 0.5
+WIDTH = 600
+HEIGHT = 600
+ZOOM = 16
 
 
 class MainGUI(QWidget):
@@ -59,6 +64,18 @@ class MainGUI(QWidget):
         self.imageLabel.setMouseTracking(True)
         self.imageLabel.mouseMoveEvent = self.getPos
         self.imageLabel.mousePressEvent= self.addWayPoint
+
+        self.mapLayout = QGridLayout()
+        self.newMap = QPushButton("Retrieve new map")
+        self.newMap.clicked.connect(lambda: self.newMapPush(self.newMap))
+
+        self.mapSourceGoogle = QRadioButton("Google")
+        self.mapSourceIGN = QRadioButton("IGN")
+        self.mapSourceIGN.setChecked(True)
+        self.mapLayout.addWidget(self.mapSourceIGN,0,0)
+        self.mapLayout.addWidget(self.mapSourceGoogle,0,1)
+
+        self.mapLayout.addWidget(self.newMap,0,2)
 
         #Prepared to manual control of copters
         self.tabs = QTabWidget()
@@ -130,6 +147,7 @@ class MainGUI(QWidget):
 
         layoutPpal = QGridLayout()
         layoutPpal.addWidget(self.imageLabel)
+        layoutPpal.addLayout(self.mapLayout,1,0)
         layoutPpal.addWidget(self.table,0,1)
         layoutPpal.addLayout(self.buttonLayout, 0, 2)
         #layoutPpal.addWidget(self.labelXY)
@@ -185,7 +203,6 @@ class MainGUI(QWidget):
             lonMin, latMin, lonMax, latMax = self.imageMetadata['bbox']
             sizeX, sizeY = self.imageMetadata['size']
             lat, lon = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
-
             currentRowCount = self.table.rowCount()
             item = QTableWidgetItem()
             alt = QTableWidgetItem()
@@ -217,6 +234,36 @@ class MainGUI(QWidget):
                 self.toffButton.setText('Take off')
                 self.toffButton.setChecked(False)
             #TODO call to takeOff over Ice
+
+    def newMapPush(self, newMap):
+        pose = self.getPose3D().getPose3D()
+
+        if (self.mapSourceIGN.isChecked()):
+            self.imageMetadata = GeoUtils.retrieve_new_map(pose.x, pose.y, RADIUS, WIDTH, HEIGHT)
+
+            # Prepare the image to be showed
+            image = self.imageMetadata["bytes"]
+            cvRGBImg = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+            # self.image2show = ImageUtils.prepareInitialImage(self.imageMetadata["bytes"], self.imageMetadata["size"][0],self.imageMetadata["size"][1])
+            self.cvImage = cvRGBImg.copy()
+            self.cvImageShadow = cvRGBImg.copy()
+            self.im_to_show = cvRGBImg.copy()
+
+            self.refreshImage()
+
+        else:
+            self.imageMetadata = GeoUtils.retrieve_new_map(pose.x, pose.y, ZOOM, WIDTH, HEIGHT)
+            # Prepare the image to be showed
+            image = self.imageMetadata["bytes"]
+            cvRGBImg = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+            # self.image2show = ImageUtils.prepareInitialImage(self.imageMetadata["bytes"], self.imageMetadata["size"][0],self.imageMetadata["size"][1])
+            self.cvImage = cvRGBImg.copy()
+            self.cvImageShadow = cvRGBImg.copy()
+            self.im_to_show = cvRGBImg.copy()
+
+            self.refreshImage()
 
     def sendWP(self, send2APM):
         '''HARDCODED

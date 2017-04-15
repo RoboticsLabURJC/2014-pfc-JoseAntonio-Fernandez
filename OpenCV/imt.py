@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication
 
 from OpenCV.ImageLabel import ImageGUI
 from OpenCV.threadGUI import ThreadGUI
+from MapClient import *
 
 import threading
 
@@ -39,17 +40,23 @@ with open('images/plazaMayor600x600.png', 'wb') as f:
 '''
 
 img = open('images/plazaMayor600x600.png','rb')
-#bbox = GeoUtils.getBoundingBox(lat,lon, h)
-#image = GeoUtils.retrieve_new_map(lat, lon, h, IMAGE_WIDTH, IMAGE_HEIGTH)
+bbox = GeoUtils.getBoundingBox(lat,lon, h)
+result = GeoUtils.retrieve_new_google_map(lat, lon, h, IMAGE_WIDTH, IMAGE_HEIGTH)
 
+with open('images/tmp.png', 'wb') as f:
+    f.write(result.read())
+
+opencv_image = cv2.imread('images/tmp.png',1);
+
+cv2.imshow("image", opencv_image)
 #image = {'bytes': img.read(), 'bbox': bbox, 'size': (IMAGE_WIDTH,IMAGE_HEIGTH)}
-print ("openning " + 'images/plazaMayor600x600.png')
-im = cv2.imread('images/plazaMayor600x600.png',1);
+#print ("openning " + 'images/plazaMayor600x600.png')
+#im = cv2.imread('images/plazaMayor600x600.png',1);
 
 
 
 
-
+'''
 
 if __name__ == '__main__':
     import sys
@@ -64,5 +71,5 @@ if __name__ == '__main__':
     t2.start()
 
     sys.exit(app.exec_())
-
+'''
 

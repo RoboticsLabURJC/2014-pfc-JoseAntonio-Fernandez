@@ -12,6 +12,8 @@ from MapClient.GUI.threadMap import ThreadMap
 from MapClient.classes.navDataClient import NavDataClient
 from MapClient.classes.MissionI import MissionI
 from MapClient.tools import GeoUtils, ImageUtils
+from OpenCV.Util import *
+
 import cv2
 
 IMAGE_WIDTH = 600
@@ -35,25 +37,25 @@ lon = -3.798212
 '''
 
 
-h = 0.5 # radius in kilometers
-
-bbox = GeoUtils.getBoundingBox(lat,lon, h)
-#im = GeoUtils.retrieve_new_map(lat, lon, h, IMAGE_WIDTH, IMAGE_HEIGTH)
-
+H = 0.5 # radius in kilometers
 '''
+bbox = GeoUtils.getBoundingBox(lat,lon, h)
+im = GeoUtils.retrieve_new_google_map(lat, lon, IMAGE_WIDTH, IMAGE_HEIGTH)
+corners = getCorners((lat,lon),10,IMAGE_WIDTH,IMAGE_HEIGTH)
+
 with open('images/tmp.png', 'wb') as f:
     f.write(im.read())
 
 
 im = open('images/tmp.png','rb')
 ImageUtils.prepareInitialImage(im.read(),IMAGE_WIDTH,IMAGE_HEIGTH)
+
+#opencv_image = cv2.imread('images/imageWithDisclaimer.png',1);
+
+opencv_image = cv2.imread('images/tmp.png',1)
+image = {'bytes': opencv_image, 'bbox': corners, 'size': (IMAGE_WIDTH,IMAGE_HEIGTH)}
+
 '''
-opencv_image = cv2.imread('images/imageWithDisclaimer.png',1);
-
-
-image = {'bytes': opencv_image, 'bbox': bbox, 'size': (IMAGE_WIDTH,IMAGE_HEIGTH)}
-
-
 if __name__ == '__main__':
     import sys
 
@@ -66,6 +68,9 @@ if __name__ == '__main__':
     mission = MissionI(ic, "UavViewer.Mission")
 
     app = QApplication(sys.argv)
+
+    pose3D = pose.getPose3D()
+    image = GeoUtils.retrieve_new_google_map(pose3D.x, pose3D.y, 16, IMAGE_WIDTH, IMAGE_HEIGTH)
 
     screen = MainGUI(image)
     screen.setFirstLocation(image)

@@ -4,6 +4,10 @@ from PIL import Image
 from owslib.wms import WebMapService
 import numpy as np
 import io
+from urllib.request  import urlopen
+from MapClient.tools import ImageUtils
+import cv2
+
 
 '''
 Utility functions to operate with coordinates
@@ -14,6 +18,8 @@ MIN_LAT = radians(-90)
 MAX_LAT = radians(90)
 MIN_LON = radians(-180)
 MAX_LON = radians(180)
+H = 0.5
+MERCATOR_RANGE = 256.0
 EARTH_RADIUS_WGS84 = 6371  # kilometers based on the ellipsoid of the standard WGS84 used in the IGN EPSG:4326
 
 
@@ -111,6 +117,8 @@ def distance_to(valores, other ):
 
 def retrieve_new_map(lat, lon, radius, width, heigth):
 
+    bbox = getBoundingBox(lat, lon, radius)
+
     wms = WebMapService('http://www.ign.es/wms-inspire/pnoa-ma', version='1.3.0')
     bbox = getBoundingBox(lat, lon, radius)
 
@@ -122,4 +130,94 @@ def retrieve_new_map(lat, lon, radius, width, heigth):
                      format='image/png',
                      transparent=True)
 
-    return img
+    with open('images/tmp.png', 'wb') as f:
+        f.write(img.read())
+
+    ImageUtils.prepareInitialImage(img.read(), width, heigth)
+    opencv_image = cv2.imread("images/imageWithDisclaimer.png", 1)
+
+    image = {'bytes': opencv_image, 'bbox': bbox, 'size': (width, heigth)}
+    return image
+
+def retrieve_new_google_map(lat, lon, zoomInt, width, heigth):
+
+    url = "http://maps.googleapis.com/maps/api/staticmap?"
+    center = "center=" + str(lat) + "," + str(lon)
+    size = "size=" + str(width) + "x" + str(heigth)
+    zoom = "zoom=" + str(zoomInt)
+    type = "maptype=satellite"
+    url = url + center + "&" + size + "&" + zoom + "&" + type
+
+    print(url)
+    result = urlopen(url=url)
+    if result.getcode() != 200:
+        print
+        "errrrrr"
+        sys.exit(1)
+
+    with open('images/tmp.png', 'wb') as f:
+        f.write(result.read())
+
+    opencv_image = cv2.imread("images/tmp.png", 1)
+    bbox = MercatorProjection.getCorners((lat, lon), zoomInt, width, heigth)
+    image = {'bytes': opencv_image, 'bbox': bbox, 'size': (width, heigth)}
+    return image
+
+
+
+def bound(value, opt_min, opt_max):
+    if (opt_min != None):
+        value = max(value, opt_min)
+    if (opt_max != None):
+        value = min(value, opt_max)
+    return value
+
+
+def degreesToRadians(deg):
+    return deg * (pi / 180)
+
+
+def radiansToDegrees(rad):
+    return rad / (pi / 180)
+
+
+
+class MercatorProjection:
+    def __init__(self):
+        self.pixelOrigin_ = (MERCATOR_RANGE / 2, MERCATOR_RANGE / 2)
+        self.pixelsPerLonDegree_ = MERCATOR_RANGE / 360
+        self.pixelsPerLonRadian_ = MERCATOR_RANGE / (2 * pi)
+
+    def fromLatLngToPoint(self, latLng, opt_point=None):
+        point =(0,0)
+        if opt_point is not None:
+            point = opt_point
+        origin = self.pixelOrigin_
+        point = list(point)
+        point[0] = origin[0] + latLng[1] * self.pixelsPerLonDegree_
+        # NOTE(appleton): Truncating to 0.9999 effectively limits latitude to
+        # 89.189.  This is about a third of a tile past the edge of the world tile.
+        siny = bound(sin(degreesToRadians(latLng[0])), -0.9999, 0.9999)
+        point[1] = origin[1] + 0.5 * log((1 + siny) / (1 - siny)) * -     self.pixelsPerLonRadian_
+        return point
+
+
+    def fromPointToLatLng(self, point):
+        origin = self.pixelOrigin_
+        lng = (point[0] - origin[0]) / self.pixelsPerLonDegree_
+        latRadians = (point[1] - origin[1]) / -self.pixelsPerLonRadian_
+        lat = radiansToDegrees(2 * atan(exp(latRadians)) - pi / 2)
+        return (lat, lng)
+
+
+# pixelCoordinate = worldCoordinate * pow(2,zoomLevel)
+
+    def getCorners(center, zoom, mapWidth, mapHeight):
+        scale = 2 ** zoom
+        proj = MercatorProjection()
+        centerPx = proj.fromLatLngToPoint(center)
+        SWPoint = (centerPx[0] - (mapWidth / 2) / scale, centerPx[1] + (mapHeight / 2) / scale)
+        SWLatLon = proj.fromPointToLatLng(SWPoint)
+        NEPoint = (centerPx[0] + (mapWidth / 2) / scale, centerPx[1] - (mapHeight / 2) / scale)
+        NELatLon = proj.fromPointToLatLng(NEPoint)
+        return SWLatLon[1], SWLatLon[0], NELatLon[1], NELatLon[0]
