@@ -232,30 +232,8 @@ Si bien se est\'an utilizando ya de forma habitual en sectores como el cine o la
 
 El objetivo de este trabajo final es poner en valor y asentar el uso de un tipo de UAV que no est\'a hoy muy representado en el \'ambito civil y que aventaja en varios aspectos al mas popularizado quadrac\'optero, se trata del avi\'on.
 
-\section{Tipos de aeronaves}
-\label{sec:tipos_aeronaves}
-
-Las aeronaves son la base sobre las que se asienta la inteligencia que permite que nuestro robot vuele de ahí que convenga dedicar unas líneas a entender la base de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC los llamados aerodinos.
-
-Existen principalmente 2 tipos de aeronaves si atendemos al modo en que generan su sustentaci\'on con sus alas, de ala fija y las de ala rotatoria.
-
-Dentro de la tipificaci\'on de ala fija tenemos aquellas aeronaves que tienes sus alas fijas al fuselaje.
-Seg\'un la definici\'on de la OACI, es un «Aerodino propulsado por motor, que debe su sustentaci\'on en vuelo principalmente a reacciones aerodin\'amicas ejercidas sobre superficies que permanecen fijas en determinadas condiciones de vuelo»
-Algunos ejemplos de aeronaves de ala fija son los aeroplanos, planeadores/veleros, aladeltas, parapentes, paramotores y ultraligeros.
-
-Este tipo de aerodinos los conocemos mas com\'unmente como avienes y tienen como principal ventaja de que la carga de aire que necesitan en sus alas puede ser producida de muchas formas distinta (los veleros no tienen ning\'un tipo de propulsi\'on). Esta carga es variable en funci\'on de la superficie alar del mismo y permite por tanto cargas mas grandes que si instal\'asemos el mismo propulsor en un ala rotatoria.
-Pongamos como ejemplo el A380 de Airbus, es el avi\'on de pasajeros mas grande del mundo y cuenta con 4 motores que producen un empuje de entre 70.000 y 80.000lbs, unas 32-36 toneladas de empuje cada uno generando por  tanto entre los 4 a m\'aximo rendimiento y optimas condiciones alrededor de 144 toneladas de empuje. Este avi\'on tiene un peso m\'aximo al despegue\footnote{Peso m\'aximo que es capaz de soportar un avi\'on en su maniobra de despegue}\ de entre 560 y 590 toneladas. Tenemos por tanto que necesitamos en este caso \nicefrac{1}{4} del peso total en empuje para despegar este avi\'on.
-Si hici\'esemos este mismo ejercicio con un aerodino de ala rotatoria como el Boing AH-64 o Apache con un peso m\'aximo al despegue de 9,5 toneladas necesitar\'iamos que la combinaci\'on que realizan empuje y palas superase esos 9,5 toneladas para siguiera levantar del suelo.
-Este tipo de aerodinos son por tanto mas eficientes, r\'apidos, con mayor carga de pago, mayor alcance debido a su menor consumo y mas estables.
-
-Dentro de la tipificaci\'on de ala rotatoria tenemos aquellas aeronaves que producen su sustentaci\'on con el movimiento (rotaci\'on) de sus alas. En este tipo de aeronaves las alas, tambi\'en llamadas "palas" en este tipo de aerodinos, giran en torno a un eje produciendo con este giro la sustentaci\'on necesaria para despegar del suelo.
-Algunos ejemplos de este tipo de aeronaves son los helic\'opteros, autogiros, convertibles o los ampliamente conocidos en robotica aerea los quadrac\'opteros.
-Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su versatilidad a la hora de realizar las maniobras de despegue y aterrizaje que pueden realizarse de forma vertical (VTOL\footnote{Vertical take off and landing }) adem\'as de la capacidad de realizar vuelo estacionario\footnote{Mantenerse est\'aticamente en un punto elevado} que le hacen imprescindible en escenarios poco accesibles o donde nos es posible aterrizar como el rescate mar\'itimo.
-
-
-\section{Origenes}
-\label{sec:origenes}
-
+\section{Robótica Aérea}
+\label{sec:robotica_aerea}
 
 Los or\'igenes de la rob\'otica aerea tienen origen militar y su avance ha estado intr\'insecamente ligado a este \'ambito durante todo el siglo XX.
 
@@ -266,30 +244,46 @@ Desde ese momento y hasta nuestros d\'ias se utilizan de forma habitual en el \'
 
 A los largo de los primeros años de este siglo debido al abaratamiento de los componentes electr\'onicos y a su minituarizaci\'on y potencia, la rob\'otica a\'erea se ha "desmilitarizado" y esta experimentado un enorme crecimiento en el \'ambito de las aplicaciones civiles.
 
-Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco mas de 200?.
+Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco mas de 200¤.
 
-Por ello se ha popularizado su uso en aplicaciones civiles como:
-Fotograf\'ia a\'erea. Para por ejemplo usos topogr\'aficos o educativos e incluso recaudatorios\footnote{El ministerio de hacienda español tiene varios drones para cotejar los datos catastrales con la vivienda f\'isica}
-Cine y televisi\'on. Hoy en d\'ia es raro encontrar una producci\'on que no haya hecho uso de ellos y es que permite la captura de tomas que de otra forma ser\'ian extremadamente complicadas o imposibles o bien factibles pero econ\'omicamente inviables.
-Vigilancia y protecci\'on. Las principales fuerzas y cuerpos de seguridad de una gran cantidad de pa\'ises los utilizan.
-
-Se esta experimentando su uso en otros \'ambitos como el log\'istico\footnote{Amazon plantea utilizarlo en algunas entregas}, sanitario o salvamento.
-
- 
-\section{Estado del arte}
-\label{sec:estado_arte}
+Por ello se ha popularizado su uso en aplicaciones civiles como fotograf\'ia, cine, televisión, topografía, educación,vigilancia e incluso con fines recaudatorios\footnote{El ministerio de hacienda español tiene varios drones para cotejar los datos catastrales con la vivienda f\'isica}
+Además se esta experimentando su uso en otros \'ambitos como el log\'istico\footnote{Amazon plantea utilizarlo en algunas entregas}, sanitario o salvamento.
 
 En la actualidad el uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que mas ha crecido su inversi\'on, y es que seg\'un la empresa analista especializada en dones Droneii con sede en Hamburgo en un estudio sobre la inversi\'on en el sector\footnote{\url{http://www.droneii.com/drone-investment-trends-2016}} en europa se invirti\'o en en proyectos dom\'esticos en 2016 cerca de 65 millones de d\'olares increment\'andose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
 Estas datos se asientan en un mercado cada vez mas extendido y con una gran proyecci\'on de crecimiento,la publicaci\'on BI Intelligence\footnote{\url{http://www.businessinsider.com/the-drones-report-research-use-cases-regulations-and-issues-2016-4}} espera que las ventas de drones alcancen los 12.000 millones en 2021.
 
 Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, educativo, forestal, ingenier\'ia civil y presencia en sectores como el sanitario, salvamento o seguridad y protecci\'on el nicho de mercado de los UAV esta lejos de su cima y se investigan dia a dia nuevos usos en sectores como la log\'istica.
 
+Las aeronaves son la base sobre las que se asienta la inteligencia que permite que nuestro robot vuele de ahí que convenga dedicar unas líneas a entender la base de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC los llamados aerodinos.
+
+Existen principalmente 2 tipos de aerodinos si atendemos al modo en que generan su sustentaci\'on con sus alas, de ala fija y las de ala rotatoria.
+
+Dentro de la tipificaci\'on de ala fija tenemos aquellas aerodinos que tienes sus alas fijas al fuselaje.
+Seg\'un la definici\'on de la OACI, es un «Aerodino propulsado por motor, que debe su sustentaci\'on en vuelo principalmente a reacciones aerodin\'amicas ejercidas sobre superficies que permanecen fijas en determinadas condiciones de vuelo»
+Algunos ejemplos de aerodinos de ala fija son los aeroplanos, planeadores/veleros, aladeltas, parapentes, paramotores y ultraligeros.
+
+Este tipo de aerodinos los conocemos mas com\'unmente como avienes y tienen como principal ventaja de que la carga de aire que necesitan en sus alas puede ser producida de muchas formas distinta (los veleros no tienen ning\'un tipo de propulsi\'on). Esta carga es variable en funci\'on de la superficie alar del mismo y permite por tanto cargas mas grandes que si instal\'asemos el mismo propulsor en un ala rotatoria.
+Pongamos como ejemplo el A380 de Airbus, es el avi\'on de pasajeros mas grande del mundo y cuenta con 4 motores que producen un empuje de entre 70.000 y 80.000lbs, unas 32-36 toneladas de empuje cada uno generando por  tanto entre los 4 a m\'aximo rendimiento y optimas condiciones alrededor de 144 toneladas de empuje. Este avi\'on tiene un peso m\'aximo al despegue\footnote{Peso m\'aximo que es capaz de soportar un avi\'on en su maniobra de despegue}\ de entre 560 y 590 toneladas. Tenemos por tanto que necesitamos en este caso \nicefrac{1}{4} del peso total en empuje para despegar este avi\'on.
+Si hici\'esemos este mismo ejercicio con un aerodino de ala rotatoria como el Boing AH-64 o Apache con un peso m\'aximo al despegue de 9,5 toneladas necesitar\'iamos que la combinaci\'on que realizan empuje y palas superase esos 9,5 toneladas para siguiera levantar del suelo.
+Este tipo de aerodinos son por tanto mas eficientes, r\'apidos, con mayor carga de pago, mayor alcance debido a su menor consumo y mas estables.
+
+Dentro de la tipificaci\'on de ala rotatoria tenemos aquellas aerodinos que producen su sustentaci\'on con el movimiento (rotaci\'on) de sus alas. En este tipo de aerodinos las alas, tambi\'en llamadas "palas" en este tipo de aerodinos, giran en torno a un eje produciendo con este giro la sustentaci\'on necesaria para despegar del suelo.
+Algunos ejemplos de este tipo de aerodinos son los helic\'opteros, autogiros, convertibles o los ampliamente conocidos en robotica aerea los quadrac\'opteros.
+Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su versatilidad a la hora de realizar las maniobras de despegue y aterrizaje que pueden realizarse de forma vertical (VTOL\footnote{Vertical take off and landing }) adem\'as de la capacidad de realizar vuelo estacionario\footnote{Mantenerse est\'aticamente en un punto elevado} que le hacen imprescindible en escenarios poco accesibles o donde nos es posible aterrizar como el rescate mar\'itimo.
+
+
+\section{Aplicaciones}
+\label{sec:aplicaciones
+
+\section{Robótica aérea en el laboratorio de Robótica de la URJC}
+\label{sec:lab_robotica}
+
 Dentro del laboratorio de rob\'otica de la Universidad Rey Juan Carlos cabe destacar los trabajos realizados para profundizar investigar y experimentar con ellos.
 Trabajos como el de Alberto Mart\'inez Florido quien desarrollo un driver para poder utilizar desde jderobot el ar-drone comercial, desarrollado por la empresa francesa parrot, y el software de control UAV Viewer. Y mas adelante Daniel Yague que realiz\'o un driver para utilizar el ar-drone de forma simulada en gazebo.
 O los trabajos de Jorge Cano quien construyo propio su drone utilizando como base un quadrac\'optero y dando soporte a jderobot de muchas de las intruciones de MAVLink.
 Son destacables también los trabajos que se están llevando a cabo por Diego Jimenez adaptando el interfaz SoloDrone de la empresa 3DR\footnote{Empresa norteamericana con sede en California especializada en robótica aérea. Se sitúa en 2017 como la 3ª empresa del sector} o Jorge Vela quien se encuentra desarrollando como realizar la maniobra de aterrizaje de forma automática.
 
-\section{Objetivos}
+\chapter{Objetivos}
 \label{sec:objetivos}
 
 Los objetivos de este PFC son arrojar luz sobre el uso de drones de ala fija poniendo en valor éstos en situaciones donde la carga de pago, la autonomía, velocidad o consumo desaconsejan el uso de los mas extendidos quadrac\'opteros.
