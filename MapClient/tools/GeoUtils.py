@@ -146,6 +146,7 @@ def retrieve_new_google_map(lat, lon, zoomInt, width, heigth):
     size = "size=" + str(width) + "x" + str(heigth)
     zoom = "zoom=" + str(zoomInt)
     type = "maptype=satellite"
+    sensor = "sensor=true"
     url = url + center + "&" + size + "&" + zoom + "&" + type
 
     print(url)

@@ -70,7 +70,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     pose3D = pose.getPose3D()
-    image = GeoUtils.retrieve_new_google_map(pose3D.x, pose3D.y, 16, IMAGE_WIDTH, IMAGE_HEIGTH)
+    image = GeoUtils.retrieve_new_map(pose3D.x, pose3D.y, H, IMAGE_WIDTH, IMAGE_HEIGTH)
 
     screen = MainGUI(image)
     screen.setFirstLocation(image)

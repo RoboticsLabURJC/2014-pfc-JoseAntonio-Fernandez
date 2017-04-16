@@ -33,6 +33,8 @@ class MainGUI(QWidget):
     def __init__(self, imageInput, parent=None):
         super(MainGUI, self).__init__(parent)
 
+        self.setFixedHeight(680)
+
         self.pose = None
         self.updGUI.connect(self.updateGUI)
         self.update_map.connect(self.update_position)
@@ -253,7 +255,7 @@ class MainGUI(QWidget):
             self.refreshImage()
 
         else:
-            self.imageMetadata = GeoUtils.retrieve_new_map(pose.x, pose.y, ZOOM, WIDTH, HEIGHT)
+            self.imageMetadata = GeoUtils.retrieve_new_google_map(pose.x, pose.y, ZOOM, WIDTH, HEIGHT)
             # Prepare the image to be showed
             image = self.imageMetadata["bytes"]
             cvRGBImg = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
