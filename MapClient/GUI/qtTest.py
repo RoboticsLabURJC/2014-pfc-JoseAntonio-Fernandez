@@ -20,8 +20,8 @@ from MapClient.ice import ice_init
 
 LEFT =1
 RADIUS = 0.5
-WIDTH = 600
-HEIGHT = 600
+WIDTH = 600.0
+HEIGHT = 600.0
 ZOOM = 16
 
 
@@ -191,7 +191,9 @@ class MainGUI(QWidget):
         x = event.pos().x()
         y = event.pos().y()
         lonMin, latMin, lonMax, latMax = self.imageMetadata['bbox']
+
         sizeX, sizeY = self.imageMetadata['size']
+
         lat, lon = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
         self.labelGP.setText("lat: " + str(lat) + ' lon: ' +str(lon) + " X: " + str(x)+ " Y: " + str(y))
 
@@ -205,6 +207,7 @@ class MainGUI(QWidget):
             lonMin, latMin, lonMax, latMax = self.imageMetadata['bbox']
             sizeX, sizeY = self.imageMetadata['size']
             lat, lon = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
+            print(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
             currentRowCount = self.table.rowCount()
             item = QTableWidgetItem()
             alt = QTableWidgetItem()

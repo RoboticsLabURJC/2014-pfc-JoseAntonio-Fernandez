@@ -58,12 +58,17 @@ def posImage2Coords(x, y, tamImageX, tamImageY, latMin, lonMin, latMax, lonMax):
     :return: lat, lon who correspond to the point in the image
     '''
 
-    distCoordX = round(latMax - latMin,7)
-    distCoordY = round(lonMax - lonMin, 7)
-
-    lat = latMax - (y * (distCoordY/tamImageY))
-    lon = lonMin + (x * (distCoordX / tamImageX))
-    return round(lat,7), round(lon,7)
+    distCoordX = round(latMax - latMin,10)
+    distCoordY = round(lonMax - lonMin, 10)
+    '''
+    lat = latMax - (x * (distCoordX/tamImageX))
+    #print("lat(" + str(lat) + ") =" + str(latMax) + " - (" + str(y) + " *  (" +str(distCoordY) + "/" + str(tamImageY) + "))" )
+    lon = lonMin + (y * (distCoordY/tamImageY))
+    '''
+    lat = latMin + ((tamImageY-y )* (distCoordY/tamImageY))
+    #print("lat(" + str(lat) + ") =" + str(latMax) + " - (" + str(y) + " *  (" +str(distCoordY) + "/" + str(tamImageY) + "))" )
+    lon = lonMax - ((tamImageX-x) * (distCoordX/tamImageX))
+    return round(lat, 10), round(lon, 10)
 
 def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY):
     '''

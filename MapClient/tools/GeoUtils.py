@@ -121,7 +121,7 @@ def retrieve_new_map(lat, lon, radius, width, heigth):
 
     wms = WebMapService('http://www.ign.es/wms-inspire/pnoa-ma', version='1.3.0')
     bbox = getBoundingBox(lat, lon, radius)
-
+    print(bbox)
     img = wms.getmap(layers=['OI.OrthoimageCoverage'],
                      styles=['default'],
                      srs='EPSG:4326',
@@ -143,17 +143,17 @@ def retrieve_new_google_map(lat, lon, zoomInt, width, heigth):
 
     url = "http://maps.googleapis.com/maps/api/staticmap?"
     center = "center=" + str(lat) + "," + str(lon)
-    size = "size=" + str(width) + "x" + str(heigth)
+    size = "size=" + str(int(width)) + "x" + str(int(heigth))
     zoom = "zoom=" + str(zoomInt)
     type = "maptype=satellite"
     sensor = "sensor=true"
-    url = url + center + "&" + size + "&" + zoom + "&" + type
+    scale = "scale=1"
+    url = url + center + "&" + size + "&" + zoom + "&" + type + "&" + sensor + "&" + scale
 
     print(url)
     result = urlopen(url=url)
     if result.getcode() != 200:
-        print
-        "errrrrr"
+        print ("Error | AUVCommander: Error retrieving new map from Google " + result.getcode())
         sys.exit(1)
 
     with open('images/tmp.png', 'wb') as f:
@@ -161,6 +161,7 @@ def retrieve_new_google_map(lat, lon, zoomInt, width, heigth):
 
     opencv_image = cv2.imread("images/tmp.png", 1)
     bbox = MercatorProjection.getCorners((lat, lon), zoomInt, width, heigth)
+    print(bbox)
     image = {'bytes': opencv_image, 'bbox': bbox, 'size': (width, heigth)}
     return image
 
