@@ -31,7 +31,7 @@
 \usepackage{float}  %% H para posicionar figuras
 \usepackage[nottoc, notlot, notlof, notindex]{tocbibind} %% Opciones de \'indice
 \usepackage{latexsym}  %% Logo LaTeX
-
+\usepackage{eurosym}
 
 \title{Memoria del Proyecto}
 \author{Nombre del autor}
@@ -232,7 +232,7 @@ Si bien se est\'an utilizando ya de forma habitual en sectores como el cine o la
 
 El objetivo de este trabajo final es poner en valor y asentar el uso de un tipo de UAV que no est\'a hoy muy representado en el \'ambito civil y que aventaja en varios aspectos al mas popularizado quadrac\'optero, se trata del avi\'on.
 
-\section{Robótica Aérea}
+\section{Rob\'otica A\'erea}
 \label{sec:robotica_aerea}
 
 Los or\'igenes de la rob\'otica aerea tienen origen militar y su avance ha estado intr\'insecamente ligado a este \'ambito durante todo el siglo XX.
@@ -244,17 +244,25 @@ Desde ese momento y hasta nuestros d\'ias se utilizan de forma habitual en el \'
 
 A los largo de los primeros años de este siglo debido al abaratamiento de los componentes electr\'onicos y a su minituarizaci\'on y potencia, la rob\'otica a\'erea se ha "desmilitarizado" y esta experimentado un enorme crecimiento en el \'ambito de las aplicaciones civiles.
 
-Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco mas de 200¤.
+Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco mas de 200 \euro.
 
-Por ello se ha popularizado su uso en aplicaciones civiles como fotograf\'ia, cine, televisión, topografía, educación,vigilancia e incluso con fines recaudatorios\footnote{El ministerio de hacienda español tiene varios drones para cotejar los datos catastrales con la vivienda f\'isica}
-Además se esta experimentando su uso en otros \'ambitos como el log\'istico\footnote{Amazon plantea utilizarlo en algunas entregas}, sanitario o salvamento.
+Por ello se ha popularizado su uso en aplicaciones civiles como fotograf\'ia, cine, televisi\'on, topograf\'ia, educaci\'on,vigilancia e incluso con fines recaudatorios\footnote{El ministerio de hacienda español tiene varios drones para cotejar los datos catastrales con la vivienda f\'isica}
+Adem\'as se esta experimentando su uso en otros \'ambitos como el log\'istico\footnote{Amazon plantea utilizarlo en algunas entregas}, sanitario o salvamento.
+
+
 
 En la actualidad el uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que mas ha crecido su inversi\'on, y es que seg\'un la empresa analista especializada en dones Droneii con sede en Hamburgo en un estudio sobre la inversi\'on en el sector\footnote{\url{http://www.droneii.com/drone-investment-trends-2016}} en europa se invirti\'o en en proyectos dom\'esticos en 2016 cerca de 65 millones de d\'olares increment\'andose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
 Estas datos se asientan en un mercado cada vez mas extendido y con una gran proyecci\'on de crecimiento,la publicaci\'on BI Intelligence\footnote{\url{http://www.businessinsider.com/the-drones-report-research-use-cases-regulations-and-issues-2016-4}} espera que las ventas de drones alcancen los 12.000 millones en 2021.
 
 Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, educativo, forestal, ingenier\'ia civil y presencia en sectores como el sanitario, salvamento o seguridad y protecci\'on el nicho de mercado de los UAV esta lejos de su cima y se investigan dia a dia nuevos usos en sectores como la log\'istica.
 
-Las aeronaves son la base sobre las que se asienta la inteligencia que permite que nuestro robot vuele de ahí que convenga dedicar unas líneas a entender la base de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC los llamados aerodinos.
+\section{Tipos de Aeronaves}
+\label{sec:tipos_aeronaves}
+
+
+Las aeronaves son la base sobre las que se asienta la inteligencia que permite que nuestro robot vuele de ah\'i que convenga dedicar unas l\'ineas a entender la base de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC los llamados aerodinos.
+
+Los aerodinos son aquellas aeronaves que vuelan a pesar de pesar mas que el aire, son capaces de generar sustentaci\'on por sus propios medios a diferencia de los aerostatos como por ejemplo los globos aerost\'aticos.
 
 Existen principalmente 2 tipos de aerodinos si atendemos al modo en que generan su sustentaci\'on con sus alas, de ala fija y las de ala rotatoria.
 
@@ -273,38 +281,65 @@ Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su v
 
 
 \section{Aplicaciones}
-\label{sec:aplicaciones
+\label{sec:aplicaciones}
 
-\section{Robótica aérea en el laboratorio de Robótica de la URJC}
+La rob\'otica a\'erea ha experimentado un crecimiento exponencial en los \'ultimos años, se ha popularizado su uso y se ha extendido la comercializaci\'on de drones.
+
+El sector donde m\'as r\'apida acogida ha tenido la rob\'otica a\'erea ha sido el sector audiovisual, se usa de forma habitual en cine, grabaci\'on de espect\'aculos en directo televisi\'on y fotograf\'ia. El porqu\'e de tal acogida se basa principalmente en 2 factores, los costes y la viabilidad t\'ecnica. 
+Los costes de realizar una toma a\'erea en una producci\'on antes pasaban por el alquiler de un helic\'optero, dependiendo de la toma, as\'i como del material y la contrataci\'on de los medios humanos a bordo para realizarlas pod\'ia ascender a entre 4000 y 6000 euros la hora. Hoy en d\'ia basta con un pequeño dronde entre 400 y 1800 euros\footnote{Precios aproximados extra\'idos de la empresa especializada World Aviation Helicopters \url{https://www.worldaviation.es/es/servicio-drones.aspx}} por jornada e incluir\'ian en el tramo mas elevado piloto y operador de c\'amara.
+Como se puede constatar f\'acilmente el ahorro incurrido no es para nada desdeñable y ofrece a pequeñas productoras acceder a \'este tipo de grabaciones que de otro modo ser\'ian privativas para \'estas.
+Aunque aspecto econ\'omico es especialmente importante para decantarse por el uso de este tipo de medios, existen en el mundo audiovisual trabajos que no hubiesen sido posibles hasta este momento gracias a los drones. Grabaciones en las que el riesgo humano y material que habr\'ia que asumir es tan alto que t\'an solo de \'este modo, debemos por tanto a los drones fotograf\'ias como \'esta que si bien nos se tomó como parte de ningún proyecto cinematográfico nos hace una idea de lo que la robótica aérea puede ofrecernos.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.40]{img/drone_volcan.jpg}
+  \caption{drongrabando en el interior de un crater}
+  \label{fig:drone_volcan}
+\end{figure}
+
+Otro sector que ha adaptado rápidamente el uso de éstas pequeñas aeronaves es el agropecuario donde se utiliza para medir la condiciones del terreno, con el fin de recoger información sobre la hidratación, la temperatura o el ritmo de crecimiento de los cultivos. Controlan el riego e incluso esparcen los pesticidas de manera eficiente siendo un arma eficaz contra las plagas, se utilizan incluso como espantapájaros.
+La aplicación de drones en este sector se remonta a 1983 cuando el Ministerio de Agricultura de Japón preocupado por el envejecimiento de su población rural encargó a Yamaha el desarrollo de una aeronave no tripulada capaz de realizar varias tareas de las anteriormente descritas a fin de atraer mas gente al medio rural. En 1990 se entregaron las primeras unidades del Yamaha RMAX y actualmente el 40\% de los arrozales japoneses cuentan con un dron sobrevolándolos.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.40]{img/Yamaha_crop_Sprayer_Drone_RMAX.jpg}
+  \caption{dronYamaha RMAX fumigando}
+  \label{fig:drone_yamaha}
+\end{figure}
+
+
+Son utilizados también por los servicios de rescate tras una catástrofe para evaluar los daños experimentados y ayudas a encontrar supervivientes entre los escombros. Algunos son capaces de enviar a los supervivientes paquetes de supervivencia con salvavidas, alimentos o agua mientras esperan su rescate\footnote{\url{http://www.elmundo.es/economia/2015/09/15/55f8239546163fc6598b45c3.html}}
+
+E incluso se han empezado a utilizar por el Ministerio de Hacienda de España con fines recaudatorios, sobrevuelan las viviendas o fincas localizando edificaciones no registradas por el catastro con el fin de regularizar su situación.
+
+El uso de drones es especialmente importante en el ámbito científico para por ejemplo tomar medidas de temperatura y CO2 en zonas peligrosas\footnote{\url{http://www.igepn.edu.ec/servicios/noticias/1395-medidas-de-temperatura-y-co2-de-las-fumarolas-muestreo-y-fotografias-con-drone}}, estudiar las nubes volcánicas\footnote{\url{https://www.nasa.gov/topics/earth/earthmonth/volcanic-plume-uavs.html}} o volar dentro de una grieta en un glaciar\footnote{\url{http://tn.com.ar/tecno/recomendados/increible-un-drone-volo-dentro-de-un-glaciar_648661}}. 
+
+El futuro del uso de los drones se está escribiendo en este mismo momento y es que poco a poco se investigan con nuevos usos o cómo mejorar los ya actuales. 
+
+Uno de los usos mas prometedores que esta siendo investigado es el uso de drones para la logística y paquetería, Amazon estudió en 2105 la viabilidad de utilizar drones para el reparto, especialmente en zonas de difícil acceso o bien alejadas de las zonas habituales de reparto. A finales de dicho año realizó pruebas de entregas en el reino unido y desarrollo un prototipo de alrededor de 25Kg de peso. El objetivo de Amazon, entregas de menos de 3Kg en 30 minutos y una toma de contacto en la entrega de paquetes en zonas pobladas.
+Esto a dado pie a las principales empresas de logística y paquetería a realizar sus propios desarrollos y constuir sus propios prototipos. 
+DHL ha realizado sendas pruebas con drones de cerca de 5 Kg para la entrega de paquetes de hasta 1,2 Kg.
+La empresa francesa GeoPost se ha con la empresa Atechsys, especializada en el desarrollo de sistemas autónomos para aeronaves no tripuladas, que ha dado como resultado un dron que cuenta con seis rotores eléctricos y estructura de fibra de carbono, con capacidad para llevar paquetes de un peso aproximado de hasta 2 kilos.
+UPS ha realizado un experimento en tampa con un octocóptero que despegaría desde el techo de la furgoneta de reparto para entregar los paquetes en zonas rurales y ahorrar en kilometraje el dron tendía una carga de pago de unos 4,5Kg.
+
+Otro de los estudios que mas llama la atención es el de Google y Facebook que compiten en llevar internet a zonas aisladas a través de una re de drones y satélites.
+Facebook presentó en su F8 en Marzo de 2015 su prototipo de dron a tal efecto, Aquila, fruto de la adquisición de la empresa especializa en robótica aérea Acenta. Este proyecto se enmarca dentro del plan internet.org y liderado Connectivity Lab\footnote{Un equipo formado por 50 expertos en aeronáutica y ciencia espacial} que pretende ofrecer internet con un coste reducido a todo aquel que no lo tenga.
+Google compró en 2015 la empresa Titan Aerospace dedicada al desarrollo de drones solares que son capaces de volar a gran altura con el fin de ampliar el Proyecto Loon que empezó su andadura al sur de Nueva Zelanda con el despliegue de globos aerostáticos a fin de ofrecer internet en zonas remotas del hemisferio sur. Con esta adquisición se pretende ampliar su radio de acción, su control y se prevee la posibilidad de la toma de fotografías aéreas como realimentación de su aplicación de mapas.
+ 
+\section{Rob\'otica a\'erea en el laboratorio de Rob\'otica de la URJC}
 \label{sec:lab_robotica}
 
 Dentro del laboratorio de rob\'otica de la Universidad Rey Juan Carlos cabe destacar los trabajos realizados para profundizar investigar y experimentar con ellos.
-Trabajos como el de Alberto Mart\'inez Florido quien desarrollo un driver para poder utilizar desde jderobot el ar-drone comercial, desarrollado por la empresa francesa parrot, y el software de control UAV Viewer. Y mas adelante Daniel Yague que realiz\'o un driver para utilizar el ar-drone de forma simulada en gazebo.
-O los trabajos de Jorge Cano quien construyo propio su drone utilizando como base un quadrac\'optero y dando soporte a jderobot de muchas de las intruciones de MAVLink.
-Son destacables también los trabajos que se están llevando a cabo por Diego Jimenez adaptando el interfaz SoloDrone de la empresa 3DR\footnote{Empresa norteamericana con sede en California especializada en robótica aérea. Se sitúa en 2017 como la 3ª empresa del sector} o Jorge Vela quien se encuentra desarrollando como realizar la maniobra de aterrizaje de forma automática.
+Trabajos como el de Alberto Mart\'inez Florido quien desarrollo un driver para poder utilizar desde jderobot el ar-droncomercial, desarrollado por la empresa francesa parrot, y el software de control UAV Viewer. Y mas adelante Daniel Yague que realiz\'o un driver para utilizar el ar-dronde forma simulada en gazebo.
+O los trabajos de Jorge Cano quien construyo propio su dronutilizando como base un quadrac\'optero y dando soporte a jderobot de muchas de las intruciones de MAVLink.
+Son destacables tambi\'en los trabajos que se est\'an llevando a cabo por Diego Jimenez adaptando el interfaz Solodronde la empresa 3DR\footnote{Empresa norteamericana con sede en California especializada en rob\'otica a\'erea. Se sit\'ua en 2017 como la 3ª empresa del sector} o Jorge Vela quien se encuentra desarrollando como realizar la maniobra de aterrizaje de forma autom\'atica.
 
 \chapter{Objetivos}
 \label{sec:objetivos}
 
-Los objetivos de este PFC son arrojar luz sobre el uso de drones de ala fija poniendo en valor éstos en situaciones donde la carga de pago, la autonomía, velocidad o consumo desaconsejan el uso de los mas extendidos quadrac\'opteros.
+Los objetivos de este PFC son arrojar luz sobre el uso de drones de ala fija poniendo en valor \'estos en situaciones donde la carga de pago, la autonom\'ia, velocidad o consumo desaconsejan el uso de los mas extendidos quadrac\'opteros.
 
-Para ésto hemos adaptado un avión de radio-control comercial añadiéndole toda la aviónica necesaria para que puede operar como drone. Hemos desarrollado un driver para jderobot del interfaz MAVLink que nos permite recoger actitud, velocidades lineales y angulares, altura, posición y otros parámetros como la batería restante. Nos permite también la actuación con el seguimiento de misiones que no sólo incluyen el paso por ciertos puntos de control o waypoints sino que también soporta las maniobras de despegue y aterrizaje en drones de ala fija.
-Hemos desarrollado también un software de control que da soporte a este tipo de actuación de mas alto nivel, las misiones.
-
-\section{Estructura de la memoria}
-\label{sec:estructura}
-
-En esta secci\'on se deber\'ia introducir la esctura de la memoria. As\'i:
-
-\begin{itemize}
-  \item En el primer cap\'itulo se hace una intro al proyecto.
-  
-  \item En el cap\'itulo~\ref{chap:objetivos} se muestran los objetivos del proyecto.
-  
-  \item A continuaci\'on se presenta el estado del arte.
-  
-  \item \ldots
-\end{itemize}
+Para \'esto hemos adaptado un avi\'on de radio-control comercial añadi\'endole toda la avi\'onica necesaria para que puede operar como drone. Hemos desarrollado un driver para jderobot del interfaz MAVLink que nos permite recoger actitud, velocidades lineales y angulares, altura, posici\'on y otros par\'ametros como la bater\'ia restante. Nos permite tambi\'en la actuaci\'on con el seguimiento de misiones que no s\'olo incluyen el paso por ciertos puntos de control o waypoints sino que tambi\'en soporta las maniobras de despegue y aterrizaje en drones de ala fija.
+Hemos desarrollado tambi\'en un software de control que da soporte a este tipo de actuaci\'on de mas alto nivel, las misiones.
 
 
 
@@ -324,54 +359,54 @@ Este PFC se apoya principalmente en 3 piezas hardware:
 
 
 \begin{itemize}
-\item El avión a radio-control. Para este desarrollo hemos elegido el avión Bix3 distribuido por la empresa china \url{www.hobbyking.com}, hemos elegido este modelo por ser un avión muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Para poder cargar con el equipo necesario nos ha sido necesario cambiar el motor, el variador y las baterías de serie por otras de mayor rendimiento que nos permiten volar con tanta carga de pago.
-\item El estabilizador/piloto automático, para este desarrollo hemos optado por un Ardupilot que trae incoorporados en su placa los giróscopos y acerelómetros para su estabilizaci\'on y que trae de serie un receptor GPS con brújula.
-\item Una raspberry PI3 que es nuestro ordenador de abordo y en el que instalaremos la infraestructura necesaria para que podamos dotarle de inteligencia. Hemos elegido éste dispositivo debido al compromiso peso/potencia que nos otorga así como porque se trata de un hardware muy asequible  y extendido.
+\item El avi\'on a radio-control. Para este desarrollo hemos elegido el avi\'on Bix3 distribuido por la empresa china \url{www.hobbyking.com}, hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Para poder cargar con el equipo necesario nos ha sido necesario cambiar el motor, el variador y las bater\'ias de serie por otras de mayor rendimiento que nos permiten volar con tanta carga de pago.
+\item El estabilizador/piloto autom\'atico, para este desarrollo hemos optado por un Ardupilot que trae incoorporados en su placa los gir\'oscopos y acerel\'ometros para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula.
+\item Una raspberry PI3 que es nuestro ordenador de abordo y en el que instalaremos la infraestructura necesaria para que podamos dotarle de inteligencia. Hemos elegido \'este dispositivo debido al compromiso peso/potencia que nos otorga as\'i como porque se trata de un hardware muy asequible  y extendido.
 \end{itemize} 
 
 \section{Software}
 label{sec:software}
 
-En este apartada trataremos las capas de software sobre las que nuestro desarrollo se apoya para lograr nuestros objetivos, vamos a agrupar las mismas en los dispositivos hardware sobre las que se apoyan o el las que estarán instaladas.
+En este apartada trataremos las capas de software sobre las que nuestro desarrollo se apoya para lograr nuestros objetivos, vamos a agrupar las mismas en los dispositivos hardware sobre las que se apoyan o el las que estar\'an instaladas.
 \begin{enumerate}
-\item Placa estabilizadora/piloto automático Ardupilot. Esta placa accede directamente a los actuadores del avión (los servos y el motor) a través de señales PWM. Esta y otras placas similares como Pikhawnk ofrecen un interfaz que se apoya en comandos llamado MAVLink. A través de comandos MAVLink se puede acceder a los sensores, a los que incoorpora la placa o a los que le añadamos a la misma como el GPS o sensores de velocidad del aire. A través de estos comandos se le puede también enviar ordenes al piloto automático quien las ejecutará.
-Un ejemplo de comando MAVLink sería:
+\item Placa estabilizadora/piloto autom\'atico Ardupilot. Esta placa accede directamente a los actuadores del avi\'on (los servos y el motor) a trav\'es de señales PWM. Esta y otras placas similares como Pikhawnk ofrecen un interfaz que se apoya en comandos llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, a los que incoorpora la placa o a los que le añadamos a la misma como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar ordenes al piloto autom\'atico quien las ejecutar\'a.
+Un ejemplo de comando MAVLink ser\'ia:
 {\small
 \begin{verbatim}
 type GpsStatus struct {
-    SatellitesVisible  uint8      Número de satélites visibles
-    SatellitePrn       [20]uint8  Id Global de cada satélite
-    SatelliteUsed      [20]uint8  Lista con el uso de cada satélite 0: no se utiliza, 1: en uso
-    SatelliteElevation [20]uint8  Elevación, nos da el ángulo sobre el horizonte de cada satélite 0: justo encima, 90: en el horizonte
-    SatelliteAzimuth   [20]uint8  Dirección del satélite, 0: 0 grados, 255: 360 grados.
-    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los satélites
+    SatellitesVisible  uint8      N\'umero de sat\'elites visibles
+    SatellitePrn       [20]uint8  Id Global de cada sat\'elite
+    SatelliteUsed      [20]uint8  Lista con el uso de cada sat\'elite 0: no se utiliza, 1: en uso
+    SatelliteElevation [20]uint8  Elevaci\'on, nos da el \'angulo sobre el horizonte de cada sat\'elite 0: justo encima, 90: en el horizonte
+    SatelliteAzimuth   [20]uint8  Direcci\'on del sat\'elite, 0: 0 grados, 255: 360 grados.
+    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los sat\'elites
 }
 \end{verbatim}}
-Este mensaje trae la información del enlace actual con el GPS y se envía periódicamente en ciclos que decidimos en parámetros de conexión con el dispositivo.
-Otro parámetro, esta vez vinculado a la actuación sería:
+Este mensaje trae la informaci\'on del enlace actual con el GPS y se env\'ia peri\'odicamente en ciclos que decidimos en par\'ametros de conexi\'on con el dispositivo.
+Otro par\'ametro, esta vez vinculado a la actuaci\'on ser\'ia:
 {\small
 \begin{verbatim}
 type MissionItem struct {
-    Param1          float32    parámetro variable en función del comando.
-    Param2          float32    parámetro variable en función del comando.
-    Param3          float32    parámetro variable en función del comando.
-    Param4          float32    parámetro variable en función del comando.
+    Param1          float32    par\'ametro variable en funci\'on del comando.
+    Param2          float32    par\'ametro variable en funci\'on del comando.
+    Param3          float32    par\'ametro variable en funci\'on del comando.
+    Param4          float32    par\'ametro variable en funci\'on del comando.
     X               float32    latitud
     Y               float32    longitud
     Z               float32    altitud
-    Seq             uint16     Número del item en la misión
-    Command         uint16     Tipo de comando de navegación por ejemplo 16 es un waypoint y 22 es despegue
+    Seq             uint16     N\'umero del item en la misi\'on
+    Command         uint16     Tipo de comando de navegaci\'on por ejemplo 16 es un waypoint y 22 es despegue
     TargetSystem    uint8      ID del sistema
     TargetComponent uint8      
     Frame           uint8      Sistema de coordenadas que se utiliza
-    Current         uint8      Misión actual no:0, si:1
-    Autocontinue    uint8      Autocontinuar al siguiente objeto de misión tras alcanzar el actual
+    Current         uint8      Misi\'on actual no:0, si:1
+    Autocontinue    uint8      Autocontinuar al siguiente objeto de misi\'on tras alcanzar el actual
 }
 \end{verbatim}}
 
-\item Raspberry PI. Dentro del dispositivo instalaremos la distribución linux Ubuntu en su versión 14.04 sobre la que instalaremos el framework Jderobot. Jderobot es un framework desarollado por el departamento de robótica de la Universidad rey Juan Carlos que nos expone un interfaz sobre el que recoger/servir datos recogidos por sensores así como de actuar sobre los actuadores del robot. Se apoya en el interfaz de ZeroC Ice\footnote{algo} para la distribución es estos interfaces aislando por tanto el lenguaje de programación utilizado pudiendo utilizar el lenguaje mas apropiado para cada tarea. Expone varios interfaces, pero en este capítulo explicaremos los que durante nuestro desarrollo hemos implementado:
+\item Raspberry PI. Dentro del dispositivo instalaremos la distribuci\'on linux Ubuntu en su versi\'on 14.04 sobre la que instalaremos el framework Jderobot. Jderobot es un framework desarollado por el departamento de rob\'otica de la Universidad rey Juan Carlos que nos expone un interfaz sobre el que recoger/servir datos recogidos por sensores as\'i como de actuar sobre los actuadores del robot. Se apoya en el interfaz de ZeroC Ice\footnote{algo} para la distribuci\'on es estos interfaces aislando por tanto el lenguaje de programaci\'on utilizado pudiendo utilizar el lenguaje mas apropiado para cada tarea. Expone varios interfaces, pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado:
 \begin{itemize}
-\item Pose3D. Utilizado para recoger los datos de actitud y la posición de la aeronave.
+\item Pose3D. Utilizado para recoger los datos de actitud y la posici\'on de la aeronave.
 \begin{verbatim}
 Pose3DData
   {
@@ -385,7 +420,7 @@ Pose3DData
 	float q3; /* qz */
   };
 \end{verbatim}
-\item Camera. Utilizado para servir imágenes.
+\item Camera. Utilizado para servir im\'agenes.
 
 \begin{verbatim}
   class CameraDescription
@@ -408,7 +443,7 @@ Pose3DData
   };
 
 \end{verbatim}
-\item NavData. Utilizado para servir datos secundarios de actuación como velocidades lineales o angulares o el estado de la batería.
+\item NavData. Utilizado para servir datos secundarios de actuaci\'on como velocidades lineales o angulares o el estado de la bater\'ia.
 \begin{verbatim}
 class NavdataData 
 {
@@ -416,14 +451,14 @@ class NavdataData
  int state; // landed, flying,...
  float batteryPercent; //The remaing charge of baterry %
 		
- //Magnetometer ArDrone 2.0
+ //Magnetometer Ardron2.0
  int magX;
  int magY;
  int magZ;
 		
- int pressure; //Barometer ArDrone 2.0
- int temp;     //Temperature sensor ArDrone 2.0
- float windSpeed; //Estimated wind speed ArDrone 2.0		
+ int pressure; //Barometer Ardron2.0
+ int temp;     //Temperature sensor Ardron2.0
+ float windSpeed; //Estimated wind speed Ardron2.0		
 		
  float windAngle;
  float windCompAngle;
@@ -439,7 +474,7 @@ class NavdataData
  float vy;
  float vz;
 		
- //linear accelerations (unit: g) ¿ArDrone 2.0?
+ //linear accelerations (unit: g) ¿Ardron2.0?
  float ax;
  float ay;
  float az;
@@ -458,7 +493,7 @@ class NavdataData
  float tm; //time stamp
 };
 \end{verbatim}
-\item Extra. Utilizado principalmente para las órdenes de despegue y aterrizaje.
+\item Extra. Utilizado principalmente para las \'ordenes de despegue y aterrizaje.
 \begin{verbatim}
     void land() - land drone. 
     void takeoff() - takeoff drone. 
@@ -470,38 +505,6 @@ class NavdataData
     void toggleCam() - switch camera. 
 \end{verbatim}
 
-\item Misión. Hemos desarrollado el interfaz misión para poder dar cabida a este tipo de actución que Jderobot no soportaba hasta el momento
-\begin{verbatim}
-class Pose3DData  //we consumes Pose3DData
-  {
-		float x;
-		float y;
-		float z;
-  	float h;
-		float q0;
-		float q1;
-		float q2;
-		float q3;
-  };
-
-  ["python:seq:list"] sequence<Pose3DData> PoseSequence;
-  /**
-  * Mission data information 
-  */
-  class MissionData
-  {
-    PoseSequence mission;
-  };
-
-  /** 
-   * Interface to the Mission.
-   */
-  interface Mission
-  {
-    idempotent MissionData getMissionData();
-    int setMissionData(MissionData data);
-  };
-\end{verbatim}
 \end{itemize}
 \end{enumerate}
 
@@ -656,4 +659,4 @@ las tecnolog\'ias utilizadas y dem\'as.
 % M\'as informaci\'on: 
 % http://texblog.org/2014/04/22/using-google-scholar-to-download-bibtex-citations/
 
-\end{document}
+\end{document}99999999
