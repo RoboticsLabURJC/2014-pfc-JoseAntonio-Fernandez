@@ -327,8 +327,13 @@ Trabajos como el de Alberto Mart\'inez Florido permitió controlar un AR-Drone re
 El driver ardrone\_server es capaz de conectar con el AR-DRONE a través de comandos AT tanto para obtener los datos de todos sus sensores como para controlarlo y expone todo ello en interfaces JdeRobot para su interconexión con todo el software disponible en el framework.
 El AR-Drone es un quadracóptero que en su versión actual cuenta con acelerómetros, giróscopos y magnetómetros en 3 ejes que determinan junto con su barómetro y un sensor de ultrasonidos la actitud del mismo, dispone además de 2 cámaras, una ventral y otra frontal y algunos modelos traen sensor GPS.
 Alberto desarrolló también el software de control UAV Viewer, esta aplicación cliente es capaz de controlar con cualquier drone y mostrar de forma visual su actitud, lo que captan sus cámaras.
-Este trabajo 
-[foto de UAVViewer]
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.30]{img/uavviewer.png}
+  \caption{Ventanas de UAV Viewer}
+  \label{fig:uavviewer}
+\end{figure}
 
 Daniel Yague desarrolló un driver para poder simular el comportamiento del AD-Dronde en el simulador Gazebo, de referencia en el departamento de robótica de la universidad y contenido dentro de la suite JdeRobot. Con este desarrollo se hizo posible desarrollar, probar anticipar los problemas que puedan surgir en el vuelo del dron antes siquiera de volarlo, de esta forma es posible el desarrollo de aplicaciones de navegación complejas sin disponer de el, sin arriesgarlo e independientemente de factores externos como la climatología.
 Para mostrar las posibilidades de desarrollo que se abrían desarrolló varias aplicaciones en el ar-drone simulado como un gato-ratón donde un dron teleoperado trataba de huir de otro que le seguía o una aplicación donde el dron seguía una carretera.
@@ -343,7 +348,7 @@ Además de la construcción del drone Jorge desarrolló el driver MAVLinkServer don
     \includegraphics[width=0.3\textwidth]{img/Compuandcaminstall.JPG}}
   \subfloat[camaras]{
    \label{f:Cámaras de abordo}
-    \includegraphics[width=0.3\textwidth]{img/FPVcamara.jpg}}
+    \includegraphics[width=0.535\textwidth]{img/FPVcamara.jpg}}
  \label{f:drone_cano}
 \end{figure}
 
@@ -376,61 +381,69 @@ Hemos desarrollado tambi\'en un software de control que da soporte a este tipo d
 \section{Hardware}
 \label{sec:hardware}
 
-Este PFC se apoya principalmente en 3 piezas hardware:
+Este PFC se apoya principalmente en 2 piezas hardware:
 
 
 \begin{itemize}
-\item El avi\'on a radio-control. Para este desarrollo hemos elegido el avi\'on Bix3 distribuido por la empresa china \url{www.hobbyking.com}, hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Para poder cargar con el equipo necesario nos ha sido necesario cambiar el motor, el variador y las bater\'ias de serie por otras de mayor rendimiento que nos permiten volar con tanta carga de pago.
-\item Una raspberry PI3 que es nuestro ordenador de abordo y en el que instalaremos la infraestructura necesaria para que podamos dotarle de inteligencia. Hemos elegido \'este dispositivo debido al compromiso peso/potencia que nos otorga as\'i como porque se trata de un hardware muy asequible  y extendido.
+\item El avi\'on a radio-control. Para este desarrollo hemos elegido el avi\'on Bix3 distribuido por la empresa china \url{www.hobbyking.com}, hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Otro aspecto importante de la constrcción del avión es que el propulsor no se encuentra en el frontal del avión lo que nos permitirá aprovechar al máximo esa zona pudiendo poner incluso una cámara frontal.
+
+\begin{figure}[h]
+\centering
+  \subfloat[Bix3]{
+   \label{f:Bix3}
+    \includegraphics[width=0.339\textwidth]{img/bix_general.jpg}}
+  \subfloat[Vista de cerca]{
+   \label{f:Vista de cerca}
+    \includegraphics[width=0.339\textwidth]{img/bix_prof.jpg}}
+  \subfloat[Bix3 en vuelo]{
+   \label{f:Bix en vuelo}
+    \includegraphics[width=0.3\textwidth]{img/bix_vuelo.png}}
+ \label{f:drone_cano}
+\end{figure}
+
+Para poder cargar con el equipo necesario nos ha sido necesario cambiar el motor, el variador y las bater\'ias de serie por otras de mayor rendimiento que nos permitan volar con tanta carga de pago.
+
+\item Una raspberry PI3 que es nuestro ordenador de abordo y en el que instalaremos la infraestructura necesaria para que podamos dotarle de inteligencia. Hemos elegido \'este dispositivo debido al compromiso peso/potencia que nos otorga as\'i como porque se trata de un hardware muy asequible  y extendido. Conectado a esta PI3 irá una PiCam que nos permitira ver lo que el avión vea.
 \end{itemize} 
 
 \section{Placa estabilizadora}
 \label{sec:estabilizadora}
 
-El estabilizador/piloto autom\'atico, para este desarrollo hemos optado por un Ardupilot que trae incoorporados en su placa los gir\'oscopos y acerel\'ometros para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula.
+El estabilizador/piloto autom\'atico, para este desarrollo hemos optado por un Ardupilot Mega\footnote{\url{http://www.ardupilot.co.uk/}}. Este dispositivo tiene como base una placa Arduino Mega a la que se le han incoorporado, gir\'oscopos y acerel\'ometros en 3 ejes para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula. El kit que adquirimos incluye también también 
+Esta placa ataca directamente sobre los actuadores del avi\'on (los servos y el motor) a trav\'es de señales PWM. 
 
-Placa estabilizadora/piloto autom\'atico Ardupilot. Esta placa accede directamente a los actuadores del avi\'on (los servos y el motor) a trav\'es de señales PWM. Esta y otras placas similares como Pikhawnk ofrecen un interfaz que se apoya en comandos llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, a los que incoorpora la placa o a los que le añadamos a la misma como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar ordenes al piloto autom\'atico quien las ejecutar\'a.
-Un ejemplo de comando MAVLink ser\'ia:
-{\small
-\begin{verbatim}
-type GpsStatus struct {
-    SatellitesVisible  uint8      N\'umero de sat\'elites visibles
-    SatellitePrn       [20]uint8  Id Global de cada sat\'elite
-    SatelliteUsed      [20]uint8  Lista con el uso de cada sat\'elite 0: no se utiliza, 1: en uso
-    SatelliteElevation [20]uint8  Elevaci\'on, nos da el \'angulo sobre el horizonte de cada sat\'elite 0: justo encima, 90: en el horizonte
-    SatelliteAzimuth   [20]uint8  Direcci\'on del sat\'elite, 0: 0 grados, 255: 360 grados.
-    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los sat\'elites
-}
-\end{verbatim}}
-Este mensaje trae la informaci\'on del enlace actual con el GPS y se env\'ia peri\'odicamente en ciclos que decidimos en par\'ametros de conexi\'on con el dispositivo.
-Otro par\'ametro, esta vez vinculado a la actuaci\'on ser\'ia:
-{\small
-\begin{verbatim}
-type MissionItem struct {
-    Param1          float32    par\'ametro variable en funci\'on del comando.
-    Param2          float32    par\'ametro variable en funci\'on del comando.
-    Param3          float32    par\'ametro variable en funci\'on del comando.
-    Param4          float32    par\'ametro variable en funci\'on del comando.
-    X               float32    latitud
-    Y               float32    longitud
-    Z               float32    altitud
-    Seq             uint16     N\'umero del item en la misi\'on
-    Command         uint16     Tipo de comando de navegaci\'on por ejemplo 16 es un waypoint y 22 es despegue
-    TargetSystem    uint8      ID del sistema
-    TargetComponent uint8      
-    Frame           uint8      Sistema de coordenadas que se utiliza
-    Current         uint8      Misi\'on actual no:0, si:1
-    Autocontinue    uint8      Autocontinuar al siguiente objeto de misi\'on tras alcanzar el actual
-}
-\end{verbatim}}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/ardupilot.jpg}
+  \caption{Placa estabilizadora ardupilot}
+  \label{fig:ardupilot}
+\end{figure}
+
+Esta placa ha de flashearse con un firmware en función del tipo de aeronave que utilicemos como base, Arducoopter para alas rotatorias o Ardupilot para alas fijas.
+
+Esta y otras placas similares como PixHawnk ofrecen un interfaz que se apoya en comandos llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, a los que incoorpora la placa o a los que le añadamos a la misma como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar ordenes al piloto autom\'atico quien las ejecutar\'a más adelante trataremos el protocolo MAVLink en profundidad. Cabe sin embargo destacar ya en este punto no sólo que algunos de los comando que mandemos tendran distinto comportamiento en la placa en funcion del firmware escogido sino que hay set de comandos que no pueden ser utilizados en uno o en otro.
 
 
 \section{JdeRobot}
-label{sec:jderobot}
+\label{sec:jderobot}
 
+JdeRobot es un framework desarrollado por el laboratorio de robótica de la Universidad Rey Juan Carlos, para el desarrollo de aplicaciones de robótica. Su última realease la 5.5 se liberó el 15 de Marzo de 2017 pudiendo ver los detalles de ésta en el github oficial\footnote{\url{https://github.com/JdeRobot/JdeRobot/wiki/JdeRobot-5.5.0}}.
+JdeRobot se compone de interfaces, drivers, utilidades y aplicaciones para el desarrollo de cualquier proyecto de robótica, se apoya en estos interfaces, algunos de ellos los veremos en profundidad a continuación, para interconectar entre sí todos los aplicativos del mismo y en Zeroc ICE para la comunicación entre ellos.
+Algunos de los driver mas importantes que contiene serían:
+\begin{enumerate}
+\item Cameraserver. Se trata de un driver para enviar imágenes y video a través del interfaz camera
+\item Gazeboserver. Driver desarrollado para conectar la herramienta de simulación Gazebo con JdeRobot y así poder simular los desarrollos.
+\item MAVLinkServer. Desarrollado para intercomunicar JdeRobot con placas que utilicen el protocolo de comunicación MAVLink.
+\item Ardrone\_server. Driver que conecta el Parrot Ar-Drone a JdeRobot. Este driver escrito en c++ transforma el set de comandos AT del done en interfaces y viceversa, implementa los interfaces camera, cmdvel, navdata, extra y pose3D y permite acceder a la actitud del drone así como a sus 2 cámaras. Sirve también datos como el nivel de la batería y permite grabar vídeo o tomar fotos.
+\end{enumerate}
+Algunas de las aplicaciones desarrolladas más importantes serían:
+\begin{enumerate}
+\item Cameraview. Se trata de una aplicación desarrollada en c++ capaz de recibir vídeo a través del interfaz camera.
+\item UAV viewer. Aplicación desarrollada como ground control de robots aéreos. Esta aplicación permite teleoperar cualquier tipo de robot aéreo y ofrece de forma visualmente atractiva datos como la actitud, velocidades lineales y angulares, ofrece también la posibilidad de visualizar videos servidos por el interfaz camera.
+\end{enumerate}
 \subsection{Interfaces}
 
-JdeRobot expone varios interfaces pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado:
+JdeRobot expone más de 30 interfaces pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado:
 \begin{itemize}
 \item Pose3D. Utilizado para recoger los datos de actitud y la posici\'on de la aeronave.
 \begin{verbatim}
@@ -533,25 +546,93 @@ class NavdataData
 
 \end{itemize}
 
-\subsection{Framework}
-
-\subsection{ArDrone Server}
-
-\subsection{UAV Viewer}
 
 \section{MAVLink}
 label{sec:mavlink}
 
+MAVLink siglas de Micro Air Vehicle Link es un protocolo de comunicación desarrollado para comunicar las placas estabilizadoras con piloto automático a los GCS o Ground control station, las aplicaciones desde las que se podía enviar misiones y seguir el cumplimiento de las mismas desde tierra.
+MAVLink se publicó en 2009 por Lorenz Meier, publicado bajo licencia LGPL aspira a convertirse en el protocolo standard en robótica aérea y se ha probado su funcionamiento en PX4, PIXHAWK, APM\footnote{Ardupilot Mega} y Parrot AR.Drone.
+
+Un ejemplo de comando MAVLink ser\'ia:
+{\small
+\begin{verbatim}
+type GpsStatus struct {
+    SatellitesVisible  uint8      Némero de satélites visibles
+    SatellitePrn       [20]uint8  Id Global de cada satélite
+    SatelliteUsed      [20]uint8  Lista con el uso de cada satélite
+    SatelliteElevation [20]uint8  Elevación, nos da el ángulo sobre el horizonte.
+    SatelliteAzimuth   [20]uint8  Dirección del satélite, 0: 0 grados, 255: 360 grados.
+    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los satélites
+}
+\end{verbatim}}
+Este mensaje trae la informaci\'on del enlace actual con el GPS y se env\'ia peri\'odicamente en ciclos que decidimos en par\'ametros de conexi\'on con el dispositivo.
+Otro par\'ametro, esta vez vinculado a la actuaci\'on ser\'ia:
+{\small
+\begin{verbatim}
+type MissionItem struct {
+    Param1          float32    parámetro variable en función del comando.
+    Param2          float32    parámetro variable en función del comando.
+    Param3          float32    parámetro variable en función del comando.
+    Param4          float32    parámetro variable en función del comando.
+    X               float32    latitud
+    Y               float32    longitud
+    Z               float32    altitud
+    Seq             uint16     Número del item en la misión
+    Command         uint16     Tipo de comando de navegación.
+    TargetSystem    uint8      ID del sistema
+    TargetComponent uint8      
+    Frame           uint8      Sistema de coordenadas que se utiliza.
+    Current         uint8      Misión actual no:0, si:1
+    Autocontinue    uint8      Autocontinuar al siguiente objeto de misión.
+}
+\end{verbatim}}
 
 
 \section{Python y PyQt5}
-label{sec:python}
+\label{sec:python}
+
+Python es un lenguaje de programación interpretado y multiplataforma que nació en los años 80 en los país bajos con idea de hacer más legible el código.
+El lenguaje de programación que inicialmente se utilizaba principalmente para scripting, ha sabido crecer con los años y con la publicación de Python3 en 2009 ha recibido el impulso que necesitaba para ser hoy en día el 5º leguaje mas utilizado por encima de PHP, .NET y Javascript que baja hasta el 8º puesto según TIOBE en un estudio de Abril de 2017.
+
+El porqué de utlizar Python, muy sencillo mantiene el carácter multiplataforma de JdeRobot, su código es simple y legible y trabaja muy bien con dependencias muy utilizadas en robótica como OpenCV.
+
+Para nuestro desarrollo hemos utilizado PyQt5 para desarrollar el interfaz gráfico. PyQt5 es un binding de Qt5 en forma de librería python que nos permite acceder a toda la funcionalidad de Qt5. Qt, propiedad de Nokia, es un conjunto de librerías escritas en C++ para interfaces gráficas.
+
 
 \section{Mapas y Geo-referenciación}
-label{sec:mapas}
+\label{sec:mapas}
+
+En nuestro desarrollo hemos tenido que trabajar con mapas geo-referenciados. Estos mapas, que tanto se han popularizado gracias a Google, son una herramienta imprescindible en robótica aérea si se quiere trabajar con largas distancias.
+
+Un mapa geo-referenciado es aquel en el que conocemos o podemos calcular la posición en el planeta que representa cada pixel del mismo.
+
+La forma mas común de obtener estos mapas geo-referenciado es a través de WMS, siglas de Web Map Service. Un WMS nos es mas que un servicio web que recibe como entrada unas coordenadas y una serie de parámetros y devuelve una imagen encuadrada en lo datos enviados.
+En nuestro desarrollo hemos utilizado 2 WMS el del IGN\footnote{Instrituto Geográfico Nacional de españa} y el de Google, a continuación vamos a desgranar un WMS, el de PMOA del IGN.
+
+El WMS PNOA requiere como entrada 4 atributos principales:
+\begin{enumerate}
+\item La posición GPS.
+\item Bounding Box. El Bounding box son 2 puntos que corresponden con la posición GPS que queremos que sea el extremo inferior izquierdo de nuestra imagen y con el punto superior derecho de la misma.
+\item Datum. El datum es el sistema de referencia o proyección de la tierra a utilizar. En el caso de IGN pese a que soporta varias utilizamos WGS84 que es el estandar.
+\item Tamaño de la imagen, el tamaño que queremos que tenga la imagen obtenida.
+\end{enumerate}
+El resultado un mapa del que conocemos el punto central, y los extremos inferior izquierdo y superior derecho y los pixeles que tiene a lo ancho y alto del mismo, un mapa geo-referenciado.
+
+
 
 \section{SITL}
-label{sec:SITL}
+\label{sec:SITL}
+
+SITL siglas de Software in the loop es un simulador que te permite a cualquier programa que envíe o reciba comandos MAVLink ejecutar pruebas sin necesidad de tener ninguna placa estabilizadora y evitando la pérdida de la aeronave en caso de error del mismo.
+SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto físico de la simulación y con MAVProxy para el envío de commandos y seguimento de misiones.
+Se trata de una compilación en C++ de ardupilot y se podría asemejar a nuestro gazeboserver.
+SITL puede conectarse también con Gazebo o a FlightGear para hacer mas completa su simulación mostrando el vuelo en un entorno desarrollado para pruebas con elementos del mundo real.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/SITL.jpg}
+  \caption{Arquitectura de SITL}
+  \label{fig:sitl}
+\end{figure}
 
 \cleardoublepage
 \chapter{Infraestructura Desarrollada}
