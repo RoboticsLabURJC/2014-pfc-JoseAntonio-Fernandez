@@ -474,37 +474,15 @@ class MainGUI(QWidget):
 
     def set_waypoints(self, wayPoints, current=True):
         n=0
-        if current:
-            pts = np.array(wayPoints, np.int32)
-            pts = pts.reshape((-1, 1, 2))
-            cv2.polylines(self.cvImageShadow, [pts], False, (250, 250, 250), thickness=1)
-            for waypoint in wayPoints:
-                n+=1
-                s = str(n)
-                cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
-                cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
-            self.refreshImage()
-        else:
-            bbox = self.imageMetadata["bbox"]
-            print(bbox)
-            imagesize = self.imageMetadata["size"]
-            list_wp = []
-            for i in range(len(wayPoints)):
-                geo_point = wayPoints[i]
-                point = ImageUtils.posCoords2Image(bbox[0], bbox[1], bbox[2], bbox[3],
-                                                   geo_point[0], geo_point[1], imagesize[0], imagesize[1])
-
-                list_wp.append(point)
-            pts = np.array(list_wp, np.int32)
-            pts = pts.reshape((-1, 1, 2))
-            cv2.polylines(self.cvImageShadow, [pts], False, (250, 250, 250), thickness=1)
-            for waypoint in wayPoints:
-                n += 1
-                s = str(n)
-                cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
-                cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1,
-                            [0, 0, 255], thickness=1)
-            self.refreshImage()
+        pts = np.array(wayPoints, np.int32)
+        pts = pts.reshape((-1, 1, 2))
+        cv2.polylines(self.cvImageShadow, [pts], False, (250, 250, 250), thickness=1)
+        for waypoint in wayPoints:
+            n+=1
+            s = str(n)
+            cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
+            cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
+        self.refreshImage()
 
     def refreshImage(self):
         height, width, channel = self.cvImage.shape
@@ -569,22 +547,7 @@ class MainGUI(QWidget):
             bbox = self.imageMetadata["bbox"]
             self.limit_warning = GeoUtils.is_position_close_border(lat, lon , bbox)
             if self.limit_warning:
-                poseI = self.get_initial_pose3D()
-                latI = poseI.x
-                lonI = poseI.y
-                if self.mapSourceIGN.isChecked():
-                    self.imageMetadata = GeoUtils.retrieve_new_map(latI, lonI, RADIUS *2, WIDTH, HEIGHT)
-                else:
-                    self.imageMetadata = GeoUtils.retrieve_new_google_map(latI, lonI, ZOOM -1, WIDTH, HEIGHT)
-                # Prepare the image to be showed
-                image = self.imageMetadata["bytes"]
-                cvRGBImg = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-                self.cvImage = cvRGBImg.copy()
-                self.cvImageShadow = cvRGBImg.copy()
-                self.im_to_show = cvRGBImg.copy()
-                self.set_waypoints(self.wayPoints_lat_lon, current=False)
-                self.refreshImage()
-
+                self.download_zoomed_map()
             else:
                 bbox = self.imageMetadata["bbox"]
                 imagesize = self.imageMetadata["size"]
@@ -592,7 +555,40 @@ class MainGUI(QWidget):
                 angle = self.sensorsWidget.quatToYaw(pose.q0, pose.q1, pose.q2, pose.q3)
                 self.setPosition(x, y, angle)
 
+    def download_zoomed_map(self):
+        poseI = self.get_initial_pose3D()
+        latI = poseI.x
+        lonI = poseI.y
+        if self.mapSourceIGN.isChecked():
+            self.imageMetadata = GeoUtils.retrieve_new_map(latI, lonI, RADIUS * 2, WIDTH, HEIGHT)
+        else:
+            self.imageMetadata = GeoUtils.retrieve_new_google_map(latI, lonI, ZOOM - 1, WIDTH, HEIGHT)
 
+
+        self.update_waypoints()
+
+        # Prepare the image to be showed
+        image = self.imageMetadata["bytes"]
+        cvRGBImg = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        self.cvImage = cvRGBImg.copy()
+        self.cvImageShadow = cvRGBImg.copy()
+        self.im_to_show = cvRGBImg.copy()
+        self.set_waypoints(self.wayPoints_lat_lon, current=False)
+        self.refreshImage()
+
+
+    def update_waypoints(self):
+        self.wayPoints = []
+        bbox = self.imageMetadata["bbox"]
+        print(bbox)
+        imagesize = self.imageMetadata["size"]
+        list_wp = []
+        for i in range(len(self.wayPoints_lat_lon)):
+            geo_point = self.wayPoints_lat_lon[i]
+            point = ImageUtils.posCoords2Image(bbox[0], bbox[1], bbox[2], bbox[3],
+                                               geo_point[0], geo_point[1], imagesize[0], imagesize[1])
+
+            self.wayPoints.append(point)
 
 class MyDialog(QDialog):
     def __init__(self, parent=None):
