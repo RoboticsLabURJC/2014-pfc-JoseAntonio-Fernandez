@@ -20,8 +20,8 @@ MIN_LON = radians(-180)
 MAX_LON = radians(180)
 H = 0.5
 MERCATOR_RANGE = 256.0
-EARTH_RADIUS_WGS84 = 6371  # kilometers based on the ellipsoid of the standard WGS84 used in the IGN EPSG:4326
-
+EARTH_RADIUS_WGS84 = 6371.0  # kilometers based on the ellipsoid of the standard WGS84 used in the IGN EPSG:4326
+DEAD_BAND = 10 # 10 percent
 
 
 def getBoundingBox(lat, lon, distance):
@@ -166,6 +166,16 @@ def retrieve_new_google_map(lat, lon, zoomInt, width, heigth):
     return image
 
 
+def is_position_close_border(lat, lon , bbox):
+    dif_lat = bbox[3] - bbox[1]
+    dif_lon = bbox[2] - bbox[0]
+    dead_lat = 10 * dif_lat / 100.0
+    dead_lon = 10 * dif_lon / 100.0
+    if(((lat < (bbox[1] + dead_lat)) or (lat > (bbox[3] - dead_lat))) or
+               ((lon < (bbox[0] + dead_lon)) or (lon > (bbox[2] - dead_lon)))):
+                return True
+    else:
+        return False
 
 def bound(value, opt_min, opt_max):
     if (opt_min != None):

@@ -42,6 +42,9 @@ class MainGUI(QWidget):
         #Set the image Metadata
         self.imageMetadata = imageInput
         self.wayPoints = []
+        self.wayPoints_lat_lon = []
+        self.limit_warning = False
+        self.initial_pose = jderobot.Pose3DData
 
         #Prepare the image to be showed
         image = self.imageMetadata["bytes"]
@@ -173,6 +176,7 @@ class MainGUI(QWidget):
         self.im_to_show = self.im_to_show
         self.refreshImage()
         self.wayPoints = []
+        self.wayPoints_lat_lon = []
         self.table.setRowCount(0)
         self.table.clearContents()
 
@@ -207,7 +211,8 @@ class MainGUI(QWidget):
             lonMin, latMin, lonMax, latMax = self.imageMetadata['bbox']
             sizeX, sizeY = self.imageMetadata['size']
             lat, lon = ImageUtils.posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
-            print(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)
+            point_ll = (lat, lon)
+            self.wayPoints_lat_lon.append(point)
             currentRowCount = self.table.rowCount()
             item = QTableWidgetItem()
             alt = QTableWidgetItem()
@@ -366,6 +371,12 @@ class MainGUI(QWidget):
     def getPose3D(self):
         return self.pose
 
+    def get_initial_pose3D(self):
+        return self.initial_pose
+
+    def set_initial_pose3D(self,pose):
+        self.initial_pose = pose
+
     def setPose3D(self, pose):
         self.pose = pose
 
@@ -393,20 +404,8 @@ class MainGUI(QWidget):
         Update the position of the UAV in the map and the attitude and camera image in it's own widgets
         :return:
         '''
-
-        '''
-        if not (self.pose.getPose3D() == None):
-            data = self.pose.getPose3D()
-            img_to_show = ImageUtils.refreshPosition(self.image2show,data.x, data.y)
-            # TODO ver si se puede hacer mejor
-            pixmap = QPixmap()
-            pixmap.loadFromData(img_to_show)
-            self.imageLabel.setPixmap(pixmap)
-        '''
         # HARDCODED
         self.updateImage()
-
-
         self.cameraWidget.imageUpdate.emit()
         self.sensorsWidget.sensorsUpdate.emit()
 
@@ -473,18 +472,39 @@ class MainGUI(QWidget):
         self.refreshImage()
 
 
-    def set_waypoints(self, wayPoints):
+    def set_waypoints(self, wayPoints, current=True):
         n=0
-        pts = np.array(wayPoints, np.int32)
-        pts = pts.reshape((-1, 1, 2))
-        cv2.polylines(self.cvImageShadow, [pts], False, (250, 250, 250), thickness=1)
-        for waypoint in wayPoints:
-            n+=1
-            s = str(n)
-            cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
-            cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
-        self.refreshImage()
+        if current:
+            pts = np.array(wayPoints, np.int32)
+            pts = pts.reshape((-1, 1, 2))
+            cv2.polylines(self.cvImageShadow, [pts], False, (250, 250, 250), thickness=1)
+            for waypoint in wayPoints:
+                n+=1
+                s = str(n)
+                cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
+                cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
+            self.refreshImage()
+        else:
+            bbox = self.imageMetadata["bbox"]
+            print(bbox)
+            imagesize = self.imageMetadata["size"]
+            list_wp = []
+            for i in range(len(wayPoints)):
+                geo_point = wayPoints[i]
+                point = ImageUtils.posCoords2Image(bbox[0], bbox[1], bbox[2], bbox[3],
+                                                   geo_point[0], geo_point[1], imagesize[0], imagesize[1])
 
+                list_wp.append(point)
+            pts = np.array(list_wp, np.int32)
+            pts = pts.reshape((-1, 1, 2))
+            cv2.polylines(self.cvImageShadow, [pts], False, (250, 250, 250), thickness=1)
+            for waypoint in wayPoints:
+                n += 1
+                s = str(n)
+                cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
+                cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1,
+                            [0, 0, 255], thickness=1)
+            self.refreshImage()
 
     def refreshImage(self):
         height, width, channel = self.cvImage.shape
@@ -547,10 +567,30 @@ class MainGUI(QWidget):
             lat = pose.x
             lon = pose.y
             bbox = self.imageMetadata["bbox"]
-            imagesize = self.imageMetadata["size"]
-            x, y = ImageUtils.posCoords2Image(bbox[0], bbox[1], bbox[2], bbox[3], lat, lon, imagesize[0], imagesize[1])
-            angle = self.sensorsWidget.quatToYaw(pose.q0, pose.q1, pose.q2, pose.q3)
-            self.setPosition(x, y, angle)
+            self.limit_warning = GeoUtils.is_position_close_border(lat, lon , bbox)
+            if self.limit_warning:
+                poseI = self.get_initial_pose3D()
+                latI = poseI.x
+                lonI = poseI.y
+                if self.mapSourceIGN.isChecked():
+                    self.imageMetadata = GeoUtils.retrieve_new_map(latI, lonI, RADIUS *2, WIDTH, HEIGHT)
+                else:
+                    self.imageMetadata = GeoUtils.retrieve_new_google_map(latI, lonI, ZOOM -1, WIDTH, HEIGHT)
+                # Prepare the image to be showed
+                image = self.imageMetadata["bytes"]
+                cvRGBImg = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                self.cvImage = cvRGBImg.copy()
+                self.cvImageShadow = cvRGBImg.copy()
+                self.im_to_show = cvRGBImg.copy()
+                self.set_waypoints(self.wayPoints_lat_lon, current=False)
+                self.refreshImage()
+
+            else:
+                bbox = self.imageMetadata["bbox"]
+                imagesize = self.imageMetadata["size"]
+                x, y = ImageUtils.posCoords2Image(bbox[0], bbox[1], bbox[2], bbox[3], lat, lon, imagesize[0], imagesize[1])
+                angle = self.sensorsWidget.quatToYaw(pose.q0, pose.q1, pose.q2, pose.q3)
+                self.setPosition(x, y, angle)
 
 
 

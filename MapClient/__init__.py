@@ -76,6 +76,7 @@ if __name__ == '__main__':
     screen.setFirstLocation(image)
     screen.setCamera(camera)
     screen.setPose3D(pose)
+    screen.set_initial_pose3D(pose3D)
     screen.setNavData(navdata)
     screen.setCMDVel(cmdvel) # Not used yet
     screen.setExtra(extra)
