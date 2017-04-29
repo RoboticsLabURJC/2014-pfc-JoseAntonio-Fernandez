@@ -248,9 +248,59 @@ A los largo de los primeros años de este siglo debido al abaratamiento de los co
 Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco más de 200 \euro.
 
 En la actualidad el uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que más ha crecido su inversi\'on, y es que seg\'un la empresa analista especializada en dones Droneii con sede en Hamburgo en un estudio sobre la inversi\'on en el sector\footnote{\url{http://www.droneii.com/drone-investment-trends-2016}} en europa se invirti\'o en en proyectos dom\'esticos en 2016 cerca de 65 millones de d\'olares increment\'andose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
-Estas datos se asientan en un mercado cada vez más extendido y con una gran proyecci\'on de crecimiento,la publicaci\'on BI Intelligence\footnote{\url{http://www.businessinsider.com/the-drones-report-research-use-cases-regulations-and-issues-2016-4}} espera que las ventas de drones alcancen los 12.000 millones en 2021.
 
-Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, forestal, ingenier\'ia civil y presencia en sectores como el de salvamento o seguridad y protecci\'on el nicho de mercado de los UAV esta lejos de su cima y se investigan dia a dia nuevos usos en sectores como el de la log\'istica o las telecomunicaciones como veremos mas adelante..
+Estas datos se asientan en un mercado cada vez más extendido y con una gran proyecci\'on de crecimiento,la publicaci\'on BI Intelligence\footnote{\url{http://www.businessinsider.com/the-drones-report-research-use-cases-regulations-and-issues-2016-4}} espera que las ventas de drones alcancen los 12.000 millones en 2021.
+En estos momentos tenemos 
+
+La enorme aceptación y expansión de los drones se ha producido de un modo tan explosivo, que en ciertos aspectos de la sociedad no se ha avanzado lo suficiente como para que su utilización se haga de forma segura.
+
+\begin{itemize}
+\item Problemas de seguridad. Los drones y en especial los drones de gran envergadura más allá de su uso profesional o lúdico pueden ser muy peligrosos. Sus palas giran a mas de 1000RPM y pueden producir cortes o amputaciones o producir daños personales y/o materiales en el caso de una pérdida de control del mismo o una caída. Esto se hizo patente cuando durante la filmación de un concierto del cantante Enrique Iglesias en Tijuana (México) éste agarró el drone que le grababa de forma espontánea y ésto le produjo severos cortes en su mano derecha que hizo que sangrase profusamente.
+
+También pueden utilizarse con fines terroristas como se sospechó en Francia cuando se detectaron en octubre de 2014 volando en las proximidades de varias centrales nucleares. Además, en la noche del 19 al 20 de enero de 2015 otro 'dron' sobrevoló el Palacio del Elíseo, donde tiene su residencia el presidente de la república Francesa, Françoise Hollande. Y a ellos hay que sumar los 19 'drones' que han sido avistados sobrevolando 17 centrales nucleares francesas de octubre a febrero de 2015.
+De hecho en el ámbito militar los drones son parte importante del despliegue militar del IS (Estado islamico) quien con vídeo e infografías como la siguiente se jactan de sus "logros' con ellas en las redes sociales. Su bajo coste y su versatilidad producen que proliferen muchos drones construidos por sus militantes para la guerra.
+
+
+\begin{figure}[h]
+\centering
+  \subfloat[Infograf\'ia publicada por el IS en twitter]{
+   \label{f:infografia_is}
+    \includegraphics[width=0.4\textwidth]{img/IS_drones.jpg}}
+  \subfloat[Dron casero del IS]{
+   \label{f:diy_is_drone}
+    \includegraphics[width=0.475\textwidth]{img/IS_drones_DIY.jpg}}
+ \label{f:is}
+\end{figure}
+
+A estos problemas de seguridad hay que unir el problema del Hacking, muchos de los más extendidos drones comerciales no tienen protección alguna contra el ataque de un ciberdelincuente. Por poner un ejemplo el modo en el que el Parrot AR-Drone se empareja con el móvil es una conexión plana sin contraseña, haciendo posible conectarse a el por un tercero con unas pocas líneas de código.
+\begin{itemize}
+\item Guía sencilla de hacking del AR-Drone 2.0 - http://www.xdrones.es/guia-para-hackear-el-ar-drone-2-0/
+\item Cómo atacar el AR-Drone 2.0 con nodecopter - http://www.nodecopter.com/hack
+\item Suit para hackear drones a través de WIFI - https://github.com/samyk/skyjack
+\end{itemize}
+Si bien es relativamente simple su hackeo el daño que pueda producirse con ellos es mas bien leve o muy moderado, pero existen técnicas como el GPS Spoofing que pueden "secuestrar'cualquier drone que se guíe por GPS como ocurrió en Irán en 2011 dónde hackers iraníes se hicieron con el control de un drone militar americano Lockheed Martin RQ-170 Sentinel\footnote{\url{https://en.wikipedia.org/wiki/Iran\%E2\%80\%93U.S._RQ-170_incident}} mediante ésta técnica que engaña a la antena GPS del UAV haciéndole pensar que se encuentra en otro lugar. Si bien para éste ataque se necesitó un hardware caro que haría el ataque prohibitivo, hoy es posible realizarlo por unos pocos cientos de euros con hackrf o braderf como se demostró por la compañía china Qihoo 360 en las conferencias de Haking DEFCON de 2015.\footnote{\url{http://www.rtl-sdr.com/spoofing-gps-locations-with-low-cost-tx-sdrs/}}
+
+\item Problemas regulatorios. Otro problema importante que apenas se está empezando a abordar es el regulatorio. Con el fin de minimizar el riesgo para las personas se está llevando a cabo una regulación del sector en todo el mundo. En España por ejemplo hasta abril de 2014, volar un dron para uso civil estaba absolutamente prohibido. La no regulación no indicaba que se pudiese volar, indicaba más bien todo lo contrario. Otro tema es el desconocimiento total por parte de las fuerzas del orden del Estado, donde una persona volase un drone y nadie le dijese nada.
+En éste marco regulatorio no se puede por ejemplo, volar un dron en núcleos urbanos, sólo debe hacerse en zonas previstas a tal efecto. Tampoco es posible volar un dron de más de 2Kg más allá de donde puedas verlo (500m), y es que antes era muy usual ponerle una cámara y volar varios kilómetros con él.
+
+Para hacernos una idea clara del marco regulatorio actual para su uso no profesional basta con fijarnos en la siguiente infografía publicada por la agencia EFE.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/infografia_legislacion_drones.jpg}
+  \caption{Infografía de la Agencia EFE con la regulación}
+  \label{fig:infografia_efe}
+\end{figure}
+
+Para poder utilizar los drones con fines profesionales la ley es aún más restrictiva la Agencia Española de Seguridad Aérea AESA exige el registro de las aeronaves civiles pilotadas por control remoto cuya masa máxima al despegue exceda de 25 kg, que deberán estar inscritas en el Registro de matrícula de aeronaves y disponer de certificado de aeronavegabilidad.
+Para drones de menor peso, el piloto deberá presentar ante la Agencia Estatal de Seguridad Aérea una comunicación previa y declaración responsable) con una antelación mínima de cinco días al día del inicio de la operación y éste ha de estar habilitado como operdor de drones.
+
+La ley completa se puede consultar el BOE\footnote{\url{ http://www.seguridadaerea.gob.es/media/4243006/rdl_8_2014_4julio.pdf}}
+
+\end{itemize}
+
+Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, forestal, ingenier\'ia civil y presencia en sectores como el de salvamento o seguridad y protecci\'on el nicho de mercado de los UAV esta lejos de su cima y se investigan dia a dia nuevos usos en sectores como el de la log\'istica o las telecomunicaciones como veremos mas adelante suponiendo un reto constante para investigadores, desarrolladores, ingenieros, inversores y entidades regulatorias.
+
+
 
 \section{Tipos de Aeronaves}
 \label{sec:tipos_aeronaves}
@@ -770,3 +820,4 @@ las tecnolog\'ias utilizadas y dem\'as.
 % http://texblog.org/2014/04/22/using-google-scholar-to-download-bibtex-citations/
 
 \end{document}
+\grid
