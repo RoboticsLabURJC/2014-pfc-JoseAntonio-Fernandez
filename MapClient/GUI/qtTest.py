@@ -594,7 +594,7 @@ class MyDialog(QDialog):
     def __init__(self, parent=None):
         super(MyDialog, self).__init__(parent)
 
-        self.buttonBox = QDialogButtonBox(self)
+        self.buttonBox = QDialogButtonBox(se                                               clf)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
 
