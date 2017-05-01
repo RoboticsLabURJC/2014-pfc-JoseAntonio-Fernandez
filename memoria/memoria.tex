@@ -34,6 +34,70 @@
 \usepackage{eurosym}
 \usepackage{subfig}
 
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\scriptsize,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\scriptsize\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\scriptsize\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=Ltb,                         % Any extra options here
+showstringspaces=false            % 
+framerule=0pt,
+aboveskip=0.5cm,
+framextopmargin=3pt,
+framexbottommargin=3pt,
+framexleftmargin=0.4cm,
+framesep=0pt,
+rulesep=.4pt,
+backgroundcolor=\color{gray97},
+rulesepcolor=\color{black},
+commentstyle=\color{gray45},
+numbers=left,
+numbersep=15pt,
+numberstyle=\scriptsize,
+numberfirstline = false,
+breaklines=true,
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+
+
+
 \title{Rob\'otica aérea con aviones}
 \author{José Antonio Fernández Casillas}
 
@@ -272,6 +336,7 @@ De hecho en el ámbito militar los drones son parte importante del despliegue mil
     \includegraphics[width=0.475\textwidth]{img/IS_drones_DIY.jpg}}
  \label{f:is}
 \end{figure}
+Algunas empresas del sector se han hecho eco de estos ataques y han deshabilitado sus drones en zonas de conflicto para evitar que se utilicen como armas de guerra como es el caso de la empresa china DJI líder en el sector.\footnote{\url{http://clipset.20minutos.es/dji-bloquea-drones-guerra-irak-siria/}}
 
 A estos problemas de seguridad hay que unir el problema del Hacking, muchos de los más extendidos drones comerciales no tienen protecci\'on alguna contra el ataque de un ciberdelincuente. Por poner un ejemplo el modo en el que el Parrot AR-Drone se empareja con el m\'ovil es una conexi\'on plana sin contraseña, haciendo posible conectarse a el por un tercero con unas pocas líneas de c\'odigo.
 \begin{itemize}
@@ -657,6 +722,7 @@ Algunas de las aplicaciones desarrolladas más importantes serían:
 JdeRobot expone más de 30 interfaces pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado:
 \begin{itemize}
 \item Pose3D. Utilizado para recoger los datos de actitud y la posici\'on de la aeronave.
+{\scriptsize
 \begin{verbatim}
 Pose3DData
   {
@@ -669,9 +735,9 @@ Pose3DData
 	float q2; /* qy */
 	float q3; /* qz */
   };
-\end{verbatim}
+\end{verbatim}}
 \item Camera. Utilizado para servir im\'agenes.
-
+{\scriptsize
 \begin{verbatim}
   class CameraDescription
   {
@@ -692,8 +758,9 @@ Pose3DData
     float roll;
   };
 
-\end{verbatim}
+\end{verbatim}}
 \item NavData. Utilizado para servir datos secundarios de actuaci\'on como velocidades lineales o angulares o el estado de la bater\'ia.
+{\scriptsize
 \begin{verbatim}
 class NavdataData 
 {
@@ -742,8 +809,9 @@ class NavdataData
 
  float tm; //time stamp
 };
-\end{verbatim}
+\end{verbatim}}
 \item Extra. Utilizado principalmente para las \'ordenes de despegue y aterrizaje.
+{\scriptsize
 \begin{verbatim}
     void land() - land drone. 
     void takeoff() - takeoff drone. 
@@ -753,19 +821,19 @@ class NavdataData
     void flightAnimation(int type, float duration) 
     void flatTrim() 
     void toggleCam() - switch camera. 
-\end{verbatim}
+\end{verbatim}}
 
 \end{itemize}
 
 
 \section{MAVLink}
-label{sec:mavlink}
+\label{sec:mavlink}
 
 MAVLink siglas de Micro Air Vehicle Link es un protocolo de comunicaci\'on desarrollado para comunicar las placas estabilizadoras con piloto automático a los GCS o Ground control station, las aplicaciones desde las que se podía enviar misiones y seguir el cumplimiento de las mismas desde tierra.
 MAVLink se public\'o en 2009 por Lorenz Meier, publicado bajo licencia LGPL aspira a convertirse en el protocolo standard en rob\'otica aérea y se ha probado su funcionamiento en PX4, PIXHAWK, APM\footnote{Ardupilot Mega} y Parrot AR.Drone.
 
 Un ejemplo de comando MAVLink ser\'ia:
-{\small
+{\scriptsize
 \begin{verbatim}
 type GpsStatus struct {
     SatellitesVisible  uint8      Némero de satélites visibles
@@ -778,7 +846,7 @@ type GpsStatus struct {
 \end{verbatim}}
 Este mensaje trae la informaci\'on del enlace actual con el GPS y se env\'ia peri\'odicamente en ciclos que decidimos en par\'ametros de conexi\'on con el dispositivo.
 Otro par\'ametro, esta vez vinculado a la actuaci\'on ser\'ia:
-{\small
+{\scriptsize
 \begin{verbatim}
 type MissionItem struct {
     Param1          float32    parámetro variable en funci\'on del comando.
@@ -862,14 +930,294 @@ De un análisis exhaustivo definimos los requerimientos hablados en el capítulo 2
 Para abordar este desarrollo vamos a definir 3 capas que pasamos a describir desde la más cercana al hardware hasta la más cercana a JdeRobot:
 \begin{itemize}
 \item Capa de comunicación con el dispositivo APM. Esta capa se encargará de la comunicación del driver con el dispositivo APM a través del protocolo de comunicación MavLink.
-\item Capa de negocio e interpretación. En esta capa el driver transformará los comandos MavLink y los interfaces JdeRobot interpretando la información en ambos sentidos y haciendo ésta legible en ambos sentidos.
+\item Capa de negocio e interpretación. En esta capa el driver transformará los comandos MavLink y los interfaces JdeRobot interpretando la información de ambas capas y haciendo ésta legible en ambos sentidos.
 \item Capa de comunicación con JdeRobot. En ésta capa se expondrán los servicios Ice necesarios para la recepción y envío de los interfaces Ice que implementa.
 \end{itemize}
+
 \section{Interfaces} 
 \label{sec:interfaces_apms}
 
+\subsection{Comunicación APM}
+En la capa de comunicación con el APM dónde recibimos comandos MAVLink vamos a consumir y enviar los siguientes mensajes:
+\begin{itemize}
+\item RAW\_IMU donde recibiremos la información de los acelerómetros giróscopos y magnetrómetros.
+{\scriptsize
+\begin{verbatim}
+<message id="27" name="RAW_IMU">
+  <description>The RAW IMU readings for the usual 9DOF sensor setup. 
+    This message should alwaysCcontain the true raw values without any
+    scaling to allow data capture and system debugging.</description>
+  <field type="uint64_t" name="time_usec" units="us">Timestamp 
+    (microseconds since UNIX epoch or microseconds since system boot)</field>
+  <field type="int16_t" name="xacc">X acceleration (raw)</field>
+  <field type="int16_t" name="yacc">Y acceleration (raw)</field>
+  <field type="int16_t" name="zacc">Z acceleration (raw)</field>
+  <field type="int16_t" name="xgyro">Angular speed around X axis (raw)</field>
+  <field type="int16_t" name="ygyro">Angular speed around Y axis (raw)</field>
+  <field type="int16_t" name="zgyro">Angular speed around Z axis (raw)</field>
+  <field type="int16_t" name="xmag">X Magnetic field (raw)</field>
+  <field type="int16_t" name="ymag">Y Magnetic field (raw)</field>
+  <field type="int16_t" name="zmag">Z Magnetic field (raw)</field>
+</message>
+\end{verbatim}}
+Un mensaje recibido sería: 
+RAW\_IMU \{time\_usec : 480794000, xacc : 244, yacc : 0, zacc : -968, xgyro : 1, ygyro : 1, zgyro : 1, xmag : 335, ymag : 60, zmag : -452\}
+\item SYS\_STATUS donde obtendremos el nivel de batería.
+{\scriptsize
+\begin{verbatim}
+<message id="1" name="SYS_STATUS">
+  <description>The general system state. If the system is following the MAVLink standard, 
+    the system state is mainly defined by three orthogonal states/modes: The system mode, 
+    which is either LOCKED (motors shut down and locked), MANUAL (system under RC control), 
+    GUIDED (system with autonomous position control, position setpoint controlled manually) 
+    or AUTO (system guided by path/waypoint planner). 
+    The NAV_MODE defined the current flight state: 
+      LIFTOFF (often an open-loop maneuver), 
+      LANDING
+      WAYPOINTS
+      VECTOR. 
+    This represents the internal navigation state machine. The system status shows wether 
+    the system is currently active or not and if an emergency occured. 
+    During the CRITICAL and EMERGENCY states the MAV is still considered to be active, 
+    but should start emergency procedures autonomously. After a failure occured it should 
+    first move from active to critical to allow manual intervention and then move to 
+    emergency after a certain timeout.</description>
+  <field type="uint32_t" name="onboard_control_sensors_present" enum="MAV_SYS_STATUS_SENSOR" 
+    display="bitmask" print_format="0x%04x">
+    Bitmask showing which onboard controllers and sensors are present. Value of 0: not 
+    present. Value of 1: present. Indices defined by ENUM MAV_SYS_STATUS_SENSOR</field>
+  <field type="uint32_t" name="onboard_control_sensors_enabled" enum="MAV_SYS_STATUS_SENSOR" 
+    display="bitmask" print_format="0x%04x">
+    Bitmask showing which onboard controllers and sensors are enabled:  Value of 0: 
+    not enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSOR</field>
+  <field type="uint32_t" name="onboard_control_sensors_health" enum="MAV_SYS_STATUS_SENSOR" 
+    display="bitmask" print_format="0x%04x">
+    Bitmask showing which onboard controllers and sensors are operational or have an error:  
+    Value of 0: not enabled. Value of 1: enabled. 
+    Indices defined by ENUM MAV_SYS_STATUS_SENSOR</field>
+  <field type="uint16_t" name="load" units="d%">Maximum usage in percent of the mainloop 
+    time, (0%: 0, 100%: 1000) should be always below 1000</field>
+  <field type="uint16_t" name="voltage_battery" units="mV">Battery voltage, in millivolts 
+    (1 = 1 millivolt)</field>
+  <field type="int16_t" name="current_battery" units="cA">Battery current, in 
+    10*milliamperes (1 = 10 milliampere), -1: autopilot does not measure the current</field>
+  <field type="int8_t" name="battery_remaining" units="%">Remaining battery energy: 
+    (0%: 0, 100%: 100), -1: autopilot estimate the remaining battery</field>
+  <field type="uint16_t" name="drop_rate_comm" units="c%">Communication drops in percent, 
+    (0%: 0, 100%: 10'000), (UART, I2C, SPI, CAN), dropped packets on all links 
+    (packets that were corrupted on reception on the MAV)</field>
+  <field type="uint16_t" name="errors_comm">Communication errors (UART, I2C, SPI, CAN), 
+    dropped packets on all links (packets that were corrupted on reception on the MAV)</field>
+      <field type="uint16_t" name="errors_count1">Autopilot-specific errors</field>
+      <field type="uint16_t" name="errors_count2">Autopilot-specific errors</field>
+      <field type="uint16_t" name="errors_count3">Autopilot-specific errors</field>
+      <field type="uint16_t" name="errors_count4">Autopilot-specific errors</field>
+</message>
+\end{verbatim}}
+Un mensaje recibido sería: 
+SYS\_STATUS \{onboard\_control\_sensors\_present : 23198783, onboard\_control\_sensors\_enabled : 23198783, onboard\_control\_sensors\_health : 24247359, load : 0, voltage\_battery : 12587, current\_battery : 0, battery\_remaining : 100, drop\_rate\_comm : 0, errors\_comm : 0, errors\_count1 : 0, errors\_count2 : 0, errors\_count3 : 0, errors\_count4 : 0\}
+\item SCALED\_PRESSURE donde obtendremos la presión absoluta y la temperatura.
+{\scriptsize
+\begin{verbatim}
+<message id="29" name="SCALED_PRESSURE">
+  <description>The pressure readings for the typical setup of one absolute and differential 
+      pressure sensor. The units are as specified in each field.</description>
+  <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp 
+      (milliseconds since system boot)</field>
+  <field type="float" name="press_abs" units="hPa">Absolute pressure (hectopascal)</field>
+  <field type="float" name="press_diff" units="hPa">Differential pressure 1 </field>
+  <field type="int16_t" name="temperature" units="cdegC">Temperature measurement 
+     (0.01 degrees celsius)</field>
+</message>
+\end{verbatim}}
+Un mensaje recibido sería: 
+SCALED\_PRESSURE \{time\_boot\_ms : 480794, press\_abs : 945.0001831054688, press\_diff : 0.021015625447034836, temperature : 2600\}
+\item WIND donde obtendemos las lecturas del viento estimadas. Este interfaz esta en MAVLink pero PixHawnk no lo sirve en su set.
+{\scriptsize
+\begin{verbatim}
+<message id="168" name="WIND">
+    <description>Wind estimation</description>
+    <field name="direction" type="float">wind direction that wind is coming from </field>
+    <field name="speed" type="float">wind speed in ground plane (m/s)</field>
+    <field name="speed_z" type="float">vertical wind speed (m/s)</field>
+</message>
+\end{verbatim}}
+Un mensaje recibido sería: 
+WIND \{direction : -179.99998474121094, speed : 0.0, speed\_z : 0.0\}
+\item GLOBAL\_POSITION\_INT donde obtendremos la posición GPS.
+{\scriptsize
+\begin{verbatim}
+<message id="33" name="GLOBAL_POSITION_INT">
+  <description>The filtered global position (e.g. fused GPS and accelerometers). 
+    The position is in GPS-frame (right-handed, Z-up). It is designed as scaled integer 
+    message since the resolution of float is not sufficient.</description>
+  <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp 
+    (milliseconds since system boot)</field>
+  <field type="int32_t" name="lat" units="degE7">Latitude, expressed as degrees * 1E7</field>
+  <field type="int32_t" name="lon" units="degE7">Longitude, expressed as degrees * 1E7</field>
+  <field type="int32_t" name="alt" units="mm">Altitude in meters, expressed as 
+    * 1000 (millimeters), AMSL (not WGS84 - note that virtually all GPS modules provide 
+    the AMSL as well)</field>
+  <field type="int32_t" name="relative_alt" units="mm">Altitude above ground in meters,
+    expressed as * 1000 (millimeters)</field>
+  <field type="int16_t" name="vx" units="cm/s">Ground X Speed (Latitude, positive north), 
+    expressed as m/s * 100</field>
+  <field type="int16_t" name="vy" units="cm/s">Ground Y Speed (Longitude, positive east), 
+    expressed as m/s * 100</field>
+  <field type="int16_t" name="vz" units="cm/s">Ground Z Speed (Altitude, positive down), 
+    expressed as m/s * 100</field>
+  <field type="uint16_t" name="hdg" units="cdeg">Vehicle heading (yaw angle) in degrees 
+    * 100, 0.0..359.99 degrees. If unknown, set to: UINT16_MAX</field>
+</message>
+\end{verbatim}}
+Un mensaje recibido sería: 
+GLOBAL\_POSITION\_INT \{time\_boot\_ms : 480614, lat : -353632612, lon : 1491652301, alt : 584110, relative\_alt : -179, vx : 0, vy : 0, vz : 0, hdg : 35608\}
+\item MISSION\_ITEM Son objetos de misión, en ellos se mandan los Waypoint o comandos como setear una velocidad o una altitud o bien aterrizar o desapegar en función del parámetro command.
+{\scriptsize
+\begin{verbatim}
+<message id="39" name="MISSION_ITEM">
+  <description>Message encoding a mission item. This message is emitted to announce the 
+    presence of a mission item and to set a mission item on the system. The mission item 
+    can be either in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. 
+    Local frame is Z-down, right handed (NED), global frame is Z-up, right handed (ENU). 
+    See also http://qgroundcontrol.org/mavlink/waypoint_protocol.</description>
+  <field type="uint8_t" name="target_system">System ID</field>
+  <field type="uint8_t" name="target_component">Component ID</field>
+  <field type="uint16_t" name="seq">Sequence</field>
+  <field type="uint8_t" name="frame" enum="MAV_FRAME">The coordinate system of the MISSION. 
+    see MAV_FRAME in mavlink_types.h</field>
+  <field type="uint16_t" name="command" enum="MAV_CMD">The scheduled action for the MISSION. 
+    see MAV_CMD in common.xml MAVLink specs</field>
+  <field type="uint8_t" name="current">false:0, true:1</field>
+  <field type="uint8_t" name="autocontinue">autocontinue to next wp</field>
+  <field type="float" name="param1">PARAM1, see MAV_CMD enum</field>
+  <field type="float" name="param2">PARAM2, see MAV_CMD enum</field>
+  <field type="float" name="param3">PARAM3, see MAV_CMD enum</field>
+  <field type="float" name="param4">PARAM4, see MAV_CMD enum</field>
+  <field type="float" name="x">PARAM5 / local: x position, global: latitude</field>
+  <field type="float" name="y">PARAM6 / y position: global: longitude</field>
+  <field type="float" name="z">PARAM7 / z position: global: altitude (relative or absolute,
+    depending on frame.</field>
+  <extensions/>
+  <field type="uint8_t" name="mission_type" enum="MAV_MISSION_TYPE">Mission type, 
+    see MAV_MISSION_TYPE</field>
+</message>
+\end{verbatim}}
+Un mensaje recibido sería: MISSION\_ITEM \{target\_system : 1, target\_component : 1, seq : 0, frame : 3, command : 16, current : 0, autocontinue : 0, param1 : 0, param2 : 10, param3 : 0, param4 : 0, x : 40.33024215698242, y : -3.8008816242218018, z : 40.0\}
+\item MISSION\_REQUEST mesaje donde el AMP nos requiere el siguiente MISSION\_ITEM.
+{\scriptsize
+\begin{verbatim}
+<message id="40" name="MISSION_REQUEST">
+  <description>Request the information of the mission item with the sequence number seq. 
+    The response of the system to this message should be a MISSION_ITEM message. 
+    http://qgroundcontrol.org/mavlink/waypoint_protocol</description>
+  <field type="uint8_t" name="target_system">System ID</field>
+  <field type="uint8_t" name="target_component">Component ID</field>
+  <field type="uint16_t" name="seq">Sequence</field>
+  <extensions/>
+  <field type="uint8_t" name="mission_type" enum="MAV_MISSION_TYPE">Mission type, 
+    see MAV_MISSION_TYPE</field>
+</message>
+\end{verbatim}}
+Un mensaje recibido sería: MISSION\_REQUEST \{target\_system : 0, target\_component : 0, seq : 2\}
+\end{itemize}
+
+\subsection{Comunicación JdeRobot}
+
+En la comunicación con JdeRobot vamos a utilizar los interfaces descritos en el capítulo 3.1.1:
+\begin{itemize}
+\item Pose3D
+\item NavData
+\item Extra
+\item Camera
+\end{itemize}
+
+Y adicionalmente un nuevo interfaz que hemos desarrollado para dar soporte al uso de misiones, el interfaz mission.
+{\scriptsize
+\begin{verbatim}
+class Pose3DData  //we consumes Pose3DData
+  {
+		float x;
+		float y;
+		float z;
+  	float h;
+		float q0;
+		float q1;
+		float q2;
+		float q3;
+  };
+
+  ["python:seq:list"] sequence<Pose3DData> PoseSequence;
+  /**
+  * Mission data information 
+  */
+  class MissionData
+  {
+    PoseSequence mission;
+  };
+
+  /** 
+   * Interface to the Mission.
+   */
+  interface Mission
+  {
+    idempotent MissionData getMissionData();
+    int setMissionData(MissionData data);
+  };
+\end{verbatim}}
 \section{Implementación} 
 \label{sec:impl_apms}
+
+Para en tender mejor el código que vamos a describir a conticuación se muestra un esquema del diseño del driver. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.30]{img/Attachment-1.png}
+  \caption{Diseño de APM Server}
+  \label{fig:apms_design}
+\end{figure}
+
+\subsection{Conexión y configuración}
+
+De cara a facilitarnos la implementación del software, ahorrarnos crear los comandos MAVLink a mano y hacer el código más legible utlizaremos las librería pymavlink. Con pymavlink podemos traernos ya a python la definición de los comandos a utilizar con los import
+
+\begin{python}[
+    basicstyle=\scriptsize, %or \small or \footnotesize etc.
+]
+from pymavlink import mavutil, quaternion, mavwp
+from pymavlink.dialects.v10 import ardupilotmega as mavlink
+\end{python}
+
+
+El primer paso para poder interactuar con el APM es el proceso de conexión. En el comando de conexión se le indica una de las siguiente tuplas:
+\begin{itemize}
+\item Dispositivo\_serie, baudrate
+\item Tipo\_de\_puerto:IP:puerto, baudrate. En este caso baudrate es obligatorio pero se desecha.
+\end{itemize}
+
+
+\begin{python}[
+    basicstyle=\scriptsize, %or \small or \footnotesize etc.
+]
+class Server:
+
+    def __init__(self, port, baudrate):
+
+        # Connect to the APM
+        self.master = mavutil.mavlink_connection(port, baudrate, autoreconnect=True)
+        print('Connection established to device')
+
+	#Waiting for a HeartBeat
+        self.master.wait_heartbeat()
+        print("Heartbeat Recieved")
+
+
+#test = Server("/dev/ttyUSB0", 57600)
+test = Server("udp:192.168.1.133:14558",57600)
+\end{python}
+
+Con estas líneas iniciamos nuestro servidor y conectamos com e
+
 
 \cleardoublepage
 \chapter{AUV Commander}
