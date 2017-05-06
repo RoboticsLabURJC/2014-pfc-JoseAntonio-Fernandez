@@ -491,20 +491,7 @@ class MainGUI(QWidget):
         qpm = QPixmap.fromImage(qimg)
         self.imageLabel.setPixmap(qpm)
 
-    def change_coordinate_system(self, points, origin, toCartsian=True):
-        points_transformed = []
-        if toCartsian:
-            for corner in points:
-                x = corner[0] - origin[0]
-                y = origin[1] - corner[1]
-                points_transformed.append([x, y])
-        else:
-            for corner in points:
-                x = corner[0] + origin[0]
-                y = origin[1] + corner[1]
-                points_transformed.append([x, y])
 
-        return points_transformed
 
     def rotate_polygon(self, polygon, angle):
         """Rotates the given polygon which consists of corners represented as (x,y),
@@ -519,11 +506,11 @@ class MainGUI(QWidget):
 
     def draw_triangle(self, x, y, angle):
         triangle = [[x-5,y-7],[x,y+7],[x+5,y-7]]
-        center = self.center_of_triangle(triangle)
-        triangleCartesian = self.change_coordinate_system(triangle, center,True)
+        center = GeoUtils.center_of_triangle(triangle)
+        triangleCartesian = GeoUtils.change_coordinate_system(triangle, center,True)
         rotated_triangleCartesian = self.rotate_polygon(triangleCartesian,angle)
         image_center = [x,y]
-        rotated_triangle = self.change_coordinate_system(rotated_triangleCartesian,image_center ,False)
+        rotated_triangle = GeoUtils.change_coordinate_system(rotated_triangleCartesian,image_center ,False)
         pts = np.array(rotated_triangle, np.int32)
         pts = pts.reshape((-1,1,2))
         self.im_to_show = self.cvImageShadow.copy()
@@ -533,10 +520,7 @@ class MainGUI(QWidget):
     def refresh_shadow(self,x,y):
         cv2.circle(self.cvImageShadow, (x, y), 1, [255,255,102], thickness=-1, lineType=8, shift=0)
 
-    def center_of_triangle(self, triangle):
-        center_x = (triangle[0][0] + triangle[1][0] + triangle[2][0]) / 3;
-        center_y = (triangle[0][1]+ triangle[1][1] + triangle[2][1]) / 3;
-        return [center_x,center_y]
+
 
     def update_position(self):
 
@@ -594,7 +578,7 @@ class MyDialog(QDialog):
     def __init__(self, parent=None):
         super(MyDialog, self).__init__(parent)
 
-        self.buttonBox = QDialogButtonBox(se                                               clf)
+        self.buttonBox = QDialogButtonBox(self)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
 

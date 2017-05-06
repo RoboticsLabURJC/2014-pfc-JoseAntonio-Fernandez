@@ -33,7 +33,7 @@
 \usepackage{latexsym}  %% Logo LaTeX
 \usepackage{eurosym}
 \usepackage{subfig}
-
+\usepackage{siunitx}
 
 % Default fixed font does not support bold face
 \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
@@ -79,6 +79,34 @@ breaklines=true,
 }}
 
 
+% Python style for highlighting
+\newcommand\pythonstyleinline{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=Ltb,                         % Any extra options here
+showstringspaces=false            % 
+framerule=0pt,
+aboveskip=0.5cm,
+framextopmargin=3pt,
+framexbottommargin=3pt,
+framexleftmargin=0.4cm,
+framesep=0pt,
+rulesep=.4pt,
+backgroundcolor=\color{gray97},
+rulesepcolor=\color{black},
+commentstyle=\color{gray45},
+numbers=left,
+numbersep=15pt,
+numberstyle=\ttm,
+numberfirstline = false,
+breaklines=true,
+}}
+
 % Python environment
 \lstnewenvironment{python}[1][]
 {
@@ -93,7 +121,7 @@ breaklines=true,
 \lstinputlisting[#1]{#2}}}
 
 % Python for inline
-\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+\newcommand\pythoninline[1]{{\pythonstyleinline\lstinline!#1!}}
 
 
 
@@ -916,29 +944,53 @@ SITL puede conectarse también con Gazebo o a FlightGear para hacer mas completa 
 \cleardoublepage
 \chapter{APM Server}
 
+El driver APM Server es quien va a mediar entre las aplicaciones de JdeRobot y el robot aéreo con sus sensores y actuadores físicos o simulados a través de APM Server. De ésta manera las aplicaciones pueden correr en máquinas distintas, no obligatoriamente abordo, y pueden estar implementadas en distintos lenguajes de programación. Estas ventajas vienen de utilizar ls división habitual en JdeRobot entre componentes drivers y componentes aplicación.
 
-\section{Análisis y diseño} 
-\label{sec:analisis_apms}
+En nuestro caso éste driver ira instalado sobre una Raspberry Pi3 con raspbian a la que hemos instalado el framework Jderobot y el driver APM Server, e irá abordo del robot físico conectado por puerto serie.
+
+\section{Diseño} 
+\label{sec:diseno_apms}
 
 De un análisis exhaustivo definimos los requerimientos hablados en el capítulo 2.1.2 y que serían a grandes rasgos:
 \begin{itemize}
 \item El driver debe ser capaz de conectar con dispositivos físicos de estabilización cómo APM 2.8 o PixHawnk así como al simulador SITL
-\item El driver debe acceder a los sensores y actuadores del robot aéreo, interpretarlos y servirlos en forma de interfaz.
+\item El driver debe acceder a los sensores y actuadores del robot aéreo, interpretarlos y servirlos en forma de interfaz Ice a las aplicaciones de control.
 \item EL driver debe ser capar de recibir a través de interfaces JdeRobot interfaces que éste interprete y envíe a los actuadores del robot aéreo.
 \end{itemize}
+
+
+\begin{figure}[h]
+\centering{
+   \label{f:diseno}
+    \includegraphics[width=0.49\textwidth]{img/diseno.png}}
+{
+   \label{f:diseno1}
+    \includegraphics[width=0.49\textwidth]{img/diseno1.png}}
+
+  \caption{Diseño de APM Server}
+\end{figure}
+
+
+
 
 Para abordar este desarrollo vamos a definir 3 capas que pasamos a describir desde la más cercana al hardware hasta la más cercana a JdeRobot:
 \begin{itemize}
 \item Capa de comunicación con el dispositivo APM. Esta capa se encargará de la comunicación del driver con el dispositivo APM a través del protocolo de comunicación MavLink.
 \item Capa de negocio e interpretación. En esta capa el driver transformará los comandos MavLink y los interfaces JdeRobot interpretando la información de ambas capas y haciendo ésta legible en ambos sentidos.
-\item Capa de comunicación con JdeRobot. En ésta capa se expondrán los servicios Ice necesarios para la recepción y envío de los interfaces Ice que implementa.
+\item Capa de comunicación con aplicaciones JdeRobot. En ésta capa se expondrán los servicios Ice necesarios para la recepción y envío de los interfaces Ice que implementa.
 \end{itemize}
 
-\section{Interfaces} 
-\label{sec:interfaces_apms}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/bloque_mavlink.png}
+  \caption{Bloque Mavlink}
+  \label{fig:apms_design}
+\end{figure}
 
-\subsection{Comunicación APM}
-En la capa de comunicación con el APM dónde recibimos comandos MAVLink vamos a consumir y enviar los siguientes mensajes:
+
+\section{Bloque de conexión MAVLink}
+
+En la capa de comunicación con el APM es dónde se van a recibir comandos MAVLink y se van a consumir y enviar los siguientes mensajes:
 \begin{itemize}
 \item RAW\_IMU donde recibiremos la información de los acelerómetros giróscopos y magnetrómetros en crudo par el NavData.
 {\scriptsize
@@ -1155,7 +1207,7 @@ Un mensaje enviado sería: MISSION\_ITEM \{target\_system : 1, target\_component 
     see MAV_MISSION_TYPE</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería: MISSION\_REQUEST \{target\_system : 0, target\_component : 0, seq : 2\} En este mensaje el APM nos estaría solicitando el item de misión 3, ya que empieza solicitando el 0. Este mensaje termina al llegar al máximo de mission item que hemos indicado que le vamos a mandar 
+Un mensaje recibido sería: MISSION\_REQUEST \{target\_system : 0, target\_component : 0, seq : 2\} En este mensaje el APM nos estaría solicitando el item de misión 3, ya que empieza solicitando el 0. Este mensaje termina al llegar al máximo de mission item que se ha indicado que le se le va a mandar.
 
 \item MISSION\_COUNT éste comando se envía para comenzar una comunicación con el APM con el objetivo de enviarle una misión.
 {\scriptsize
@@ -1189,67 +1241,24 @@ Un mensaje enviado sería: MISSION\_COUNT \{target\_system : 0, target\_component
 Un mesaje enviado sería MISSION\_CLEAR\_ALL \{target\_system : 0, target\_component : 0\}
 \end{itemize}
 
-\subsection{Comunicación JdeRobot}
+\subsection{Conexión y configuración}
 
-En la comunicación con JdeRobot vamos a utilizar los interfaces descritos en el capítulo 3.1.1:
+De cara a facilitarnos la implementación del software, ahorrarnos crear los comandos MAVLink a mano y hacer el código más legible utilizaremos la librería pymavlink. Pymavlink trae la definición de los comandos a utilizar en python, para instalarla tan sólo se necesita ejecutar:
+ 
+\begin{verbatim}
+sudo pip2 install -U pymavlink
+\end{verbatim}
+
+Y tiene como dependencias:
 \begin{itemize}
-\item Pose3D
-\item NavData
-\item Extra
-\item Camera
+\item future. Se necesita future como soporte en Python 3.X de Python 2.7 (http://python-future.org/)
+\item lxml. Para parsear xml (http://lxml.de/installation.html)
+\item python-dev
+\item MavLink. (http://qgroundcontrol.org/mavlink/start)
 \end{itemize}
 
-Y adicionalmente un nuevo interfaz que hemos desarrollado para dar soporte al uso de misiones, el interfaz mission.
-{\scriptsize
-\begin{verbatim}
-class Pose3DData  //we consumes Pose3DData
-  {
-		float x;
-		float y;
-		float z;
-  	float h;
-		float q0;
-		float q1;
-		float q2;
-		float q3;
-  };
 
-  ["python:seq:list"] sequence<Pose3DData> PoseSequence;
-  /**
-  * Mission data information 
-  */
-  class MissionData
-  {
-    PoseSequence mission;
-  };
-
-  /** 
-   * Interface to the Mission.
-   */
-  interface Mission
-  {
-    idempotent MissionData getMissionData();
-    int setMissionData(MissionData data);
-  };
-\end{verbatim}}
-\section{Implementación} 
-\label{sec:impl_apms}
-
-Para en tender mejor el código que vamos a describir a continuación se muestra un esquema del diseño del driver. 
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.30]{img/Attachment-1.png}
-  \caption{Diseño de APM Server}
-  \label{fig:apms_design}
-\end{figure}
-
-\subsection{Capa de conexión MAVLink}
-
-\subsubsection{Conexión y configuración}
-
-De cara a facilitarnos la implementación del software, ahorrarnos crear los comandos MAVLink a mano y hacer el código más legible utlizaremos las librería pymavlink. Con pymavlink podemos traernos ya a python la definición de los comandos a utilizar con los import siguientes.
-Importamos mavutil para ardupilotmega para obtener los interfaces en python gracias a pymavlink y mavwp y quaternion para ayudarnos con la transformación a quaterniones.
+Los import que se utilizan son los siguientes:
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1257,6 +1266,8 @@ Importamos mavutil para ardupilotmega para obtener los interfaces en python grac
 from pymavlink import mavutil, quaternion, mavwp
 from pymavlink.dialects.v10 import ardupilotmega as mavlink
 \end{python}
+
+Se importa mavutil para ardupilotmega para obtener los interfaces en python desde pymavlink y mavwp y quaternion como soporte a la transformación a quaterniones y viceversa.
 
 
 El primer paso para poder interactuar con el APM es el proceso de conexión. En el comando de conexión se le indica una de las siguiente tuplas:
@@ -1281,30 +1292,31 @@ class Server:
         self.master.wait_heartbeat()
         print("Heartbeat Recieved")
 
-#test = Server("/dev/ttyUSB0", 57600)
-test = Server("udp:192.168.1.133:14558",57600)
+#test = Server("/dev/ttyUSB0", 57600) # Connection to the real APM device
+test = Server("udp:192.168.1.133:14558",57600) # Connection to SITL
 \end{python}
 
-Con estas líneas iniciamos nuestro servidor y conectamos con él y podemos apreciar en la creación del servidor 2 conexiones, la comentada sería al dispositivo real y la que se encuentran sin comentar a SITL.
+Con estas líneas se inicia el servidor de APM Server y se realiza la conexión con el dispositivo APM o con el simulador.Se puede apreciar cómo se realiza la conexión en el método \_\_init\_\_  del servidor. Y la creación de 2 objetos de servidor, una que conectaría con el dispositivo real y la que se realiza con SITL.
 
-Una vez conectado, debemos indicar al APM qué mensajes queremos recibir y la frecuencia con la que queremos recibirlo. Debido a que se trata de un prototipo y estamos tratando de extraer el máximo potencial del mismo indicaremos el set de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo máximo que soporta nuestro APM.
+
+Una vez conectado, se debe indicar al APM qué mensajes se quieren recibir y la frecuencia con la que se quieren recibir. Debido a que se trata de un prototipo y se trata de extraer el máximo potencial del mismo, se indicará el set de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo máximo que soporta el APM adquirido.
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
-	RATE = 50
+RATE = 50
 
-        # Set the complete set of commands
-        self.master.mav.request_data_stream_send(self.master.target_system,
-                                                 self.master.target_component,
-                                                 mavutil.mavlink.MAV_DATA_STREAM_ALL,
-                                                 RATE, 1)
+# Set the complete set of commands
+self.master.mav.request_data_stream_send(self.master.target_system,
+                                         self.master.target_component,
+                                         mavutil.mavlink.MAV_DATA_STREAM_ALL,
+                                         RATE, 1)
 \end{python}
 
-Desde éste momento se van a estar volcando a un buffer los mensajes que manda nuestro APM, con lo que ahora ya podemos acceder a ellos para procesarlos.
+Desde éste momento se van a estar volcando a un buffer los mensajes que manda nuestro APM, con lo que ahora ya se puede acceder a ellos para procesarlos.
 
-\subsubsection{Lectura de datos del APM}
+\subsection{Lectura de datos del APM}
 
-Una vez establecida la conexión y seteados los parámetros de configuración ya podemos acceder a los datos. Para ésto en nuestra capa de transformación se levantará el siguiente hilo que procesará los mensajes
+Una vez establecida la conexión y seteados los parámetros de configuración ya se puede acceder a los datos. Para ésto en el bloque de transformación se levantará el siguiente hilo que procesará los mensajes.
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1315,32 +1327,23 @@ print('Initiating server...')
 # MsgHandler.daemon = True
 MsgHandler.start()
 
-	def mavMsgHandler(self, m):
-	"""
-	Funtion who handle the mavLink's messages received and refresh the attitude
-	:param m: mavLink Connector
-	:return: none
-	"""
-	while True:
-	    msg = m.recv_msg()
-	    # send heartbeats to autopilot
-	    if time.time() - self.lastSentHeartbeat > 1.0:
-		self.master.mav.heartbeat_send(mavlink.MAV_TYPE_GCS, mavlink.MAV_AUTOPILOT_INVALID, 0, 0, 0)
-		self.lastSentHeartbeat = time.time()
-
-		# refresh the attitude
-		self.refreshAPMPose3D()
-		self.refreshAPMnavdata()
-
-	    elif msg is None or msg.get_type() == "BAD_DATA":
-		time.sleep(0.01)
-		continue
-
+def mavMsgHandler(self, m):
+    while True:
+        msg = m.recv_msg()
+	# send heartbeats to autopilot
+	if time.time() - self.lastSentHeartbeat > 1.0:
+	    self.master.mav.heartbeat_send(mavlink.MAV_TYPE_GCS, mavlink.MAV_AUTOPILOT_INVALID, 0, 0, 0)
+	    self.lastSentHeartbeat = time.time()
+	    # refresh the attitude
+	    self.refreshAPMPose3D()
+	    self.refreshAPMnavdata()
+	elif msg is None or msg.get_type() == "BAD_DATA":
+	    time.sleep(0.01)
+	    continue
 \end{python}
 
-En este thread e accede a los mensajes para su procesamiento, salvo que no se haya recibido ninguno aún, en los métodos refreshAPMPose3D() y refreshAPMnavdata().
 
-\subsubsection{Envío de misiones al APM}
+\subsection{Envío de misiones al APM}
 
 Con el fin de entender mejor el código en la figura 4.2 podemos observar un gráfico de cómo es el protocolo de envío de misiones al APM a través de MAVLink obtenido de la universidad University of Colorado Boulder\cite{colorado:_mission}
 \begin{figure}[H]
@@ -1432,7 +1435,7 @@ Para abordar el problema e implementar dicho protocolo partimos de la solución q
             print ('Sending waypoint {0} '.format(i) + format(wp.wp(msg.seq)))
 
         self.master.arducopter_arm()
-        self.master.set_mode_auto() # arms and start mission I thought
+        self.master.set_mode_auto() # start mission
 
         print('SENDED')
         empty_mission = jderobot.MissionData()
@@ -1440,222 +1443,64 @@ Para abordar el problema e implementar dicho protocolo partimos de la solución q
 
 \end{python}
 
-\subsection{Capa de interpretación}
+Como se puede observar en el código, en caso de tener takeOffDecision o landDecision activos en el atributo extra (mapeado a través de Ice) se añaden los comandos de despegue y aterrizaje, que interpreta son el primero y el último. 
+Se puede observar también al final del código como se arman los motores con la línea \pythoninline{self.master.arducopter_arm()}
+y como se pone el dispositivo en modo automático con \pythoninline{self.master.set_mode_auto()}.
+El driver está implementado para ejecutarse en modo auto, se puede ejecutar también en modo guided pero el modo auto a diferencia del guided no inhabilita la radio y se puede recuperar en cualquier momento el control del robot aéreo. Si bien hay que decir que el modo guided o modo guiado es más preciso que el modo auto.
 
-En ésta capa se interpretan los mensajes recibidos de una y otra capa y se transforman en el formato que sea necesario para que o interprete la opuesta.
+\section{Capa de conexión con aplicaciones JdeRobot}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/bloque_jderobot.png}
+  \caption{Bloque JdeRobot}
+  \label{fig:apms_design}
+\end{figure}
 
-El método setMission() se llama al recibir vía Ice una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, hemos construido un listener que valida el valor de la variable mission y si tiene contenido articula el método setMission(mission).
+En ésta capa se sirven y reciben los objetos de interfaces JdeRobot de modo que sean entendibles por el resto de los framework.
+Para ésto se han implementado 4 hilos, uno por cada interfaz JdeRobot que se sirve o se recibe. En cada uno de éstos hilos se levanta un servidor Ice para recibir o servir objetos de interfaces JdeRobot mapeando atributos de la clase del servidor al estos servicios Ice.
 
-\begin{python}[
-    basicstyle=\scriptsize, %or \small or \footnotesize etc.
-]
-    print("- Mission listener")
-    MissionListener = threading.Thread(target=self.missionListener, name='MissionListener')
-    MissionListener.daemon = True
-    MissionListener.start()
-    print("Mission listener up")
+Los 4 interfaces que van a ser servidos desde APM server serán:
+\begin{itemize}
+\item Pose3D
+\item NavData
+\item Extra
+\item Mission
+\end{itemize}
 
+Pose3D, navData y Extra se describieron en el capítulo 3.1.1, adicionalmente a éstos se ha desarrollado un nuevo interfaz para dar soporte al uso de misiones, el interfaz mission.
+{\scriptsize
+\begin{verbatim}
+class Pose3DData  //we consumes Pose3DData
+  {
+		float x;
+		float y;
+		float z;
+  	float h;
+		float q0;
+		float q1;
+		float q2;
+		float q3;
+  };
 
-    def missionListener(self):
-        '''
-        Function who listen to a new mission revieved from Ice MissionChannel thread and send it to APM
-        :return: None
-        '''
-        while True:
-            if not self.mission.is_empty():
-                self.lastMission = self.mission
-                self.setMission(self.mission.getMissionData())
+  ["python:seq:list"] sequence<Pose3DData> PoseSequence;
+  /**
+  * Mission data information 
+  */
+  class MissionData
+  {
+    PoseSequence mission;
+  };
 
-            time.sleep(1)
-
-\end{python}
-Ya hemos visto cómo se realiza la transformación entre mensajes de misión en el método setMission(mission), ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretación por JdeRobot.
-Esto lo realizamos principalmente en 2 métodos, refreshAPMPose3D() y refreshAPMnavdata().
-Estos métodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informción relevante para nosotros, ya descritos en el capítulo 4.2, parsearlos y extraer de ellos la información que necesitamos y guardarla en objetos de interfaces JdeRobot para ser servidos a través de Ice.
-
-\begin{python}[
-    basicstyle=\scriptsize, %or \small or \footnotesize etc.
-]
-    def refreshAPMPose3D(self):
-        """
-        Funtion to refresh the Pose3D class atribute
-        :return: none
-        """
-
-        # get attitude of APM
-        if 'ATTITUDE' not in self.master.messages:
-            self.attitudeStatus = 1
-            q=[0,0,0,0]
-        else:
-            attitude = self.master.messages['ATTITUDE']
-            # print(attitude)
-            yaw = getattr(attitude,"yaw")
-            pitch = getattr(attitude,"pitch") * -1
-            roll = getattr(attitude,"roll")
-            q = quaternion.Quaternion([roll, pitch, yaw])
-
-        # get altitude of APM
-        altitude = self.master.field('VFR_HUD', 'alt', None)
-        if altitude is None:
-            self.altitudeStatus = 1
-
-        # get GPS position from APM
-        latitude = 0
-        longitude = 0
-        if 'GPS_RAW_INT' not in self.master.messages:
-            self.gpsStatus = 1
-        else:
-            gps = self.master.messages['GPS_RAW_INT']
-
-            latitude = getattr(gps,"lat")/ 10e6
-            longitude = getattr(gps,"lon") / 10e6
-            self.GPS_fix_type = getattr(gps,"fix_type")
-
-        # refresh the pose3D
-        data = jderobot.Pose3DData
-        data.x = latitude
-        data.y = longitude
-        data.z = altitude
-        data.h = altitude
-        data.q0 = q.__getitem__(0)
-        data.q1 = q.__getitem__(1)
-        data.q2 = q.__getitem__(2)
-        data.q3 = q.__getitem__(3)
-        self.pose3D.setPose3DData(data)
-
-    def refreshAPMnavdata(self):
-        """
-        Function that apdate
-        :return: none
-        """
-        battery_remaining = 0
-        rawIMU = {}
-        scaled_presure = {}
-        wind = {}
-        global_position = {}
-
-
-        #get battery_remaining
-        if 'SYS_STATUS' not in self.master.messages:
-            self.battery_remainingStatus = 1
-        else:
-            stats = self.master.messages['SYS_STATUS']
-            battery_remaining = getattr(stats,"battery_remaining")
-
-        #get RAW_IMU
-        if 'RAW_IMU' not in self.master.messages:
-            self.rawIMUStatus = 1
-        else:
-            rawIMU = self.master.messages['RAW_IMU']
-
-        #get SCALED PRESSURE
-        if 'SCALED_PRESSURE' not in self.master.messages:
-            self.scaled_presureStatus = 1
-        else:
-            scaled_presure = self.master.messages['SCALED_PRESSURE']
-
-        #get WIND
-        if 'WIND' not in self.master.messages:
-            self.gpsStatus = 1
-        else:
-            wind = self.master.messages['WIND']
-
-        #get GLOBAL_POSITION_INT
-        if 'GLOBAL_POSITION_INT' not in self.master.messages:
-            self.gpsStatus = 1
-        else:
-            global_position = self.master.messages['GLOBAL_POSITION_INT']
-
-        # refresh the navdata
-        ndata = jderobot.NavdataData()
-
-        ndata.batteryPercent = battery_remaining
-        #print(str(ndata.batteryPercent))
-        try:
-            ndata.pressure = getattr(scaled_presure, "press_abs")
-        except:
-            print (str(scaled_presure))
-        try:
-            ndata.temp = getattr(scaled_presure, "temperature")/100
-        except:
-            print(str(scaled_presure))
-        try:
-            ndata.windSpeed = getattr(wind, "speed")
-        except:
-            print(str(wind))
-        try:
-            ndata.windAngle = getattr(wind, "direction")
-        except:
-            print(str(wind))
-        try:
-            ndata.vx = getattr(global_position, "vx")
-        except:
-            print(str(global_position))
-        try:
-            ndata.vy = getattr(global_position, "vy")
-        except:
-            print(str(global_position))
-        try:
-            ndata.vz = getattr(global_position, "vz")
-        except:
-            print(str(global_position))
-        try:
-            ndata.rotx = getattr(rawIMU, "xgyro")
-        except:
-            print(str(rawIMU))
-        try:
-            ndata.roty = getattr(rawIMU, "ygyro")
-        except:
-            print(str(rawIMU))
-        try:
-            ndata.rotz = getattr(rawIMU, "zgyro")
-        except:
-            print(str(rawIMU))
-        try:
-            ndata.ax = getattr(rawIMU, "xacc")
-        except:
-            print(str(rawIMU))
-        try:
-            ndata.ay = getattr(rawIMU, "yacc")
-        except:
-            print(str(rawIMU))
-        try:
-            ndata.az = getattr(rawIMU, "zacc")
-        except:
-            print(str(rawIMU))
-        try:
-            ndata.magx = getattr(rawIMU, "xmag")
-        except:
-            print(str(rawIMU))
-        try:
-            ndata.magy = getattr(rawIMU, "ymag")
-        except:
-            print(str(rawIMU))
-        try:
-            ndata.magz = getattr(rawIMU, "zmag")
-        except:
-            print(str(rawIMU))
-
-        ndata.tagsCount = 0
-        ndata.tagsType
-        ndata.tagsXc
-        ndata.tagsYc
-        ndata.tagsWidth
-        ndata.tagsHeight
-        ndata.tagsOrientation
-        ndata.tagsDistance
-        ndata.vehicle = 1
-        ndata.state = 1
-
-        self.navdata.setNavdata(ndata)
-
-\end{python}
-
-\subsection{Capa de comunicación con JdeRobot}
-
-En ésta capa servimos y recibimos los objetos de interfaces JdeRobot de modo que sean entendibles por el resto des framework.
-Para ésto tenemos 4 hilos, uno por cada interfaz JdeRobot que recibo o sirvo. En éstos hilos levantamos un servidor Ice para recibir o servir objetos de interfaces JdeRobot mapeando atribulos de la clase del servidor al estos servicios Ice.
+  /** 
+   * Interface to the Mission.
+   */
+  interface Mission
+  {
+    idempotent MissionData getMissionData();
+    int setMissionData(MissionData data);
+  };
+\end{verbatim}}
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1690,17 +1535,13 @@ Para ésto tenemos 4 hilos, uno por cada interfaz JdeRobot que recibo o sirvo. En
 
 \end{python}
 
-Cada hilo abre un servicio Ice, como todos los servicios Ice que implementamos son muy similares podremos como ejemplo de implementación el servicio de Pose3D
+Cada hilo abre un servicio Ice, como todos los servicios Ice que implementamos son muy similares podremos como ejemplo de implementación el servicio de Pose3D.
+Como se puede apreciar en esta capa tenemos 4 hilos de ejecución simultáneos sirviendo objetos Ice a través de servidores como el que sigue a éstas líneas. En paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta éstos objetos Ice con lo que se ha tenido que cuidar mucho el código para evitar problemas de concurrencia.  
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
     def openPose3DChannel(self, pose3D):
-        """
-        Open a Ice Server to serve Pose3D objects
-        :return: none
-        """
-
         status = 0
         ic = None
         # recovering the attitude
@@ -1727,14 +1568,405 @@ Cada hilo abre un servicio Ice, como todos los servicios Ice que implementamos s
         sys.exit(status)
 
 \end{python}
+
+
+\section{Bloque de interpretación}
+
+En ésta capa se interpretan los mensajes recibidos de una y otra capa y se transforman en el formato que sea necesario para que o interprete la opuesta.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/bloque_inter.png}
+  \caption{Bloque de interpretación}
+  \label{fig:apms_design}
+\end{figure}
+
+El método setMission() se llama al recibir vía Ice una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, se ha construido un listener que valida el valor de la variable mission y si tiene contenido articula el método setMission(mission).
+
+\begin{python}[
+    basicstyle=\scriptsize, %or \small or \footnotesize etc.
+]
+    print("- Mission listener")
+    MissionListener = threading.Thread(target=self.missionListener, name='MissionListener')
+    MissionListener.daemon = True
+    MissionListener.start()
+    print("Mission listener up")
+
+    def missionListener(self):
+        '''
+        Function who listen to a new mission revieved from Ice MissionChannel thread and send it to APM
+        :return: None
+        '''
+        while True:
+            if not self.mission.is_empty():
+                self.lastMission = self.mission
+                self.setMission(self.mission.getMissionData())
+            time.sleep(1)
+
+\end{python}
+Ya se visto cómo se realiza la transformación entre mensajes de misión en el método setMission(mission), ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretación por JdeRobot.
+Esto lo realizamos principalmente en 2 métodos, refreshAPMPose3D() y refreshAPMnavdata().
+Estos métodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informción relevante para nosotros, ya descritos en el capítulo 4.2, parsearlos y extraer de ellos la información que necesitamos y guardarla en objetos de interfaces JdeRobot para ser servidos a través de Ice.
+
+\begin{python}[
+    basicstyle=\scriptsize, %or \small or \footnotesize etc.
+]
+    def refreshAPMPose3D(self):
+        # get attitude of APM
+        if 'ATTITUDE' not in self.master.messages:
+            self.attitudeStatus = 1
+            q=[0,0,0,0]
+        else:
+            attitude = self.master.messages['ATTITUDE']
+            # print(attitude)
+            yaw = getattr(attitude,"yaw")
+            pitch = getattr(attitude,"pitch") * -1
+            roll = getattr(attitude,"roll")
+            q = quaternion.Quaternion([roll, pitch, yaw])
+        # get altitude of APM
+        altitude = self.master.field('VFR_HUD', 'alt', None)
+        if altitude is None:
+            self.altitudeStatus = 1
+        # get GPS position from APM
+        latitude = 0
+        longitude = 0
+        if 'GPS_RAW_INT' not in self.master.messages:
+            self.gpsStatus = 1
+        else:
+            gps = self.master.messages['GPS_RAW_INT']
+            latitude = getattr(gps,"lat")/ 10e6
+            longitude = getattr(gps,"lon") / 10e6
+            self.GPS_fix_type = getattr(gps,"fix_type")
+        # refresh the pose3D
+        data = jderobot.Pose3DData
+        data.x = latitude
+        data.y = longitude
+        data.z = altitude
+        data.h = altitude
+        data.q0 = q.__getitem__(0)
+        data.q1 = q.__getitem__(1)
+        data.q2 = q.__getitem__(2)
+        data.q3 = q.__getitem__(3)
+        self.pose3D.setPose3DData(data)
+
+    def refreshAPMnavdata(self):
+        battery_remaining = 0
+        rawIMU = {}
+        scaled_presure = {}
+        wind = {}
+        global_position = {}
+        #get battery_remaining
+        if 'SYS_STATUS' not in self.master.messages:
+            self.battery_remainingStatus = 1
+        else:
+            stats = self.master.messages['SYS_STATUS']
+            battery_remaining = getattr(stats,"battery_remaining")
+        #get RAW_IMU
+        if 'RAW_IMU' not in self.master.messages:
+	...
+	...
+        else:
+            wind = self.master.messages['WIND']
+        #get GLOBAL_POSITION_INT
+        if 'GLOBAL_POSITION_INT' not in self.master.messages:
+            self.gpsStatus = 1
+        else:
+            global_position = self.master.messages['GLOBAL_POSITION_INT']
+        # refresh the navdata
+        ndata = jderobot.NavdataData()
+        ndata.batteryPercent = battery_remaining
+        #print(str(ndata.batteryPercent))
+        try:
+            ndata.pressure = getattr(scaled_presure, "press_abs")
+        except:
+            print (str(scaled_presure))
+        try:
+            ndata.temp = getattr(scaled_presure, "temperature")/100
+        except:
+            print(str(scaled_presure))
+        ...
+        ...
+        try:
+            ndata.magz = getattr(rawIMU, "zmag")
+        except:
+            print(str(rawIMU))
+
+        ndata.tagsCount = 0
+        ndata.tagsType
+        ndata.tagsXc
+        ndata.tagsYc
+        ndata.tagsWidth
+        ndata.tagsHeight
+        ndata.tagsOrientation
+        ndata.tagsDistance
+        ndata.vehicle = 1
+        ndata.state = 1
+
+        self.navdata.setNavdata(ndata)
+
+\end{python}
+
 \cleardoublepage
 \chapter{AUV Commander}
 
-\section{Arquitectura general} 
-\label{sec:arquitectura}
+UAV Commander es una aplicación JdeRobot que hace las veces de estación de tierra o GCS (Ground Control Station) para robots aéreos.
+Desde UAVCommander se pueden programar missiones, enviar éstas al driver MavLink, verificar el cumplimiento de las mismas y visualizar los sensores a bordo del robot aéreo.
+
+\section{Diseño} 
+\label{sec:diseno_uavc}
+
+\begin{figure}[H]
+\centering{
+   \label{f:diseno}
+    \includegraphics[width=0.60\textwidth]{img/diseno_uavc.png}}
+{
+   \label{f:diseno1}
+    \includegraphics[width=0.60\textwidth]{img/diseno1_uavc.png}}
+
+  \caption{Diseño de UAV Commander}
+\end{figure}
+
+La aplicación UAV Commander se estructura en 3 grandes bloques:
+\begin{itemize}
+\item GUI. La interfaz de usuario, es la parte de la aplicación que va a interactuar con el usuario.
+\item Core. El core de la aplicación será quien haga de orquestador entre los datos recibidos del bloque de comunicación con los driver JdeRobot y el interfaz de usuario. Se hará cargo también de obtener, de la fuente que sea preciso, IGN, Google o el bloque de conexión de drivers de JdeRobot la información necesaria y procesarla para ser mostrada por el GUI.
+\item Bloque de conexión con los driver JdeRobot.
+\end{itemize}
+
+La aplicación debe cumplir los requisitos descritos en el capítulo 2.2.3 que pueden resumirse en 4 grandes milestones:
+
+\begin{enumerate}
+\item Premitir la creación de misiones
+\item Enviar misiones a través de interfaces ICE al driver conectado.
+\item Presentar toda la información sensorial que nos ofrezca el driver.
+	\begin{itemize}
+	\item Actitud
+	\item Cámaras de abordo
+	\end{itemize}
+\item Validar el cumplimiento de misiones.
+\end{enumerate}
 
 
+\section{Bloque de conexión con aplicaciones JdeRobot} 
+\label{sec:bloque_jderobot_uavc}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/jderobot_uavc.png}
+  \caption{Diseño de UAV Commander mas en profundidad}
+  \label{fig:apms_design}
+\end{figure}
+
+En éste bloque se implementan todos los servidores Ice necesarios para acceder a la información sensorial y para enviar los interfaces necesarios para la actuación.
+Éste bloque es análogo al Bloque de comunicación con aplicaciones JdeRobot del Capítulo 4.1 si bien para simplificar este proceso hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez y las clases de EasyIce de Victor Arribas Raigadas ambas integradas en el framework de JdeRobot. De éste modo éste bloque queda simplificado éste bloque y su inicialización queda  relegada a unas pocas líneas de código:
+\begin{python}
+    ic = EasyIce.initialize(sys.argv)
+    camera = CameraClient(ic, "UavViewer.Camera", True)
+    navdata = NavDataClient(ic, "UavViewer.Navdata", True)
+    pose = Pose3DClient(ic, "UavViewer.Pose3D", True)
+    cmdvel = CMDVel(ic, "UavViewer.CMDVel")
+    extra = Extra(ic, "UavViewer.Extra")
+    mission = MissionI(ic, "UavViewer.Mission")
+\end{python}
+
+Con ésto se definen los 6 objetos Ice que van a ser enviados y/o recibidos por el APM Server, y con el código siguiente se los mapeamos al GUI quien los seteará como atributos en su clase principal.
+\begin{python}
+    screen.setCamera(camera)
+    screen.setPose3D(pose)
+    screen.set_initial_pose3D(pose3D)
+    screen.setNavData(navdata)
+    screen.setCMDVel(cmdvel) # Not used yet
+    screen.setExtra(extra)
+    screen.setMission(mission)
+\end{python}
+
+
+\section{Core} 
+\label{sec:core_uavc}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/core.png}
+  \caption{Diseño de UAV Commander mas en profundidad}
+  \label{fig:apms_design}
+\end{figure}
+
+El core es el bloque más complicado de la aplicación, se divide a su vez en 5 bloques:
+\begin{itemize}
+\item Obtención y actualización de mapas. Éste bloque es el encargado de obtener los mapas de cualquiera de las 2 fuentes actualmente implenetadas, el IGN o Google. También se encarga de actualizar la georeferenciación asociada a ellos una vez descargados.
+\item Utilidades de mapas. Aquí se encuentran los métodos de apoyo a la georeferenciación, como obtener el bounding box de una posición GPS, validar si nos acercamos al límite del mapa descargado o la transformación de magnitudes.
+\item Proyección. Es sin duda una de las partes más complejas del aplicativo, son las clases encargadas de a partir de una posición GPS obtener su posición en imagen que representa el mapa de la zona y viceversa.
+\item Procesamiento de los datos de vuelo. En este bloque se extraen, transforman (en caso que sea necesario) y distribuyen los datos de vuelo a las ventanas correspondiente y objetos correspondientes del GUI .
+\item Control de misiones. El control de misiones orquesta llamadas al resto de bloques del core para dar soporte a las misiones. Muestra éstas en la GUI y cuando desde la GUI se pulsa el botón de 'Send to APM" prepara los objetos del bloque de comunicación con el diver para ser enviados.
+
+\subsection{Obtención y actualización de mapas}
+
+Para obtener los mapas geo-referenciados necesitamos, como vimos en el capítulo 3, principalmente 4 cosas:
+\begin{enumerate}
+\item Bounding Bo
+\item Tamaño de la imagen
+\item Proyección
+\end{enumerate}
+
+Con el fin de abstraernos del montaje de la URL y envío y tratamiento de la respuesta utilizaremos la librería owslib que nos ayudará con éstos trámites. El código para obtener un nuevo mapa sería:
+\begin{python}
+def retrieve_new_map(lat, lon, radius, width, heigth):
+    bbox = getBoundingBox(lat, lon, radius)
+    ...
+\end{python}
+
+En el código mostrado podemos obserbar como recuperamos un nuevo mapa del IGN\footnote{Instituto geográfico nacional}, que publica uno de sus numerosos WMS en 'http://www.ign.es/wms-inspire/pnoa-ma'.
+Primero obtenemos el bounding box. El bounding box es la zona geográfica que vamos a recuperar, se calcula a partir de la posición GPS central y, en nuestro caso al mostrar imágenes cuadradas, un radio.
+El código para calcularlo sería:
+\begin{python}
+def getBoundingBox(lat, lon, distance):
+    radValues = from_degrees(lat, lon)
+    rad_dist = distance / EARTH_RADIUS_WGS84
+    min_lat = radValues[0] - rad_dist
+    max_lat = radValues[0] + rad_dist
+    if min_lat > MIN_LAT and max_lat < MAX_LAT:
+        delta_lon = asin(sin(rad_dist) / cos(radValues[1]))
+        min_lon = radValues[1] - delta_lon
+        if min_lon < MIN_LON:
+            min_lon += 2 * pi
+        max_lon = radValues[1] + delta_lon
+        if max_lon > MAX_LON:
+            max_lon -= 2 * pi
+    # a pole is within the distance, The up code isn't accurate in these cases
+    else:
+        min_lat = max(min_lat, MIN_LAT)
+        max_lat = min(max_lat, MAX_LAT)
+        min_lon = MIN_LON
+        max_lon = MAX_LON
+    # back to degrees
+    southWestPoint = from_radians(min_lat, min_lon)
+    northEastpoint = from_radians(max_lat, max_lon)
+    return southWestPoint[1], southWestPoint[0], northEastpoint[1], northEastpoint[0]
+\end{python}
+
+Una vez obtenido el bounding box únicamente rellenamos el resto del objeto WMS y lanzamos la request que devuelve una imagen en bytes a la que debemos añadir el disclaimer que nos indica el IGN.
+Al final montamos la imagen geo-referenciada que en nuestro caso será un diccionario con la imagen en OpenCV el bounding box, y el tamaño de la imagen. 
+
+\begin{python}
+def retrieve_new_map(lat, lon, radius, width, heigth):
+    ...
+    wms = WebMapService('http://www.ign.es/wms-inspire/pnoa-ma', version='1.3.0')
+    img = wms.getmap(layers=['OI.OrthoimageCoverage'],
+                     styles=['default'],
+                     srs='EPSG:4326',
+                     bbox=(bbox),
+                     size=(width, heigth),
+                     format='image/png',
+                     transparent=True)
+    ...
+    ImageUtils.prepareInitialImage(img.read(), width, heigth)
+    opencv_image = cv2.imread("images/imageWithDisclaimer.png", 1)
+    image = {'bytes': opencv_image, 'bbox': bbox, 'size': (width, heigth)}
+    return image
+
+\end{python}
+\subsection{Utilidades de mapas}
+
+Aquí se encuentran los métodos necesarios para trabajar con geo-posicionamiento como el método de cálculo de bounding box que se ha visto anteriormente.
+Se encuentran también transformaciones de radianes a grados, o el cálculo de la distancia entre 2 puntos.
+
+Como ejemplo vamos a ver el código para calcular distancias siempre u cuando utilicemos la proyección WGS84.
+\begin{python}
+def distance_to(valores, other ):
+    radius = EARTH_RADIUS_WGS84
+    radValuesIni = from_degrees(valores[0], valores[1])
+    radValuesOther = from_degrees(other[0], other[1])
+    return radius * acos(
+        sin(radValuesIni[0]) * sin(radValuesOther[0]) +
+        cos(radValuesIni[0]) *
+        cos(radValuesOther[0]) *
+        cos(radValuesIni[1] - radValuesOther[1])
+    )
+\end{python}
+
+\subsection{Proyección}
+
+La proyección se basa en 'ubicar" un punto en un determinado sistema de coordenadas en otro sistema completamente distinto.
+En nuestro caso trabajamos hasta con 3 sistemas de coordenadas distintos el de las imágenes con X[0, MAX\_WIDHT] creciente de izquierda a derecha e Y[0, MAX\_HEIGHT] creciente de arriba a abajo, el sistema de coordenadas geográficas y el cartesiano.
+
+Ambas se mueven en órdenes de magnitud diferentes y un movimiento de $1 * 10^{-5}$ puede suponer varias decenas de píxeles.
+
+Para abordar este problema y dado que se ha trabajado con robots aéreos con una autonomía relativamente reducida se ha asumido que la tierra es plana en bounding box de menos de 2 kilómetros de ancho. Con ésta convención conseguimos simplificar notablemente la complejidad del problema, que prácticamente se convierte en una normalización de un sistema a otro.
+Si en un futuro se decidiese utilizar la aplicación para vuelos de mayor envergadura, y con el fin de obtener una mayor precisión, se debería tener en cuenta la curvatura de la tierra y por tanto habría que reescribir éstos métodos teniéndolo en cuenta.
+La proyección en UAV Commander se realiza en ambos sentidos, de imagen a posicion geográfica y de sistema de coordenadas a imagen.
+
+A continuación podemos ver la proyección de posición geográfica a imagen:
+\begin{python}
+def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY):
+    distCoordX = round(latMax - latMin,7)
+    distCoordY = round(lonMax - lonMin, 7)
+    x = ((latMax-lat) *(tamImageX))/distCoordX
+    y = ((lon-lonMin) *(tamImageY))/distCoordY
+    return round(y), round(x)
+\end{python}
+
+\subsection{Procesamiento de los datos de vuelo}
+
+Este bloque se encarga de extraer los datos de vuelo y proporcionárselos a los componentes del GUI que o necesiten, así como recogerlos del GUI y transformarlos a objetos de interfaz Ice. Este bloque sería muy similar al bloque de interpretación del driver APM Server.
+Aquí se encontrarían los métodos de refresco de datos, getters y setters.
+
+\subsection{Control de misiones}
+
+Este bloque incluye todos lo métodos necesarios para dar soporte a misiones, se apoya fuertemente en los bloques de GUI y de conexión con drivers JdeRobot y realiza la transfromación de datos y el envío de estos de una capa a otra.
+Métodos como update\_waypoints() o sendWP(send2APM) estarían englobados en éste bloque, éste último es sin duda alguna el método más importante del bloque, se apoya en el GUI para obtener los Waypoints de la vista de la tabla, interpretarlos, y rellenar el objeto de interfaz missión con ella.
+Se puede ver a continuación:
+\begin{python}
+    def sendWP(self, send2APM):
+        colCount = self.table.rowCount()
+        mission = jderobot.MissionData()
+        mission.mission = []
+        i = 0
+        for row in range(colCount):
+            pose = jderobot.Pose3DData(0,0,0,0,0,0,0,0)
+            text = self.table.item(row, 0).text()
+            pos_lat = text.find("lat:")
+            pos_lon = text.find("lon:")
+            if pos_lat != -1:
+                lat = (text[pos_lat + 4:pos_lon])
+                pose.x = float(lat)
+                lon = (text[pos_lon + 4:])
+                pose.y = float(lon)
+            else:
+                if "LAND in " in text:
+                    pos = text.find("LAND in ") + 8
+                    position = text[pos:].split(" ")
+                    lat = position[0]
+                    lon = position[1]
+                    pose.x = float(lat)
+                    pose.y = float(lon)
+                    self.extra.land()
+                else:
+                    pos = text.find("TAKE OFF to ") + 12
+                    position = text[pos:].split(" ")
+                    lat = position[0]
+                    lon = position[1]
+                    pose.x = float(lat)
+                    pose.y = float(lon)
+                    self.extra.takeoff()
+            alt = self.table.item(row, 1)
+            pose.h = int(alt.text())
+            print(mission.mission)
+            mission.mission.append(pose)
+            if i==0:
+                mission.mission.append(pose)
+            i += 1
+\end{python}
+\end{itemize}
+
+\section{Interfaz de usuario} 
+\label{sec:interfaz_uavc}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.50]{img/gui.png}
+  \caption{Diseño de UAV Commander mas en profundidad}
+  \label{fig:apms_design}
+\end{figure}
 
 \cleardoublepage
 \chapter{Experimentos}
@@ -1835,5 +2067,6 @@ las tecnolog\'ias utilizadas y dem\'as.
 % http://texblog.org/2014/04/22/using-google-scholar-to-download-bibtex-citations/
 
 \end{document}
+\grid
 \grid
 \grid

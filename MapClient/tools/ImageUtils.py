@@ -85,8 +85,6 @@ def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImag
 
     distCoordX = round(latMax - latMin,7)
     distCoordY = round(lonMax - lonMin, 7)
-
-
     x = ((latMax-lat) *(tamImageX))/distCoordX
     y = ((lon-lonMin) *(tamImageY))/distCoordY
     print (x,y)
