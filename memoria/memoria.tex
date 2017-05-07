@@ -351,7 +351,7 @@ La enorme aceptaci\'on y expansi\'on de los drones se ha producido de un modo ta
 \item Problemas de seguridad. Los drones y en especial los drones de gran envergadura más allá de su uso profesional o lúdico pueden ser muy peligrosos. Sus palas giran a mas de 1000RPM y pueden producir cortes o amputaciones o producir daños personales y/o materiales en el caso de una pérdida de control del mismo o una caída. Esto se hizo patente cuando durante la filmaci\'on de un concierto del cantante Enrique Iglesias en Tijuana (México) éste agarr\'o el drone que le grababa de forma espontánea y ésto le produjo severos cortes en su mano derecha que hizo que sangrase profusamente.
 
 También pueden utilizarse con fines terroristas como se sospech\'o en Francia cuando se detectaron en octubre de 2014 volando en las proximidades de varias centrales nucleares. Además, en la noche del 19 al 20 de enero de 2015 otro 'dron' sobrevol\'o el Palacio del Elíseo, donde tiene su residencia el presidente de la república Francesa, Françoise Hollande. Y a ellos hay que sumar los 19 'drones' que han sido avistados sobrevolando 17 centrales nucleares francesas de octubre a febrero de 2015.
-De hecho en el ámbito militar los drones son parte importante del despliegue militar del IS (Estado islamico) quien con vídeo e infografías como la siguiente se jactan de sus "logros' con ellas en las redes sociales. Su bajo coste y su versatilidad producen que proliferen muchos drones construidos por sus militantes para la guerra.
+De hecho en el ámbito militar los drones son parte importante del despliegue militar del IS (Estado islamico) quien con vídeo e infografías como la siguiente se jactan de sus ``logros'' con ellas en las redes sociales. Su bajo coste y su versatilidad producen que proliferen muchos drones construidos por sus militantes para la guerra.
 
 
 \begin{figure}[h]
@@ -372,7 +372,7 @@ A estos problemas de seguridad hay que unir el problema del Hacking, muchos de l
 \item C\'omo atacar el AR-Drone 2.0 con nodecopter - http://www.nodecopter.com/hack
 \item Suit para hackear drones a través de WIFI - https://github.com/samyk/skyjack
 \end{itemize}
-Si bien es relativamente simple su hackeo el daño que pueda producirse con ellos es mas bien leve o muy moderado, pero existen técnicas como el GPS Spoofing que pueden "secuestrar'cualquier drone que se guíe por GPS como ocurri\'o en Irán en 2011 d\'onde hackers iraníes se hicieron con el control de un drone militar americano Lockheed Martin RQ-170 Sentinel\footnote{\url{https://en.wikipedia.org/wiki/Iran\%E2\%80\%93U.S._RQ-170_incident}} mediante ésta técnica que engaña a la antena GPS del UAV haciéndole pensar que se encuentra en otro lugar. Si bien para éste ataque se necesit\'o un hardware caro que haría el ataque prohibitivo, hoy es posible realizarlo por unos pocos cientos de euros con hackrf o braderf como se demostr\'o por la compañía china Qihoo 360 en las conferencias de Haking DEFCON de 2015.\footnote{\url{http://www.rtl-sdr.com/spoofing-gps-locations-with-low-cost-tx-sdrs/}}
+Si bien es relativamente simple su hackeo el daño que pueda producirse con ellos es mas bien leve o muy moderado, pero existen técnicas como el GPS Spoofing que pueden ``secuestrar'' cualquier drone que se guíe por GPS como ocurri\'o en Irán en 2011 d\'onde hackers iraníes se hicieron con el control de un drone militar americano Lockheed Martin RQ-170 Sentinel\footnote{\url{https://en.wikipedia.org/wiki/Iran\%E2\%80\%93U.S._RQ-170_incident}} mediante ésta técnica que engaña a la antena GPS del UAV haciéndole pensar que se encuentra en otro lugar. Si bien para éste ataque se necesit\'o un hardware caro que haría el ataque prohibitivo, hoy es posible realizarlo por unos pocos cientos de euros con hackrf o braderf como se demostr\'o por la compañía china Qihoo 360 en las conferencias de Haking DEFCON de 2015.\footnote{\url{http://www.rtl-sdr.com/spoofing-gps-locations-with-low-cost-tx-sdrs/}}
 
 \item Problemas regulatorios. Otro problema importante que apenas se está empezando a abordar es el regulatorio. Con el fin de minimizar el riesgo para las personas se está llevando a cabo una regulaci\'on del sector en todo el mundo. En España por ejemplo hasta abril de 2014, volar un dron para uso civil estaba absolutamente prohibido. La no regulaci\'on no indicaba que se pudiese volar, indicaba más bien todo lo contrario. Otro tema es el desconocimiento total por parte de las fuerzas del orden del Estado, donde una persona volase un drone y nadie le dijese nada.
 En éste marco regulatorio no se puede por ejemplo, volar un dron en núcleos urbanos, s\'olo debe hacerse en zonas previstas a tal efecto. Tampoco es posible volar un dron de más de 2Kg más allá de donde puedas verlo (500m), y es que antes era muy usual ponerle una cámara y volar varios kil\'ometros con él.
@@ -1769,6 +1769,19 @@ En éste bloque se implementan todos los servidores Ice necesarios para acceder a
     mission = MissionI(ic, "UavViewer.Mission")
 \end{python}
 
+En la aplicación UAV Commander se exponen 5 interfaces Ice a diferencia de los 4 que exponía el driver APM Server. Además de los que expone APM Server, a saber:
+\begin{itemize}
+\item Pose3D
+\item NavData
+\item Extra
+\item Mission
+\end{itemize}
+Se implementan 2 más: 
+\begin{itemize}
+\item El interfaz de camera para mostrar las imágenes que se sirvan a través de dicho interfaz, como por ejemplo a través de la aplicación cameraserver, que irá corriendo junto con nuestro driver en el avión real.
+\item El interfaz CmdVel. Que en la implementación actual no se utiliza pero se ha implementado para futuras realeases, donde en un futuro puedan añadirse el control por velocidades.
+\end{itemize}
+
 Con ésto se definen los 6 objetos Ice que van a ser enviados y/o recibidos por el APM Server, y con el código siguiente se los mapeamos al GUI quien los seteará como atributos en su clase principal.
 \begin{python}
     screen.setCamera(camera)
@@ -1797,13 +1810,13 @@ El core es el bloque más complicado de la aplicación, se divide a su vez en 5 bl
 \item Utilidades de mapas. Aquí se encuentran los métodos de apoyo a la georeferenciación, como obtener el bounding box de una posición GPS, validar si nos acercamos al límite del mapa descargado o la transformación de magnitudes.
 \item Proyección. Es sin duda una de las partes más complejas del aplicativo, son las clases encargadas de a partir de una posición GPS obtener su posición en imagen que representa el mapa de la zona y viceversa.
 \item Procesamiento de los datos de vuelo. En este bloque se extraen, transforman (en caso que sea necesario) y distribuyen los datos de vuelo a las ventanas correspondiente y objetos correspondientes del GUI .
-\item Control de misiones. El control de misiones orquesta llamadas al resto de bloques del core para dar soporte a las misiones. Muestra éstas en la GUI y cuando desde la GUI se pulsa el botón de 'Send to APM" prepara los objetos del bloque de comunicación con el diver para ser enviados.
+\item Control de misiones. El control de misiones orquesta llamadas al resto de bloques del core para dar soporte a las misiones. Muestra éstas en la GUI y cuando desde la GUI se pulsa el botón de ``Send to APM'' prepara los objetos del bloque de comunicación con el diver para ser enviados.
 
 \subsection{Obtención y actualización de mapas}
 
 Para obtener los mapas geo-referenciados necesitamos, como vimos en el capítulo 3, principalmente 4 cosas:
 \begin{enumerate}
-\item Bounding Bo
+\item Bounding Box
 \item Tamaño de la imagen
 \item Proyección
 \end{enumerate}
@@ -1886,7 +1899,7 @@ def distance_to(valores, other ):
 
 \subsection{Proyección}
 
-La proyección se basa en 'ubicar" un punto en un determinado sistema de coordenadas en otro sistema completamente distinto.
+La proyección se basa en ``ubicar'' un punto en un determinado sistema de coordenadas en otro sistema completamente distinto.
 En nuestro caso trabajamos hasta con 3 sistemas de coordenadas distintos el de las imágenes con X[0, MAX\_WIDHT] creciente de izquierda a derecha e Y[0, MAX\_HEIGHT] creciente de arriba a abajo, el sistema de coordenadas geográficas y el cartesiano.
 
 Ambas se mueven en órdenes de magnitud diferentes y un movimiento de $1 * 10^{-5}$ puede suponer varias decenas de píxeles.
@@ -1967,6 +1980,155 @@ Se puede ver a continuación:
   \caption{Diseño de UAV Commander mas en profundidad}
   \label{fig:apms_design}
 \end{figure}
+
+La interfaz de usuario es una del las partes más importantes de toda aplicación, se trata de la parte que interactúa con el usuario, con lo que la información se ha de mostrar de forma agradable, armónica y de forma precisa, para que no genere confusión en el usuario final.
+
+Es por tanto el bloque donde más horas se han invertido en su desarrollo junto con el bloque core de la aplicación.
+
+La aplicación consta de 3 pantallas:
+\begin{enumerate}
+\item Pantalla principal.
+\item Ventana de actitud.
+\item Ventana visor de cámara.
+\end{enumerate}
+
+Las pantallas de actitud y el visor de cámara se han integrado del desarrollo de UAV Viewer de Alberto Martín Florido, con lo que nos centraremos en la pantalla principal, la encargada del control y creación de misiones.
+
+Para su correcto desarrollo se comenzó dibujando varios bocetos que fueron descartándose y puliendo hasta que se fijó el aspecto visual de la pantalla. 
+
+\begin{figure}[h]
+\centering
+  \subfloat[Boceto en papel de uno de los diseños de UAV Commander]{
+   \label{f:boceto}
+    \includegraphics[width=0.486\textwidth]{img/boceto.jpg}}
+  \subfloat[Vista general de UAV Commander]{
+   \label{f:uavc}
+    \includegraphics[width=0.50\textwidth]{img/uavc_comp.png}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.396]{img/uavc.png}
+  \caption{Pantalla principal de UAV Commander}
+  \label{fig:uavc_ppal}
+
+\end{figure}
+Para facilitar su disección vamos a dividir ésta ventana en 3 bloques:
+\begin{enumerate}
+\item Creación y envío de misiones.
+\item Control de misiones.
+\item Conexión con sensores. Éste bloque tan solo conecta con las integraciones de las pantallas de actitud y visor de cámara integradas desde UAV Viewer.
+\end{enumerate}
+
+
+\subsection{Creación y envío de misiones}
+
+Para poder dar ésta funcionalidad de una forma intuitiva y sencilla se han implementado:
+\begin{itemize}
+\item Un mapa interactivo dónde un click crea un punto de misión, dibujando un numero secuencial que muestra el orden la misión. Además según van añadiéndose nuevos puntos UAV Commander va dibujando la ruta que ``debería'' seguir el robot para el cumplimiento de su missión.
+Un simple click desencadenaría:
+\begin{enumerate}
+\item Inclusión del waypoint en la lista de waypoints
+\item Llamada al método de proyección \pythoninline{posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)} para obtener a partir del x e y de la imagen la latitud y longitud dónde se desea ir.
+\item Control de misión a realizar, verificando si se trata de un despegue, aterrizaje o un punto de paso.
+\item Inserción en la tabla de seguimiento de waypoints.
+\item En la próxima iteración del threadMap a través de la llamada a \pythoninline{update_position()}.
+\item Se llama al método \pythoninline{setPosition(self, x, y,angle)} quien ejecuta el método.
+\item \pythoninline{set_waypoints(self, wayPoints, current=True)} quien pinta el nuevo waypoint y la ruta a seguir en el mapa.
+\end{enumerate}
+Las siguientes líneas de código muestran la implementación del método encargado de pintar los waypoints y las rutas en el mapa \pythoninline{set_waypoints(self, wayPoints, current=True)}
+\begin{python}
+    def set_waypoints(self, wayPoints, current=True):
+        n=0
+        pts = np.array(wayPoints, np.int32)
+        pts = pts.reshape((-1, 1, 2))
+        cv2.polylines(self.cvImageShadow, [pts], False, (250, 250, 250), thickness=1)
+        for waypoint in wayPoints:
+            n+=1
+            s = str(n)
+            cv2.circle(self.cvImageShadow, (waypoint[0], waypoint[1]), 1, [0, 0, 255], thickness=-1, lineType=1)
+            cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
+        self.refreshImage()
+\end{python}
+\item Botón de ``Take Off''/``Land''. Éste botón apoya al mapa para crear misiones con aterrizaje y despegue, si se quiere despegar hacia un punto, bastaría con pulsarlo y pulsar después hacia dónde se quiere despegar. El comportamiento para el aterrizaje sería análogo.
+\item Tabla de seguimiento de waypoints. En ésta tabla se almacenan los waypoints que se van creando al hacer click sobre el mapa, cada fila es editable, de tal forma que ofrece una gran precisión en caso que sea necesario.
+\item Campo ``default altitude'' Establece la altitud de crucero, el valor de éste campo se irá propagando en cada waypoint creado en el atributo altitude.
+\item Botón ``Send''. Éste botón llama al método \pythoninline{sendWP(self, send2APM)} del core quien recoge los objetos de misión, los procesa y los envía al bloque de comunicación con drivers JdeRobot para su envío a través de los interfaces Ice necesarios, a saber, mission y extra en el caso en el que haya aterrizaje o despegue en la misión.
+\end{itemize}
+
+\subsection{Control de misiones}
+
+El control de misiones es la parte más tediosa de todo el desarrollo, en ella se muestra el comportamiento del robot aéreo sobre el mapa; la ruta que ha seguido, la posición actual y su orientación.
+
+Para llevar ésto a cabo se ha tenido que dividir el mapa en capas, tenemos 3 capas:
+\begin{enumerate}
+\item Mapa original con el disclaimer. \pythoninline{self.cvImage}
+\item Mapa original con la estela que ha dejado el robot aéreo. \pythoninline{self.cvImageShadow}
+\item Mapa que va a mostrarse, donde se pinta la posición actual del robot aéreo \pythoninline{self.im_to_show}
+\end{enumerate}
+Éste planteamiento por capas nos permite, por ejemplo, mantener la estela del robot y pintar la posición actual, añadir waypoints sin alterar lo ya dibujado, etc. Pero complica la implementación de todos los métodos que interactúan en este bloque.
+Algunos de los métodos las importantes del desarrollo del aplicativo se encuentran aquí y se listan a continuación:
+
+\begin{itemize}
+\item  \pythoninline{update_position(self)}
+\item  \pythoninline{self.setPosition(self, x, y, angle)}
+\item  \pythoninline{draw_triangle(self, x, y, angle)}
+\item  \pythoninline{refresh_shadow(self,x,y)}
+\item  \pythoninline{refreshImage(self)}
+\end{itemize}
+
+En cada iteración del hilo threadMap se articula el siguiente árbol con las llamadas:
+\begin{itemize}
+\item \pythoninline{update_position(self)}
+	\begin{itemize}
+	\item \pythoninline{GeoUtils.is_position_close_border(lat, lon , bbox)}
+	\item \pythoninline{ImageUtils.posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY)}
+	\item \pythoninline{setPosition(self, x, y, angle)}
+		\begin{itemize}
+		\item \pythoninline{refresh_shadow(self, x, y)}
+		\item \pythoninline{set_waypoints(self.wayPoints)}
+		\item \pythoninline{draw_triangle(self, x, y, angle)}
+			\begin{itemize}
+			\item \pythoninline{GeoUtils.center_of_triangle(triangle)}
+			\item \pythoninline{GeoUtils.change_coordinate_system(triangle, center,True)}
+			\item \pythoninline{rotate_polygon(triangleCartesian,angle)}
+			\end{itemize}
+		\item \pythoninline{set_waypoints(self.wayPoints)}
+		\item \pythoninline{self.refreshImage()}
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+A continuación se muestran las implementaciones de los métodos con más peso de éste bloque:
+\begin{python}
+    def update_position(self):
+
+        if self.pose != None:
+            pose = self.getPose3D().getPose3D()
+            lat = pose.x
+            lon = pose.y
+            bbox = self.imageMetadata["bbox"]
+            self.limit_warning = GeoUtils.is_position_close_border(lat, lon , bbox)
+            if self.limit_warning:
+                self.download_zoomed_map()
+            else:
+                bbox = self.imageMetadata["bbox"]
+                imagesize = self.imageMetadata["size"]
+                x, y = ImageUtils.posCoords2Image(bbox[0], bbox[1], bbox[2], bbox[3], lat, lon, imagesize[0], imagesize[1])
+                angle = self.sensorsWidget.quatToYaw(pose.q0, pose.q1, pose.q2, pose.q3)
+                self.setPosition(x, y, angle)
+
+    def setPosition(self, x, y,angle):
+        self.refresh_shadow(x,y)
+        self.set_waypoints(self.wayPoints)
+        self.draw_triangle(x, y, angle)
+        self.refreshImage()
+
+    def refresh_shadow(self,x,y):
+            cv2.circle(self.cvImageShadow, (x, y), 1, [255,255,102], thickness=-1, lineType=8, shift=0)
+
+
+\end{python}
+
 
 \cleardoublepage
 \chapter{Experimentos}
