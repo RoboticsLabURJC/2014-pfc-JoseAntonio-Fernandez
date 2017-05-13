@@ -2,7 +2,7 @@
 %% Plantilla de memoria en LaTeX para la ETSIT - Universidad Rey Juan Carlos
 %%
 %% Por Gregorio Robles <grex arroba gsyc.urjc.es>
-%%     Grupo de Sistemás y Comunicaciones
+%%     Grupo de Sistem\'as y Comunicaciones
 %%     Escuela T\'ecnica Superior de Ingenieros de Telecomunicaci\'on
 %%     Universidad Rey Juan Carlos
 %% (muchas ideas tomadas de Internet, colegas del GSyC, antiguos alumnos...
@@ -126,8 +126,8 @@ breaklines=true,
 
 
 
-\title{Rob\'otica aérea con aviones}
-\author{José Antonio Fernández Casillas}
+\title{Rob\'otica a\'erea con aviones}
+\author{Jos\'e Antonio Fern\'andez Casillas}
 
 \renewcommand{\baselinestretch}{1.5}  %% Interlineado
 
@@ -156,7 +156,7 @@ breaklines=true,
 \vspace{3cm}
 
 \Large
-INGENIERÍA TÉCNICA INFORMÁTICA EN SISTEMAS
+INGENIER\'IA T\'ECNICA INFORM\'ATICA EN SISTEMAS
 
 \vspace{0.4cm}
 
@@ -170,13 +170,13 @@ Proyecto Fin de Carrera
 \vspace{2.5cm}
 
 \LARGE
-ROB\'oTICA AÉREA CON AVIONES
+ROB\'oTICA A\'EREA CON AVIONES
 
 \vspace{4cm}
 
 \large
-Autor : José Antonio Fernández Casillas \\
-Tutor : José María Cañas Plaza
+Autor : Jos\'e Antonio Fern\'andez Casillas \\
+Tutor : Jos\'e Mar\'ia Cañas Plaza
 \end{center}
 \end{titlepage}
 
@@ -198,12 +198,12 @@ Tutor : José María Cañas Plaza
 
 \vspace{1cm}
 \large
-Rob\'otica aérea con aviones
+Rob\'otica a\'erea con aviones
 
 \vspace{1cm}
 \large
-\textbf{Autor :} José Antonio Fernández Casillas
-\textbf{Tutor :} José María Cañas Plaza
+\textbf{Autor :} Jos\'e Antonio Fern\'andez Casillas
+\textbf{Tutor :} Jos\'e Mar\'ia Cañas Plaza
 
 \end{center}
 
@@ -319,80 +319,64 @@ just before submitting.
 \label{sec:intro} % etiqueta para poder referenciar luego en el texto con ~\ref{sec:intro}
 \pagenumbering{arabic} % para empezar la numeraci\'on de p\'agina con n\'umeros
 
-Los UAV o Drones se han popularizado en los \'ultimos años hasta es punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ambitos de nuestra vida. 
+Los UAV o Drones se han popularizado en los \'ultimos años hasta es punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ambitos de nuestra vida. Si bien se est\'an utilizando ya de forma habitual en sectores como el cine o la ingenier\'ia civil, a\'un se est\'an explorando muchas de las posibles utilidades que estos robots pueden llegar a ofrecer.
 
-Si bien se est\'an utilizando ya de forma habitual en sectores como el cine o la ingenier\'ia civil, a\'un se est\'an explorando muchas de las posibles utilidades que estos robots pueden llegar a ofrecer.
-
-El objetivo de este trabajo final es poner en valor y asentar el uso de un tipo de UAV que no est\'a hoy muy representado en el \'ambito civil y que aventaja en varios aspectos al más popularizado quadrac\'optero, se trata del avi\'on.
+El objetivo de este trabajo final es desarrollar tecnolog\'ia que permita la programaci\'on de aplicaciones rob\'oticas con un avi\'on aut\'onomo. Este proyecto se ubica por lo  tanto en el contexto de rob\'otica y drones, en rob\'otica a\'erea.
 
 \section{Rob\'otica A\'erea}
 \label{sec:robotica_aerea}
 
-Los or\'igenes de la rob\'otica aerea tienen origen militar y su avance ha estado intr\'insecamente ligado a este \'ambito durante todo el siglo XX.
-
-Se consideran el origen de los aviones no tripulados los experimentos llevados a cabo a principios del siglo XX durante la 1ª guerra mundial como el 'Aerial Target' desarrollado por el capit\'an A. H. Lowpara para su uso como blanco a\'ereo. Si bien eran veh\'iculos no tripulados (Unmaned Aereal Vehicles) no eran aut\'onomos y eran manejados desde tierra a trav\'es de una radio. 
-No es hasta el final del siglo XX cuando bajo el escenario de la guerra de Vietnam y ante la creciente perdida de vidas de los pilotos estos veh\'iculos vuelvan de nuevo a ser objeto de desarrollo y se conviertan en veh\'iculos aut\'onomos.
+Los or\'igenes de la rob\'otica aerea tienen origen militar y su avance ha estado intr\'insecamente ligado a este \'ambito durante todo el siglo XX. Se consideran el origen de los aviones no tripulados los experimentos llevados a cabo a principios del siglo XX durante la 1ª guerra mundial como el \textit{``Aerial Target''} desarrollado por el capit\'an A. H. Low para para su uso como blanco a\'ereo. Si bien eran veh\'iculos no tripulados (\textit{Unmaned Aereal Vehicles}) no eran aut\'onomos y eran manejados desde tierra a trav\'es de una radio. 
+No es hasta el final del siglo XX cuando bajo el escenario de la guerra de Vietnam y ante la creciente p\'erdida de vidas de los pilotos estos veh\'iculos vuelvan de nuevo a ser objeto de desarrollo y se conviertan en veh\'iculos aut\'onomos.
 
 Desde ese momento y hasta nuestros d\'ias se utilizan de forma habitual en el \'ambito militar en misiones de reconocimiento, bombardeos o apoyo sin arriesgar vidas humanas.
 
-A los largo de los primeros años de este siglo debido al abaratamiento de los componentes electr\'onicos y a su minituarizaci\'on y potencia, la rob\'otica a\'erea se ha 'desmilitarizado' y esta experimentado un enorme crecimiento en el \'ambito de las aplicaciones civiles.
+A los largo de los primeros años de este siglo debido al abaratamiento de los componentes electr\'onicos y a su minituarizaci\'on y potencia, la rob\'otica a\'erea se ha 'desmilitarizado' y est\'a experimentado un enorme crecimiento en el \'ambito de las aplicaciones civiles.
 
-Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco más de 200 \euro.
+Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco m\'as de 200 \euro.
 
-En la actualidad el uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que más ha crecido su inversi\'on, y es que seg\'un la empresa analista especializada en dones Droneii con sede en Hamburgo en un estudio sobre la inversi\'on en el sector\footnote{\url{http://www.droneii.com/drone-investment-trends-2016}} en europa se invirti\'o en en proyectos dom\'esticos en 2016 cerca de 65 millones de d\'olares increment\'andose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
+En la actualidad el uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que m\'as ha crecido su inversi\'on, y es que seg\'un la empresa analista especializada en drones Droneii con sede en Hamburgo, en un estudio sobre la inversi\'on en el sector\cite{Droneii:_drone_Invest} en europa se invirti\'o en proyectos dom\'esticos en 2016 cerca de 65 millones de d\'olares increment\'andose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
 
-Estas datos se asientan en un mercado cada vez más extendido y con una gran proyecci\'on de crecimiento,la publicaci\'on BI Intelligence\footnote{\url{http://www.businessinsider.com/the-drones-report-research-use-cases-regulations-and-issues-2016-4}} espera que las ventas de drones alcancen los 12.000 millones en 2021.
-La venta de drones es s\'olo una de las piezas de éste negocio incipiente, empresas como DJI, Xiaomy o 3DR estan en la punta de lanza de la  innovaci\'on desarrollo de éstos, pero es tán solo la punta del iceberg. Esta industria está potenciando otras como la de las videocámaras deportivas GoPRO e incluso estan surgiendo nuevos puestos de trabajo como el de operador de drones.
-Las grandes empresas tecnol\'ogicas ven el potencial econ\'omico que pueden aportar a sus balances y se está produciendo una pugna por adquirir las principales empresas esecializadas en drones, Verizon compr\'o en febrero Skyward, facebook compr\'o Acenta y google 
+Estos datos se asientan en un mercado cada vez m\'as extendido y con una gran proyecci\'on de crecimiento. La publicaci\'on BI Intelligence\footnote{\url{http://www.businessinsider.com}}\cite{businessinsider:_drones_5_years} espera que las ventas de drones alcancen los 12.000 millones en 2021.
+La venta de drones es s\'olo una de las piezas de \'este negocio incipiente, empresas como DJI, Xiaomy o 3DR estan en la punta de lanza de la  innovaci\'on desarrollo de \'estos, pero es t\'an solo la punta del iceberg. Esta industria est\'a potenciando otras como la de las videoc\'amaras deportivas GoPRO e incluso estan surgiendo nuevos puestos de trabajo como el de operador de drones.
+Las grandes empresas tecnol\'ogicas ven el potencial econ\'omico que pueden aportar a sus balances y se est\'a produciendo una pugna por adquirir las principales empresas esecializadas en drones, Verizon compr\'o en febrero Skyward, FaceBook compr\'o Acenta y Google Titan Aeroespace.
 
-La enorme aceptaci\'on y expansi\'on de los drones se ha producido de un modo tan explosivo, que en ciertos aspectos de la sociedad no se ha avanzado lo suficiente como para que su utilizaci\'on se haga de forma segura.
+La enorme aceptaci\'on y expansi\'on de los drones se ha producido de un modo tan explosivo que en ciertos aspectos de la sociedad no se ha avanzado lo suficiente como para que su utilizaci\'on se haga de forma segura.
 
 \begin{itemize}
-\item Problemas de seguridad. Los drones y en especial los drones de gran envergadura más allá de su uso profesional o lúdico pueden ser muy peligrosos. Sus palas giran a mas de 1000RPM y pueden producir cortes o amputaciones o producir daños personales y/o materiales en el caso de una pérdida de control del mismo o una caída. Esto se hizo patente cuando durante la filmaci\'on de un concierto del cantante Enrique Iglesias en Tijuana (México) éste agarr\'o el drone que le grababa de forma espontánea y ésto le produjo severos cortes en su mano derecha que hizo que sangrase profusamente.
+\item Problemas de seguridad. Los drones y en especial los drones de gran envergadura, m\'as all\'a de su uso profesional o l\'udico, pueden ser muy peligrosos. Sus palas giran a m\'as de 1000RPM y pueden producir cortes o amputaciones o producir daños personales y/o materiales en el caso de una p\'erdida de control del mismo o una ca\'ida. Esto se hizo patente cuando durante la filmaci\'on de un concierto del cantante Enrique Iglesias en Tijuana (M\'exico) \'este agarr\'o el drone que le grababa de forma espont\'anea y \'esto le produjo severos cortes en su mano derecha que hizo que sangrase profusamente.
 
-También pueden utilizarse con fines terroristas como se sospech\'o en Francia cuando se detectaron en octubre de 2014 volando en las proximidades de varias centrales nucleares. Además, en la noche del 19 al 20 de enero de 2015 otro 'dron' sobrevol\'o el Palacio del Elíseo, donde tiene su residencia el presidente de la república Francesa, Françoise Hollande. Y a ellos hay que sumar los 19 'drones' que han sido avistados sobrevolando 17 centrales nucleares francesas de octubre a febrero de 2015.
-De hecho en el ámbito militar los drones son parte importante del despliegue militar del IS (Estado islamico) quien con vídeo e infografías como la siguiente se jactan de sus ``logros'' con ellas en las redes sociales. Su bajo coste y su versatilidad producen que proliferen muchos drones construidos por sus militantes para la guerra.
+Tambi\'en pueden utilizarse con fines terroristas como se sospech\'o en Francia cuando se detectaron en octubre de 2014 volando en las proximidades de varias centrales nucleares. Adem\'as, en la noche del 19 al 20 de enero de 2015 otro 'drone' sobrevol\'o el Palacio del El\'iseo, donde tiene su residencia el presidente de la rep\'ublica francesa. Y a ellos hay que sumar los 19 'drones' que han sido avistados sobrevolando 17 centrales nucleares francesas de octubre a febrero de 2015.
+Su bajo coste y su versatilidad producen que proliferen muchos drones construidos para fines oscuros.
 
+Algunas empresas del sector se han hecho eco de estos ataques y han deshabilitado sus drones en zonas de conflicto para evitar que se utilicen como armas de guerra como es el caso de la empresa china DJI, l\'ider en el sector.\footnote{\url{http://clipset.20minutos.es/dji-bloquea-drones-guerra-irak-siria/}}
 
-\begin{figure}[h]
-\centering
-  \subfloat[Infograf\'ia publicada por el IS en twitter]{
-   \label{f:infografia_is}
-    \includegraphics[width=0.4\textwidth]{img/IS_drones.jpg}}
-  \subfloat[Dron casero del IS]{
-   \label{f:diy_is_drone}
-    \includegraphics[width=0.475\textwidth]{img/IS_drones_DIY.jpg}}
- \label{f:is}
-\end{figure}
-Algunas empresas del sector se han hecho eco de estos ataques y han deshabilitado sus drones en zonas de conflicto para evitar que se utilicen como armas de guerra como es el caso de la empresa china DJI líder en el sector.\footnote{\url{http://clipset.20minutos.es/dji-bloquea-drones-guerra-irak-siria/}}
-
-A estos problemas de seguridad hay que unir el problema del Hacking, muchos de los más extendidos drones comerciales no tienen protecci\'on alguna contra el ataque de un ciberdelincuente. Por poner un ejemplo el modo en el que el Parrot AR-Drone se empareja con el m\'ovil es una conexi\'on plana sin contraseña, haciendo posible conectarse a el por un tercero con unas pocas líneas de c\'odigo.
+A estos problemas de seguridad hay que unir el problema del \textit{hacking}, muchos de los m\'as extendidos drones comerciales no tienen protecci\'on alguna contra el ataque de un ciberdelincuente. Por poner un ejemplo, el modo en el que el Parrot AR-Drone se empareja con el m\'ovil es una conexi\'on plana sin contraseña, haciendo posible conectarse a \'el por un tercero con unas pocas l\'ineas de c\'odigo.
 \begin{itemize}
-\item Guía sencilla de hacking del AR-Drone 2.0 - http://www.xdrones.es/guia-para-hackear-el-ar-drone-2-0/
+\item Gu\'ia sencilla de hacking del AR-Drone 2.0 - http://www.xdrones.es/guia-para-hackear-el-ar-drone-2-0/
 \item C\'omo atacar el AR-Drone 2.0 con nodecopter - http://www.nodecopter.com/hack
-\item Suit para hackear drones a través de WIFI - https://github.com/samyk/skyjack
+\item Entorno para \textit{hackear} drones a trav\'es de WIFI - https://github.com/samyk/skyjack
 \end{itemize}
-Si bien es relativamente simple su hackeo el daño que pueda producirse con ellos es mas bien leve o muy moderado, pero existen técnicas como el GPS Spoofing que pueden ``secuestrar'' cualquier drone que se guíe por GPS como ocurri\'o en Irán en 2011 d\'onde hackers iraníes se hicieron con el control de un drone militar americano Lockheed Martin RQ-170 Sentinel\footnote{\url{https://en.wikipedia.org/wiki/Iran\%E2\%80\%93U.S._RQ-170_incident}} mediante ésta técnica que engaña a la antena GPS del UAV haciéndole pensar que se encuentra en otro lugar. Si bien para éste ataque se necesit\'o un hardware caro que haría el ataque prohibitivo, hoy es posible realizarlo por unos pocos cientos de euros con hackrf o braderf como se demostr\'o por la compañía china Qihoo 360 en las conferencias de Haking DEFCON de 2015.\footnote{\url{http://www.rtl-sdr.com/spoofing-gps-locations-with-low-cost-tx-sdrs/}}
+Existen t\'ecnicas como el GPS Spoofing que pueden ``secuestrar'' cualquier drone que se gu\'ie por GPS como ocurri\'o en Ir\'an en 2011 d\'onde hackers iran\'ies se hicieron con el control de un drone militar americano Lockheed Martin RQ-170 Sentinel\footnote{\url{https://en.wikipedia.org/wiki/Iran\%E2\%80\%93U.S._RQ-170_incident}} mediante \'esta t\'ecnica que engaña a la antena GPS del UAV haci\'endole pensar que se encuentra en otro lugar. Si bien para este ataque se necesit\'o un hardware caro que har\'ia el ataque prohibitivo, hoy es posible realizarlo por unos pocos cientos de euros con placas como hackrf o braderf como se demostr\'o por la compañ\'ia china Qihoo 360 en las conferencias de Haking DEFCON de 2015.\cite{rtl-sdr:_gps_spoofing}
 
-\item Problemas regulatorios. Otro problema importante que apenas se está empezando a abordar es el regulatorio. Con el fin de minimizar el riesgo para las personas se está llevando a cabo una regulaci\'on del sector en todo el mundo. En España por ejemplo hasta abril de 2014, volar un dron para uso civil estaba absolutamente prohibido. La no regulaci\'on no indicaba que se pudiese volar, indicaba más bien todo lo contrario. Otro tema es el desconocimiento total por parte de las fuerzas del orden del Estado, donde una persona volase un drone y nadie le dijese nada.
-En éste marco regulatorio no se puede por ejemplo, volar un dron en núcleos urbanos, s\'olo debe hacerse en zonas previstas a tal efecto. Tampoco es posible volar un dron de más de 2Kg más allá de donde puedas verlo (500m), y es que antes era muy usual ponerle una cámara y volar varios kil\'ometros con él.
+\item Problemas regulatorios. Otro problema importante que apenas se est\'a empezando a abordar es el regulatorio. Con el fin de minimizar el riesgo para las personas se est\'a llevando a cabo una regulaci\'on del sector en todo el mundo. En España por ejemplo hasta abril de 2014, volar un drone para uso civil estaba absolutamente prohibido. La no regulaci\'on no indicaba que se pudiese volar, indicaba m\'as bien todo lo contrario.
+En este marco regulatorio no se puede por ejemplo, volar un drone en n\'ucleos urbanos, s\'olo debe hacerse en zonas previstas a tal efecto. Tampoco es posible volar un drone de m\'as de 2Kg m\'as all\'a de donde puedas verlo (500m), y es que antes era muy usual ponerle una c\'amara y volar varios kil\'ometros con \'el.
 
-Para hacernos una idea clara del marco regulatorio actual para su uso no profesional basta con fijarnos en la siguiente infografía publicada por la agencia EFE.
-\begin{figure}[H]
+Para hacernos una idea clara del marco regulatorio actual para su uso no profesional basta con fijarnos en la siguiente Figura
+1.1 publicada por la agencia EFE.
+\begin{figure}
   \centering
-  \includegraphics[scale=0.50]{img/infografia_legislacion_drones.jpg}
-  \caption{Infografía de la Agencia EFE con la regulaci\'on}
+  \includegraphics[scale=0.40]{img/infografia_legislacion_drones.jpg}
+  \caption{Infograf\'ia de la Agencia EFE con la regulaci\'on}
   \label{fig:infografia_efe}
 \end{figure}
 
-Para poder utilizar los drones con fines profesionales la ley es aún más restrictiva la Agencia Española de Seguridad Aérea AESA exige el registro de las aeronaves civiles pilotadas por control remoto cuya masa máxima al despegue exceda de 25 kg, que deberán estar inscritas en el Registro de matrícula de aeronaves y disponer de certificado de aeronavegabilidad.
-Para drones de menor peso, el piloto deberá presentar ante la Agencia Estatal de Seguridad Aérea una comunicaci\'on previa y declaraci\'on responsable) con una antelaci\'on mínima de cinco días al día del inicio de la operaci\'on y éste ha de estar habilitado como operdor de drones.
-
-La ley completa se puede consultar el BOE\footnote{\url{ http://www.seguridadaerea.gob.es/media/4243006/rdl_8_2014_4julio.pdf}}
+Para poder utilizar los drones con fines profesionales la ley es a\'un m\'as restrictiva. La Agencia Española de Seguridad A\'erea AESA exige el registro de las aeronaves civiles pilotadas por control remoto cuya masa m\'axima al despegue exceda de 25 kg, que deber\'an estar inscritas en el Registro de matr\'icula de aeronaves y disponer de certificado de aeronavegabilidad.
+Para drones de menor peso, el piloto deber\'a presentar ante la Agencia Estatal de Seguridad A\'erea una comunicaci\'on previa y declaraci\'on responsable) con una antelaci\'on m\'inima de cinco d\'ias al d\'ia del inicio de la operaci\'on y \'este ha de estar habilitado como operador de drones. La ley completa se puede consultar el BOE\footnote{\url{ http://www.seguridadaerea.gob.es/media/4243006/rdl_8_2014_4julio.pdf}}
 
 \end{itemize}
 
-Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, forestal, ingenier\'ia civil y presencia en sectores como el de salvamento o seguridad y protecci\'on el nicho de mercado de los UAV esta lejos de su cima y se investigan dia a dia nuevos usos en sectores como el de la log\'istica o las telecomunicaciones como veremos mas adelante suponiendo un reto constante para investigadores, desarrolladores, ingenieros, inversores y entidades regulatorias.
+Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, forestal, ingenier\'ia civil y presencia en sectores como el de salvamento o seguridad y protecci\'on, el nicho de mercado de los UAV esta lejos de su cima. D\'ia a d\'ia se investigan nuevos usos en sectores como el de la log\'istica o las telecomunicaciones, como veremos m\'as adelante, suponiendo un reto constante para investigadores, desarrolladores, ingenieros, inversores y entidades regulatorias.
 
 
 
@@ -400,23 +384,21 @@ Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, f
 \label{sec:tipos_aeronaves}
 
 
-Las aeronaves son la base sobre las que se asienta la inteligencia que permite que nuestro robot vuele de ah\'i que convenga dedicar unas l\'ineas a entender la base de las mismás y en particular las que son objeto de estudio y desarrollo en este PFC los llamados aerodinos.
+Las aeronaves son la base que permite que nuestro robot vuele, de ah\'i que convenga dedicar unas l\'ineas a entender la base de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC, los llamados aerodinos.
 
-Los aerodinos son aquellas aeronaves que vuelan a pesar de pesar más que el aire, son capaces de generar sustentaci\'on por sus propios medios a diferencia de los aerostatos como por ejemplo los globos aerost\'aticos.
+Los aerodinos son aquellas aeronaves que vuelan a pesar de pesar m\'as que el aire, son capaces de generar sustentaci\'on por sus propios medios a diferencia de los aerostatos como por ejemplo los globos aerost\'aticos. Existen principalmente 2 tipos de aerodinos si atendemos al modo en que generan su sustentaci\'on con sus alas: de ala fija y las de ala rotatoria.
 
-Existen principalmente 2 tipos de aerodinos si atendemos al modo en que generan su sustentaci\'on con sus alas, de ala fija y las de ala rotatoria.
-
-Dentro de la tipificaci\'on de ala fija tenemos aquellas aerodinos que tienes sus alas fijas al fuselaje, y que comunmente conocemos como aviones, seg\'un la OACI, un avi\'on es un «Aerodino propulsado por motor, que debe su sustentaci\'on en vuelo principalmente a reacciones aerodin\'amicas ejercidas sobre superficies que permanecen fijas en determinadas condiciones de vuelo»
+Dentro de los primeros tenemos aquellos aerodinos que tienes sus alas fijas al fuselaje, y que comunmente conocemos como aviones. Seg\'un la OACI, un avi\'on es un «Aerodino propulsado por motor, que debe su sustentaci\'on en vuelo principalmente a reacciones aerodin\'amicas ejercidas sobre superficies que permanecen fijas en determinadas condiciones de vuelo»
 Algunos ejemplos de aerodinos de ala fija son los aeroplanos, planeadores/veleros, aladeltas, parapentes, paramotores y ultraligeros.
 
-Este tipo de aerodinos tienen como principal ventaja que la carga de aire que necesitan en sus alas puede ser producida de muchas formás distinta (los veleros no tienen ning\'un tipo de propulsi\'on). Esta carga es variable en funci\'on de la superficie alar del mismo y permite por tanto cargas más grandes que si instal\'asemos el mismo propulsor en un ala rotatoria.
-Pongamos como ejemplo el A380 de Airbus, es el avi\'on de pasajeros más grande del mundo y cuenta con 4 motores que producen un empuje de entre 70.000 y 80.000lbs, unas 32-36 toneladas de empuje cada uno generando por  tanto entre los 4 a m\'aximo rendimiento y optimás condiciones alrededor de 144 toneladas de empuje. Este avi\'on tiene un peso m\'aximo al despegue\footnote{Peso m\'aximo que es capaz de soportar un avi\'on en su maniobra de despegue}\ de entre 560 y 590 toneladas. Tenemos por tanto que necesitamos en este caso \nicefrac{1}{4} del peso total en empuje para despegar este avi\'on.
+Este tipo de aerodinos tienen como principal ventaja que la carga de aire que necesitan en sus alas puede ser producida de muchas formas distinta (los veleros no tienen ning\'un tipo de propulsi\'on). Esta carga es variable en funci\'on de la superficie alar del mismo y permite por tanto cargas m\'as grandes que si instal\'asemos el mismo propulsor en un ala rotatoria.
+Pongamos como ejemplo el A380 de Airbus, es el avi\'on de pasajeros m\'as grande del mundo y cuenta con 4 motores que producen un empuje de entre 70.000 y 80.000lbs, unas 32-36 toneladas de empuje cada uno generando por  tanto entre los 4 a m\'aximo rendimiento y optim\'as condiciones alrededor de 144 toneladas de empuje. Este avi\'on tiene un peso m\'aximo al despegue\footnote{Peso m\'aximo que es capaz de soportar un avi\'on en su maniobra de despegue}\ de entre 560 y 590 toneladas. Tenemos por tanto que necesitamos en este caso \nicefrac{1}{4} del peso total en empuje para despegar este avi\'on.
 Si hici\'esemos este mismo ejercicio con un aerodino de ala rotatoria como el Boing AH-64 o Apache con un peso m\'aximo al despegue de 9,5 toneladas necesitar\'iamos que la combinaci\'on que realizan empuje y palas superase esos 9,5 toneladas para siguiera levantar del suelo.
-Este tipo de aerodinos son por tanto más eficientes, r\'apidos, con mayor carga de pago, mayor alcance debido a su menor consumo y más estables.
+Este tipo de aerodinos son por tanto m\'as eficientes, r\'apidos, con mayor carga de pago, mayor alcance debido a su menor consumo y m\'as estables.
 
-Dentro de la tipificaci\'on de ala rotatoria tenemos aquellas aerodinos que producen su sustentaci\'on con el movimiento (rotaci\'on) de sus alas. En este tipo de aerodinos las alas, tambi\'en llamadas 'palas' en este tipo de aerodinos, giran en torno a un eje produciendo con este giro la sustentaci\'on necesaria para despegar del suelo.
-Algunos ejemplos de este tipo de aerodinos son los helic\'opteros, autogiros, convertibles o los ampliamente conocidos en robotica aerea los quadrac\'opteros.
-Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su versatilidad a la hora de realizar las maniobras de despegue y aterrizaje que pueden realizarse de forma vertical (VTOL\footnote{Vertical take off and landing }) adem\'as de la capacidad de realizar vuelo estacionario\footnote{Mantenerse est\'aticamente en un punto elevado} que le hacen imprescindible en escenarios poco accesibles o donde nos es posible aterrizar como el rescate mar\'itimo.
+Dentro de la tipificaci\'on de ala rotatoria tenemos aquellas aerodinos que producen su sustentaci\'on con el movimiento (rotaci\'on) de sus alas. En este tipo de aerodinos las alas, tambi\'en llamadas 'palas', que giran en torno a un eje produciendo con este giro la sustentaci\'on necesaria para despegar del suelo.
+Algunos ejemplos de este tipo de aerodinos son los helic\'opteros, autogiros, convertibles o los ampliamente conocidos en rob\'otica aerea los quadric\'opteros.
+Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su versatilidad a la hora de realizar las maniobras de despegue y aterrizaje que pueden realizarse de forma vertical (VTOL\footnote{Vertical take off and landing }), adem\'as de la capacidad de realizar vuelo estacionario\footnote{Mantenerse est\'aticamente en un punto elevado} que le hacen imprescindible en escenarios poco accesibles o donde no es posible aterrizar como el rescate mar\'itimo.
 
 
 \section{Aplicaciones}
@@ -424,54 +406,102 @@ Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su v
 
 La rob\'otica a\'erea ha experimentado un crecimiento exponencial en los \'ultimos años, se ha popularizado su uso y se ha extendido la comercializaci\'on de drones.
 
-El sector donde m\'as r\'apida acogida ha tenido la rob\'otica a\'erea ha sido el sector audiovisual, se usa de forma habitual en cine, grabaci\'on de espect\'aculos en directo televisi\'on y fotograf\'ia. El porqu\'e de tal acogida se basa principalmente en 2 factores, los costes y la viabilidad t\'ecnica. 
-Los costes de realizar una toma a\'erea en una producci\'on antes pasaban por el alquiler de un helic\'optero, dependiendo de la toma, as\'i como del material y la contrataci\'on de los medios humanos a bordo para realizarlas pod\'ia ascender a entre 4000 y 6000 euros la hora. Hoy en d\'ia basta con un pequeño dronde entre 400 y 1800 euros\footnote{Precios aproximados extra\'idos de la empresa especializada World Aviation Helicopters \url{https://www.worldaviation.es/es/servicio-drones.aspx}} por jornada e incluir\'ian en el tramo más elevado piloto y operador de c\'amara.
-Como se puede constatar f\'acilmente el ahorro incurrido no es para nada desdeñable y ofrece a pequeñas productoras acceder a \'este tipo de grabaciones que de otro modo ser\'ian privativas para \'estas.
-Aunque aspecto econ\'omico es especialmente importante para decantarse por el uso de este tipo de medios, existen en el mundo audiovisual trabajos que no hubiesen sido posibles hasta este momento gracias a los drones. Grabaciones en las que el riesgo humano y material que habr\'ia que asumir es tan alto que t\'an solo de \'este modo, debemos por tanto a los drones fotograf\'ias como \'esta que si bien nos se tom\'o como parte de ningún proyecto cinematográfico nos hace una idea de lo que la rob\'otica aérea puede ofrecernos.
+El sector donde m\'as r\'apida acogida ha tenido la rob\'otica a\'erea ha sido el sector audiovisual, se usa de forma habitual en cine, grabaci\'on de espect\'aculos en directo televisi\'on y fotograf\'ia. El porqu\'e de tal acogida se basa principalmente en dos factores, los costes y la viabilidad t\'ecnica. 
+Los costes de realizar una toma a\'erea en una producci\'on antes pasaban por el alquiler de un helic\'optero, dependiendo de la toma, as\'i como del material y la contrataci\'on de los medios humanos a bordo para realizarlas pod\'ia ascender a entre 4000 y 6000 euros la hora. Hoy en d\'ia basta con un pequeño dron de entre 400 y 1800 euros\footnote{Precios aproximados extra\'idos de la empresa especializada World Aviation Helicopters \url{https://www.worldaviation.es/es/servicio-drones.aspx}} por jornada, e incluir\'ian en el tramo m\'as elevado piloto y operador de c\'amara.
+Como se puede constatar f\'acilmente, el ahorro incurrido no es desdeñable y ofrece a pequeñas productoras acceder a \'este tipo de grabaciones que de otro modo ser\'ian privativas.
+Aunque el aspecto econ\'omico es especialmente importante para decantarse por el uso de este tipo de medios, existen en el mundo audiovisual trabajos que no hubiesen sido posibles sin los drones. Grabaciones en las que el riesgo humano y material que habr\'ia que asumir es tan alto que tan solo son factibles de este modo. Debemos por tanto a los drones fotograf\'ias como la de la Figura 1.2 que si bien nos se tom\'o como parte de ning\'un proyecto cinematogr\'afico nos hace una idea de lo que la rob\'otica a\'erea puede ofrecernos.
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.30]{img/drone_volcan.jpg}
-  \caption{Dron grabando en el interior de un crater}
+  \includegraphics[scale=0.45]{img/drone_volcan.jpg}
+  \caption{Drone grabando en el interior de un crater}
   \label{fig:drone_volcan}
 \end{figure}
-Otro sector que ha adaptado rápidamente el uso de éstas pequeñas aeronaves es el agropecuario donde se utiliza para medir la condiciones del terreno, con el fin de recoger informaci\'on sobre la hidrataci\'on, la temperatura o el ritmo de crecimiento de los cultivos. Controlan el riego e incluso esparcen los pesticidas de manera eficiente siendo un arma eficaz contra las plagas, se utilizan incluso como espantapájaros.
-La aplicaci\'on de drones en este sector se remonta a 1983 cuando el Ministerio de Agricultura de Jap\'on preocupado por el envejecimiento de su poblaci\'on rural encarg\'o a Yamaha el desarrollo de una aeronave no tripulada capaz de realizar varias tareas de las anteriormente descritas a fin de atraer más gente al medio rural. En 1990 se entregaron las primeras unidades del Yamaha RMAX y actualmente el 40\% de los arrozales japoneses cuentan con un dron sobrevolándolos.
+Otro sector que ha adaptado r\'apidamente el uso de \'estas pequeñas aeronaves es el agropecuario donde se utiliza para medir la condiciones del terreno, con el fin de recoger informaci\'on sobre la hidrataci\'on, la temperatura o el ritmo de crecimiento de los cultivos. Con el punto de vista e im\'agenes de los drones el agricultor puede tener en tiempo real una foto del estado de su viñedo localizando con facilidad zonas afectadas por plagas o incluso vigilar el cultivo para evitar la entrada de intrusos. Controlan el riego e incluso esparcen los pesticidas de manera eficiente siendo un arma eficaz contra las plagas, se utilizan incluso como espantap\'ajaros.
+La aplicaci\'on de drones en este sector se remonta a 1983 cuando el Ministerio de Agricultura de Jap\'on preocupado por el envejecimiento de su poblaci\'on rural encarg\'o a Yamaha el desarrollo de una aeronave no tripulada capaz de realizar varias tareas de las anteriormente descritas, a fin de atraer m\'as gente al medio rural. En 1990 se entregaron las primeras unidades del Yamaha RMAX y actualmente el 40\% de los arrozales japoneses cuentan con un drone sobrevol\'andolos. Como m\'etodo de riego, el drone tiene dos contenedores que pueden albergar una cantidad de 8 litros cada uno y en caso de utilizarse para esparcimiento de semillas o material granulado, posee otros dos contenedores que se pueden adaptar los cuales tienen una capacidad de 13 litros cada uno. Puede elevarse a una altura de 400 metros y dispone de un sistema de GPS que no solo le permite mayor estabilidad durante el vuelo, sino que tambi\'en le proporciona al usuario la posibilidad de programar la ruta desde antes de ser lanzado. Tiene una autonom\'ia de una hora durante el vuelo.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.30]{img/Yamaha_crop_Sprayer_Drone_RMAX.jpg}
-  \caption{Dron Yamaha RMAX fumigando}
+  \includegraphics[scale=0.50]{img/Yamaha_crop_Sprayer_Drone_RMAX.jpg}
+  \caption{Drone Yamaha RMAX fumigando}
   \label{fig:drone_yamaha}
 \end{figure}
 
+Los drones est\'an empezando a popularizarse en las empresas de seguridad privada. El punto de vista y alcance que proporcionan hacen de los drones herramientas muy potentes y vers\'atiles. Se utilizan principalmente en vigilancia perimetral, d\'onde un drone puede recorrer una ruta de forma aut\'onoma proporcionando im\'agenes de la misma a los vigilantes del centro de c\'amaras o a los \textit{smartphones} o \textit{tablets} de los guardias de seguridad. Se les utiliza tambi\'en como apoyo a la vigilancia tradicional, sobrevolando con ellos zonas de grandes aglomeraciones o apoyando desde las alturas a las patrullas de vigilancia proporcionando, por ejemplo, im\'agenes t\'ermicas de una zona durante la noche. 
+Empresas como la francesa Drone Volt, l\'ider en el sector de los drones profesionales, ha realizado un avance en materia de seguridad con el modelo \textit{Z18 UF (Unlimited Flight)} un drone umbilical capaz monitorizar 24 horas de forma ininterrumpida. Esto es posible gracias a que va unido con un cable a una fuente de alimentaci\'on en tierra y por tanto se reduce la principal limitaci\'on de los drones, el tiempo de vuelo que proporcionan bater\'ias pequeñas y ligeras.
 
-Son utilizados también por los servicios de rescate tras una catástrofe para evaluar los daños experimentados y ayudas a encontrar supervivientes entre los escombros. Algunos son capaces de enviar a los supervivientes paquetes de supervivencia con salvavidas, alimentos o agua mientras esperan su rescate\footnote{\url{http://www.elmundo.es/economia/2015/09/15/55f8239546163fc6598b45c3.html}}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.25]{img/droneVoltZ18ufphoto.jpg}
+  \caption{Drone Volt Z18 UF}
+  \label{fig:drone_volt}
+\end{figure}
 
+En España varias empresas de vigilancia privada ofrecen sus servicios con drones, algunas de ellas son: 
+\begin{itemize}
+\item Aero C\'amaras - http://aerocamaras.es/servicios-drones-profesionales/drones-vigilancia
+\item Prosegur - https://www.prosegur.es/newsdetails/drone-vigilancia-interiores
+\item SkyDron - https://www.skydron.es/seguridad-aerea-privada-drones/
+\end{itemize}
+
+Son utilizados tambi\'en por los servicios de rescate tras una cat\'astrofe para evaluar los daños experimentados y ayudas a encontrar supervivientes entre los escombros. Algunos son capaces de enviar a los supervivientes paquetes de supervivencia con salvavidas, alimentos o agua mientras esperan su rescate\footnote{\url{http://www.elmundo.es/economia/2015/09/15/55f8239546163fc6598b45c3.html}}
+
+Es muy extendido en el mantenimiento de infraestructuras, como su uso en trabajos como:
+\begin{itemize}
+\item La inspecci\'on de tendidos el\'ectricos, d\'onde antes se utilizaban helic\'opteros. Ahora con los drones se obtienen mejores im\'agenes e inspecciones mas precisas y meticulosas sin arriesgar vidas humanas y por una m\'inima parte del coste que se asum\'ia. 
+\item Estos mismos drones tambi\'en se utilizan para la revisi\'on de las palas de los aerogeneradores, evitando que el personal de mantenimiento tenga que descolgarse desde ellos para su an\'alisis.
+\item Se utilizan tambi\'en drones para revisar oleoductos, especialmente en zonas de dif\'icil acceso.
+\item Conservaci\'on de carreteras, detectando el estado de conservaci\'on de las calzadas, obst\'aculos o potenciales situaciones de peligro debido a accidentes o condiciones meteorol\'ogicas adversas.
+\item Supervisi\'on y mantenimiento de presas y embalses.
+\end{itemize}
+La empresa española Ferrovial fue la pionera en España en obtener la licencia para este tipo de trabajos\footnote{\url{http://www.ferrovial.com/es/prensa/noticias/ferrovial-servicios-obtiene-la-licencia-para-operar-drones-en-espana/}}
+
+Es muy importante su uso en topograf\'ia principalmente para obtener topograf\'ia a\'erea mediante t\'ecnicas de fotogrametr\'ia\footnote{T\'ecnica para obtener mapas y planos de grandes extensiones de terreno por medio de la fotograf\'ia a\'erea.}, la empresa española OHL dispone de varios drones a tal efecto y tiene varios proyectos de i+d+i para seguir profundizando en esta materia. 
+De esta manera se pueden estudiar obras en su fase de licitaci\'on, realizar c\'alculos de vol\'umenes y superficies en acopios, control de certificaciones, estudio de patolog\'ias como deslizamiento de taludes y realizar seguimientos.
+OHL 
+Se utilizan en minas a cielo abierto para entre otras muchas funciones:
+\begin{itemize}
+\item Control y monitorizaci\'on de explotaci\'on de minerales y su impacto ambiental
+\item Observaci\'on de operaciones con necesidad de supervisi\'on a\'erea y realizar seguimientos de movimientos de tierra y acumulaci\'on de residuos.
+\item Seguimiento de movimientos de tierra, residuos, balsas, control de relaves,control de pilas,transporte de implementos de un punto a otro.
+\item Realizar la reconstrucci\'on de una mina mediante fotogametr\'ia para medir los vol\'umenes extra\'idos.
+\item Analizar la variaci\'on de alturas entre periodos para determinar los vol\'umenes explotados por periodo.
+\end{itemize}
 E incluso se han empezado a utilizar por el Ministerio de Hacienda de España con fines recaudatorios, sobrevuelan las viviendas o fincas localizando edificaciones no registradas por el catastro con el fin de regularizar su situaci\'on.
 
-El uso de drones es especialmente importante en el ámbito científico para por ejemplo tomar medidas de temperatura y CO2 en zonas peligrosas\footnote{\url{http://www.igepn.edu.ec/servicios/noticias/1395-medidas-de-temperatura-y-co2-de-las-fumarolas-muestreo-y-fotografias-con-drone}}, estudiar las nubes volcánicas\footnote{\url{https://www.nasa.gov/topics/earth/earthmonth/volcanic-plume-uavs.html}} o volar dentro de una grieta en un glaciar\footnote{\url{http://tn.com.ar/tecno/recomendados/increible-un-drone-volo-dentro-de-un-glaciar_648661}}. 
+El uso de drones es especialmente importante en el \'ambito cient\'ifico para por ejemplo tomar medidas de temperatura y CO2 en zonas peligrosas\footnote{\url{http://www.igepn.edu.ec/servicios/noticias/1395-medidas-de-temperatura-y-co2-de-las-fumarolas-muestreo-y-fotografias-con-drone}}, estudiar las nubes volc\'anicas\footnote{\url{https://www.nasa.gov/topics/earth/earthmonth/volcanic-plume-uavs.html}} o volar dentro de una grieta en un glaciar\footnote{\url{http://tn.com.ar/tecno/recomendados/increible-un-drone-volo-dentro-de-un-glaciar_648661}}. 
 
-El futuro del uso de los drones se está escribiendo en este mismo momento y es que poco a poco se investigan con nuevos usos o c\'omo mejorar los ya actuales. 
+El futuro del uso de los drones se est\'a escribiendo en este mismo momento y es que poco a poco se investigan con nuevos usos o c\'omo mejorar los ya actuales. 
 
-Uno de los usos más prometedores que esta siendo investigado es el uso de drones para la logística y paquetería, Amazon estudi\'o en 2105 la viabilidad de utilizar drones para el reparto, especialmente en zonas de difícil acceso o bien alejadas de las zonas habituales de reparto. A finales de dicho año realiz\'o pruebas de entregas en el reino unido y desarrollo un prototipo de alrededor de 25Kg de peso. El objetivo de Amazon, entregas de menos de 3Kg en 30 minutos y una toma de contacto en la entrega de paquetes en zonas pobladas.
-Esto a dado pie a las principales empresas de logística y paquetería a realizar sus propios desarrollos y constuir sus propios prototipos. 
+Uno de los usos m\'as prometedores que est\'a siendo investigado es el de log\'istica y paqueter\'ia, Amazon estudi\'o en 2105 la viabilidad de utilizar drones para el reparto, especialmente en zonas de dif\'icil acceso o bien alejadas de las zonas habituales de reparto. A finales de dicho año realiz\'o pruebas de entregas en el reino unido y desarroll\'o un prototipo de alrededor de 25Kg de peso. El objetivo de Amazon, en \'este experimento, era realizar entregas de hasta 3Kg de peso en menos de 30 minutos y ver la viabilidad de la entrega de paquetes en zonas pobladas.
+
+Esto ha dado pie a las principales empresas de log\'istica y paqueter\'ia a realizar sus propios desarrollos y construir sus propios prototipos. 
 DHL ha realizado sendas pruebas con drones de cerca de 5 Kg para la entrega de paquetes de hasta 1,2 Kg.
-La empresa francesa GeoPost se ha con la empresa Atechsys, especializada en el desarrollo de sistemás aut\'onomos para aeronaves no tripuladas, que ha dado como resultado un dron que cuenta con seis rotores eléctricos y estructura de fibra de carbono, con capacidad para llevar paquetes de un peso aproximado de hasta 2 kilos.
-UPS ha realizado un experimento en tampa con un octoc\'optero que despegaría desde el techo de la furgoneta de reparto para entregar los paquetes en zonas rurales y ahorrar en kilometraje el dron tendía una carga de pago de unos 4,5Kg.
+La empresa francesa GeoPost ha comprado recientemente la empresa Atechsys, especializada en el desarrollo de sistem\'as aut\'onomos para aeronaves no tripuladas. Operaci\'on que ha dado como resultado un drone que cuenta con seis rotores el\'ectricos y estructura de fibra de carbono, con capacidad para llevar paquetes de un peso aproximado de hasta 2 kilos.
+UPS ha realizado un experimento en Tampa con un octoc\'optero que despegar\'ia desde el techo de la furgoneta de reparto para entregar los paquetes en zonas rurales y ahorrar en kilometraje el drone tend\'ia una carga de pago de unos 4,5Kg.
 
-Otro de los estudios que más llama la atenci\'on es el de Google y Facebook que compiten en llevar internet a zonas aisladas a través de una re de drones y satélites.
-Facebook present\'o en su F8 en Marzo de 2015 su prototipo de dron a tal efecto, Aquila, fruto de la adquisici\'on de la empresa especializa en rob\'otica aérea Acenta. Este proyecto se enmarca dentro del plan internet.org y liderado Connectivity Lab\footnote{Un equipo formado por 50 expertos en aeronáutica y ciencia espacial} que pretende ofrecer internet con un coste reducido a todo aquel que no lo tenga.
-En 2014 Google por su parte compr\'o Titan Aeroespace para crear una flota de drones propulsados por energía solar, capaces de volar más de una semana mientras tomaban fotos de la superficie y proveían de acceso a Internet a lugares remotos y proveer nueva informaci\'on para sus mapas. Éste desarrollo sin embargo se ha abandonado en enero de éste año en pro de la utlizacion de globos aerostáticos para tal prop\'osito.
+Otro de los estudios que m\'as llama la atenci\'on es el de Google y Facebook que compiten en llevar internet a zonas aisladas a trav\'es de una red de drones y sat\'elites.
+Facebook present\'o en su F8 en Marzo de 2015 su prototipo de drone a tal efecto, Aquila, fruto de la adquisici\'on de la empresa especializa en rob\'otica a\'erea Acenta. Este proyecto se enmarca dentro del plan internet.org y liderado Connectivity Lab\footnote{Un equipo formado por 50 expertos en aeron\'autica y ciencia espacial} que pretende ofrecer internet con un coste reducido a todo aquel que no lo tenga.
+
+En 2014 Google por su parte compr\'o Titan Aeroespace para crear una flota de drones propulsados por energ\'ia solar, capaces de volar m\'as de una semana mientras tomaban fotos de la superficie y prove\'ian de acceso a Internet a lugares remotos y proveer nueva informaci\'on para sus mapas. Este desarrollo sin embargo se ha abandonado en enero de este año en pro de la utlizacion de globos aerost\'aticos para tal prop\'osito.
  
 \section{Rob\'otica a\'erea en el laboratorio de Rob\'otica de la URJC}
 \label{sec:lab_robotica}
 
-Dentro del laboratorio de rob\'otica de la Universidad Rey Juan Carlos cabe destacar los trabajos realizados para profundizar investigar y experimentar con ellos.
+Dentro del laboratorio de rob\'otica de la Universidad Rey Juan Carlos cabe destacar varios trabajos realizados para profundizar investigar y experimentar con drones y que han servido de antecedentes directos y base para este Proyecto Fin de Carrera. Todos ellos han usado como plataforma software JdeRobot \url{http://jderobot.org/Main_Page}. Se resumen a continuaci\'on los m\'as importantes.
 
-Trabajos como el de Alberto Mart\'inez Florido permiti\'o controlar un AR-Drone real desde una aplicaci\'on cliente, desarrollando para ello un driver para el dron, ardrone\_server y una aplicacci\'on cliente UAV Viewer.
-El driver ardrone\_server es capaz de conectar con el AR-DRONE a través de comandos AT tanto para obtener los datos de todos sus sensores como para controlarlo y expone todo ello en interfaces JdeRobot para su interconexi\'on con todo el software disponible en el framework.
-El AR-Drone es un quadrac\'optero que en su versi\'on actual cuenta con aceler\'ometros, gir\'oscopos y magnet\'ometros en 3 ejes que determinan junto con su bar\'ometro y un sensor de ultrasonidos la actitud del mismo, dispone además de 2 cámaras, una ventral y otra frontal y algunos modelos traen sensor GPS.
-Alberto desarroll\'o también el software de control UAV Viewer, esta aplicaci\'on cliente es capaz de controlar con cualquier drone y mostrar de forma visual su actitud, lo que captan sus cámaras.
+Trabajos como el de Alberto Mart\'inez Florido\cite{amartinflorido:_mediawiki} permiti\'o controlar un AR-Drone 2 de Parrot real desde una aplicaci\'on cliente, desarrollando para ello un driver para el dron, \texttt{ardrone\_server} y una aplicacci\'on cliente \texttt{UAV Viewer}.
+El driver \texttt{ardrone\_server} es capaz de conectar con el AR-DRONE a trav\'es de comandos AT tanto para obtener los datos de todos sus sensores como para controlarlo y expone todo ello en interfaces JdeRobot para su interconexi\'on con todo el software disponible en el entorno.
+
+El AR-Drone es un quadric\'optero que en su versi\'on actual cuenta con aceler\'ometros, gir\'oscopos y magnet\'ometros en 3 ejes que determinan junto con su bar\'ometro y un sensor de ultrasonidos la actitud del mismo, dispone adem\'as de 2 c\'amaras, una ventral y otra frontal, y algunos modelos traen sensor GPS.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.16]{img/ar-drone2.jpg}
+  \caption{AR Drone 2}
+  \label{fig:ardrone2}
+\end{figure}
+
+Alberto desarroll\'o tambi\'en el software de control UAV Viewer, esta aplicaci\'on cliente es capaz de controlar con cualquier drone y mostrar de forma visual su actitud, lo que captan sus c\'amaras.
 
 \begin{figure}[H]
   \centering
@@ -480,11 +510,18 @@ Alberto desarroll\'o también el software de control UAV Viewer, esta aplicaci\'o
   \label{fig:uavviewer}
 \end{figure}
 
-Daniel Yague desarroll\'o un driver para poder simular el comportamiento del AD-Dronde en el simulador Gazebo, de referencia en el departamento de rob\'otica de la universidad y contenido dentro de la suite JdeRobot. Con este desarrollo se hizo posible desarrollar, probar anticipar los problemas que puedan surgir en el vuelo del dron antes siquiera de volarlo, de esta forma es posible el desarrollo de aplicaciones de navegaci\'on complejas sin disponer de el, sin arriesgarlo e independientemente de factores externos como la climatología.
-Para mostrar las posibilidades de desarrollo que se abrían desarroll\'o varias aplicaciones en el ar-drone simulado como un gato-rat\'on donde un dron teleoperado trataba de huir de otro que le seguía o una aplicaci\'on donde el dron seguía una carretera.
+Daniel Yague desarroll\'o un driver (plugin) para simular el comportamiento del AD-Drone en el simulador Gazebo, de referencia en el Laboratorio de Rob\'otica de la universidad y contenido dentro de la suite JdeRobot\cite{daniyague:_mediawiki}. Con este driver se hizo posible probar, anticipar los problemas que puedan surgir en el vuelo del drone antes siquiera de volarlo f\'isicamente. De esta forma es posible el desarrollo de aplicaciones de navegaci\'on complejas sin disponer de \'el, sin arriesgarlo e independientemente de factores externos como la climatolog\'ia.
+Para mostrar las posibilidades que se abr\'ian desarroll\'o varias aplicaciones en el ar-drone simulado como un gato-rat\'on donde un drone teleoperado trataba de huir de otro que le segu\'ia o una aplicaci\'on donde el drone segu\'ia una carretera.
 
-Jorge Cano construy\'o propio su dron utilizando como base un quadrac\'optero con un Intel Compute Stick (ICS) STCK1A8LFC como ordenador de abordo y una placa Pixhawnk como placa estabilizadora/piloto automático. Esta placa utiliza como protocolo de comunicaci\'on MAVLink\footnote{Micro Air Vehicle Link \url{https://en.wikipedia.org/wiki/MAVLink}} y dispone de aceler\'ometros, gir\'oscopos y magnet\'ometros para determinar la actitud.
-Además de la construcci\'on del drone Jorge desarroll\'o el driver MAVLinkServer donde apoyándose en MAVProxy adapt\'o los comandos MAVLink a interfaces JdeRobot permitiendo acceder a la actitud y controlar el drone con comandos tipo GotoXY enviados a través del interfaz Pose3D\footnote{Ver capítulo 3 Arquitectura utilizada}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.57]{img/ArDrone_model.png}
+  \caption{AR Drone Simulado en Gazebo}
+  \label{fig:ardrone_gazebo}
+\end{figure}
+
+Jorge Cano construy\'o propio su drone utilizando como base un quadric\'optero con un procesador Intel Compute Stick (ICS) STCK1A8LFC como ordenador de abordo y una placa Pixhawk como placa estabilizadora/piloto autom\'atico\cite{jocano:_mediawiki}. Esta placa utiliza como protocolo de comunicaci\'on MAVLink\footnote{Micro Air Vehicle Link \url{https://en.wikipedia.org/wiki/MAVLink}} y dispone de aceler\'ometros, gir\'oscopos y magnet\'ometros para determinar la actitud.
+Adem\'as de la construcci\'on del drone Jorge desarroll\'o el driver MAVLinkServer donde apoy\'andose en MAVProxy adapt\'o los comandos MAVLink a interfaces JdeRobot permitiendo acceder a la actitud y controlar el drone con comandos tipo GotoXY enviados a trav\'es del interfaz Pose3D\footnote{Ver cap\'itulo 3 Arquitectura utilizada}
 
 \begin{figure}[h]
 \centering
@@ -492,16 +529,40 @@ Además de la construcci\'on del drone Jorge desarroll\'o el driver MAVLinkServer
    \label{f:Ordenador de abordo}
     \includegraphics[width=0.3\textwidth]{img/Compuandcaminstall.JPG}}
   \subfloat[camaras]{
-   \label{f:Cámaras de abordo}
+   \label{f:C\'amaras de abordo}
     \includegraphics[width=0.535\textwidth]{img/FPVcamara.jpg}}
  \label{f:drone_cano}
 \end{figure}
 
-En la actualidad se estan desarrollando nuevos trabajos sobre este tipo de placas estabilizadoras que tiene como software base ArduCopter/Ardupilot o son compatibles.
+En la actualidad se est\'an desarrollando nuevos trabajos sobre este tipo de placas estabilizadoras que tiene como software base ArduCopter/Ardupilot o son compatibles. Por un lado Diego Jim\'enez\cite{jimenez:_mediawiki} trabaja en controlar un Solo Drone de la empresa 3DR\footnote{Empresa norteamericana con sede en California especializada en rob\'otica a\'erea. Se sit\'ua en 2017 como la 3ª empresa del sector} mediante el interfaz de velocidades CMDVel\footnote{Ver cap\'itulo 3 Arquitectura utilizada}, este quadrac\'otero tiene como placa de control una Pixhawk como la utilizada por Jorge Vela en el drone que se construy\'o y utiliza tambi\'en comamdos MAVLink.
 
-Diego Jimenez trabaja en controlar un Solo Drone de la empresa 3DR\footnote{Empresa norteamericana con sede en California especializada en rob\'otica a\'erea. Se sit\'ua en 2017 como la 3ª empresa del sector} mediante el interfaz de velocidades CMDVel\footnote{Ver capítulo 3 Arquitectura utilizada}, este quadrac\'otero tiene como placa de control una Pixhawnk como la utilizada por Jorge Vela en el dron que se construy\'o y utiliza también comamdos MAVLink.
+Por otro lado Jorge Vela se encuentra desarrollando c\'omo realizar la maniobra de aterrizaje de forma autom\'atica al localizar un patr\'on o baliza localizado visi\'on\cite{jvela:_mediawiki}. Como drone de referencia est\'a utilizando un Solo Drone con una Intel Stick como ordenador de abordo.
 
-Jorge Vela se encuentra desarrollando como realizar la maniobra de aterrizaje de forma autom\'atica al localizar un patr\'on o baliza localizado visi\'on, como drone estan utilizando un Solo Drone con una Intel Stick como ordenador de abordo.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.60]{img/3DR-solo.jpg}
+  \caption{SOLO Drone de 3D Robotics}
+  \label{fig:3dr_solo}
+\end{figure}
+
+Crear clientes web para las principales aplicaciones JdeRobot fue tarea de Aitor Mart\'inez\cite{aitor:_mediawiki}. En desarroll\'o 6 clientes: CameraViewJS, que recibe datos de CameraServer
+RgbdViewerJS, que recibe datos de Openni1Server
+KobukiViewerJS, que permite teleoperar robots Kobuki
+UavViewerJS: Creaci\'on del cliente web similar a la herramienta UavViewer para teleoperar drones tanto reales como simulados y ver los datos de sus sensores.
+IntrorobKobukiJS, que permite programar comportamientos como introrob en una interfaz Web
+IntrorobUavJS, permite programar comportamientos aut\'onomos en una en una interfaz Web similar a UAV Viewer
+Gracias a \'estos desarrollos, se pod\'ia teleoperar un drone desde cualquier dispositivo que tenga un navegador web, como un m\'ovil o una tablet.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.26]{img/js-jderobot.png}
+  \caption{Drone teleoperado con tel\'efono m\'ovil}
+  \label{fig:js_jderobot}
+\end{figure}
+
+En este contexto este PFC aborda el soporte de un nuevo robot \'aereo, diferentes a todos los usados en el Laboratorio de Rob\'otica hasta la fecha: un avi\'on de ala fija. Adem\'as se integrar\'a con las herramientas ya existentes para robots a\'ereos dentro de la plataforma JdeRobot.
+
+La memoria de este PFC se ha vertebrado en 7 cap\'itulos. En el segundo se fijan los objetivos concretos que se persiguen y los requisitos marcados. A continuaci\'on se describe la infraestructura, tanto hardware como software, utilizada en el desarrollo de este trabajo. En el cap\'itulo 4 se detalla el desarrollo del driver \texttt{APM Server} y se desgrana la aplicaci\'on \texttt{UAV Commander} en el cap\'itulo 5. En el sexto se muestran los experimentos realizados y en el s\'eptimo las conclusiones alcanzadas.
 
 \chapter{Objetivos}
 \label{sec:objetivos}
@@ -513,7 +574,7 @@ Los objetivos de este proyecto final de carrera es dar un soporte en la platafor
 \begin{enumerate}
 \item Preparaci\'on del hardware necesario para abordar el problema con un avi\'on real.
 \item Desarrollo de un driver que acceda a los sensores y actuadores de drones de ala fija que utlicen MAVLink y dar soporte a la actuaci\'on de misiones que hasta ahora no soportaba JdeRobot el driver se llamara APM Server siglas de Ardupilot Mega Server.
-\item Desarrollo de una aplicaci\'on GCS Ground Control Station que permita al operador introducir misiones y seguir el cumplimiento de las mismas a través de el. Permitiendo el acceso a toda la actitud y a las cámaras de abordo. Se llamará UAV Commander.
+\item Desarrollo de una aplicaci\'on GCS Ground Control Station que permita al operador introducir misiones y seguir el cumplimiento de las mismas a trav\'es de el. Permitiendo el acceso a toda la actitud y a las c\'amaras de abordo. Se llamar\'a UAV Commander.
 \item Experimentos en simulaci\'on. Conectaremos nuestro driver APM Server al simulador SITL y el UAV Commander al APM Server para poder simular el seguimiento de misiones.
 \item Experimentos en el avi\'on real. Montaremos la avi\'onica en el avi\'on real y lo llevaremos al campo de vuelo para validar su comportamiento.
 \end{enumerate}
@@ -521,35 +582,35 @@ Los objetivos de este proyecto final de carrera es dar un soporte en la platafor
 \section{Requisitos}
 \label{requisitos}
 
-Para abordar con éxito los milestones expuestos anteriormente debemos cubrir los siguientes requisitos:
+Para abordar con \'exito los milestones expuestos anteriormente debemos cubrir los siguientes requisitos:
 \begin{enumerate}
 	\item Preparaci\'on del hardware necesario.
 	\begin{enumerate}
 		\item Compra del hardware necesario:
 		\begin{itemize}
 			\item Raspberry Pi, se empez\'o por la Raspberry 2 y se ha adquirido posteriormente la 3.
-			\item Cámara Picam.
+			\item C\'amara Picam.
 			\item Ardupilot Mega junto con GPS.
 			\item Avi\'on de radiocontrol Bix3.
-			\item Kit de motorizaci\'on más potente.
+			\item Kit de motorizaci\'on m\'as potente.
 		\end{itemize}
 		\item Instalaci\'on de Raspbian y JdeRobot en Raspberry Pi.
-		\item Pruebas de vídeo en Raspberry Pi con cameraserver.
+		\item Pruebas de v\'ideo en Raspberry Pi con cameraserver.
 	\end{enumerate}
 	\item APM Server
 	\begin{enumerate}
 		\item Dar acceso a los sensores del APM y servir en forma de Pose3D y NavData:
 		\begin{enumerate}
 			\item Conectar con el APM
-			\item Leer los mensajes que envían sus sensores.
+			\item Leer los mensajes que env\'ian sus sensores.
 			\item Implementar los interfaces Pose3D y NavData con esta informaci\'on.
-			\item Servir a través de Ice todos los interfaces.
+			\item Servir a trav\'es de Ice todos los interfaces.
 		\end{enumerate}
-		\item Dar acceso a instrucciones de actuaci\'on a través del interfaz mission.
+		\item Dar acceso a instrucciones de actuaci\'on a trav\'es del interfaz mission.
 		\begin{enumerate}
-			\item Recibir a través de Ice un objeto de misi\'on.
+			\item Recibir a trav\'es de Ice un objeto de misi\'on.
 			\item Construir los comandos MAVLink necesarios para que el APM sepa interpretar y realizar la misi\'on.
-			\item Recibir los comandos de despegue y aterrizaje a través del interfaz Extra.
+			\item Recibir los comandos de despegue y aterrizaje a trav\'es del interfaz Extra.
 			\item Construir los comandos MAVLink necesarios para que el APM sepa interpretarlos y añadirlos a la misi\'on.
 		\end{enumerate}
 	\end{enumerate}
@@ -559,10 +620,10 @@ Para abordar con éxito los milestones expuestos anteriormente debemos cubrir los
 		\item Funcionalidad de creaci\'on de misiones:
 		\begin{enumerate}
 			\item Recuperar mapa georeferenciado de un servicio WMS.
-			\item Capacidad de actuar sobre él para añadir puntos de misi\'on.
-			\item Añadir botones de despegue y aterrizaje que interactúen con el mapa.
+			\item Capacidad de actuar sobre \'el para añadir puntos de misi\'on.
+			\item Añadir botones de despegue y aterrizaje que interact\'uen con el mapa.
 			\item Borrado de misi\'on actual.
-			\item Envío de misi\'on al APM.
+			\item Env\'io de misi\'on al APM.
 		\end{enumerate}
 		\item Funcionalidad de seguimiento de misiones:
 		\begin{enumerate}
@@ -570,68 +631,68 @@ Para abordar con éxito los milestones expuestos anteriormente debemos cubrir los
 			\item Recuperar nuevo mapa con mayor zoom si se prevee la salida del actual mapa.
 		\end{enumerate}
 		\item Acceso a la informaci\'on de actitud de forma visual.
-		\item Acceso a las cámaras de abordo.
+		\item Acceso a las c\'amaras de abordo.
 	\end{enumerate}	
 	\item Experimentos en simulaci\'on.
 	\begin{enumerate}
-		\item Montaje de máquina virtual para el simulador
+		\item Montaje de m\'aquina virtual para el simulador
 		\item Instalaci\'on de SITL.
 		\item Conectar APM server a SITL.
 		\item Ejecuci\'on de plan de pruebas simuladas:
 		\begin{enumerate}
 			\item Prueba de integraci\'on de todo el software.
-			\item Prueba envío de misi\'on con avi\'on en vuelo.
-			\item Prueba de envío de misi\'on con despegue y varios waypoints.
-			\item Prueba de envío de misi\'on con despegue y aterrizaje.
+			\item Prueba env\'io de misi\'on con avi\'on en vuelo.
+			\item Prueba de env\'io de misi\'on con despegue y varios waypoints.
+			\item Prueba de env\'io de misi\'on con despegue y aterrizaje.
 			\item Prueba de autozoom forzando la salida del avi\'on del mapa.
 		\end{enumerate}
 	\end{enumerate}
 	\item Experimentos en el avi\'on real.
 	\begin{enumerate}
-		\item Pruebas de envío recepci\'on del sistema de radiofrecuencias.
+		\item Pruebas de env\'io recepci\'on del sistema de radiofrecuencias.
 		\item Pruebas de conexi\'on con APM Server y UAV Commander.
 		\item Ejecuci\'on de plan de pruebas:
 		\begin{enumerate}
-			\item Pruebas de seguimiento del avi\'on a través del UAV Commander.	
-			\item Prueba de envío de misi\'on desde el avi\'on en vuelo.
+			\item Pruebas de seguimiento del avi\'on a trav\'es del UAV Commander.	
+			\item Prueba de env\'io de misi\'on desde el avi\'on en vuelo.
 		\end{enumerate}
 \end{enumerate}
 \end{enumerate}
 
-Cómo requisitos no funcionales debemos:
+C\'omo requisitos no funcionales debemos:
 \begin{enumerate}
 \item Ser multiplataforma.
-\item Utilizar únicamente librerías de software libre.
+\item Utilizar \'unicamente librer\'ias de software libre.
 \item Ser 100\% compatibles con los actuales interfaces JdeRobot.
 \end{enumerate}
 
-\section{Metodología y plan de trabajo}
-\label{metodología}
+\section{Metodolog\'ia y plan de trabajo}
+\label{metodolog\'ia}
 
-Este proyecto se ha abordado en con 2 metodologías de trabajo distintas que combinadas, la primera metodología de desarroll\'o aplicada es el desarrollo en espiral que se ha utilizado como metodología principal, y la segunda que se ha aplicado la metodología ágil Kanban, para un control de tareas y subtareas más eficiente.
+Este proyecto se ha abordado en con 2 metodolog\'ias de trabajo distintas que combinadas, la primera metodolog\'ia de desarroll\'o aplicada es el desarrollo en espiral que se ha utilizado como metodolog\'ia principal, y la segunda que se ha aplicado la metodolog\'ia \'agil Kanban, para un control de tareas y subtareas m\'as eficiente.
 
 \begin{figure}[h]
 \centering
-  \subfloat[Representaci\'on gráfica del desarrollo en espiral.]{
+  \subfloat[Representaci\'on gr\'afica del desarrollo en espiral.]{
    \label{f:espiral}
     \includegraphics[width=0.4\textwidth]{img/359px-ModeloEspiral.png}}
-  \subfloat[Representación de una pizarra kanban]{
+  \subfloat[Representaci\'on de una pizarra kanban]{
    \label{f:kanban}
     \includegraphics[width=0.52\textwidth]{img/kanban.png}}
 \end{figure}
 
 
-El modelo de desarrollo en espiral define una serie de ciclos que se repiten en un bucle hasta el final del proyecto, dividiéndolo
-en varias subtareas más sencillas y estableciendo puntos de control al final de cada iteraci\'on en los que se
-evalúa el trabajo realizado y se enfocan las nuevas tareas para continuar.
-Esta metodología recibe su nombre por la forma de espiral que tiene su representaci\'on gráfica o diagrama
+El modelo de desarrollo en espiral define una serie de ciclos que se repiten en un bucle hasta el final del proyecto, dividi\'endolo
+en varias subtareas m\'as sencillas y estableciendo puntos de control al final de cada iteraci\'on en los que se
+eval\'ua el trabajo realizado y se enfocan las nuevas tareas para continuar.
+Esta metodolog\'ia recibe su nombre por la forma de espiral que tiene su representaci\'on gr\'afica o diagrama
 de flujo, que podemos ver en la figura 2.1. En cada iteraci\'on se llevan a cabo las siguientes actividades:
 Determinar los objetivos, dividir en subobjetivos y fijar requisitos.
 Analizar los riesgos y factores que impidan o dificulten el trabajo y las consecuencias negativas
 que este pueda ocasionar.
 
-Para desarrollar las tareas especificadas en cada incremento, fijadas en cada reunión de seguimiento, se utilizó la metodología kanban. Esta metodología de desarrollo no es más que una adaptación de su versión industrial que surgió en Toyota. A finales de los años 40, Toyota empezó a optimizar sus procesos de ingeniería a partir del modelo que empleaban los supermercados para llenar los estantes. Los supermercados almacenan los productos suficientes para suplir la demanda del cliente, una práctica que optimiza el flujo entre el supermercado y el cliente. 
-En su versión TIC ésta metodología se centra, al igual que su versión industrial, en el just in time y permite ver de una forma muy visual tas tareas que hay en vuelo, desarrolladas, pendientes o bloqueadas pudiendo anticiparnos a cuellos de botella o bloqueos de forma sencilla. Esta metodología nos permite visualizar tareas que a priori no tienen relación pero se relacionan a un nivel mas profundo y agruparlas para optimizar el tiempo.
+Para desarrollar las tareas especificadas en cada incremento, fijadas en cada reuni\'on de seguimiento, se utiliz\'o la metodolog\'ia kanban. Esta metodolog\'ia de desarrollo no es m\'as que una adaptaci\'on de su versi\'on industrial que surgi\'o en Toyota. A finales de los años 40, Toyota empez\'o a optimizar sus procesos de ingenier\'ia a partir del modelo que empleaban los supermercados para llenar los estantes. Los supermercados almacenan los productos suficientes para suplir la demanda del cliente, una pr\'actica que optimiza el flujo entre el supermercado y el cliente. 
+En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on industrial, en el just in time y permite ver de una forma muy visual tas tareas que hay en vuelo, desarrolladas, pendientes o bloqueadas pudiendo anticiparnos a cuellos de botella o bloqueos de forma sencilla. Esta metodolog\'ia nos permite visualizar tareas que a priori no tienen relaci\'on pero se relacionan a un nivel m\'as profundo y agruparlas para optimizar el tiempo.
 
 \begin{figure}[h]
 \centering
@@ -653,22 +714,22 @@ En su versión TIC ésta metodología se centra, al igual que su versión industrial
     \includegraphics[width=0.31\textwidth]{img/IMG_1249.jpg}
    \label{f:kanban}
     \includegraphics[width=0.31\textwidth]{img/IMG_0063.jpg}
-\caption{Evolución de nuestra}
+\caption{Evoluci\'on de nuestra}
 \end{figure}
 
 
 Durante el ciclo de vida del proyecto se han llevado a cabo reuniones semanales de seguimiento con el tutor. En ellas
-se evaluaban las tareas realizadas y se marcaba qué direcci\'on tomar para la siguiente iteración o incremento. Si los
-puntos marcados en la anterior reuni\'on no se habían alcanzado se ampliaba el plazo o se discutían otras
-vías para avanzar. En caso contrario se proponían nuevos subobjetivos.
+se evaluaban las tareas realizadas y se marcaba qu\'e direcci\'on tomar para la siguiente iteraci\'on o incremento. Si los
+puntos marcados en la anterior reuni\'on no se hab\'ian alcanzado se ampliaba el plazo o se discut\'ian otras
+v\'ias para avanzar. En caso contrario se propon\'ian nuevos subobjetivos.
 
 
 Para apoyarnos en nuestro desarrollo hemos utilizado principalmente 4 herramientas:
 \begin{itemize} 
-\item GitHub como forja y control de versiones. En el repositorio https://github.com/RoboticsURJC-students/2014-pfc-JoseAntonio-Fernandez  se almacenan todos los desarrollos que son objetivo de éste PFC así como ésta memoria. También se encuentran subproductos de desarrollo que han ido surgiendo como apoyo o pruebas a los desarrollos principales.
-\item Contamos también con un mediawiki en JdeRobot dónde hemos actualizado peri\'odicamente nuestros avances acompañados con explicaciones, vídeos e imágenes. Aquí se puede contemplar con mas detalle la construcción del UAV.
+\item GitHub como forja y control de versiones. En el repositorio https://github.com/RoboticsURJC-students/2014-pfc-JoseAntonio-Fernandez  se almacenan todos los desarrollos que son objetivo de \'este PFC as\'i como \'esta memoria. Tambi\'en se encuentran subproductos de desarrollo que han ido surgiendo como apoyo o pruebas a los desarrollos principales.
+\item Contamos tambi\'en con un mediawiki en JdeRobot d\'onde hemos actualizado peri\'odicamente nuestros avances acompañados con explicaciones, v\'ideos e im\'agenes. Aqu\'i se puede contemplar con m\'as detalle la construcci\'on del UAV.
 \item Como apoyo principalmente al mediawiki dispusimos de una carpeta en el FTP de JdeRobot hasta que colgamos los videos en Youtube.
-\item Youtube. Muchos de los vídeos del mediawiki han sido compartidos en youtube.com.
+\item Youtube. Muchos de los v\'ideos del mediawiki han sido compartidos en youtube.com.
 \end{itemize}
 
 
@@ -689,7 +750,7 @@ Este PFC se apoya principalmente en 2 piezas hardware:
 
 
 \begin{itemize}
-\item El avi\'on a radio-control. Para este desarrollo hemos elegido el avi\'on Bix3 distribuido por la empresa china \url{www.hobbyking.com}, hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Otro aspecto importante de la constrcci\'on del avi\'on es que el propulsor no se encuentra en el frontal del avi\'on lo que nos permitirá aprovechar al máximo esa zona pudiendo poner incluso una cámara frontal.
+\item El avi\'on a radio-control. Para este desarrollo hemos elegido el avi\'on Bix3 distribuido por la empresa china \url{www.hobbyking.com}, hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Otro aspecto importante de la constrcci\'on del avi\'on es que el propulsor no se encuentra en el frontal del avi\'on lo que nos permitir\'a aprovechar al m\'aximo esa zona pudiendo poner incluso una c\'amara frontal.
 
 \begin{figure}[h]
 \centering
@@ -707,13 +768,13 @@ Este PFC se apoya principalmente en 2 piezas hardware:
 
 Para poder cargar con el equipo necesario nos ha sido necesario cambiar el motor, el variador y las bater\'ias de serie por otras de mayor rendimiento que nos permitan volar con tanta carga de pago.
 
-\item Una raspberry PI3 que es nuestro ordenador de abordo y en el que instalaremos la infraestructura necesaria para que podamos dotarle de inteligencia. Hemos elegido \'este dispositivo debido al compromiso peso/potencia que nos otorga as\'i como porque se trata de un hardware muy asequible  y extendido. Conectado a esta PI3 irá una PiCam que nos permitira ver lo que el avi\'on vea.
+\item Una raspberry PI3 que es nuestro ordenador de abordo y en el que instalaremos la infraestructura necesaria para que podamos dotarle de inteligencia. Hemos elegido \'este dispositivo debido al compromiso peso/potencia que nos otorga as\'i como porque se trata de un hardware muy asequible  y extendido. Conectado a esta PI3 ir\'a una PiCam que nos permitira ver lo que el avi\'on vea.
 \end{itemize} 
 
 \section{Placa estabilizadora}
 \label{sec:estabilizadora}
 
-El estabilizador/piloto autom\'atico, para este desarrollo hemos optado por un Ardupilot Mega\footnote{\url{http://www.ardupilot.co.uk/}}. Este dispositivo tiene como base una placa Arduino Mega a la que se le han incoorporado, gir\'oscopos y acerel\'ometros en 3 ejes para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula. El kit que adquirimos incluye también también 
+El estabilizador/piloto autom\'atico, para este desarrollo hemos optado por un Ardupilot Mega\footnote{\url{http://www.ardupilot.co.uk/}}. Este dispositivo tiene como base una placa Arduino Mega a la que se le han incoorporado, gir\'oscopos y acerel\'ometros en 3 ejes para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula. El kit que adquirimos incluye tambi\'en tambi\'en 
 Esta placa ataca directamente sobre los actuadores del avi\'on (los servos y el motor) a trav\'es de señales PWM. 
 
 \begin{figure}[H]
@@ -725,29 +786,29 @@ Esta placa ataca directamente sobre los actuadores del avi\'on (los servos y el 
 
 Esta placa ha de flashearse con un firmware en funci\'on del tipo de aeronave que utilicemos como base, Arducoopter para alas rotatorias o Ardupilot para alas fijas.
 
-Esta y otras placas similares como PixHawnk ofrecen un interfaz que se apoya en comandos llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, a los que incoorpora la placa o a los que le añadamos a la misma como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar ordenes al piloto autom\'atico quien las ejecutar\'a más adelante trataremos el protocolo MAVLink en profundidad. Cabe sin embargo destacar ya en este punto no s\'olo que algunos de los comando que mandemos tendran distinto comportamiento en la placa en funcion del firmware escogido sino que hay set de comandos que no pueden ser utilizados en uno o en otro.
+Esta y otras placas similares como PixHawnk ofrecen un interfaz que se apoya en comandos llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, a los que incoorpora la placa o a los que le añadamos a la misma como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar ordenes al piloto autom\'atico quien las ejecutar\'a m\'as adelante trataremos el protocolo MAVLink en profundidad. Cabe sin embargo destacar ya en este punto no s\'olo que algunos de los comando que mandemos tendran distinto comportamiento en la placa en funcion del firmware escogido sino que hay set de comandos que no pueden ser utilizados en uno o en otro.
 
 
 \section{JdeRobot}
 \label{sec:jderobot}
 
-JdeRobot es un framework desarrollado por el laboratorio de rob\'otica de la Universidad Rey Juan Carlos, para el desarrollo de aplicaciones de rob\'otica. Su última realease la 5.5 se liber\'o el 15 de Marzo de 2017 pudiendo ver los detalles de ésta en el github oficial\footnote{\url{https://github.com/JdeRobot/JdeRobot/wiki/JdeRobot-5.5.0}}.
-JdeRobot se compone de interfaces, drivers, utilidades y aplicaciones para el desarrollo de cualquier proyecto de rob\'otica, se apoya en estos interfaces, algunos de ellos los veremos en profundidad a continuaci\'on, para interconectar entre sí todos los aplicativos del mismo y en Zeroc ICE para la comunicaci\'on entre ellos.
-Algunos de los driver mas importantes que contiene serían:
+JdeRobot es un framework desarrollado por el laboratorio de rob\'otica de la Universidad Rey Juan Carlos, para el desarrollo de aplicaciones de rob\'otica. Su \'ultima realease la 5.5 se liber\'o el 15 de Marzo de 2017 pudiendo ver los detalles de \'esta en el github oficial\footnote{\url{https://github.com/JdeRobot/JdeRobot/wiki/JdeRobot-5.5.0}}.
+JdeRobot se compone de interfaces, drivers, utilidades y aplicaciones para el desarrollo de cualquier proyecto de rob\'otica, se apoya en estos interfaces, algunos de ellos los veremos en profundidad a continuaci\'on, para interconectar entre s\'i todos los aplicativos del mismo y en Zeroc ICE para la comunicaci\'on entre ellos.
+Algunos de los driver m\'as importantes que contiene ser\'ian:
 \begin{enumerate}
-\item Cameraserver. Se trata de un driver para enviar imágenes y video a través del interfaz camera
-\item Gazeboserver. Driver desarrollado para conectar la herramienta de simulaci\'on Gazebo con JdeRobot y así poder simular los desarrollos.
+\item Cameraserver. Se trata de un driver para enviar im\'agenes y video a trav\'es del interfaz camera
+\item Gazeboserver. Driver desarrollado para conectar la herramienta de simulaci\'on Gazebo con JdeRobot y as\'i poder simular los desarrollos.
 \item MAVLinkServer. Desarrollado para intercomunicar JdeRobot con placas que utilicen el protocolo de comunicaci\'on MAVLink.
-\item Ardrone\_server. Driver que conecta el Parrot Ar-Drone a JdeRobot. Este driver escrito en c++ transforma el set de comandos AT del done en interfaces y viceversa, implementa los interfaces camera, cmdvel, navdata, extra y pose3D y permite acceder a la actitud del drone así como a sus 2 cámaras. Sirve también datos como el nivel de la batería y permite grabar vídeo o tomar fotos.
+\item Ardrone\_server. Driver que conecta el Parrot Ar-Drone a JdeRobot. Este driver escrito en c++ transforma el set de comandos AT del done en interfaces y viceversa, implementa los interfaces camera, cmdvel, navdata, extra y pose3D y permite acceder a la actitud del drone as\'i como a sus 2 c\'amaras. Sirve tambi\'en datos como el nivel de la bater\'ia y permite grabar v\'ideo o tomar fotos.
 \end{enumerate}
-Algunas de las aplicaciones desarrolladas más importantes serían:
+Algunas de las aplicaciones desarrolladas m\'as importantes ser\'ian:
 \begin{enumerate}
-\item Cameraview. Se trata de una aplicaci\'on desarrollada en c++ capaz de recibir vídeo a través del interfaz camera.
-\item UAV viewer. Aplicaci\'on desarrollada como ground control de robots aéreos. Esta aplicaci\'on permite teleoperar cualquier tipo de robot aéreo y ofrece de forma visualmente atractiva datos como la actitud, velocidades lineales y angulares, ofrece también la posibilidad de visualizar videos servidos por el interfaz camera.
+\item Cameraview. Se trata de una aplicaci\'on desarrollada en c++ capaz de recibir v\'ideo a trav\'es del interfaz camera.
+\item UAV viewer. Aplicaci\'on desarrollada como ground control de robots a\'ereos. Esta aplicaci\'on permite teleoperar cualquier tipo de robot a\'ereo y ofrece de forma visualmente atractiva datos como la actitud, velocidades lineales y angulares, ofrece tambi\'en la posibilidad de visualizar videos servidos por el interfaz camera.
 \end{enumerate}
 \subsection{Interfaces}
 
-JdeRobot expone más de 30 interfaces pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado:
+JdeRobot expone m\'as de 30 interfaces pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado:
 \begin{itemize}
 \item Pose3D. Utilizado para recoger los datos de actitud y la posici\'on de la aeronave.
 {\scriptsize
@@ -857,19 +918,19 @@ class NavdataData
 \section{MAVLink}
 \label{sec:mavlink}
 
-MAVLink siglas de Micro Air Vehicle Link es un protocolo de comunicaci\'on desarrollado para comunicar las placas estabilizadoras con piloto automático a los GCS o Ground control station, las aplicaciones desde las que se podía enviar misiones y seguir el cumplimiento de las mismas desde tierra.
-MAVLink se public\'o en 2009 por Lorenz Meier, publicado bajo licencia LGPL aspira a convertirse en el protocolo standard en rob\'otica aérea y se ha probado su funcionamiento en PX4, PIXHAWK, APM\footnote{Ardupilot Mega} y Parrot AR.Drone.
+MAVLink siglas de Micro Air Vehicle Link es un protocolo de comunicaci\'on desarrollado para comunicar las placas estabilizadoras con piloto autom\'atico a los GCS o Ground control station, las aplicaciones desde las que se pod\'ia enviar misiones y seguir el cumplimiento de las mismas desde tierra.
+MAVLink se public\'o en 2009 por Lorenz Meier, publicado bajo licencia LGPL aspira a convertirse en el protocolo standard en rob\'otica a\'erea y se ha probado su funcionamiento en PX4, PIXHAWK, APM\footnote{Ardupilot Mega} y Parrot AR.Drone.
 
 Un ejemplo de comando MAVLink ser\'ia:
 {\scriptsize
 \begin{verbatim}
 type GpsStatus struct {
-    SatellitesVisible  uint8      Némero de satélites visibles
-    SatellitePrn       [20]uint8  Id Global de cada satélite
-    SatelliteUsed      [20]uint8  Lista con el uso de cada satélite
-    SatelliteElevation [20]uint8  Elevaci\'on, nos da el ángulo sobre el horizonte.
-    SatelliteAzimuth   [20]uint8  Direcci\'on del satélite, 0: 0 grados, 255: 360 grados.
-    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los satélites
+    SatellitesVisible  uint8      N\'emero de sat\'elites visibles
+    SatellitePrn       [20]uint8  Id Global de cada sat\'elite
+    SatelliteUsed      [20]uint8  Lista con el uso de cada sat\'elite
+    SatelliteElevation [20]uint8  Elevaci\'on, nos da el \'angulo sobre el horizonte.
+    SatelliteAzimuth   [20]uint8  Direcci\'on del sat\'elite, 0: 0 grados, 255: 360 grados.
+    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los sat\'elites
 }
 \end{verbatim}}
 Este mensaje trae la informaci\'on del enlace actual con el GPS y se env\'ia peri\'odicamente en ciclos que decidimos en par\'ametros de conexi\'on con el dispositivo.
@@ -877,14 +938,14 @@ Otro par\'ametro, esta vez vinculado a la actuaci\'on ser\'ia:
 {\scriptsize
 \begin{verbatim}
 type MissionItem struct {
-    Param1          float32    parámetro variable en funci\'on del comando.
-    Param2          float32    parámetro variable en funci\'on del comando.
-    Param3          float32    parámetro variable en funci\'on del comando.
-    Param4          float32    parámetro variable en funci\'on del comando.
+    Param1          float32    par\'ametro variable en funci\'on del comando.
+    Param2          float32    par\'ametro variable en funci\'on del comando.
+    Param3          float32    par\'ametro variable en funci\'on del comando.
+    Param4          float32    par\'ametro variable en funci\'on del comando.
     X               float32    latitud
     Y               float32    longitud
     Z               float32    altitud
-    Seq             uint16     Número del item en la misi\'on
+    Seq             uint16     N\'umero del item en la misi\'on
     Command         uint16     Tipo de comando de navegaci\'on.
     TargetSystem    uint8      ID del sistema
     TargetComponent uint8      
@@ -898,23 +959,23 @@ type MissionItem struct {
 \section{Python y PyQt5}
 \label{sec:python}
 
-Python es un lenguaje de programaci\'on interpretado y multiplataforma que naci\'o en los años 80 en los país bajos con idea de hacer más legible el c\'odigo.
-El lenguaje de programaci\'on que inicialmente se utilizaba principalmente para scripting, ha sabido crecer con los años y con la publicaci\'on de Python3 en 2009 ha recibido el impulso que necesitaba para ser hoy en día el 5º leguaje mas utilizado por encima de PHP, .NET y Javascript que baja hasta el 8º puesto según TIOBE en un estudio de Abril de 2017.
+Python es un lenguaje de programaci\'on interpretado y multiplataforma que naci\'o en los años 80 en los pa\'is bajos con idea de hacer m\'as legible el c\'odigo.
+El lenguaje de programaci\'on que inicialmente se utilizaba principalmente para scripting, ha sabido crecer con los años y con la publicaci\'on de Python3 en 2009 ha recibido el impulso que necesitaba para ser hoy en d\'ia el 5º leguaje m\'as utilizado por encima de PHP, .NET y Javascript que baja hasta el 8º puesto seg\'un TIOBE en un estudio de Abril de 2017.
 
-El porqué de utlizar Python, muy sencillo mantiene el carácter multiplataforma de JdeRobot, su c\'odigo es simple y legible y trabaja muy bien con dependencias muy utilizadas en rob\'otica como OpenCV.
+El porqu\'e de utlizar Python, muy sencillo mantiene el car\'acter multiplataforma de JdeRobot, su c\'odigo es simple y legible y trabaja muy bien con dependencias muy utilizadas en rob\'otica como OpenCV.
 
-Para nuestro desarrollo hemos utilizado PyQt5 para desarrollar el interfaz gráfico. PyQt5 es un binding de Qt5 en forma de librería python que nos permite acceder a toda la funcionalidad de Qt5. Qt, propiedad de Nokia, es un conjunto de librerías escritas en C++ para interfaces gráficas.
+Para nuestro desarrollo hemos utilizado PyQt5 para desarrollar el interfaz gr\'afico. PyQt5 es un binding de Qt5 en forma de librer\'ia python que nos permite acceder a toda la funcionalidad de Qt5. Qt, propiedad de Nokia, es un conjunto de librer\'ias escritas en C++ para interfaces gr\'aficas.
 
 
 \section{Mapas y Geo-referenciaci\'on}
 \label{sec:mapas}
 
-En nuestro desarrollo hemos tenido que trabajar con mapas geo-referenciados. Estos mapas, que tanto se han popularizado gracias a Google, son una herramienta imprescindible en rob\'otica aérea si se quiere trabajar con largas distancias.
+En nuestro desarrollo hemos tenido que trabajar con mapas geo-referenciados. Estos mapas, que tanto se han popularizado gracias a Google, son una herramienta imprescindible en rob\'otica a\'erea si se quiere trabajar con largas distancias.
 
 Un mapa geo-referenciado es aquel en el que conocemos o podemos calcular la posici\'on en el planeta que representa cada pixel del mismo.
 
-La forma mas común de obtener estos mapas geo-referenciado es a través de WMS, siglas de Web Map Service. Un WMS nos es mas que un servicio web que recibe como entrada unas coordenadas y una serie de parámetros y devuelve una imagen encuadrada en lo datos enviados.
-En nuestro desarrollo hemos utilizado 2 WMS el del IGN\footnote{Instrituto Geográfico Nacional de españa} y el de Google, a continuaci\'on vamos a desgranar un WMS, el de PMOA del IGN.
+La forma m\'as com\'un de obtener estos mapas geo-referenciado es a trav\'es de WMS, siglas de Web Map Service. Un WMS nos es m\'as que un servicio web que recibe como entrada unas coordenadas y una serie de par\'ametros y devuelve una imagen encuadrada en lo datos enviados.
+En nuestro desarrollo hemos utilizado 2 WMS el del IGN\footnote{Instrituto Geogr\'afico Nacional de españa} y el de Google, a continuaci\'on vamos a desgranar un WMS, el de PMOA del IGN.
 
 El WMS PNOA requiere como entrada 4 atributos principales:
 \begin{enumerate}
@@ -930,10 +991,10 @@ El resultado un mapa del que conocemos el punto central, y los extremos inferior
 \section{SITL}
 \label{sec:SITL}
 
-SITL siglas de Software in the loop es un simulador que te permite a cualquier programa que envíe o reciba comandos MAVLink ejecutar pruebas sin necesidad de tener ninguna placa estabilizadora y evitando la pérdida de la aeronave en caso de error del mismo.
-SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto físico de la simulaci\'on y con MAVProxy para el envío de commandos y seguimento de misiones.
-Se trata de una compilaci\'on en C++ de ardupilot y se podría asemejar a nuestro gazeboserver.
-SITL puede conectarse también con Gazebo o a FlightGear para hacer mas completa su simulaci\'on mostrando el vuelo en un entorno desarrollado para pruebas con elementos del mundo real.
+SITL siglas de Software in the loop es un simulador que te permite a cualquier programa que env\'ie o reciba comandos MAVLink ejecutar pruebas sin necesidad de tener ninguna placa estabilizadora y evitando la p\'erdida de la aeronave en caso de error del mismo.
+SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto f\'isico de la simulaci\'on y con MAVProxy para el env\'io de commandos y seguimento de misiones.
+Se trata de una compilaci\'on en C++ de ardupilot y se podr\'ia asemejar a nuestro gazeboserver.
+SITL puede conectarse tambi\'en con Gazebo o a FlightGear para hacer m\'as completa su simulaci\'on mostrando el vuelo en un entorno desarrollado para pruebas con elementos del mundo real.
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.50]{img/SITL.jpg}
@@ -944,18 +1005,18 @@ SITL puede conectarse también con Gazebo o a FlightGear para hacer mas completa 
 \cleardoublepage
 \chapter{APM Server}
 
-El driver APM Server es quien va a mediar entre las aplicaciones de JdeRobot y el robot aéreo con sus sensores y actuadores físicos o simulados a través de APM Server. De ésta manera las aplicaciones pueden correr en máquinas distintas, no obligatoriamente abordo, y pueden estar implementadas en distintos lenguajes de programación. Estas ventajas vienen de utilizar ls división habitual en JdeRobot entre componentes drivers y componentes aplicación.
+El driver APM Server es quien va a mediar entre las aplicaciones de JdeRobot y el robot a\'ereo con sus sensores y actuadores f\'isicos o simulados a trav\'es de APM Server. De \'esta manera las aplicaciones pueden correr en m\'aquinas distintas, no obligatoriamente abordo, y pueden estar implementadas en distintos lenguajes de programaci\'on. Estas ventajas vienen de utilizar ls divisi\'on habitual en JdeRobot entre componentes drivers y componentes aplicaci\'on.
 
-En nuestro caso éste driver ira instalado sobre una Raspberry Pi3 con raspbian a la que hemos instalado el framework Jderobot y el driver APM Server, e irá abordo del robot físico conectado por puerto serie.
+En nuestro caso \'este driver ira instalado sobre una Raspberry Pi3 con raspbian a la que hemos instalado el framework Jderobot y el driver APM Server, e ir\'a abordo del robot f\'isico conectado por puerto serie.
 
 \section{Diseño} 
 \label{sec:diseno_apms}
 
-De un análisis exhaustivo definimos los requerimientos hablados en el capítulo 2.1.2 y que serían a grandes rasgos:
+De un an\'alisis exhaustivo definimos los requerimientos hablados en el cap\'itulo 2.1.2 y que ser\'ian a grandes rasgos:
 \begin{itemize}
-\item El driver debe ser capaz de conectar con dispositivos físicos de estabilización cómo APM 2.8 o PixHawnk así como al simulador SITL
-\item El driver debe acceder a los sensores y actuadores del robot aéreo, interpretarlos y servirlos en forma de interfaz Ice a las aplicaciones de control.
-\item EL driver debe ser capar de recibir a través de interfaces JdeRobot interfaces que éste interprete y envíe a los actuadores del robot aéreo.
+\item El driver debe ser capaz de conectar con dispositivos f\'isicos de estabilizaci\'on c\'omo APM 2.8 o PixHawnk as\'i como al simulador SITL
+\item El driver debe acceder a los sensores y actuadores del robot a\'ereo, interpretarlos y servirlos en forma de interfaz Ice a las aplicaciones de control.
+\item EL driver debe ser capar de recibir a trav\'es de interfaces JdeRobot interfaces que \'este interprete y env\'ie a los actuadores del robot a\'ereo.
 \end{itemize}
 
 
@@ -973,11 +1034,11 @@ De un análisis exhaustivo definimos los requerimientos hablados en el capítulo 2
 
 
 
-Para abordar este desarrollo vamos a definir 3 capas que pasamos a describir desde la más cercana al hardware hasta la más cercana a JdeRobot:
+Para abordar este desarrollo vamos a definir 3 capas que pasamos a describir desde la m\'as cercana al hardware hasta la m\'as cercana a JdeRobot:
 \begin{itemize}
-\item Capa de comunicación con el dispositivo APM. Esta capa se encargará de la comunicación del driver con el dispositivo APM a través del protocolo de comunicación MavLink.
-\item Capa de negocio e interpretación. En esta capa el driver transformará los comandos MavLink y los interfaces JdeRobot interpretando la información de ambas capas y haciendo ésta legible en ambos sentidos.
-\item Capa de comunicación con aplicaciones JdeRobot. En ésta capa se expondrán los servicios Ice necesarios para la recepción y envío de los interfaces Ice que implementa.
+\item Capa de comunicaci\'on con el dispositivo APM. Esta capa se encargar\'a de la comunicaci\'on del driver con el dispositivo APM a trav\'es del protocolo de comunicaci\'on MavLink.
+\item Capa de negocio e interpretaci\'on. En esta capa el driver transformar\'a los comandos MavLink y los interfaces JdeRobot interpretando la informaci\'on de ambas capas y haciendo \'esta legible en ambos sentidos.
+\item Capa de comunicaci\'on con aplicaciones JdeRobot. En \'esta capa se expondr\'an los servicios Ice necesarios para la recepci\'on y env\'io de los interfaces Ice que implementa.
 \end{itemize}
 
 \begin{figure}[H]
@@ -988,11 +1049,11 @@ Para abordar este desarrollo vamos a definir 3 capas que pasamos a describir des
 \end{figure}
 
 
-\section{Bloque de conexión MAVLink}
+\section{Bloque de conexi\'on MAVLink}
 
-En la capa de comunicación con el APM es dónde se van a recibir comandos MAVLink y se van a consumir y enviar los siguientes mensajes:
+En la capa de comunicaci\'on con el APM es d\'onde se van a recibir comandos MAVLink y se van a consumir y enviar los siguientes mensajes:
 \begin{itemize}
-\item RAW\_IMU donde recibiremos la información de los acelerómetros giróscopos y magnetrómetros en crudo par el NavData.
+\item RAW\_IMU donde recibiremos la informaci\'on de los aceler\'ometros gir\'oscopos y magnetr\'ometros en crudo par el NavData.
 {\scriptsize
 \begin{verbatim}
 <message id="27" name="RAW_IMU">
@@ -1012,10 +1073,10 @@ En la capa de comunicación con el APM es dónde se van a recibir comandos MAVLink
   <field type="int16_t" name="zmag">Z Magnetic field (raw)</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería: 
+Un mensaje recibido ser\'ia: 
 RAW\_IMU \{time\_usec : 480794000, xacc : 244, yacc : 0, zacc : -968, xgyro : 1, ygyro : 1, zgyro : 1, xmag : 335, ymag : 60, zmag : -452\}
 
-\item VFR\_HUD Dónde se nos presentan los típicos datos de navegación en ala fija como, la velocidad en el aire, velocidad en tierra o la velocidad de ascenso. De aquí obtendremos la altitud
+\item VFR\_HUD D\'onde se nos presentan los t\'ipicos datos de navegaci\'on en ala fija como, la velocidad en el aire, velocidad en tierra o la velocidad de ascenso. De aqu\'i obtendremos la altitud
 {\scriptsize
 \begin{verbatim}
 <message id="74" name="VFR_HUD">
@@ -1030,8 +1091,8 @@ RAW\_IMU \{time\_usec : 480794000, xacc : 244, yacc : 0, zacc : -968, xgyro : 1,
   <field type="float" name="climb" units="m/s">Current climb rate in meters/second</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería: VFR\_HUD \{airspeed : 0.022061701864004135, groundspeed : 0.08534427732229233, heading : 356, throttle : 0, alt : 584.1099853515625, climb : -0.33149993419647217\} 
-\item ATTITUDE donde recibimos la actitud del avión.
+Un mensaje recibido ser\'ia: VFR\_HUD \{airspeed : 0.022061701864004135, groundspeed : 0.08534427732229233, heading : 356, throttle : 0, alt : 584.1099853515625, climb : -0.33149993419647217\} 
+\item ATTITUDE donde recibimos la actitud del avi\'on.
 {\scriptsize
 \begin{verbatim}
 <message id="30" name="ATTITUDE">
@@ -1047,10 +1108,10 @@ Un mensaje recibido sería: VFR\_HUD \{airspeed : 0.022061701864004135, groundspe
   <field type="float" name="yawspeed" units="rad/s">Yaw angular speed (rad/s)</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería:
+Un mensaje recibido ser\'ia:
 ATTITUDE \{time\_boot\_ms : 480794, roll : -0.005003694910556078, pitch : 0.2430807501077652, yaw : -0.06844368577003479, rollspeed : -0.0010073177982121706, pitchspeed : -0.0008516315137967467, yawspeed : -0.0006909647490829229\}
 
-\item SYS\_STATUS donde obtendremos el nivel de batería.
+\item SYS\_STATUS donde obtendremos el nivel de bater\'ia.
 {\scriptsize
 \begin{verbatim}
 <message id="1" name="SYS_STATUS">
@@ -1102,9 +1163,9 @@ ATTITUDE \{time\_boot\_ms : 480794, roll : -0.005003694910556078, pitch : 0.2430
       <field type="uint16_t" name="errors_count4">Autopilot-specific errors</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería: 
+Un mensaje recibido ser\'ia: 
 SYS\_STATUS \{onboard\_control\_sensors\_present : 23198783, onboard\_control\_sensors\_enabled : 23198783, onboard\_control\_sensors\_health : 24247359, load : 0, voltage\_battery : 12587, current\_battery : 0, battery\_remaining : 100, drop\_rate\_comm : 0, errors\_comm : 0, errors\_count1 : 0, errors\_count2 : 0, errors\_count3 : 0, errors\_count4 : 0\}
-\item SCALED\_PRESSURE donde obtendremos la presión absoluta y la temperatura.
+\item SCALED\_PRESSURE donde obtendremos la presi\'on absoluta y la temperatura.
 {\scriptsize
 \begin{verbatim}
 <message id="29" name="SCALED_PRESSURE">
@@ -1118,7 +1179,7 @@ SYS\_STATUS \{onboard\_control\_sensors\_present : 23198783, onboard\_control\_s
      (0.01 degrees celsius)</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería: 
+Un mensaje recibido ser\'ia: 
 SCALED\_PRESSURE \{time\_boot\_ms : 480794, press\_abs : 945.0001831054688, press\_diff : 0.021015625447034836, temperature : 2600\}
 \item WIND donde obtendemos las lecturas del viento estimadas.
 {\scriptsize
@@ -1130,9 +1191,9 @@ SCALED\_PRESSURE \{time\_boot\_ms : 480794, press\_abs : 945.0001831054688, pres
     <field name="speed_z" type="float">vertical wind speed (m/s)</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería: 
+Un mensaje recibido ser\'ia: 
 WIND \{direction : -179.99998474121094, speed : 0.0, speed\_z : 0.0\}
-\item GLOBAL\_POSITION\_INT donde obtendremos la posición GPS.
+\item GLOBAL\_POSITION\_INT donde obtendremos la posici\'on GPS.
 {\scriptsize
 \begin{verbatim}
 <message id="33" name="GLOBAL_POSITION_INT">
@@ -1158,9 +1219,9 @@ WIND \{direction : -179.99998474121094, speed : 0.0, speed\_z : 0.0\}
     * 100, 0.0..359.99 degrees. If unknown, set to: UINT16_MAX</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería: 
+Un mensaje recibido ser\'ia: 
 GLOBAL\_POSITION\_INT \{time\_boot\_ms : 480614, lat : -353632612, lon : 1491652301, alt : 584110, relative\_alt : -179, vx : 0, vy : 0, vz : 0, hdg : 35608\}
-\item MISSION\_ITEM Son objetos de misión, en ellos se mandan los Waypoint o comandos como setear una velocidad o una altitud o bien aterrizar o desapegar en función del parámetro command.
+\item MISSION\_ITEM Son objetos de misi\'on, en ellos se mandan los Waypoint o comandos como setear una velocidad o una altitud o bien aterrizar o desapegar en funci\'on del par\'ametro command.
 {\scriptsize
 \begin{verbatim}
 <message id="39" name="MISSION_ITEM">
@@ -1191,8 +1252,8 @@ GLOBAL\_POSITION\_INT \{time\_boot\_ms : 480614, lat : -353632612, lon : 1491652
     see MAV_MISSION_TYPE</field>
 </message>
 \end{verbatim}}
-Un mensaje enviado sería: MISSION\_ITEM \{target\_system : 1, target\_component : 1, seq : 0, frame : 3, command : 16, current : 0, autocontinue : 0, param1 : 0, param2 : 10, param3 : 0, param4 : 0, x : 40.33024215698242, y : -3.8008816242218018, z : 40.0\}
-\item MISSION\_REQUEST mesaje donde el AMP nos requiere el siguiente MISSION\_ITEM. Este comando se recibe o bien una ver enviado al APM nuestra intención de enviale mensajes de misión y cuando vamos a enviarle, en un comando MISSION\_COUNT o bien tras la recepción de alguno de ellos como ACK y solicitando el siguiente
+Un mensaje enviado ser\'ia: MISSION\_ITEM \{target\_system : 1, target\_component : 1, seq : 0, frame : 3, command : 16, current : 0, autocontinue : 0, param1 : 0, param2 : 10, param3 : 0, param4 : 0, x : 40.33024215698242, y : -3.8008816242218018, z : 40.0\}
+\item MISSION\_REQUEST mesaje donde el AMP nos requiere el siguiente MISSION\_ITEM. Este comando se recibe o bien una ver enviado al APM nuestra intenci\'on de enviale mensajes de misi\'on y cuando vamos a enviarle, en un comando MISSION\_COUNT o bien tras la recepci\'on de alguno de ellos como ACK y solicitando el siguiente
 {\scriptsize
 \begin{verbatim}
 <message id="40" name="MISSION_REQUEST">
@@ -1207,9 +1268,9 @@ Un mensaje enviado sería: MISSION\_ITEM \{target\_system : 1, target\_component 
     see MAV_MISSION_TYPE</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido sería: MISSION\_REQUEST \{target\_system : 0, target\_component : 0, seq : 2\} En este mensaje el APM nos estaría solicitando el item de misión 3, ya que empieza solicitando el 0. Este mensaje termina al llegar al máximo de mission item que se ha indicado que le se le va a mandar.
+Un mensaje recibido ser\'ia: MISSION\_REQUEST \{target\_system : 0, target\_component : 0, seq : 2\} En este mensaje el APM nos estar\'ia solicitando el item de misi\'on 3, ya que empieza solicitando el 0. Este mensaje termina al llegar al m\'aximo de mission item que se ha indicado que le se le va a mandar.
 
-\item MISSION\_COUNT éste comando se envía para comenzar una comunicación con el APM con el objetivo de enviarle una misión.
+\item MISSION\_COUNT \'este comando se env\'ia para comenzar una comunicaci\'on con el APM con el objetivo de enviarle una misi\'on.
 {\scriptsize
 \begin{verbatim}
 <message id="44" name="MISSION_COUNT">
@@ -1224,9 +1285,9 @@ Un mensaje recibido sería: MISSION\_REQUEST \{target\_system : 0, target\_compon
     see MAV_MISSION_TYPE</field>
 </message>
 \end{verbatim}}
-Un mensaje enviado sería: MISSION\_COUNT \{target\_system : 0, target\_component : 0, count : 3\} Donde comunicamos al APM nuestra intención de enviarle 3 objetos de misión.
+Un mensaje enviado ser\'ia: MISSION\_COUNT \{target\_system : 0, target\_component : 0, count : 3\} Donde comunicamos al APM nuestra intenci\'on de enviarle 3 objetos de misi\'on.
 
-\item MISSION\_CLEAR\_ALL éste comando sirve para limpiar el APM de misiones, si éste tenía alguna misión previa se desecha.
+\item MISSION\_CLEAR\_ALL \'este comando sirve para limpiar el APM de misiones, si \'este ten\'ia alguna misi\'on previa se desecha.
 {\scriptsize
 \begin{verbatim}
 <message id="45" name="MISSION_CLEAR_ALL">
@@ -1238,12 +1299,12 @@ Un mensaje enviado sería: MISSION\_COUNT \{target\_system : 0, target\_component
     see MAV_MISSION_TYPE</field>
 </message>
 \end{verbatim}}
-Un mesaje enviado sería MISSION\_CLEAR\_ALL \{target\_system : 0, target\_component : 0\}
+Un mesaje enviado ser\'ia MISSION\_CLEAR\_ALL \{target\_system : 0, target\_component : 0\}
 \end{itemize}
 
-\subsection{Conexión y configuración}
+\subsection{Conexi\'on y configuraci\'on}
 
-De cara a facilitarnos la implementación del software, ahorrarnos crear los comandos MAVLink a mano y hacer el código más legible utilizaremos la librería pymavlink. Pymavlink trae la definición de los comandos a utilizar en python, para instalarla tan sólo se necesita ejecutar:
+De cara a facilitarnos la implementaci\'on del software, ahorrarnos crear los comandos MAVLink a mano y hacer el c\'odigo m\'as legible utilizaremos la librer\'ia pymavlink. Pymavlink trae la definici\'on de los comandos a utilizar en python, para instalarla tan s\'olo se necesita ejecutar:
  
 \begin{verbatim}
 sudo pip2 install -U pymavlink
@@ -1267,10 +1328,10 @@ from pymavlink import mavutil, quaternion, mavwp
 from pymavlink.dialects.v10 import ardupilotmega as mavlink
 \end{python}
 
-Se importa mavutil para ardupilotmega para obtener los interfaces en python desde pymavlink y mavwp y quaternion como soporte a la transformación a quaterniones y viceversa.
+Se importa mavutil para ardupilotmega para obtener los interfaces en python desde pymavlink y mavwp y quaternion como soporte a la transformaci\'on a quaterniones y viceversa.
 
 
-El primer paso para poder interactuar con el APM es el proceso de conexión. En el comando de conexión se le indica una de las siguiente tuplas:
+El primer paso para poder interactuar con el APM es el proceso de conexi\'on. En el comando de conexi\'on se le indica una de las siguiente tuplas:
 \begin{itemize}
 \item Dispositivo\_serie, baudrate
 \item Tipo\_de\_puerto:IP:puerto, baudrate. En este caso baudrate es obligatorio pero se desecha.
@@ -1296,10 +1357,10 @@ class Server:
 test = Server("udp:192.168.1.133:14558",57600) # Connection to SITL
 \end{python}
 
-Con estas líneas se inicia el servidor de APM Server y se realiza la conexión con el dispositivo APM o con el simulador.Se puede apreciar cómo se realiza la conexión en el método \_\_init\_\_  del servidor. Y la creación de 2 objetos de servidor, una que conectaría con el dispositivo real y la que se realiza con SITL.
+Con estas l\'ineas se inicia el servidor de APM Server y se realiza la conexi\'on con el dispositivo APM o con el simulador.Se puede apreciar c\'omo se realiza la conexi\'on en el m\'etodo \_\_init\_\_  del servidor. Y la creaci\'on de 2 objetos de servidor, una que conectar\'ia con el dispositivo real y la que se realiza con SITL.
 
 
-Una vez conectado, se debe indicar al APM qué mensajes se quieren recibir y la frecuencia con la que se quieren recibir. Debido a que se trata de un prototipo y se trata de extraer el máximo potencial del mismo, se indicará el set de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo máximo que soporta el APM adquirido.
+Una vez conectado, se debe indicar al APM qu\'e mensajes se quieren recibir y la frecuencia con la que se quieren recibir. Debido a que se trata de un prototipo y se trata de extraer el m\'aximo potencial del mismo, se indicar\'a el set de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo m\'aximo que soporta el APM adquirido.
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
@@ -1312,11 +1373,11 @@ self.master.mav.request_data_stream_send(self.master.target_system,
                                          RATE, 1)
 \end{python}
 
-Desde éste momento se van a estar volcando a un buffer los mensajes que manda nuestro APM, con lo que ahora ya se puede acceder a ellos para procesarlos.
+Desde \'este momento se van a estar volcando a un buffer los mensajes que manda nuestro APM, con lo que ahora ya se puede acceder a ellos para procesarlos.
 
 \subsection{Lectura de datos del APM}
 
-Una vez establecida la conexión y seteados los parámetros de configuración ya se puede acceder a los datos. Para ésto en el bloque de transformación se levantará el siguiente hilo que procesará los mensajes.
+Una vez establecida la conexi\'on y seteados los par\'ametros de configuraci\'on ya se puede acceder a los datos. Para \'esto en el bloque de transformaci\'on se levantar\'a el siguiente hilo que procesar\'a los mensajes.
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1343,17 +1404,17 @@ def mavMsgHandler(self, m):
 \end{python}
 
 
-\subsection{Envío de misiones al APM}
+\subsection{Env\'io de misiones al APM}
 
-Con el fin de entender mejor el código en la figura 4.2 podemos observar un gráfico de cómo es el protocolo de envío de misiones al APM a través de MAVLink obtenido de la universidad University of Colorado Boulder\cite{colorado:_mission}
+Con el fin de entender mejor el c\'odigo en la figura 4.2 podemos observar un gr\'afico de c\'omo es el protocolo de env\'io de misiones al APM a trav\'es de MAVLink obtenido de la universidad University of Colorado Boulder\cite{colorado:_mission}
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.70]{img/waypoint-protocol-sendlist.png}
-  \caption{Protocolo de envío de misiones MAVLink}
+  \caption{Protocolo de env\'io de misiones MAVLink}
   \label{fig:misiones_mavlink}
 \end{figure}
 
-Para abordar el problema e implementar dicho protocolo partimos de la solución que nos propone la Universidad de Colorado Boulder\cite{colorado:_mission} y la adaptamos a nuestras necesidades recibiendo de entrada un objeto de la interfaz mission de JdeRobot, transformándolo y enviándolo como misión. También revisamos si se nos han enviado órdenes de despegue y aterrizaje y en el caso de que así sea añadimos sus mission item al principio o al final de la missión. En éste punto se entrelazan la capa de interpretación con la capa de comunicación con el APM
+Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on que nos propone la Universidad de Colorado Boulder\cite{colorado:_mission} y la adaptamos a nuestras necesidades recibiendo de entrada un objeto de la interfaz mission de JdeRobot, transform\'andolo y envi\'andolo como misi\'on. Tambi\'en revisamos si se nos han enviado \'ordenes de despegue y aterrizaje y en el caso de que as\'i sea añadimos sus mission item al principio o al final de la missi\'on. En \'este punto se entrelazan la capa de interpretaci\'on con la capa de comunicaci\'on con el APM
 
 
 \begin{python}[
@@ -1443,12 +1504,12 @@ Para abordar el problema e implementar dicho protocolo partimos de la solución q
 
 \end{python}
 
-Como se puede observar en el código, en caso de tener takeOffDecision o landDecision activos en el atributo extra (mapeado a través de Ice) se añaden los comandos de despegue y aterrizaje, que interpreta son el primero y el último. 
-Se puede observar también al final del código como se arman los motores con la línea \pythoninline{self.master.arducopter_arm()}
-y como se pone el dispositivo en modo automático con \pythoninline{self.master.set_mode_auto()}.
-El driver está implementado para ejecutarse en modo auto, se puede ejecutar también en modo guided pero el modo auto a diferencia del guided no inhabilita la radio y se puede recuperar en cualquier momento el control del robot aéreo. Si bien hay que decir que el modo guided o modo guiado es más preciso que el modo auto.
+Como se puede observar en el c\'odigo, en caso de tener takeOffDecision o landDecision activos en el atributo extra (mapeado a trav\'es de Ice) se añaden los comandos de despegue y aterrizaje, que interpreta son el primero y el \'ultimo. 
+Se puede observar tambi\'en al final del c\'odigo como se arman los motores con la l\'inea \pythoninline{self.master.arducopter_arm()}
+y como se pone el dispositivo en modo autom\'atico con \pythoninline{self.master.set_mode_auto()}.
+El driver est\'a implementado para ejecutarse en modo auto, se puede ejecutar tambi\'en en modo guided pero el modo auto a diferencia del guided no inhabilita la radio y se puede recuperar en cualquier momento el control del robot a\'ereo. Si bien hay que decir que el modo guided o modo guiado es m\'as preciso que el modo auto.
 
-\section{Capa de conexión con aplicaciones JdeRobot}
+\section{Capa de conexi\'on con aplicaciones JdeRobot}
 
 \begin{figure}[H]
   \centering
@@ -1457,10 +1518,10 @@ El driver está implementado para ejecutarse en modo auto, se puede ejecutar tamb
   \label{fig:apms_design}
 \end{figure}
 
-En ésta capa se sirven y reciben los objetos de interfaces JdeRobot de modo que sean entendibles por el resto de los framework.
-Para ésto se han implementado 4 hilos, uno por cada interfaz JdeRobot que se sirve o se recibe. En cada uno de éstos hilos se levanta un servidor Ice para recibir o servir objetos de interfaces JdeRobot mapeando atributos de la clase del servidor al estos servicios Ice.
+En \'esta capa se sirven y reciben los objetos de interfaces JdeRobot de modo que sean entendibles por el resto de los framework.
+Para \'esto se han implementado 4 hilos, uno por cada interfaz JdeRobot que se sirve o se recibe. En cada uno de \'estos hilos se levanta un servidor Ice para recibir o servir objetos de interfaces JdeRobot mapeando atributos de la clase del servidor al estos servicios Ice.
 
-Los 4 interfaces que van a ser servidos desde APM server serán:
+Los 4 interfaces que van a ser servidos desde APM server ser\'an:
 \begin{itemize}
 \item Pose3D
 \item NavData
@@ -1468,7 +1529,7 @@ Los 4 interfaces que van a ser servidos desde APM server serán:
 \item Mission
 \end{itemize}
 
-Pose3D, navData y Extra se describieron en el capítulo 3.1.1, adicionalmente a éstos se ha desarrollado un nuevo interfaz para dar soporte al uso de misiones, el interfaz mission.
+Pose3D, navData y Extra se describieron en el cap\'itulo 3.1.1, adicionalmente a \'estos se ha desarrollado un nuevo interfaz para dar soporte al uso de misiones, el interfaz mission.
 {\scriptsize
 \begin{verbatim}
 class Pose3DData  //we consumes Pose3DData
@@ -1535,8 +1596,8 @@ class Pose3DData  //we consumes Pose3DData
 
 \end{python}
 
-Cada hilo abre un servicio Ice, como todos los servicios Ice que implementamos son muy similares podremos como ejemplo de implementación el servicio de Pose3D.
-Como se puede apreciar en esta capa tenemos 4 hilos de ejecución simultáneos sirviendo objetos Ice a través de servidores como el que sigue a éstas líneas. En paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta éstos objetos Ice con lo que se ha tenido que cuidar mucho el código para evitar problemas de concurrencia.  
+Cada hilo abre un servicio Ice, como todos los servicios Ice que implementamos son muy similares podremos como ejemplo de implementaci\'on el servicio de Pose3D.
+Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos sirviendo objetos Ice a trav\'es de servidores como el que sigue a \'estas l\'ineas. En paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta \'estos objetos Ice con lo que se ha tenido que cuidar mucho el c\'odigo para evitar problemas de concurrencia.  
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1570,18 +1631,18 @@ Como se puede apreciar en esta capa tenemos 4 hilos de ejecución simultáneos sir
 \end{python}
 
 
-\section{Bloque de interpretación}
+\section{Bloque de interpretaci\'on}
 
-En ésta capa se interpretan los mensajes recibidos de una y otra capa y se transforman en el formato que sea necesario para que o interprete la opuesta.
+En \'esta capa se interpretan los mensajes recibidos de una y otra capa y se transforman en el formato que sea necesario para que o interprete la opuesta.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.50]{img/bloque_inter.png}
-  \caption{Bloque de interpretación}
+  \caption{Bloque de interpretaci\'on}
   \label{fig:apms_design}
 \end{figure}
 
-El método setMission() se llama al recibir vía Ice una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, se ha construido un listener que valida el valor de la variable mission y si tiene contenido articula el método setMission(mission).
+El m\'etodo setMission() se llama al recibir v\'ia Ice una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, se ha construido un listener que valida el valor de la variable mission y si tiene contenido articula el m\'etodo setMission(mission).
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1604,9 +1665,9 @@ El método setMission() se llama al recibir vía Ice una mission. Para identificar
             time.sleep(1)
 
 \end{python}
-Ya se visto cómo se realiza la transformación entre mensajes de misión en el método setMission(mission), ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretación por JdeRobot.
-Esto lo realizamos principalmente en 2 métodos, refreshAPMPose3D() y refreshAPMnavdata().
-Estos métodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informción relevante para nosotros, ya descritos en el capítulo 4.2, parsearlos y extraer de ellos la información que necesitamos y guardarla en objetos de interfaces JdeRobot para ser servidos a través de Ice.
+Ya se visto c\'omo se realiza la transformaci\'on entre mensajes de misi\'on en el m\'etodo setMission(mission), ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretaci\'on por JdeRobot.
+Esto lo realizamos principalmente en 2 m\'etodos, refreshAPMPose3D() y refreshAPMnavdata().
+Estos m\'etodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informci\'on relevante para nosotros, ya descritos en el cap\'itulo 4.2, parsearlos y extraer de ellos la informaci\'on que necesitamos y guardarla en objetos de interfaces JdeRobot para ser servidos a trav\'es de Ice.
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1709,8 +1770,8 @@ Estos métodos se centran en buscar dentro de los paquetes recibidos aquellos que
 \cleardoublepage
 \chapter{AUV Commander}
 
-UAV Commander es una aplicación JdeRobot que hace las veces de estación de tierra o GCS (Ground Control Station) para robots aéreos.
-Desde UAVCommander se pueden programar missiones, enviar éstas al driver MavLink, verificar el cumplimiento de las mismas y visualizar los sensores a bordo del robot aéreo.
+UAV Commander es una aplicaci\'on JdeRobot que hace las veces de estaci\'on de tierra o GCS (Ground Control Station) para robots a\'ereos.
+Desde UAVCommander se pueden programar missiones, enviar \'estas al driver MavLink, verificar el cumplimiento de las mismas y visualizar los sensores a bordo del robot a\'ereo.
 
 \section{Diseño} 
 \label{sec:diseno_uavc}
@@ -1726,39 +1787,39 @@ Desde UAVCommander se pueden programar missiones, enviar éstas al driver MavLink
   \caption{Diseño de UAV Commander}
 \end{figure}
 
-La aplicación UAV Commander se estructura en 3 grandes bloques:
+La aplicaci\'on UAV Commander se estructura en 3 grandes bloques:
 \begin{itemize}
-\item GUI. La interfaz de usuario, es la parte de la aplicación que va a interactuar con el usuario.
-\item Core. El core de la aplicación será quien haga de orquestador entre los datos recibidos del bloque de comunicación con los driver JdeRobot y el interfaz de usuario. Se hará cargo también de obtener, de la fuente que sea preciso, IGN, Google o el bloque de conexión de drivers de JdeRobot la información necesaria y procesarla para ser mostrada por el GUI.
-\item Bloque de conexión con los driver JdeRobot.
+\item GUI. La interfaz de usuario, es la parte de la aplicaci\'on que va a interactuar con el usuario.
+\item Core. El core de la aplicaci\'on ser\'a quien haga de orquestador entre los datos recibidos del bloque de comunicaci\'on con los driver JdeRobot y el interfaz de usuario. Se har\'a cargo tambi\'en de obtener, de la fuente que sea preciso, IGN, Google o el bloque de conexi\'on de drivers de JdeRobot la informaci\'on necesaria y procesarla para ser mostrada por el GUI.
+\item Bloque de conexi\'on con los driver JdeRobot.
 \end{itemize}
 
-La aplicación debe cumplir los requisitos descritos en el capítulo 2.2.3 que pueden resumirse en 4 grandes milestones:
+La aplicaci\'on debe cumplir los requisitos descritos en el cap\'itulo 2.2.3 que pueden resumirse en 4 grandes milestones:
 
 \begin{enumerate}
-\item Premitir la creación de misiones
-\item Enviar misiones a través de interfaces ICE al driver conectado.
-\item Presentar toda la información sensorial que nos ofrezca el driver.
+\item Premitir la creaci\'on de misiones
+\item Enviar misiones a trav\'es de interfaces ICE al driver conectado.
+\item Presentar toda la informaci\'on sensorial que nos ofrezca el driver.
 	\begin{itemize}
 	\item Actitud
-	\item Cámaras de abordo
+	\item C\'amaras de abordo
 	\end{itemize}
 \item Validar el cumplimiento de misiones.
 \end{enumerate}
 
 
-\section{Bloque de conexión con aplicaciones JdeRobot} 
+\section{Bloque de conexi\'on con aplicaciones JdeRobot} 
 \label{sec:bloque_jderobot_uavc}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.50]{img/jderobot_uavc.png}
-  \caption{Diseño de UAV Commander mas en profundidad}
+  \caption{Diseño de UAV Commander m\'as en profundidad}
   \label{fig:apms_design}
 \end{figure}
 
-En éste bloque se implementan todos los servidores Ice necesarios para acceder a la información sensorial y para enviar los interfaces necesarios para la actuación.
-Éste bloque es análogo al Bloque de comunicación con aplicaciones JdeRobot del Capítulo 4.1 si bien para simplificar este proceso hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez y las clases de EasyIce de Victor Arribas Raigadas ambas integradas en el framework de JdeRobot. De éste modo éste bloque queda simplificado éste bloque y su inicialización queda  relegada a unas pocas líneas de código:
+En \'este bloque se implementan todos los servidores Ice necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
+\'Este bloque es an\'alogo al Bloque de comunicaci\'on con aplicaciones JdeRobot del Cap\'itulo 4.1 si bien para simplificar este proceso hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez y las clases de EasyIce de Victor Arribas Raigadas ambas integradas en el framework de JdeRobot. De \'este modo \'este bloque queda simplificado \'este bloque y su inicializaci\'on queda  relegada a unas pocas l\'ineas de c\'odigo:
 \begin{python}
     ic = EasyIce.initialize(sys.argv)
     camera = CameraClient(ic, "UavViewer.Camera", True)
@@ -1769,20 +1830,20 @@ En éste bloque se implementan todos los servidores Ice necesarios para acceder a
     mission = MissionI(ic, "UavViewer.Mission")
 \end{python}
 
-En la aplicación UAV Commander se exponen 5 interfaces Ice a diferencia de los 4 que exponía el driver APM Server. Además de los que expone APM Server, a saber:
+En la aplicaci\'on UAV Commander se exponen 5 interfaces Ice a diferencia de los 4 que expon\'ia el driver APM Server. Adem\'as de los que expone APM Server, a saber:
 \begin{itemize}
 \item Pose3D
 \item NavData
 \item Extra
 \item Mission
 \end{itemize}
-Se implementan 2 más: 
+Se implementan 2 m\'as: 
 \begin{itemize}
-\item El interfaz de camera para mostrar las imágenes que se sirvan a través de dicho interfaz, como por ejemplo a través de la aplicación cameraserver, que irá corriendo junto con nuestro driver en el avión real.
-\item El interfaz CmdVel. Que en la implementación actual no se utiliza pero se ha implementado para futuras realeases, donde en un futuro puedan añadirse el control por velocidades.
+\item El interfaz de camera para mostrar las im\'agenes que se sirvan a trav\'es de dicho interfaz, como por ejemplo a trav\'es de la aplicaci\'on cameraserver, que ir\'a corriendo junto con nuestro driver en el avi\'on real.
+\item El interfaz CmdVel. Que en la implementaci\'on actual no se utiliza pero se ha implementado para futuras realeases, donde en un futuro puedan añadirse el control por velocidades.
 \end{itemize}
 
-Con ésto se definen los 6 objetos Ice que van a ser enviados y/o recibidos por el APM Server, y con el código siguiente se los mapeamos al GUI quien los seteará como atributos en su clase principal.
+Con \'esto se definen los 6 objetos Ice que van a ser enviados y/o recibidos por el APM Server, y con el c\'odigo siguiente se los mapeamos al GUI quien los setear\'a como atributos en su clase principal.
 \begin{python}
     screen.setCamera(camera)
     screen.setPose3D(pose)
@@ -1800,37 +1861,37 @@ Con ésto se definen los 6 objetos Ice que van a ser enviados y/o recibidos por e
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.50]{img/core.png}
-  \caption{Diseño de UAV Commander mas en profundidad}
+  \caption{Diseño de UAV Commander m\'as en profundidad}
   \label{fig:apms_design}
 \end{figure}
 
-El core es el bloque más complicado de la aplicación, se divide a su vez en 5 bloques:
+El core es el bloque m\'as complicado de la aplicaci\'on, se divide a su vez en 5 bloques:
 \begin{itemize}
-\item Obtención y actualización de mapas. Éste bloque es el encargado de obtener los mapas de cualquiera de las 2 fuentes actualmente implenetadas, el IGN o Google. También se encarga de actualizar la georeferenciación asociada a ellos una vez descargados.
-\item Utilidades de mapas. Aquí se encuentran los métodos de apoyo a la georeferenciación, como obtener el bounding box de una posición GPS, validar si nos acercamos al límite del mapa descargado o la transformación de magnitudes.
-\item Proyección. Es sin duda una de las partes más complejas del aplicativo, son las clases encargadas de a partir de una posición GPS obtener su posición en imagen que representa el mapa de la zona y viceversa.
+\item Obtenci\'on y actualizaci\'on de mapas. \'Este bloque es el encargado de obtener los mapas de cualquiera de las 2 fuentes actualmente implenetadas, el IGN o Google. Tambi\'en se encarga de actualizar la georeferenciaci\'on asociada a ellos una vez descargados.
+\item Utilidades de mapas. Aqu\'i se encuentran los m\'etodos de apoyo a la georeferenciaci\'on, como obtener el bounding box de una posici\'on GPS, validar si nos acercamos al l\'imite del mapa descargado o la transformaci\'on de magnitudes.
+\item Proyecci\'on. Es sin duda una de las partes m\'as complejas del aplicativo, son las clases encargadas de a partir de una posici\'on GPS obtener su posici\'on en imagen que representa el mapa de la zona y viceversa.
 \item Procesamiento de los datos de vuelo. En este bloque se extraen, transforman (en caso que sea necesario) y distribuyen los datos de vuelo a las ventanas correspondiente y objetos correspondientes del GUI .
-\item Control de misiones. El control de misiones orquesta llamadas al resto de bloques del core para dar soporte a las misiones. Muestra éstas en la GUI y cuando desde la GUI se pulsa el botón de ``Send to APM'' prepara los objetos del bloque de comunicación con el diver para ser enviados.
+\item Control de misiones. El control de misiones orquesta llamadas al resto de bloques del core para dar soporte a las misiones. Muestra \'estas en la GUI y cuando desde la GUI se pulsa el bot\'on de ``Send to APM'' prepara los objetos del bloque de comunicaci\'on con el diver para ser enviados.
 
-\subsection{Obtención y actualización de mapas}
+\subsection{Obtenci\'on y actualizaci\'on de mapas}
 
-Para obtener los mapas geo-referenciados necesitamos, como vimos en el capítulo 3, principalmente 4 cosas:
+Para obtener los mapas geo-referenciados necesitamos, como vimos en el cap\'itulo 3, principalmente 4 cosas:
 \begin{enumerate}
 \item Bounding Box
 \item Tamaño de la imagen
-\item Proyección
+\item Proyecci\'on
 \end{enumerate}
 
-Con el fin de abstraernos del montaje de la URL y envío y tratamiento de la respuesta utilizaremos la librería owslib que nos ayudará con éstos trámites. El código para obtener un nuevo mapa sería:
+Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia owslib que nos ayudar\'a con \'estos tr\'amites. El c\'odigo para obtener un nuevo mapa ser\'ia:
 \begin{python}
 def retrieve_new_map(lat, lon, radius, width, heigth):
     bbox = getBoundingBox(lat, lon, radius)
     ...
 \end{python}
 
-En el código mostrado podemos obserbar como recuperamos un nuevo mapa del IGN\footnote{Instituto geográfico nacional}, que publica uno de sus numerosos WMS en 'http://www.ign.es/wms-inspire/pnoa-ma'.
-Primero obtenemos el bounding box. El bounding box es la zona geográfica que vamos a recuperar, se calcula a partir de la posición GPS central y, en nuestro caso al mostrar imágenes cuadradas, un radio.
-El código para calcularlo sería:
+En el c\'odigo mostrado podemos obserbar como recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WMS en 'http://www.ign.es/wms-inspire/pnoa-ma'.
+Primero obtenemos el bounding box. El bounding box es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio.
+El c\'odigo para calcularlo ser\'ia:
 \begin{python}
 def getBoundingBox(lat, lon, distance):
     radValues = from_degrees(lat, lon)
@@ -1857,8 +1918,8 @@ def getBoundingBox(lat, lon, distance):
     return southWestPoint[1], southWestPoint[0], northEastpoint[1], northEastpoint[0]
 \end{python}
 
-Una vez obtenido el bounding box únicamente rellenamos el resto del objeto WMS y lanzamos la request que devuelve una imagen en bytes a la que debemos añadir el disclaimer que nos indica el IGN.
-Al final montamos la imagen geo-referenciada que en nuestro caso será un diccionario con la imagen en OpenCV el bounding box, y el tamaño de la imagen. 
+Una vez obtenido el bounding box \'unicamente rellenamos el resto del objeto WMS y lanzamos la request que devuelve una imagen en bytes a la que debemos añadir el disclaimer que nos indica el IGN.
+Al final montamos la imagen geo-referenciada que en nuestro caso ser\'a un diccionario con la imagen en OpenCV el bounding box, y el tamaño de la imagen. 
 
 \begin{python}
 def retrieve_new_map(lat, lon, radius, width, heigth):
@@ -1880,10 +1941,10 @@ def retrieve_new_map(lat, lon, radius, width, heigth):
 \end{python}
 \subsection{Utilidades de mapas}
 
-Aquí se encuentran los métodos necesarios para trabajar con geo-posicionamiento como el método de cálculo de bounding box que se ha visto anteriormente.
-Se encuentran también transformaciones de radianes a grados, o el cálculo de la distancia entre 2 puntos.
+Aqu\'i se encuentran los m\'etodos necesarios para trabajar con geo-posicionamiento como el m\'etodo de c\'alculo de bounding box que se ha visto anteriormente.
+Se encuentran tambi\'en transformaciones de radianes a grados, o el c\'alculo de la distancia entre 2 puntos.
 
-Como ejemplo vamos a ver el código para calcular distancias siempre u cuando utilicemos la proyección WGS84.
+Como ejemplo vamos a ver el c\'odigo para calcular distancias siempre u cuando utilicemos la proyecci\'on WGS84.
 \begin{python}
 def distance_to(valores, other ):
     radius = EARTH_RADIUS_WGS84
@@ -1897,18 +1958,18 @@ def distance_to(valores, other ):
     )
 \end{python}
 
-\subsection{Proyección}
+\subsection{Proyecci\'on}
 
-La proyección se basa en ``ubicar'' un punto en un determinado sistema de coordenadas en otro sistema completamente distinto.
-En nuestro caso trabajamos hasta con 3 sistemas de coordenadas distintos el de las imágenes con X[0, MAX\_WIDHT] creciente de izquierda a derecha e Y[0, MAX\_HEIGHT] creciente de arriba a abajo, el sistema de coordenadas geográficas y el cartesiano.
+La proyecci\'on se basa en ``ubicar'' un punto en un determinado sistema de coordenadas en otro sistema completamente distinto.
+En nuestro caso trabajamos hasta con 3 sistemas de coordenadas distintos el de las im\'agenes con X[0, MAX\_WIDHT] creciente de izquierda a derecha e Y[0, MAX\_HEIGHT] creciente de arriba a abajo, el sistema de coordenadas geogr\'aficas y el cartesiano.
 
-Ambas se mueven en órdenes de magnitud diferentes y un movimiento de $1 * 10^{-5}$ puede suponer varias decenas de píxeles.
+Ambas se mueven en \'ordenes de magnitud diferentes y un movimiento de $1 * 10^{-5}$ puede suponer varias decenas de p\'ixeles.
 
-Para abordar este problema y dado que se ha trabajado con robots aéreos con una autonomía relativamente reducida se ha asumido que la tierra es plana en bounding box de menos de 2 kilómetros de ancho. Con ésta convención conseguimos simplificar notablemente la complejidad del problema, que prácticamente se convierte en una normalización de un sistema a otro.
-Si en un futuro se decidiese utilizar la aplicación para vuelos de mayor envergadura, y con el fin de obtener una mayor precisión, se debería tener en cuenta la curvatura de la tierra y por tanto habría que reescribir éstos métodos teniéndolo en cuenta.
-La proyección en UAV Commander se realiza en ambos sentidos, de imagen a posicion geográfica y de sistema de coordenadas a imagen.
+Para abordar este problema y dado que se ha trabajado con robots a\'ereos con una autonom\'ia relativamente reducida se ha asumido que la tierra es plana en bounding box de menos de 2 kil\'ometros de ancho. Con \'esta convenci\'on conseguimos simplificar notablemente la complejidad del problema, que pr\'acticamente se convierte en una normalizaci\'on de un sistema a otro.
+Si en un futuro se decidiese utilizar la aplicaci\'on para vuelos de mayor envergadura, y con el fin de obtener una mayor precisi\'on, se deber\'ia tener en cuenta la curvatura de la tierra y por tanto habr\'ia que reescribir \'estos m\'etodos teni\'endolo en cuenta.
+La proyecci\'on en UAV Commander se realiza en ambos sentidos, de imagen a posicion geogr\'afica y de sistema de coordenadas a imagen.
 
-A continuación podemos ver la proyección de posición geográfica a imagen:
+A continuaci\'on podemos ver la proyecci\'on de posici\'on geogr\'afica a imagen:
 \begin{python}
 def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY):
     distCoordX = round(latMax - latMin,7)
@@ -1920,14 +1981,14 @@ def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImag
 
 \subsection{Procesamiento de los datos de vuelo}
 
-Este bloque se encarga de extraer los datos de vuelo y proporcionárselos a los componentes del GUI que o necesiten, así como recogerlos del GUI y transformarlos a objetos de interfaz Ice. Este bloque sería muy similar al bloque de interpretación del driver APM Server.
-Aquí se encontrarían los métodos de refresco de datos, getters y setters.
+Este bloque se encarga de extraer los datos de vuelo y proporcion\'arselos a los componentes del GUI que o necesiten, as\'i como recogerlos del GUI y transformarlos a objetos de interfaz Ice. Este bloque ser\'ia muy similar al bloque de interpretaci\'on del driver APM Server.
+Aqu\'i se encontrar\'ian los m\'etodos de refresco de datos, getters y setters.
 
 \subsection{Control de misiones}
 
-Este bloque incluye todos lo métodos necesarios para dar soporte a misiones, se apoya fuertemente en los bloques de GUI y de conexión con drivers JdeRobot y realiza la transfromación de datos y el envío de estos de una capa a otra.
-Métodos como update\_waypoints() o sendWP(send2APM) estarían englobados en éste bloque, éste último es sin duda alguna el método más importante del bloque, se apoya en el GUI para obtener los Waypoints de la vista de la tabla, interpretarlos, y rellenar el objeto de interfaz missión con ella.
-Se puede ver a continuación:
+Este bloque incluye todos lo m\'etodos necesarios para dar soporte a misiones, se apoya fuertemente en los bloques de GUI y de conexi\'on con drivers JdeRobot y realiza la transfromaci\'on de datos y el env\'io de estos de una capa a otra.
+M\'etodos como update\_waypoints() o sendWP(send2APM) estar\'ian englobados en \'este bloque, \'este \'ultimo es sin duda alguna el m\'etodo m\'as importante del bloque, se apoya en el GUI para obtener los Waypoints de la vista de la tabla, interpretarlos, y rellenar el objeto de interfaz missi\'on con ella.
+Se puede ver a continuaci\'on:
 \begin{python}
     def sendWP(self, send2APM):
         colCount = self.table.rowCount()
@@ -1977,24 +2038,24 @@ Se puede ver a continuación:
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.50]{img/gui.png}
-  \caption{Diseño de UAV Commander mas en profundidad}
+  \caption{Diseño de UAV Commander m\'as en profundidad}
   \label{fig:apms_design}
 \end{figure}
 
-La interfaz de usuario es una del las partes más importantes de toda aplicación, se trata de la parte que interactúa con el usuario, con lo que la información se ha de mostrar de forma agradable, armónica y de forma precisa, para que no genere confusión en el usuario final.
+La interfaz de usuario es una del las partes m\'as importantes de toda aplicaci\'on, se trata de la parte que interact\'ua con el usuario, con lo que la informaci\'on se ha de mostrar de forma agradable, arm\'onica y de forma precisa, para que no genere confusi\'on en el usuario final.
 
-Es por tanto el bloque donde más horas se han invertido en su desarrollo junto con el bloque core de la aplicación.
+Es por tanto el bloque donde m\'as horas se han invertido en su desarrollo junto con el bloque core de la aplicaci\'on.
 
-La aplicación consta de 3 pantallas:
+La aplicaci\'on consta de 3 pantallas:
 \begin{enumerate}
 \item Pantalla principal.
 \item Ventana de actitud.
-\item Ventana visor de cámara.
+\item Ventana visor de c\'amara.
 \end{enumerate}
 
-Las pantallas de actitud y el visor de cámara se han integrado del desarrollo de UAV Viewer de Alberto Martín Florido, con lo que nos centraremos en la pantalla principal, la encargada del control y creación de misiones.
+Las pantallas de actitud y el visor de c\'amara se han integrado del desarrollo de UAV Viewer de Alberto Mart\'in Florido, con lo que nos centraremos en la pantalla principal, la encargada del control y creaci\'on de misiones.
 
-Para su correcto desarrollo se comenzó dibujando varios bocetos que fueron descartándose y puliendo hasta que se fijó el aspecto visual de la pantalla. 
+Para su correcto desarrollo se comenz\'o dibujando varios bocetos que fueron descart\'andose y puliendo hasta que se fij\'o el aspecto visual de la pantalla. 
 
 \begin{figure}[h]
 \centering
@@ -2013,30 +2074,30 @@ Para su correcto desarrollo se comenzó dibujando varios bocetos que fueron desca
   \label{fig:uavc_ppal}
 
 \end{figure}
-Para facilitar su disección vamos a dividir ésta ventana en 3 bloques:
+Para facilitar su disecci\'on vamos a dividir \'esta ventana en 3 bloques:
 \begin{enumerate}
-\item Creación y envío de misiones.
+\item Creaci\'on y env\'io de misiones.
 \item Control de misiones.
-\item Conexión con sensores. Éste bloque tan solo conecta con las integraciones de las pantallas de actitud y visor de cámara integradas desde UAV Viewer.
+\item Conexi\'on con sensores. \'Este bloque tan solo conecta con las integraciones de las pantallas de actitud y visor de c\'amara integradas desde UAV Viewer.
 \end{enumerate}
 
 
-\subsection{Creación y envío de misiones}
+\subsection{Creaci\'on y env\'io de misiones}
 
-Para poder dar ésta funcionalidad de una forma intuitiva y sencilla se han implementado:
+Para poder dar \'esta funcionalidad de una forma intuitiva y sencilla se han implementado:
 \begin{itemize}
-\item Un mapa interactivo dónde un click crea un punto de misión, dibujando un numero secuencial que muestra el orden la misión. Además según van añadiéndose nuevos puntos UAV Commander va dibujando la ruta que ``debería'' seguir el robot para el cumplimiento de su missión.
-Un simple click desencadenaría:
+\item Un mapa interactivo d\'onde un click crea un punto de misi\'on, dibujando un numero secuencial que muestra el orden la misi\'on. Adem\'as seg\'un van añadi\'endose nuevos puntos UAV Commander va dibujando la ruta que ``deber\'ia'' seguir el robot para el cumplimiento de su missi\'on.
+Un simple click desencadenar\'ia:
 \begin{enumerate}
-\item Inclusión del waypoint en la lista de waypoints
-\item Llamada al método de proyección \pythoninline{posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)} para obtener a partir del x e y de la imagen la latitud y longitud dónde se desea ir.
-\item Control de misión a realizar, verificando si se trata de un despegue, aterrizaje o un punto de paso.
-\item Inserción en la tabla de seguimiento de waypoints.
-\item En la próxima iteración del threadMap a través de la llamada a \pythoninline{update_position()}.
-\item Se llama al método \pythoninline{setPosition(self, x, y,angle)} quien ejecuta el método.
+\item Inclusi\'on del waypoint en la lista de waypoints
+\item Llamada al m\'etodo de proyecci\'on \pythoninline{posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)} para obtener a partir del x e y de la imagen la latitud y longitud d\'onde se desea ir.
+\item Control de misi\'on a realizar, verificando si se trata de un despegue, aterrizaje o un punto de paso.
+\item Inserci\'on en la tabla de seguimiento de waypoints.
+\item En la pr\'oxima iteraci\'on del threadMap a trav\'es de la llamada a \pythoninline{update_position()}.
+\item Se llama al m\'etodo \pythoninline{setPosition(self, x, y,angle)} quien ejecuta el m\'etodo.
 \item \pythoninline{set_waypoints(self, wayPoints, current=True)} quien pinta el nuevo waypoint y la ruta a seguir en el mapa.
 \end{enumerate}
-Las siguientes líneas de código muestran la implementación del método encargado de pintar los waypoints y las rutas en el mapa \pythoninline{set_waypoints(self, wayPoints, current=True)}
+Las siguientes l\'ineas de c\'odigo muestran la implementaci\'on del m\'etodo encargado de pintar los waypoints y las rutas en el mapa \pythoninline{set_waypoints(self, wayPoints, current=True)}
 \begin{python}
     def set_waypoints(self, wayPoints, current=True):
         n=0
@@ -2050,24 +2111,24 @@ Las siguientes líneas de código muestran la implementación del método encargado 
             cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
         self.refreshImage()
 \end{python}
-\item Botón de ``Take Off''/``Land''. Éste botón apoya al mapa para crear misiones con aterrizaje y despegue, si se quiere despegar hacia un punto, bastaría con pulsarlo y pulsar después hacia dónde se quiere despegar. El comportamiento para el aterrizaje sería análogo.
-\item Tabla de seguimiento de waypoints. En ésta tabla se almacenan los waypoints que se van creando al hacer click sobre el mapa, cada fila es editable, de tal forma que ofrece una gran precisión en caso que sea necesario.
-\item Campo ``default altitude'' Establece la altitud de crucero, el valor de éste campo se irá propagando en cada waypoint creado en el atributo altitude.
-\item Botón ``Send''. Éste botón llama al método \pythoninline{sendWP(self, send2APM)} del core quien recoge los objetos de misión, los procesa y los envía al bloque de comunicación con drivers JdeRobot para su envío a través de los interfaces Ice necesarios, a saber, mission y extra en el caso en el que haya aterrizaje o despegue en la misión.
+\item Bot\'on de ``Take Off''/``Land''. \'Este bot\'on apoya al mapa para crear misiones con aterrizaje y despegue, si se quiere despegar hacia un punto, bastar\'ia con pulsarlo y pulsar despu\'es hacia d\'onde se quiere despegar. El comportamiento para el aterrizaje ser\'ia an\'alogo.
+\item Tabla de seguimiento de waypoints. En \'esta tabla se almacenan los waypoints que se van creando al hacer click sobre el mapa, cada fila es editable, de tal forma que ofrece una gran precisi\'on en caso que sea necesario.
+\item Campo ``default altitude'' Establece la altitud de crucero, el valor de \'este campo se ir\'a propagando en cada waypoint creado en el atributo altitude.
+\item Bot\'on ``Send''. \'Este bot\'on llama al m\'etodo \pythoninline{sendWP(self, send2APM)} del core quien recoge los objetos de misi\'on, los procesa y los env\'ia al bloque de comunicaci\'on con drivers JdeRobot para su env\'io a trav\'es de los interfaces Ice necesarios, a saber, mission y extra en el caso en el que haya aterrizaje o despegue en la misi\'on.
 \end{itemize}
 
 \subsection{Control de misiones}
 
-El control de misiones es la parte más tediosa de todo el desarrollo, en ella se muestra el comportamiento del robot aéreo sobre el mapa; la ruta que ha seguido, la posición actual y su orientación.
+El control de misiones es la parte m\'as tediosa de todo el desarrollo, en ella se muestra el comportamiento del robot a\'ereo sobre el mapa; la ruta que ha seguido, la posici\'on actual y su orientaci\'on.
 
-Para llevar ésto a cabo se ha tenido que dividir el mapa en capas, tenemos 3 capas:
+Para llevar \'esto a cabo se ha tenido que dividir el mapa en capas, tenemos 3 capas:
 \begin{enumerate}
 \item Mapa original con el disclaimer. \pythoninline{self.cvImage}
-\item Mapa original con la estela que ha dejado el robot aéreo. \pythoninline{self.cvImageShadow}
-\item Mapa que va a mostrarse, donde se pinta la posición actual del robot aéreo \pythoninline{self.im_to_show}
+\item Mapa original con la estela que ha dejado el robot a\'ereo. \pythoninline{self.cvImageShadow}
+\item Mapa que va a mostrarse, donde se pinta la posici\'on actual del robot a\'ereo \pythoninline{self.im_to_show}
 \end{enumerate}
-Éste planteamiento por capas nos permite, por ejemplo, mantener la estela del robot y pintar la posición actual, añadir waypoints sin alterar lo ya dibujado, etc. Pero complica la implementación de todos los métodos que interactúan en este bloque.
-Algunos de los métodos las importantes del desarrollo del aplicativo se encuentran aquí y se listan a continuación:
+\'Este planteamiento por capas nos permite, por ejemplo, mantener la estela del robot y pintar la posici\'on actual, añadir waypoints sin alterar lo ya dibujado, etc. Pero complica la implementaci\'on de todos los m\'etodos que interact\'uan en este bloque.
+Algunos de los m\'etodos las importantes del desarrollo del aplicativo se encuentran aqu\'i y se listan a continuaci\'on:
 
 \begin{itemize}
 \item  \pythoninline{update_position(self)}
@@ -2077,7 +2138,7 @@ Algunos de los métodos las importantes del desarrollo del aplicativo se encuentr
 \item  \pythoninline{refreshImage(self)}
 \end{itemize}
 
-En cada iteración del hilo threadMap se articula el siguiente árbol con las llamadas:
+En cada iteraci\'on del hilo threadMap se articula el siguiente \'arbol con las llamadas:
 \begin{itemize}
 \item \pythoninline{update_position(self)}
 	\begin{itemize}
@@ -2098,7 +2159,7 @@ En cada iteración del hilo threadMap se articula el siguiente árbol con las llam
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
-A continuación se muestran las implementaciones de los métodos con más peso de éste bloque:
+A continuaci\'on se muestran las implementaciones de los m\'etodos con m\'as peso de \'este bloque:
 \begin{python}
     def update_position(self):
 
@@ -2153,8 +2214,8 @@ Esta secci\'on es la secci\'on espejo de las dos primeras del cap\'itulo de obje
 donde se planteaba el objetivo general y se elaboraban los espec\'ificos.
 
 Es aqu\'i donde hay que debatir qu\'e se ha conseguido y qu\'e no. Cuando algo no
-se ha conseguido, se ha de justificar, en t\'erminos de qu\'e problemás se han
-encontrado y qu\'e medidas se han tomado para mitigar esos problemás.
+se ha conseguido, se ha de justificar, en t\'erminos de qu\'e problem\'as se han
+encontrado y qu\'e medidas se han tomado para mitigar esos problem\'as.
 
 
 \section{Aplicaci\'on de lo aprendido}

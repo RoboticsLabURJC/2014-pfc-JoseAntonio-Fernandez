@@ -1,0 +1,92 @@
+% Bibliograf\'ia
+
+% Este fichero contiene la bibliograf\'ia de la memoria
+% Est\'a en un formato que se conoce como BibTex.
+% Hay muchos sitios web que exportan referencias en formato BibTeX. 
+% Prueba a buscar en http://scholar.google.com por referencias
+% y ver\'as que lo puedes hacer de manera sencilla.
+% M\'as informaci\'on: 
+% http://texblog.org/2014/04/22/using-google-scholar-to-download-bibtex-citations/
+
+% Existen varias posibilidades para referenciar diferentes tipos de documentos,
+% ya que los datos necesarios var\'ian. As\'i, existen formatos de entrada para
+%     * libros (book)
+%     * art\'iculos en revistas de investigaci\'on (article)
+%     * cap\'itulos de libro (incollection)
+%     * informes t\'ecnicos (techreport)
+%     * otros (misc)
+%
+% Las p\'aginas web deber\'ian ir como misc.
+
+% Una \'ultima cosa: no referencias nunca la WikiPedia
+% La WikiPedia, como buena enciclopedia, no es fuente primaria.
+% Si acaso, busca por citas en la WikiPedia (que s\'i ha de referenciar fuentes
+% primarias) y haz referencia a las mismas.
+
+@misc{colorado:_mission,
+  author = 	 {University of Colorado Boulder},
+  title = 	 {MAVLink Protocol: Waypoints},
+  publisher = 	 {University of Colorado Boulder},
+  month =	 {May},
+  year = 	 2015,
+  note =	 {\\ http://www.colorado.edu/recuv/2015/05/25/mavlink-protocol-waypoints}
+}
+
+@misc{Droneii:_drone_Invest,
+ author = {Droneii.com},
+ title = {Drone Investment Trends 2016},
+ publisher = {Droneii.com},
+ month = {May},
+ year = 2016,
+ note =	 {\\ http://www.droneii.com/drone-investment-trends-2016}
+}
+
+@Misc{businessinsider:_drones_5_years,
+  author =	 {businessinsider.com},
+  title =	 {Drones are about to fill the skies within the next 5 years},
+  month =	 {Jun},
+  year =	 2016,
+  note =	 {\\ http://www.businessinsider.com/the-drones-report-research-use-cases-regulations-and-issues-2016-4}
+
+@Misc{rtl-sdr:_gps_spoofing,
+  author =	 {rtl-sdr.com},
+  title =	 {Spoofing GPS Locations with low cost TX SDRs},
+  month =	 {Sep},
+  year =	 2015,
+  note =	 {\\ http://www.rtl-sdr.com/spoofing-gps-locations-with-low-cost-tx-sdrs/}
+
+@Misc{amartinflorido:_mediawiki,
+  author =	 {Alberto Mart\'i Florido},
+  title =	 {MediaWiki},
+  year =	 2014,
+  note =	 {\\ http://jderobot.org/Amartinflorido-tfg}
+
+@Misc{daniyague:_mediawiki,
+  author =	 Daniel Yagüe},
+  title =	 {MediaWiki},
+  year =	 2014,
+  note =	 {\\ http://jderobot.org/Daniyague-pfc}
+
+@Misc{jocano:_mediawiki,
+  author =	 {Jorge cano},
+  title =	 {MediaWiki},
+  year =	 2016,
+  note =	 {\\ http://jderobot.org/J.canoma-tfg}
+
+@Misc{jvela:_mediawiki,
+  author =	 {Jorge Vela},
+  title =	 {MediaWiki},
+  year =	 2017,
+  note =	 {\\ http://jderobot.org/Jvela-tfg}
+
+@Misc{jimenez:_mediawiki,
+  author =	 {Diego Jim\'enez},
+  title =	 {MediaWiki},
+  year =	 2017,
+  note =	 {\\ http://jderobot.org/Jimenez-tfg}
+
+@Misc{aitor:_mediawiki,
+  author =	 {Aitor Martí́nez},
+  title =	 {MediaWiki},
+  year =	 2015,
+  note =	 {\\ http://jderobot.org/Aitormf-tfg}
