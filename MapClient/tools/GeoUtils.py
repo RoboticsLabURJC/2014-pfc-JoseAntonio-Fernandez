@@ -67,12 +67,12 @@ def getBoundingBox(lat, lon, distance):
     northEastpoint = from_radians(max_lat, max_lon)
     return southWestPoint[1], southWestPoint[0], northEastpoint[1], northEastpoint[0]
 
-def center_of_triangle(self, triangle):
+def center_of_triangle(triangle):
         center_x = (triangle[0][0] + triangle[1][0] + triangle[2][0]) / 3;
         center_y = (triangle[0][1]+ triangle[1][1] + triangle[2][1]) / 3;
         return [center_x,center_y]
 
-def change_coordinate_system(self, points, origin, toCartsian=True):
+def change_coordinate_system(points, origin, toCartsian=True):
         points_transformed = []
         if toCartsian:
             for corner in points:
