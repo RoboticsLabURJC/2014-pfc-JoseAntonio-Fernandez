@@ -60,7 +60,7 @@ class Server:
                                                  mavutil.mavlink.MAV_DATA_STREAM_ALL,
                                                  RATE, 1)
 
-        # Thread to mannage the AMP messages
+        # Thread to manage the AMP messages
         MsgHandler = threading.Thread(target=self.mavMsgHandler, args=(self.master,), name='msg_Handler')
         print('Initiating server...')
         # MsgHandler.daemon = True
@@ -128,14 +128,13 @@ class Server:
                 self.master.mav.heartbeat_send(mavlink.MAV_TYPE_GCS, mavlink.MAV_AUTOPILOT_INVALID, 0, 0, 0)
                 self.lastSentHeartbeat = time.time()
 
-            if msg is None or msg.get_type() == "BAD_DATA":
+                # refresh the attitude
+                self.refreshAPMPose3D()
+                self.refreshAPMnavdata()
+
+            elif msg is None or msg.get_type() == "BAD_DATA":
                 time.sleep(0.01)
                 continue
-
-            #print(self.mission.getMissionData())
-            #refresh the attitude
-            self.refreshAPMPose3D()
-            self.refreshAPMnavdata()
 
 
 
@@ -357,20 +356,32 @@ class Server:
             seq += 1
             self.extra.setTakeOff(False)
         self.extra.setTakeOff(False)
-
-        for i in range(N):
-            navData = pose3Dwaypoints[i]
-            wayPoint_tmp =mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
-                                                                self.master.target_component,
-                                                                seq,
-                                                                frame,
-                                                                mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, # 16
-                                                                0, 0, 0, radius, 0, 0,
-                                                                navData.x, navData.y, navData.h)
-            wp.add(wayPoint_tmp)
-            seq += 1
-            print(wayPoint_tmp)
-
+        if (self.extra.landDecision):
+            for i in range(N-1):
+                navData = pose3Dwaypoints[i]
+                wayPoint_tmp =mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
+                                                                    self.master.target_component,
+                                                                    seq,
+                                                                    frame,
+                                                                    mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, # 16
+                                                                    0, 0, 0, radius, 0, 0,
+                                                                    navData.x, navData.y, navData.h)
+                wp.add(wayPoint_tmp)
+                seq += 1
+                print(wayPoint_tmp)
+        else:
+             for i in range(N):
+                navData = pose3Dwaypoints[i]
+                wayPoint_tmp =mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
+                                                                    self.master.target_component,
+                                                                    seq,
+                                                                    frame,
+                                                                    mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, # 16
+                                                                    0, 0, 0, radius, 0, 0,
+                                                                    navData.x, navData.y, navData.h)
+                wp.add(wayPoint_tmp)
+                seq += 1
+                print(wayPoint_tmp)
         # Look if a land message has been recieved to set up in the mission too, Land must to be
         # the last so if we have the land message we have to create the message and append to the mission
         print("Land ", self.extra.landDecision)
@@ -396,7 +407,7 @@ class Server:
             msg = self.master.recv_match(type=['MISSION_REQUEST'], blocking=True)
             print(msg)
             self.master.mav.send(wp.wp(i))
-            print ('Sending waypoint {0}'.format(i) + format(wp.wp(msg.seq)))
+            print ('Sending waypoint {0} '.format(i) + format(wp.wp(msg.seq)))
 
         self.master.arducopter_arm()
         self.master.set_mode_auto() # arms and start mission I thought
