@@ -59,7 +59,7 @@ keywordstyle=\scriptsize\color{deepblue},
 emph={MyClass,__init__},          % Custom highlighting
 emphstyle=\scriptsize\color{deepred},    % Custom highlighting style
 stringstyle=\color{deepgreen},
-frame=Ltb,                         % Any extra options here
+frame=single,                         % Any extra options here
 showstringspaces=false            % 
 framerule=0pt,
 aboveskip=0.5cm,
@@ -239,41 +239,18 @@ Fuenlabrada, a \qquad$\;\,$ de \qquad\qquad\qquad\qquad de 20XX
 \chapter*{}
 \pagenumbering{Roman} % para comenzar la numeracion de paginas en numeros romanos
 \begin{flushright}
-\textit{Dedicado a \\
-mi familia / mi abuelo / mi abuela}
+\textit{A mis padres y a mi mujer,\\ sin vuestra perseverancia,\\ apoyo y paciencia\\ nada de esto\\ hubiese sido posible.\\A mi hijo Pablo}
 \end{flushright}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Agradecimientos
-
-\chapter*{Agradecimientos}
-%\addcontentsline{toc}{chapter}{Agradecimientos} % si queremos que aparezca en el \'indice
-\markboth{AGRADECIMIENTOS}{AGRADECIMIENTOS} % encabezado 
-
-Aqu\'i vienen los agradecimientos\ldots Aunque est\'a bien acordarse de la pareja,
-no hay que olvidarse de dar las gracias a tu madre, que aunque a veces no lo 
-parezca disfrutar\'a tanto de tus logros como t\'u\ldots Adem\'as, la pareja quiz\'as
-no sea para siempre, pero tu madre s\'i.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Resumen
 
 \chapter*{Resumen}
 %\addcontentsline{toc}{chapter}{Resumen} % si queremos que aparezca en el \'indice
 \markboth{RESUMEN}{RESUMEN} % encabezado
 
-Aqu\'i viene un resumen del proyecto. Ha de constar de tres o cuatro p\'arrafos,
-donde se presente de manera clara y concisa de qu\'e va el proyecto. Han
-de quedar respondidas las siguientes preguntas:
+Los UAV o Drones se han popularizado en los \'ultimos años hasta es punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ambitos de nuestra vida. 
+El objetivo de este trabajo final es desarrollar tecnolog\'ia que permita la programaci\'on de aplicaciones rob\'oticas con un avi\'on aut\'onomo, que se ha adaptado a partir de un avión comercial a radiocontrol y se ha simulado. Este proyecto se ubica por lo  tanto en el contexto de rob\'otica y drones, en rob\'otica a\'erea.
+Como plataforma robótica se ha empleado JdeRobot 5.3. El lenguaje de programación ha sido Python y se han empleado las bibliotecas OpenCV y PyQt, para tratamiento de imágenes y para construir la GUI respectivamente
 
-\begin{itemize}
-  \item ¿De qu\'e va este proyecto? ¿Cu\'al es su objetivo principal?
-  \item ¿C\'omo se ha realizado? ¿Qu\'e tecnolog\'ias est\'an involucradas?
-  \item ¿En qu\'e contexto se ha realizado el proyecto? ¿Es un proyecto
-dentro de un marco general?
-\end{itemize}
-
-Lo mejor es escribir el resumen al final.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Resumen en ingl\'es
@@ -489,7 +466,7 @@ En 2014 Google por su parte compr\'o Titan Aeroespace para crear una flota de dr
 
 Dentro del laboratorio de rob\'otica de la Universidad Rey Juan Carlos cabe destacar varios trabajos realizados para profundizar investigar y experimentar con drones y que han servido de antecedentes directos y base para este Proyecto Fin de Carrera. Todos ellos han usado como plataforma software JdeRobot \url{http://jderobot.org/Main_Page}. Se resumen a continuaci\'on los m\'as importantes.
 
-Trabajos como el de Alberto Mart\'inez Florido\cite{amartinflorido:_mediawiki} permiti\'o controlar un AR-Drone 2 de Parrot real desde una aplicaci\'on cliente, desarrollando para ello un driver para el dron, \texttt{ardrone\_server} y una aplicacci\'on cliente \texttt{UAV Viewer}.
+Trabajos como el de Alberto Mart\'inez\cite{amartinflorido:_mediawiki} permiti\'o controlar un AR-Drone 2 de Parrot real desde una aplicaci\'on cliente, desarrollando para ello un driver para el dron, \texttt{ardrone\_server} y una aplicacci\'on cliente \texttt{UAV Viewer}.
 El driver \texttt{ardrone\_server} es capaz de conectar con el AR-DRONE a trav\'es de comandos AT tanto para obtener los datos de todos sus sensores como para controlarlo y expone todo ello en interfaces JdeRobot para su interconexi\'on con todo el software disponible en el entorno.
 
 El AR-Drone es un quadric\'optero que en su versi\'on actual cuenta con aceler\'ometros, gir\'oscopos y magnet\'ometros en 3 ejes que determinan junto con su bar\'ometro y un sensor de ultrasonidos la actitud del mismo, dispone adem\'as de 2 c\'amaras, una ventral y otra frontal, y algunos modelos traen sensor GPS.
@@ -599,16 +576,16 @@ Para abordar con \'exito los milestones expuestos anteriormente debemos cubrir l
 	\end{enumerate}
 	\item \texttt{APM Server}
 	\begin{enumerate}
-		\item Dar acceso a los sensores del APM y servir en forma de Pose3D y NavData:
+		\item Dar acceso a los sensores del APM y servir en forma de \texttt{Pose3D} y \texttt{NavData}:
 		\begin{enumerate}
 			\item Conectar con el APM
 			\item Leer los mensajes que env\'ian sus sensores.
-			\item Implementar los interfaces Pose3D y NavData con esta informaci\'on.
-			\item Servir a trav\'es de Ice todos los interfaces.
+			\item Implementar los interfaces \texttt{Pose3D} y \texttt{NavData} con esta informaci\'on.
+			\item Servir a trav\'es de ICE todos los interfaces.
 		\end{enumerate}
 		\item Dar acceso a instrucciones de actuaci\'on a trav\'es del interfaz mission.
 		\begin{enumerate}
-			\item Recibir a trav\'es de Ice un objeto de misi\'on.
+			\item Recibir a trav\'es de ICE un objeto de misi\'on.
 			\item Construir los comandos MAVLink necesarios para que el APM sepa interpretar y realizar la misi\'on.
 			\item Recibir los comandos de despegue y aterrizaje a trav\'es del interfaz Extra.
 			\item Construir los comandos MAVLink necesarios para que el APM sepa interpretarlos y añadirlos a la misi\'on.
@@ -616,7 +593,7 @@ Para abordar con \'exito los milestones expuestos anteriormente debemos cubrir l
 	\end{enumerate}
 	\item \texttt{UAV Commander}
 	\begin{enumerate}	
-		\item Recibir toda la informaci\'on sensorial a partir de los interfaces Ice Pose3D y NavData.
+		\item Recibir toda la informaci\'on sensorial a partir de los interfaces ICE \texttt{Pose3D} y \texttt{NavData}.
 		\item Funcionalidad de creaci\'on de misiones:
 		\begin{enumerate}
 			\item Recuperar mapa georeferenciado de un servicio WMS.
@@ -743,14 +720,15 @@ Para apoyarnos en nuestro desarrollo hemos utilizado principalmente 4 herramient
 \chapter{Infraestructura utilizada}
 \label{chap:infraestructura_utilizada}
 
+Se describen en este capítulo las herramientas, ingredientes hardware y software en las que se apoya este PFC.
+
 \section{Hardware}
 \label{sec:hardware}
 
-Este PFC se apoya principalmente en 2 piezas hardware:
+Este PFC utiliza principalmente tres componentes hardware: un avión de radio control, un procesador Raspberry PI 3 y una placa estabilizadora.
 
 
-\begin{itemize}
-\item El avi\'on a radio-control. Para este desarrollo hemos elegido el avi\'on Bix3 distribuido por la empresa china \url{www.hobbyking.com}, hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Otro aspecto importante de la constrcci\'on del avi\'on es que el propulsor no se encuentra en el frontal del avi\'on lo que nos permitir\'a aprovechar al m\'aximo esa zona pudiendo poner incluso una c\'amara frontal.
+Como el avi\'on de radio-control hemos elegido el avi\'on Bix3 distribuido por la empresa china \url{www.hobbyking.com}. Hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Otro aspecto importante de la construcci\'on del avi\'on es que el propulsor no se encuentra en el frontal del avi\'on lo que nos permitir\'a aprovechar al m\'aximo esa zona pudiendo poner incluso una c\'amara frontal.
 
 \begin{figure}[h]
 \centering
@@ -766,15 +744,11 @@ Este PFC se apoya principalmente en 2 piezas hardware:
  \label{f:drone_cano}
 \end{figure}
 
-Para poder cargar con el equipo necesario nos ha sido necesario cambiar el motor, el variador y las bater\'ias de serie por otras de mayor rendimiento que nos permitan volar con tanta carga de pago.
+Para poder cargar con el equipo necesario a bordo ha sido necesario cambiar el motor, el variador y las bater\'ias de serie por otras de mayor rendimiento que nos permitan volar con tanta carga de pago.
 
-\item Una raspberry PI3 que es nuestro ordenador de abordo y en el que instalaremos la infraestructura necesaria para que podamos dotarle de inteligencia. Hemos elegido \'este dispositivo debido al compromiso peso/potencia que nos otorga as\'i como porque se trata de un hardware muy asequible  y extendido. Conectado a esta PI3 ir\'a una PiCam que nos permitira ver lo que el avi\'on vea.
-\end{itemize} 
+Una raspberry PI3 que es el ordenador de abordo y en el que se ha instalado la infraestructura necesaria para dotarle de inteligencia. Hemos elegido \'este dispositivo debido al compromiso peso/potencia que otorga, as\'i como porque es de un hardware muy asequible  y extendido. Conectado a esta PI3 va una PiCam que nos permitira ver lo que el avi\'on vea.
 
-\section{Placa estabilizadora}
-\label{sec:estabilizadora}
-
-El estabilizador/piloto autom\'atico, para este desarrollo hemos optado por un Ardupilot Mega\footnote{\url{http://www.ardupilot.co.uk/}}. Este dispositivo tiene como base una placa Arduino Mega a la que se le han incoorporado, gir\'oscopos y acerel\'ometros en 3 ejes para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula. El kit que adquirimos incluye tambi\'en tambi\'en 
+Para este PFC hemos utlizado una placa Ardupilot Mega\footnote{\url{http://www.ardupilot.co.uk/}} como estabilizador/piloto automático. Este dispositivo tiene como base una placa Arduino Mega a la que se le han incoorporado gir\'oscopos y acerel\'ometros en 3 ejes para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula. El kit que adquirimos incluye tambi\'en todo lo necesario para integrarlo en nuestro avión y proporcionarle la alimentación necesaria. 
 Esta placa ataca directamente sobre los actuadores del avi\'on (los servos y el motor) a trav\'es de señales PWM. 
 
 \begin{figure}[H]
@@ -784,48 +758,47 @@ Esta placa ataca directamente sobre los actuadores del avi\'on (los servos y el 
   \label{fig:ardupilot}
 \end{figure}
 
-Esta placa ha de flashearse con un firmware en funci\'on del tipo de aeronave que utilicemos como base, Arducoopter para alas rotatorias o Ardupilot para alas fijas.
-
-Esta y otras placas similares como PixHawnk ofrecen un interfaz que se apoya en comandos llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, a los que incoorpora la placa o a los que le añadamos a la misma como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar ordenes al piloto autom\'atico quien las ejecutar\'a m\'as adelante trataremos el protocolo MAVLink en profundidad. Cabe sin embargo destacar ya en este punto no s\'olo que algunos de los comando que mandemos tendran distinto comportamiento en la placa en funcion del firmware escogido sino que hay set de comandos que no pueden ser utilizados en uno o en otro.
+Esta placa ha de \textit{flashearse} con un \textit{firmware} en funci\'on del tipo de aeronave que utilicemos como base, Arducopter para alas rotatorias o Ardupilot para alas fijas. Esta y otras placas similares como PixHawk, se se comunican y aceptan comandos a travñes de un proticolo llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, a los que incorpora la placa o a los que le añadamos a la misma, como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar órdenes al piloto autom\'atico, quien las ejecutar\'a. M\'as adelante trataremos el protocolo MAVLink en profundidad. Cabe destacar que algunos de los comando que mandemos tendran distinto comportamiento en la placa en funcion del \textit{firmware} escogido, y que hay un conjunto de comandos que no pueden ser utilizados en uno o en otro.
+El objetivo de este PFC es crear un driver que nos permita comunicarnos con esta placa y una aplicación en JdeRobot para el manejo de un avión robotizado.
 
 
 \section{JdeRobot}
 \label{sec:jderobot}
 
-JdeRobot es un framework desarrollado por el laboratorio de rob\'otica de la Universidad Rey Juan Carlos, para el desarrollo de aplicaciones de rob\'otica. Su \'ultima realease la 5.5 se liber\'o el 15 de Marzo de 2017 pudiendo ver los detalles de \'esta en el github oficial\footnote{\url{https://github.com/JdeRobot/JdeRobot/wiki/JdeRobot-5.5.0}}.
-JdeRobot se compone de interfaces, drivers, utilidades y aplicaciones para el desarrollo de cualquier proyecto de rob\'otica, se apoya en estos interfaces, algunos de ellos los veremos en profundidad a continuaci\'on, para interconectar entre s\'i todos los aplicativos del mismo y en Zeroc ICE para la comunicaci\'on entre ellos.
-Algunos de los driver m\'as importantes que contiene ser\'ian:
+JdeRobot es un entorno de software creado por el laboratorio de rob\'otica de la Universidad Rey Juan Carlos, para el desarrollo de aplicaciones de rob\'otica. Su \'ultima versión, la 5.5, se liber\'o el 15 de Marzo de 2017 pudiendo ver los detalles de \'esta en el github oficial\footnote{\url{https://github.com/JdeRobot/JdeRobot/wiki/JdeRobot-5.5.0}}.
+JdeRobot se compone de interfaces, drivers, utilidades y aplicaciones para el desarrollo de cualquier proyecto de rob\'otica. Se apoya en estos interfaces para interconectar entre s\'i todos los componentes de una aplicación robótica y en Zeroc ICE para la comunicaci\'on entre ellos.
+Algunos de los drivers m\'as importantes que contiene y mas relacionado con este trabajo son:
 \begin{enumerate}
-\item Cameraserver. Se trata de un driver para enviar im\'agenes y video a trav\'es del interfaz camera
-\item Gazeboserver. Driver desarrollado para conectar la herramienta de simulaci\'on Gazebo con JdeRobot y as\'i poder simular los desarrollos.
-\item MAVLinkServer. Desarrollado para intercomunicar JdeRobot con placas que utilicen el protocolo de comunicaci\'on MAVLink.
-\item Ardrone\_server. Driver que conecta el Parrot Ar-Drone a JdeRobot. Este driver escrito en c++ transforma el set de comandos AT del done en interfaces y viceversa, implementa los interfaces camera, cmdvel, navdata, extra y pose3D y permite acceder a la actitud del drone as\'i como a sus 2 c\'amaras. Sirve tambi\'en datos como el nivel de la bater\'ia y permite grabar v\'ideo o tomar fotos.
+\item \texttt{Cameraserver}. Un driver para enviar im\'agenes y video a trav\'es del interfaz \texttt{camera}
+\item \texttt{Gazeboserver}. Driver para conectar las aplicaciones con distintos robots simulados (con ruedas, cuadricópteros, etc.
+\item \texttt{MAVLinkServer}. Driver desarrollado para intercomunicar JdeRobot con placas de estabilización y autopiloto que utilicen el protocolo de comunicaci\'on MAVLink.
+\item \texttt{Ardrone\_server}. Driver que conecta el Parrot Ar-Drone a JdeRobot. Este driver escrito en c++ transforma el conjunto de comandos AT del drone en interfaces ICE y viceversa. Implementa los interfaces \texttt{camera}, \texttt{cmdvel}, \texttt{navdata}, \texttt{extra} y \texttt{pose3D} y permite acceder a la actitud del drone as\'i como a sus 2 c\'amaras. Sirve tambi\'en datos como el nivel de la bater\'ia y permite grabar v\'ideo o tomar fotos.
 \end{enumerate}
-Algunas de las aplicaciones desarrolladas m\'as importantes ser\'ian:
+Algunas de las herramientas contenidas en JdeRobot y más relacionadas con este PFC son:
 \begin{enumerate}
-\item Cameraview. Se trata de una aplicaci\'on desarrollada en c++ capaz de recibir v\'ideo a trav\'es del interfaz camera.
-\item UAV viewer. Aplicaci\'on desarrollada como ground control de robots a\'ereos. Esta aplicaci\'on permite teleoperar cualquier tipo de robot a\'ereo y ofrece de forma visualmente atractiva datos como la actitud, velocidades lineales y angulares, ofrece tambi\'en la posibilidad de visualizar videos servidos por el interfaz camera.
+\item \texttt{Cameraview}. Se trata de una aplicaci\'on desarrollada en c++ capaz de recibir v\'ideo a trav\'es del interfaz \texttt{camera}.
+\item \texttt{UAV viewer}. Aplicaci\'on desarrollada para teleoperar robots a\'ereos. Esta aplicaci\'on permite teleoperar cualquier tipo de robot a\'ereo y ofrece de forma visualmente atractiva datos como la actitud, velocidades lineales y angulares, ofrece tambi\'en la posibilidad de visualizar imágenes servidas por el interfaz \texttt{camera}.
 \end{enumerate}
 \subsection{Interfaces}
 
-JdeRobot expone m\'as de 30 interfaces pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado:
+JdeRobot expone m\'as de 30 interfaces pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado en el driver para el avión o usado en la aplicación:
 \begin{itemize}
-\item Pose3D. Utilizado para recoger los datos de actitud y la posici\'on de la aeronave.
+\item \texttt{Pose3D}. Utilizado para recoger los datos de actitud y la posici\'on de la aeronave. Devuelve la posición del robot y su orientacion en el espacio, empleando para la orientación cuaterniones. Comparados con los ángulos de Euler, son más simples de componer y evitan el problema del bloqueo del cardán\footnote{El bloqueo del cardán consiste en la pérdida de un grado de libertad en una suspensión cardán de tres rotores, que ocurre cuando los ejes de dos de los tres rotores se colocan en paralelo, bloqueando el sistema en una rotación en un espacio bidimensional degenerado.}, \texttt{pymavlink} nos permite transformar de uno a otro de forma sencilla.
 {\scriptsize
 \begin{verbatim}
 Pose3DData
   {
-	float x;  /* x coord */
-	float y;  /* y coord */
-	float z;  /* z coord */
-  	float h;  /* */
-	float q0; /* qw */
-	float q1; /* qx */
-	float q2; /* qy */
-	float q3; /* qz */
+	float x;  //latitude
+	float y;  //longitude
+	float z;  //altitude
+	float h;  //not used now
+	float q0; //quaternion component 1
+	float q1; //quaternion component 2
+	float q2; //quaternion component 3
+	float q3; //quaternion component 4
   };
 \end{verbatim}}
-\item Camera. Utilizado para servir im\'agenes.
+\item \texttt{Camera}. Utilizado para servir im\'agenes.
 {\scriptsize
 \begin{verbatim}
   class CameraDescription
@@ -833,22 +806,43 @@ Pose3DData
     string name;
     string shortDescription;
     string streamingUri;
-    float fdistx;
-    float fdisty;
+    float fdistx; //focal distance in x
+    float fdisty; //focal distance in y
     float u0;
     float v0;
     float skew;
-    float posx;
-    float posy;
-    float posz;
-    float foax;
-    float foay;
-    float foaz;
-    float roll;
+    float posx; //position in x of the camera
+    float posy; //position in y of the camera
+    float posz; //position in z of the camera
+    float foax; //position of a focused object
+    float foay; //position of a focused object
+    float foaz; //position of a focused object
+    float roll; //roll of the camera
   };
 
 \end{verbatim}}
-\item NavData. Utilizado para servir datos secundarios de actuaci\'on como velocidades lineales o angulares o el estado de la bater\'ia.
+Los parámetros del interfaz se pueden dividir en 2 bloques: intrínsecos y extrínsecos. 
+\begin{itemize}
+	\item Intrínsecos.
+	\begin{itemize}
+		\item fdistx
+		\item fdisty
+		\item u0
+		\item v0
+		\item skew
+	\end{itemize}
+	\item Extrínsecos.
+	\begin{itemize}
+		\item posx
+		\item posy
+		\item posz
+		\item foax
+		\item foay
+		\item foaz
+		\item roll
+	\end{itemize}
+\end{itemize}
+\item \texttt{NavData}. Utilizado para servir datos secundarios de actuaci\'on como velocidades lineales o angulares o el estado de la bater\'ia.
 {\scriptsize
 \begin{verbatim}
 class NavdataData 
@@ -899,7 +893,7 @@ class NavdataData
  float tm; //time stamp
 };
 \end{verbatim}}
-\item Extra. Utilizado principalmente para las \'ordenes de despegue y aterrizaje.
+\item \texttt{Extra}. Utilizado principalmente para las \'ordenes de despegue y aterrizaje.
 {\scriptsize
 \begin{verbatim}
     void land() - land drone. 
@@ -915,87 +909,111 @@ class NavdataData
 \end{itemize}
 
 
-\section{MAVLink}
+\section{Protocolo \texttt{MAVLink}}
 \label{sec:mavlink}
 
-MAVLink siglas de Micro Air Vehicle Link es un protocolo de comunicaci\'on desarrollado para comunicar las placas estabilizadoras con piloto autom\'atico a los GCS o Ground control station, las aplicaciones desde las que se pod\'ia enviar misiones y seguir el cumplimiento de las mismas desde tierra.
-MAVLink se public\'o en 2009 por Lorenz Meier, publicado bajo licencia LGPL aspira a convertirse en el protocolo standard en rob\'otica a\'erea y se ha probado su funcionamiento en PX4, PIXHAWK, APM\footnote{Ardupilot Mega} y Parrot AR.Drone.
+MAVLink siglas de Micro Air Vehicle Link es un protocolo de comunicaci\'on desarrollado para comunicar las placas estabilizadoras dotadas de piloto autom\'atico con los GCS o \textit{Ground control} station, es decir, con las aplicaciones desde las que se pod\'ia enviar misiones y seguir el cumplimiento de las mismas desde tierra.
+MAVLink se public\'o en 2009 por Lorenz Meier, publicado bajo licencia LGPL. Aspira a convertirse en el protocolo standard en rob\'otica a\'erea y se ha probado su funcionamiento en PX4, PIXHAWK, APM\footnote{Ardupilot Mega} y Parrot AR.Drone.
 
-Un ejemplo de comando MAVLink ser\'ia:
+Un ejemplo de comando MAVLink ser\'ia este mensaje trae la informaci\'on del GPS y se env\'ia peri\'odicamente en ciclos que decidimos en par\'ametros de conexi\'on con el dispositivo.
 {\scriptsize
 \begin{verbatim}
 type GpsStatus struct {
-    SatellitesVisible  uint8      N\'emero de sat\'elites visibles
-    SatellitePrn       [20]uint8  Id Global de cada sat\'elite
+    SatellitesVisible  uint8      Número de satélites visibles
+    SatellitePrn       [20]uint8  Id Global de cada satélite
     SatelliteUsed      [20]uint8  Lista con el uso de cada sat\'elite
-    SatelliteElevation [20]uint8  Elevaci\'on, nos da el \'angulo sobre el horizonte.
-    SatelliteAzimuth   [20]uint8  Direcci\'on del sat\'elite, 0: 0 grados, 255: 360 grados.
-    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los sat\'elites
+    SatelliteElevation [20]uint8  Elevación, nos da el ángulo sobre el horizonte.
+    SatelliteAzimuth   [20]uint8  Dirección del satélite, 0: 0 grados, 255: 360 grados.
+    SatelliteSnr       [20]uint8  Señal/ruido de cada uno de los satélites
 }
 \end{verbatim}}
-Este mensaje trae la informaci\'on del enlace actual con el GPS y se env\'ia peri\'odicamente en ciclos que decidimos en par\'ametros de conexi\'on con el dispositivo.
-Otro par\'ametro, esta vez vinculado a la actuaci\'on ser\'ia:
+
+Otro mensaje, esta vez vinculado a la actuaci\'on ser\'ia:
 {\scriptsize
 \begin{verbatim}
 type MissionItem struct {
-    Param1          float32    par\'ametro variable en funci\'on del comando.
-    Param2          float32    par\'ametro variable en funci\'on del comando.
-    Param3          float32    par\'ametro variable en funci\'on del comando.
-    Param4          float32    par\'ametro variable en funci\'on del comando.
+    Param1          float32    parámetro variable en función del comando.
+    Param2          float32    parámetro variable en función del comando.
+    Param3          float32    parámetro variable en función del comando.
+    Param4          float32    parámetro variable en función del comando.
     X               float32    latitud
     Y               float32    longitud
     Z               float32    altitud
-    Seq             uint16     N\'umero del item en la misi\'on
-    Command         uint16     Tipo de comando de navegaci\'on.
+    Seq             uint16     Número del item en la misión
+    Command         uint16     Tipo de comando de navegación.
     TargetSystem    uint8      ID del sistema
     TargetComponent uint8      
     Frame           uint8      Sistema de coordenadas que se utiliza.
-    Current         uint8      Misi\'on actual no:0, si:1
-    Autocontinue    uint8      Autocontinuar al siguiente objeto de misi\'on.
+    Current         uint8      Misión actual no:0, si:1
+    Autocontinue    uint8      Autocontinuar al siguiente objeto de misión.
 }
 \end{verbatim}}
+Este mensaje representa in item de misión, una misión se compone de uno o varios de estos items. Un item de misión en MAVLink puede ser un punto de paso o \textit{waypoint}, una maniobra de despegue o aterrizaje, o instrucciones de cambio de altura o velocidad del robot. 
+
+\section{Biblioteca pymavlink}
+\label{sec:mavlink}
+
+Pymavlink trae la definici\'on de los comandos a utilizar en python. Gracias a esta biblioteca no se tienen que construir los comandos MAVLink a mano, evitando cometer errores y simplificando la creación y envío de los mismos. Su uso facitita también la identificación de los comandos recibidos. Para instalarla tan s\'olo se necesita ejecutar:
+ 
+\begin{verbatim}
+sudo pip2 install -U pymavlink
+\end{verbatim}
+
+Y tiene como dependencias:
+\begin{itemize}
+\item future. Se necesita future como soporte en Python 3.X de Python 2.7 (http://python-future.org/)
+\item lxml. Para parsear xml (http://lxml.de/installation.html)
+\item python-dev
+\item MavLink. (http://qgroundcontrol.org/mavlink/start)
+\end{itemize}
 
 
-\section{Python y PyQt5}
+\section{Lenguaje Python y biblioteca PyQt5}
 \label{sec:python}
 
 Python es un lenguaje de programaci\'on interpretado y multiplataforma que naci\'o en los años 80 en los pa\'is bajos con idea de hacer m\'as legible el c\'odigo.
-El lenguaje de programaci\'on que inicialmente se utilizaba principalmente para scripting, ha sabido crecer con los años y con la publicaci\'on de Python3 en 2009 ha recibido el impulso que necesitaba para ser hoy en d\'ia el 5º leguaje m\'as utilizado por encima de PHP, .NET y Javascript que baja hasta el 8º puesto seg\'un TIOBE en un estudio de Abril de 2017.
+El lenguaje de programaci\'on que inicialmente se utilizaba principalmente para scripting, ha sabido crecer con los años y con la publicaci\'on de Python3 en 2009 ha recibido el impulso que necesitaba para ser hoy en d\'ia el quinto lenguaje m\'as utilizado, por encima de PHP, .NET y JavaScript (que baja hasta el 8º puesto seg\'un TIOBE\footnote{\url{https://www.tiobe.com/tiobe-index/}} en un estudio de Abril de 2017).
 
-El porqu\'e de utlizar Python, muy sencillo mantiene el car\'acter multiplataforma de JdeRobot, su c\'odigo es simple y legible y trabaja muy bien con dependencias muy utilizadas en rob\'otica como OpenCV.
+Para este PFC se eligió Python, porque mantiene el car\'acter multiplataforma de JdeRobot, su c\'odigo es simple y legible y trabaja muy bien con dependencias muy utilizadas en rob\'otica como OpenCV.
 
-Para nuestro desarrollo hemos utilizado PyQt5 para desarrollar el interfaz gr\'afico. PyQt5 es un binding de Qt5 en forma de librer\'ia python que nos permite acceder a toda la funcionalidad de Qt5. Qt, propiedad de Nokia, es un conjunto de librer\'ias escritas en C++ para interfaces gr\'aficas.
+Para nuestro desarrollo hemos utilizado PyQt5 para desarrollar el interfaz gr\'afico. PyQt5 es un \textit{binding} de Qt5 en forma de librer\'ia Python que nos permite acceder a toda la funcionalidad de Qt5. Qt, propiedad de Nokia, es un conjunto de librer\'ias escritas en C++ para interfaces gr\'aficas.
 
 
 \section{Mapas y Geo-referenciaci\'on}
 \label{sec:mapas}
 
-En nuestro desarrollo hemos tenido que trabajar con mapas geo-referenciados. Estos mapas, que tanto se han popularizado gracias a Google, son una herramienta imprescindible en rob\'otica a\'erea si se quiere trabajar con largas distancias.
+En la aplicación de navegación autónoma hemos tenido que trabajar con mapas geo-referenciados. Estos mapas, que tanto se han popularizado gracias a Google, son una herramienta imprescindible en rob\'otica a\'erea si se quiere trabajar con largas distancias. Un mapa geo-referenciado es aquel en el que conocemos o podemos calcular la posici\'on en el planeta que representa cada píxel del mismo.
 
-Un mapa geo-referenciado es aquel en el que conocemos o podemos calcular la posici\'on en el planeta que representa cada pixel del mismo.
+La forma m\'as com\'un de obtener estos mapas geo-referenciado es a trav\'es de WMS, siglas de \textit{Web Map Service}. Un WMS nos es m\'as que un servicio web que recibe como entrada unas coordenadas y una serie de par\'ametros y devuelve una imagen encuadrada en los datos enviados.
 
-La forma m\'as com\'un de obtener estos mapas geo-referenciado es a trav\'es de WMS, siglas de Web Map Service. Un WMS nos es m\'as que un servicio web que recibe como entrada unas coordenadas y una serie de par\'ametros y devuelve una imagen encuadrada en lo datos enviados.
-En nuestro desarrollo hemos utilizado 2 WMS el del IGN\footnote{Instrituto Geogr\'afico Nacional de españa} y el de Google, a continuaci\'on vamos a desgranar un WMS, el de PMOA del IGN.
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.501]{img/imageWithDisclaimer.png}
+  \caption{Imágen geo-referenciada del club de aeromodelismo Icaro}
+  \label{fig:sitl}
+\end{figure}
 
-El WMS PNOA requiere como entrada 4 atributos principales:
+En nuestro desarrollo hemos utilizado dos WMS: el del IGN\footnote{Instrituto Geogr\'afico Nacional de españa} y el de Google.
+A continuaci\'on vamos a desgranar un WMS, el de PNOA del IGN. PNOA son las siglas de Plan Nacional de Ortofotografía Aérea y contiene los mapas más actuales del territorio español. El WMS de PNOA requiere como entrada cuatro atributos principales:
 \begin{enumerate}
 \item La posici\'on GPS.
-\item Bounding Box. El Bounding box son 2 puntos que corresponden con la posici\'on GPS que queremos que sea el extremo inferior izquierdo de nuestra imagen y con el punto superior derecho de la misma.
+\item \textit{bounding box}. El \textit{bounding box} son dos puntos que corresponden con la posici\'on GPS que queremos que sea el extremo inferior izquierdo de nuestra imagen y con el punto superior derecho de la misma.
 \item Datum. El datum es el sistema de referencia o proyecci\'on de la tierra a utilizar. En el caso de IGN pese a que soporta varias utilizamos WGS84 que es el estandar.
 \item Tamaño de la imagen, el tamaño que queremos que tenga la imagen obtenida.
 \end{enumerate}
-El resultado un mapa del que conocemos el punto central, y los extremos inferior izquierdo y superior derecho y los pixeles que tiene a lo ancho y alto del mismo, un mapa geo-referenciado.
+El resultado de la consulta es un mapa del que conocemos el punto central, y los extremos inferior izquierdo y superior derecho y los píxeles que tiene a lo ancho y alto del mismo, es decir, un mapa geo-referenciado.
+
+Con el fin de facilitar el montaje y envío de las peticiones al WMS de PNOA utlizamos la librería \footnote{\url{https://geopython.github.io/OWSLib/}} en su versión 0.14.0.
 
 
-
-\section{SITL}
+\section{Simulador SITL}
 \label{sec:SITL}
 
-SITL siglas de Software in the loop es un simulador que te permite a cualquier programa que env\'ie o reciba comandos MAVLink ejecutar pruebas sin necesidad de tener ninguna placa estabilizadora y evitando la p\'erdida de la aeronave en caso de error del mismo.
-SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto f\'isico de la simulaci\'on y con MAVProxy para el env\'io de commandos y seguimento de misiones.
-Se trata de una compilaci\'on en C++ de ardupilot y se podr\'ia asemejar a nuestro gazeboserver.
+SITL\footnote{\url{http://ardupilot.org/dev/docs/sitl-simulator-software-in-the-loop.html}} siglas de \textit{Software In The Loop} es un simulador que permite a cualquier programa que env\'ie o reciba comandos MAVLink ejecutar pruebas sin necesidad de tener ninguna placa estabilizadora real y evitando la p\'erdida de la aeronave en caso de error del programa.
+SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto f\'isico de la simulaci\'on y con MAVProxy para el env\'io de comandos y seguimento de misiones.
+Se trata de una compilaci\'on en C++ de ardupilot y se podr\'ia asemejar al driver para cuadricópteros existente en JdeRobot \texttt{gazeboserver}, pero para aviones de ala fija.
 SITL puede conectarse tambi\'en con Gazebo o a FlightGear para hacer m\'as completa su simulaci\'on mostrando el vuelo en un entorno desarrollado para pruebas con elementos del mundo real.
-\begin{figure}[H]
+\begin{figure}
   \centering
   \includegraphics[scale=0.50]{img/SITL.jpg}
   \caption{Arquitectura de SITL}
@@ -1005,55 +1023,51 @@ SITL puede conectarse tambi\'en con Gazebo o a FlightGear para hacer m\'as compl
 \cleardoublepage
 \chapter{APM Server}
 
-El driver \texttt{APM Server} es quien va a mediar entre las aplicaciones de JdeRobot y el robot a\'ereo con sus sensores y actuadores f\'isicos o simulados a trav\'es de \texttt{APM Server}. De \'esta manera las aplicaciones pueden correr en m\'aquinas distintas, no obligatoriamente abordo, y pueden estar implementadas en distintos lenguajes de programaci\'on. Estas ventajas vienen de utilizar ls divisi\'on habitual en JdeRobot entre componentes drivers y componentes aplicaci\'on.
+El driver \texttt{APM Server} es quien va a mediar entre las aplicaciones de JdeRobot y el robot a\'ereo con sus sensores y actuadores f\'isicos o simulados a trav\'es de SITL. De esta manera las aplicaciones pueden correr en m\'aquinas distintas, no obligatoriamente a bordo, y pueden estar implementadas en distintos lenguajes de programaci\'on. Estas ventajas vienen de utilizar la divisi\'on habitual en JdeRobot entre componentes drivers y componentes aplicaci\'on.
 
-En nuestro caso \'este driver ira instalado sobre una Raspberry Pi3 con raspbian a la que hemos instalado el framework Jderobot y el driver \texttt{APM Server}, e ir\'a abordo del robot f\'isico conectado por puerto serie.
+En nuestro caso este driver se ejecuta sobre una Raspberry Pi3 con raspbian a la que hemos instalado el entorno JdeRobot y el driver \texttt{APM Server}, e ir\'a abordo del robot f\'isico conectado por puerto serie.
 
 \section{Diseño} 
 \label{sec:diseno_apms}
 
-De un an\'alisis exhaustivo definimos los requerimientos hablados en el cap\'itulo 2.1.2 y que ser\'ian a grandes rasgos:
+Los requerimientos hablados en el cap\'itulo 2 son a grandes rasgos:
 \begin{itemize}
 \item El driver debe ser capaz de conectar con dispositivos f\'isicos de estabilizaci\'on c\'omo APM 2.8 o PixHawnk as\'i como al simulador SITL
-\item El driver debe acceder a los sensores y actuadores del robot a\'ereo, interpretarlos y servirlos en forma de interfaz Ice a las aplicaciones de control.
+\item El driver debe acceder a los sensores y actuadores del robot a\'ereo, interpretarlos y servirlos en forma de interfaz ICE a las aplicaciones de control.
 \item EL driver debe ser capar de recibir a trav\'es de interfaces JdeRobot interfaces que \'este interprete y env\'ie a los actuadores del robot a\'ereo.
 \end{itemize}
 
-
-\begin{figure}[h]
-\centering{
-   \label{f:diseno}
-    \includegraphics[width=0.49\textwidth]{img/diseno.png}}
-{
-   \label{f:diseno1}
-    \includegraphics[width=0.49\textwidth]{img/diseno1.png}}
-
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{img/diseno.jpg}
   \caption{Diseño de \texttt{APM Server}}
+  \label{fig:diseno_apms_caja_negra}
 \end{figure}
 
 
-
-
-Para abordar este desarrollo vamos a definir 3 capas que pasamos a describir desde la m\'as cercana al hardware hasta la m\'as cercana a JdeRobot:
+Se ha diseñado y programado un componente de JdeRobot en Python que hace de driver y que satisface esos requirimientos. Se ha organizado en tres capas desde la m\'as cercana al hardware hasta la m\'as cercana a JdeRobot:
 \begin{itemize}
-\item Capa de comunicaci\'on con el dispositivo APM. Esta capa se encargar\'a de la comunicaci\'on del driver con el dispositivo APM a trav\'es del protocolo de comunicaci\'on MavLink.
-\item Capa de negocio e interpretaci\'on. En esta capa el driver transformar\'a los comandos MavLink y los interfaces JdeRobot interpretando la informaci\'on de ambas capas y haciendo \'esta legible en ambos sentidos.
-\item Capa de comunicaci\'on con aplicaciones JdeRobot. En \'esta capa se expondr\'an los servicios Ice necesarios para la recepci\'on y env\'io de los interfaces Ice que implementa.
+\item Capa de comunicaci\'on con el dispositivo APM. Esta capa se encarga de la comunicaci\'on del driver con el dispositivo APM a trav\'es del protocolo de comunicaci\'on MavLink.
+\item Capa de negocio e interpretaci\'on. En esta capa el driver transforma los comandos MavLink y los interfaces JdeRobot interpretando la informaci\'on de ambas capas y haciendo \'esta legible en ambos sentidos.
+\item Capa de comunicaci\'on con aplicaciones JdeRobot. En \'esta capa se materializan los servicios ICE necesarios para la recepci\'on y env\'io de los interfaces ICE que implementa.
 \end{itemize}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.50]{img/bloque_mavlink.png}
-  \caption{Bloque Mavlink}
-  \label{fig:apms_design}
+\begin{figure}
+\centering{
+   \label{f:diseno_apms_caja_trans}
+    \includegraphics[width=0.7\textwidth]{img/diseno1.jpg}}
+    \caption{Diseño de \texttt{APM Server}}
+  
 \end{figure}
-
 
 \section{Bloque de conexi\'on MAVLink}
 
-En la capa de comunicaci\'on con el APM es d\'onde se van a recibir comandos MAVLink y se van a consumir y enviar los siguientes mensajes:
+En la capa de comunicaci\'on con el APM es d\'onde se van a recibir comandos MAVLink desde la placa estabilizadora y
+autopiloto y se van a consumir y enviar los siguientes mensajes. Para cada uno de ellos se detalla su nombre, su sintaxis y su semántica.
+
+\subsection{Listado de mensajes MAVLink}
 \begin{itemize}
-\item RAW\_IMU donde recibiremos la informaci\'on de los aceler\'ometros gir\'oscopos y magnetr\'ometros en crudo par el NavData.
+\item RAW\_IMU donde recibimos la informaci\'on de los aceler\'ometros gir\'oscopos y magnetr\'ometros en crudo par el \texttt{NavData}.
 {\scriptsize
 \begin{verbatim}
 <message id="27" name="RAW_IMU">
@@ -1073,10 +1087,10 @@ En la capa de comunicaci\'on con el APM es d\'onde se van a recibir comandos MAV
   <field type="int16_t" name="zmag">Z Magnetic field (raw)</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido ser\'ia: 
+Un ejemplo de mensaje recibido ser\'ia: 
 RAW\_IMU \{time\_usec : 480794000, xacc : 244, yacc : 0, zacc : -968, xgyro : 1, ygyro : 1, zgyro : 1, xmag : 335, ymag : 60, zmag : -452\}
 
-\item VFR\_HUD D\'onde se nos presentan los t\'ipicos datos de navegaci\'on en ala fija como, la velocidad en el aire, velocidad en tierra o la velocidad de ascenso. De aqu\'i obtendremos la altitud
+\item VFR\_HUD D\'onde se  presentan los t\'ipicos datos de navegaci\'on en ala fija como, la velocidad en el aire, velocidad en tierra o la velocidad de ascenso. De aqu\'i obtendremos la altitud
 {\scriptsize
 \begin{verbatim}
 <message id="74" name="VFR_HUD">
@@ -1091,7 +1105,7 @@ RAW\_IMU \{time\_usec : 480794000, xacc : 244, yacc : 0, zacc : -968, xgyro : 1,
   <field type="float" name="climb" units="m/s">Current climb rate in meters/second</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido ser\'ia: VFR\_HUD \{airspeed : 0.022061701864004135, groundspeed : 0.08534427732229233, heading : 356, throttle : 0, alt : 584.1099853515625, climb : -0.33149993419647217\} 
+Un ejemplo de mensaje recibido ser\'ia: VFR\_HUD \{airspeed : 0.022061701864004135, groundspeed : 0.08534427732229233, heading : 356, throttle : 0, alt : 584.1099853515625, climb : -0.33149993419647217\} 
 \item ATTITUDE donde recibimos la actitud del avi\'on.
 {\scriptsize
 \begin{verbatim}
@@ -1108,10 +1122,10 @@ Un mensaje recibido ser\'ia: VFR\_HUD \{airspeed : 0.022061701864004135, grounds
   <field type="float" name="yawspeed" units="rad/s">Yaw angular speed (rad/s)</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido ser\'ia:
+Un ejemplo de mensaje recibido ser\'ia:
 ATTITUDE \{time\_boot\_ms : 480794, roll : -0.005003694910556078, pitch : 0.2430807501077652, yaw : -0.06844368577003479, rollspeed : -0.0010073177982121706, pitchspeed : -0.0008516315137967467, yawspeed : -0.0006909647490829229\}
 
-\item SYS\_STATUS donde obtendremos el nivel de bater\'ia.
+\item SYS\_STATUS donde se obtiene el nivel de bater\'ia.
 {\scriptsize
 \begin{verbatim}
 <message id="1" name="SYS_STATUS">
@@ -1181,7 +1195,7 @@ SYS\_STATUS \{onboard\_control\_sensors\_present : 23198783, onboard\_control\_s
 \end{verbatim}}
 Un mensaje recibido ser\'ia: 
 SCALED\_PRESSURE \{time\_boot\_ms : 480794, press\_abs : 945.0001831054688, press\_diff : 0.021015625447034836, temperature : 2600\}
-\item WIND donde obtendemos las lecturas del viento estimadas.
+\item WIND donde se obtienen las lecturas del viento estimadas.
 {\scriptsize
 \begin{verbatim}
 <message id="168" name="WIND">
@@ -1221,7 +1235,7 @@ WIND \{direction : -179.99998474121094, speed : 0.0, speed\_z : 0.0\}
 \end{verbatim}}
 Un mensaje recibido ser\'ia: 
 GLOBAL\_POSITION\_INT \{time\_boot\_ms : 480614, lat : -353632612, lon : 1491652301, alt : 584110, relative\_alt : -179, vx : 0, vy : 0, vz : 0, hdg : 35608\}
-\item MISSION\_ITEM Son objetos de misi\'on, en ellos se mandan los Waypoint o comandos como setear una velocidad o una altitud o bien aterrizar o desapegar en funci\'on del par\'ametro command.
+\item MISSION\_ITEM Son objetos de misi\'on, en ellos se mandan los puntos de paso o comandos como fijar una velocidad o una altitud o bien aterrizar o desapegar en funci\'on del par\'ametro command.
 {\scriptsize
 \begin{verbatim}
 <message id="39" name="MISSION_ITEM">
@@ -1253,7 +1267,7 @@ GLOBAL\_POSITION\_INT \{time\_boot\_ms : 480614, lat : -353632612, lon : 1491652
 </message>
 \end{verbatim}}
 Un mensaje enviado ser\'ia: MISSION\_ITEM \{target\_system : 1, target\_component : 1, seq : 0, frame : 3, command : 16, current : 0, autocontinue : 0, param1 : 0, param2 : 10, param3 : 0, param4 : 0, x : 40.33024215698242, y : -3.8008816242218018, z : 40.0\}
-\item MISSION\_REQUEST mesaje donde el AMP nos requiere el siguiente MISSION\_ITEM. Este comando se recibe o bien una ver enviado al APM nuestra intenci\'on de enviale mensajes de misi\'on y cuando vamos a enviarle, en un comando MISSION\_COUNT o bien tras la recepci\'on de alguno de ellos como ACK y solicitando el siguiente
+\item MISSION\_REQUEST mensaje donde el AMP nos requiere el siguiente MISSION\_ITEM. Este comando se recibe o bien una ver enviado al APM nuestra intenci\'on de enviale mensajes de misi\'on y cuando vamos a enviarle, en un comando MISSION\_COUNT o bien tras la recepci\'on de alguno de ellos como ACK y solicitando el siguiente
 {\scriptsize
 \begin{verbatim}
 <message id="40" name="MISSION_REQUEST">
@@ -1302,22 +1316,9 @@ Un mensaje enviado ser\'ia: MISSION\_COUNT \{target\_system : 0, target\_compone
 Un mesaje enviado ser\'ia MISSION\_CLEAR\_ALL \{target\_system : 0, target\_component : 0\}
 \end{itemize}
 
-\subsection{Conexi\'on y configuraci\'on}
+\subsection{Conexi\'on y configuraci\'on de la comunicación con el APM}
 
-De cara a facilitarnos la implementaci\'on del software, ahorrarnos crear los comandos MAVLink a mano y hacer el c\'odigo m\'as legible utilizaremos la librer\'ia pymavlink. Pymavlink trae la definici\'on de los comandos a utilizar en python, para instalarla tan s\'olo se necesita ejecutar:
- 
-\begin{verbatim}
-sudo pip2 install -U pymavlink
-\end{verbatim}
-
-Y tiene como dependencias:
-\begin{itemize}
-\item future. Se necesita future como soporte en Python 3.X de Python 2.7 (http://python-future.org/)
-\item lxml. Para parsear xml (http://lxml.de/installation.html)
-\item python-dev
-\item MavLink. (http://qgroundcontrol.org/mavlink/start)
-\end{itemize}
-
+De cara a facilitar la implementaci\'on del software, ahorrarnos crear los comandos MAVLink a mano y hacer el c\'odigo m\'as legible utilizaremos la librer\'ia \texttt{Pymavlink}. 
 
 Los import que se utilizan son los siguientes:
 
@@ -1337,61 +1338,57 @@ El primer paso para poder interactuar con el APM es el proceso de conexi\'on. En
 \item Tipo\_de\_puerto:IP:puerto, baudrate. En este caso baudrate es obligatorio pero se desecha.
 \end{itemize}
 
-
-\begin{python}[
+\begin{figure}
+\begin{python}[	
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
 class Server:
 
     def __init__(self, port, baudrate):
-
-        # Connect to the APM
         self.master = mavutil.mavlink_connection(port, baudrate, autoreconnect=True)
         print('Connection established to device')
-
-	#Waiting for a HeartBeat
         self.master.wait_heartbeat()
         print("Heartbeat Recieved")
 
 #test = Server("/dev/ttyUSB0", 57600) # Connection to the real APM device
 test = Server("udp:192.168.1.133:14558",57600) # Connection to SITL
 \end{python}
+\caption{Conexión con el APM}
+\end{figure}
 
-Con estas l\'ineas se inicia el servidor de \texttt{APM Server} y se realiza la conexi\'on con el dispositivo APM o con el simulador.Se puede apreciar c\'omo se realiza la conexi\'on en el m\'etodo \_\_init\_\_  del servidor. Y la creaci\'on de 2 objetos de servidor, una que conectar\'ia con el dispositivo real y la que se realiza con SITL.
+Con estas l\'ineas se inicia el servidor de \texttt{APM Server} y se realiza la conexi\'on con el dispositivo APM o con el simulador. Se puede apreciar c\'omo se realiza la conexi\'on en el m\'etodo \_\_init\_\_  del servidor. Y la creaci\'on de 2 objetos de servidor, una que conectar\'ia con el dispositivo real y la que se realiza con SITL.
 
 
 Una vez conectado, se debe indicar al APM qu\'e mensajes se quieren recibir y la frecuencia con la que se quieren recibir. Debido a que se trata de un prototipo y se trata de extraer el m\'aximo potencial del mismo, se indicar\'a el set de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo m\'aximo que soporta el APM adquirido.
+
+\begin{figure}
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
 RATE = 50
-
-# Set the complete set of commands
 self.master.mav.request_data_stream_send(self.master.target_system,
                                          self.master.target_component,
                                          mavutil.mavlink.MAV_DATA_STREAM_ALL,
                                          RATE, 1)
 \end{python}
-
+\caption{configuración de la conexión}
+\end{figure}
 Desde \'este momento se van a estar volcando a un buffer los mensajes que manda nuestro APM, con lo que ahora ya se puede acceder a ellos para procesarlos.
 
 \subsection{Lectura de datos del APM}
 
-Una vez establecida la conexi\'on y seteados los par\'ametros de configuraci\'on ya se puede acceder a los datos. Para \'esto en el bloque de transformaci\'on se levantar\'a el siguiente hilo que procesar\'a los mensajes.
+Una vez establecida la conexi\'on y fijados los par\'ametros de configuraci\'on ya se puede acceder a los datos. Para \'esto en el bloque de transformaci\'on se levantar\'a el siguiente hilo que procesar\'a los mensajes.
 
+\begin{figure}[H]
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
-# Thread to manage the AMP messages
 MsgHandler = threading.Thread(target=self.mavMsgHandler, args=(self.master,), name='msg_Handler')
-print('Initiating server...')
-# MsgHandler.daemon = True
 MsgHandler.start()
 
 def mavMsgHandler(self, m):
     while True:
         msg = m.recv_msg()
-	# send heartbeats to autopilot
 	if time.time() - self.lastSentHeartbeat > 1.0:
 	    self.master.mav.heartbeat_send(mavlink.MAV_TYPE_GCS, mavlink.MAV_AUTOPILOT_INVALID, 0, 0, 0)
 	    self.lastSentHeartbeat = time.time()
@@ -1402,7 +1399,8 @@ def mavMsgHandler(self, m):
 	    time.sleep(0.01)
 	    continue
 \end{python}
-
+\caption{Hilo de alimentación de mensajes MAVLink}
+\end{figure}
 
 \subsection{Env\'io de misiones al APM}
 
@@ -1414,31 +1412,19 @@ Con el fin de entender mejor el c\'odigo en la figura 4.2 podemos observar un gr
   \label{fig:misiones_mavlink}
 \end{figure}
 
-Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on que nos propone la Universidad de Colorado Boulder\cite{colorado:_mission} y la adaptamos a nuestras necesidades recibiendo de entrada un objeto de la interfaz mission de JdeRobot, transform\'andolo y envi\'andolo como misi\'on. Tambi\'en revisamos si se nos han enviado \'ordenes de despegue y aterrizaje y en el caso de que as\'i sea añadimos sus mission item al principio o al final de la missi\'on. En \'este punto se entrelazan la capa de interpretaci\'on con la capa de comunicaci\'on con el APM
-
+Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on que nos propone la Universidad de Colorado Boulder\cite{colorado:_mission} y la adaptamos a nuestras necesidades recibiendo de entrada un objeto de la interfaz \texttt{mission} de JdeRobot, transform\'andolo y envi\'andolo como misi\'on. Tambi\'en revisamos si se han enviado \'ordenes de despegue y aterrizaje y en el caso de que as\'i sea añadimos sus \textit{mission item} al principio o al final de la misi\'on. En \'este punto se entrelazan la capa de interpretaci\'on con la capa de comunicaci\'on con el APM
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
-
-
     def setMission(self, mission):
-        '''
-        SetUp a mission with a list of waypoints, based on Colorado University Boulder Code
-        http://www.colorado.edu/recuv/2015/05/25/mavlink-protocol-waypoints
-        :param pose3Dwaypoints: list of waypoints to the mission
-        :return: None
-        '''
+
         wp = mavwp.MAVWPLoader()
         seq = 1
         frame = mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT
         radius = 10
         pose3Dwaypoints = mission.mission
-        print("waypoints received {0}" ,len(pose3Dwaypoints))
-        print(self.extra.takeOffDecision)
         N = len(pose3Dwaypoints)
-        # Look if a Take Off message has been recieved to set up in the mission too, Take off must to be
-        # the fist so if we have the TOFF message we have to create the message and start the loop in 1
         if (self.extra.takeOffDecision):
             navData = pose3Dwaypoints[seq-1]
             toff = mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
@@ -1448,12 +1434,7 @@ Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on
                                                                 mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, # 22
                                                                 0, 0, 0, radius, 0, 0,
                                                                 navData.x, navData.y, navData.h)
-            wp.add(toff)
-            wp.add(toff)
-            print(toff)
-            seq += 1
-            self.extra.setTakeOff(False)
-        self.extra.setTakeOff(False)
+			...
 
         for i in range(N):
             navData = pose3Dwaypoints[i]
@@ -1464,13 +1445,8 @@ Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on
                                                                 mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, # 16
                                                                 0, 0, 0, radius, 0, 0,
                                                                 navData.x, navData.y, navData.h)
-            wp.add(wayPoint_tmp)
-            seq += 1
-            print(wayPoint_tmp)
+            ...
 
-        # Look if a land message has been recieved to set up in the mission too, Land must to be
-        # the last so if we have the land message we have to create the message and append to the mission
-        print("Land ", self.extra.landDecision)
         if (self.extra.landDecision):
             navData = pose3Dwaypoints[N-1]
             land = mavutil.mavlink.MAVLink_mission_item_message(self.master.target_system,
@@ -1480,56 +1456,42 @@ Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on
                                                                 mavutil.mavlink.MAV_CMD_NAV_LAND, # 21
                                                                 0, 0, 0, radius, 0, 0,
                                                                 navData.x, navData.y, navData.h)
-            seq += 1
-            i += 1
-            wp.add(land)
-            print(land)
-
+            ...
 
         self.master.waypoint_clear_all_send()
         self.master.waypoint_count_send(wp.count())
 
         for i in range(wp.count()):
             msg = self.master.recv_match(type=['MISSION_REQUEST'], blocking=True)
-            print(msg)
             self.master.mav.send(wp.wp(i))
-            print ('Sending waypoint {0} '.format(i) + format(wp.wp(msg.seq)))
 
         self.master.arducopter_arm()
         self.master.set_mode_auto() # start mission
-
-        print('SENDED')
-        empty_mission = jderobot.MissionData()
-        self.mission.setMissionData(empty_mission)
+        ...
 
 \end{python}
 
-Como se puede observar en el c\'odigo, en caso de tener takeOffDecision o landDecision activos en el atributo extra (mapeado a trav\'es de Ice) se añaden los comandos de despegue y aterrizaje, que interpreta son el primero y el \'ultimo. 
+
+Como se puede observar en el c\'odigo, en caso de tener \texttt{takeOffDecision} o \texttt{landDecision} activos en el atributo extra (mapeado a trav\'es de Ice) se añaden los comandos de despegue y aterrizaje, que interpreta son el primero y el \'ultimo. 
 Se puede observar tambi\'en al final del c\'odigo como se arman los motores con la l\'inea \pythoninline{self.master.arducopter_arm()}
 y como se pone el dispositivo en modo autom\'atico con \pythoninline{self.master.set_mode_auto()}.
 El driver est\'a implementado para ejecutarse en modo auto, se puede ejecutar tambi\'en en modo guided pero el modo auto a diferencia del guided no inhabilita la radio y se puede recuperar en cualquier momento el control del robot a\'ereo. Si bien hay que decir que el modo guided o modo guiado es m\'as preciso que el modo auto.
 
 \section{Capa de conexi\'on con aplicaciones JdeRobot}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.50]{img/bloque_jderobot.png}
-  \caption{Bloque JdeRobot}
-  \label{fig:apms_design}
-\end{figure}
 
-En \'esta capa se sirven y reciben los objetos de interfaces JdeRobot de modo que sean entendibles por el resto de los framework.
-Para \'esto se han implementado 4 hilos, uno por cada interfaz JdeRobot que se sirve o se recibe. En cada uno de \'estos hilos se levanta un servidor Ice para recibir o servir objetos de interfaces JdeRobot mapeando atributos de la clase del servidor al estos servicios Ice.
+En \'esta capa se sirven y reciben los objetos de interfaces JdeRobot a través de los cuales se habla con la aplicación, que es el destino final de la información de sensores y la fuente original de los comandos de actuación para el avión, de modo que sean entendibles por el resto del driver.
+Para \'esto se han implementado 4 hilos, uno por cada interfaz JdeRobot que se sirve o se recibe. En cada uno de \'estos hilos se levanta un servidor ICE para recibir o servir objetos de interfaces JdeRobot mapeando atributos de la clase del servidor al estos servicios ICE.
 
-Los 4 interfaces que van a ser servidos desde \texttt{APM Server} ser\'an:
+Los 4 interfaces que van a ser servidos desde \texttt{APM Server} son:
 \begin{itemize}
-\item Pose3D
-\item NavData
-\item Extra
-\item Mission
+\item \texttt{Pose3D}
+\item \texttt{NavData}
+\item \texttt{Extra}
+\item \texttt{Mission}
 \end{itemize}
 
-Pose3D, navData y Extra se describieron en el cap\'itulo 3.1.1, adicionalmente a \'estos se ha desarrollado un nuevo interfaz para dar soporte al uso de misiones, el interfaz mission.
+Pose3D, \texttt{NavData} y Extra se describieron en el cap\'itulo 3.1.1, adicionalmente a \'estos se ha desarrollado un nuevo interfaz para dar soporte al uso de misiones, el interfaz \texttt{mission}.
 {\scriptsize
 \begin{verbatim}
 class Pose3DData  //we consumes Pose3DData
@@ -1563,42 +1525,30 @@ class Pose3DData  //we consumes Pose3DData
   };
 \end{verbatim}}
 
+\begin{figure}[H]
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
-        # Thread to serve Pose3D with the attitude
-        print("- Pose3D Ice Server...")
+ 
         PoseTheading = threading.Thread(target=self.openPose3DChannel, args=(self.pose3D,), name='Pose_Theading')
         PoseTheading.daemon = True
         PoseTheading.start()
-        print("Pose3D Ice Server Up")
 
-        # Thread to serve Navdata with the all navigation info
-        print("- navData Ice Server...")
-        NavDataTheading = threading.Thread(target=self.openNavdataChannel, args=(self.navdata,), name='Navdata_Theading')
-        NavDataTheading.daemon = True
-        NavDataTheading.start()
-        print("Navdata Ice Server Up")
+        ...
 
-        print("- Mission Ice Server...")
-        # Thread to receieve a mission plan
-        MissionTheading = threading.Thread(target=self.openMissionChannel, args=(self.mission,), name='Mission_Theading')
-        MissionTheading.daemon = True
-        MissionTheading.start()
-        print("Mission Ice Server Up")
-
-        #  Open the Extra channel in a thread
-        print("- Extra Ice Server...")
         ExtraTheading = threading.Thread(target=self.openExtraChannel, args=(self.extra,), name='Extra_Theading')
         ExtraTheading.daemon = True
         ExtraTheading.start()
-        print("Extra Ice Server Up")
 
 \end{python}
+\caption{Creación y arranque de los hilos encargados de servir los interfaces ICE}
+\end{figure}
 
-Cada hilo abre un servicio Ice, como todos los servicios Ice que implementamos son muy similares podremos como ejemplo de implementaci\'on el servicio de Pose3D.
-Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos sirviendo objetos Ice a trav\'es de servidores como el que sigue a \'estas l\'ineas. En paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta \'estos objetos Ice con lo que se ha tenido que cuidar mucho el c\'odigo para evitar problemas de concurrencia.  
 
+Cada hilo abre un servicio Ice, como todos los servicios ICE que implementamos son similares podremos como ejemplo de implementaci\'on el servicio de Pose3D.
+Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos sirviendo objetos ICE a trav\'es de servidores como el que sigue a \'estas l\'ineas. En paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta \'estos objetos ICE con lo que se ha tenido que cuidar el c\'odigo para evitar problemas de concurrencia.  
+
+\begin{figure}[H]
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
@@ -1608,7 +1558,7 @@ Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos
         # recovering the attitude
         Pose2Tx = pose3D
         try:
-            ic = Ice.initialize(sys.argv)
+            ic = ICE.initialize(sys.argv)
             adapter = ic.createObjectAdapterWithEndpoints("Pose3DAdapter", "default -p 9998")
             object = Pose2Tx
             # print object.getPose3DData()
@@ -1629,33 +1579,27 @@ Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos
         sys.exit(status)
 
 \end{python}
+\caption{Servidor ICE encargado de servir objetos de la interfaz Pose3D}
+\end{figure}
 
 
 \section{Bloque de interpretaci\'on}
 
 En \'esta capa se interpretan los mensajes recibidos de una y otra capa y se transforman en el formato que sea necesario para que o interprete la opuesta.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.50]{img/bloque_inter.png}
-  \caption{Bloque de interpretaci\'on}
-  \label{fig:apms_design}
-\end{figure}
+El m\'etodo setMission() se llama al recibir v\'ia ICE una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, se ha construido un \textit{listener} que valida el valor de la variable \texttt{mission} y si tiene contenido articula el m\'etodo \pythoninline{setMission(mission)}.
 
-El m\'etodo setMission() se llama al recibir v\'ia Ice una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, se ha construido un listener que valida el valor de la variable mission y si tiene contenido articula el m\'etodo setMission(mission).
-
+\begin{figure}
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
-    print("- Mission listener")
     MissionListener = threading.Thread(target=self.missionListener, name='MissionListener')
     MissionListener.daemon = True
     MissionListener.start()
-    print("Mission listener up")
 
     def missionListener(self):
         '''
-        Function who listen to a new mission revieved from Ice MissionChannel thread and send it to APM
+        Function who listen to a new mission revieved from ICE MissionChannel thread and send it to APM
         :return: None
         '''
         while True:
@@ -1665,10 +1609,14 @@ El m\'etodo setMission() se llama al recibir v\'ia Ice una mission. Para identif
             time.sleep(1)
 
 \end{python}
-Ya se visto c\'omo se realiza la transformaci\'on entre mensajes de misi\'on en el m\'etodo setMission(mission), ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretaci\'on por JdeRobot.
-Esto lo realizamos principalmente en 2 m\'etodos, refreshAPMPose3D() y refreshAPMnavdata().
-Estos m\'etodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informci\'on relevante para nosotros, ya descritos en el cap\'itulo 4.2, parsearlos y extraer de ellos la informaci\'on que necesitamos y guardarla en objetos de interfaces JdeRobot para ser servidos a trav\'es de Ice.
+\caption{Listener encargado de detectar misiones entrantes}
+\end{figure}
 
+Ya se visto c\'omo se realiza la transformaci\'on entre mensajes de misi\'on en el m\'etodo \pythoninline{setMission(mission)}, ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretaci\'on por JdeRobot.
+Esto lo realizamos principalmente en 2 m\'etodos, \pythoninline{refreshAPMPose3D()} y \pythoninline{refreshAPMnavdata()}.
+Estos m\'etodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informci\'on relevante, ya descritos en el cap\'itulo 4.2, analizarlos y extraer de ellos la informaci\'on necesaria y guardarla en objetos de interfaces JdeRobot para ser servidos a trav\'es de ICE.
+
+\begin{figure}
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
 ]
@@ -1686,86 +1634,23 @@ Estos m\'etodos se centran en buscar dentro de los paquetes recibidos aquellos q
             q = quaternion.Quaternion([roll, pitch, yaw])
         # get altitude of APM
         altitude = self.master.field('VFR_HUD', 'alt', None)
-        if altitude is None:
-            self.altitudeStatus = 1
+        ...
         # get GPS position from APM
-        latitude = 0
-        longitude = 0
-        if 'GPS_RAW_INT' not in self.master.messages:
-            self.gpsStatus = 1
-        else:
-            gps = self.master.messages['GPS_RAW_INT']
-            latitude = getattr(gps,"lat")/ 10e6
-            longitude = getattr(gps,"lon") / 10e6
-            self.GPS_fix_type = getattr(gps,"fix_type")
+        ...
+        gps = self.master.messages['GPS_RAW_INT']
+        latitude = getattr(gps,"lat")/ 10e6
+        longitude = getattr(gps,"lon") / 10e6
+        self.GPS_fix_type = getattr(gps,"fix_type")
+        ...
         # refresh the pose3D
-        data = jderobot.Pose3DData
-        data.x = latitude
-        data.y = longitude
-        data.z = altitude
-        data.h = altitude
-        data.q0 = q.__getitem__(0)
-        data.q1 = q.__getitem__(1)
-        data.q2 = q.__getitem__(2)
-        data.q3 = q.__getitem__(3)
-        self.pose3D.setPose3DData(data)
+		...
 
-    def refreshAPMnavdata(self):
-        battery_remaining = 0
-        rawIMU = {}
-        scaled_presure = {}
-        wind = {}
-        global_position = {}
-        #get battery_remaining
-        if 'SYS_STATUS' not in self.master.messages:
-            self.battery_remainingStatus = 1
-        else:
-            stats = self.master.messages['SYS_STATUS']
-            battery_remaining = getattr(stats,"battery_remaining")
-        #get RAW_IMU
-        if 'RAW_IMU' not in self.master.messages:
-	...
-	...
-        else:
-            wind = self.master.messages['WIND']
-        #get GLOBAL_POSITION_INT
-        if 'GLOBAL_POSITION_INT' not in self.master.messages:
-            self.gpsStatus = 1
-        else:
-            global_position = self.master.messages['GLOBAL_POSITION_INT']
-        # refresh the navdata
-        ndata = jderobot.NavdataData()
-        ndata.batteryPercent = battery_remaining
-        #print(str(ndata.batteryPercent))
-        try:
-            ndata.pressure = getattr(scaled_presure, "press_abs")
-        except:
-            print (str(scaled_presure))
-        try:
-            ndata.temp = getattr(scaled_presure, "temperature")/100
-        except:
-            print(str(scaled_presure))
-        ...
-        ...
-        try:
-            ndata.magz = getattr(rawIMU, "zmag")
-        except:
-            print(str(rawIMU))
-
-        ndata.tagsCount = 0
-        ndata.tagsType
-        ndata.tagsXc
-        ndata.tagsYc
-        ndata.tagsWidth
-        ndata.tagsHeight
-        ndata.tagsOrientation
-        ndata.tagsDistance
-        ndata.vehicle = 1
-        ndata.state = 1
-
-        self.navdata.setNavdata(ndata)
-
+    
 \end{python}
+\caption{Código de ejemplo de \texttt{refreshAPMPose3D()} encargado de recorrer los mensajes y obtener los datos de actitud que se van a servir a través de Pose3D}
+\end{figure}
+
+En estas líneas de código, extaídas de los métodos que recogen la actitud, podemos ver cómo se buscan los mensajes que necesitamos para extraer la información de los sensores desde \pythoninline{self.master.messages}. En esta variable se vuelcan los datos mensajes recibidos de la placa estabilizadora.
 
 \cleardoublepage
 \chapter{AUV Commander}
@@ -1776,15 +1661,13 @@ Desde \texttt{UAV Commander} se pueden programar missiones, enviar \'estas al dr
 \section{Diseño} 
 \label{sec:diseno_uavc}
 
-\begin{figure}[H]
-\centering{
-   \label{f:diseno}
-    \includegraphics[width=0.60\textwidth]{img/diseno_uavc.png}}
-{
-   \label{f:diseno1}
-    \includegraphics[width=0.60\textwidth]{img/diseno1_uavc.png}}
 
-  \caption{Diseño de \texttt{UAV Commander}}
+\begin{figure}
+\centering{
+   \label{f:diseno_uavc_caja_negra}
+    \includegraphics[width=1\textwidth]{img/diseno2_uavc.jpg}}
+    \caption{Diseño de caja negra de \texttt{UAV Commander}}
+  
 \end{figure}
 
 La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
@@ -1793,6 +1676,8 @@ La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
 \item Core. El core de la aplicaci\'on ser\'a quien haga de orquestador entre los datos recibidos del bloque de comunicaci\'on con los driver JdeRobot y el interfaz de usuario. Se har\'a cargo tambi\'en de obtener, de la fuente que sea preciso, IGN, Google o el bloque de conexi\'on de drivers de JdeRobot la informaci\'on necesaria y procesarla para ser mostrada por el GUI.
 \item Bloque de conexi\'on con los driver JdeRobot.
 \end{itemize}
+
+
 
 La aplicaci\'on debe cumplir los requisitos descritos en el cap\'itulo 2.2.3 que pueden resumirse en 4 grandes milestones:
 
@@ -1807,19 +1692,21 @@ La aplicaci\'on debe cumplir los requisitos descritos en el cap\'itulo 2.2.3 que
 \item Validar el cumplimiento de misiones.
 \end{enumerate}
 
+\begin{figure}
+\centering{
+   \label{f:diseno_uavc_caja_trans}
+    \includegraphics[width=0.7\textwidth]{img/diseno_uavc.jpg}}
+    \caption{Diseño de \texttt{UAV Commander}}
+  
+\end{figure}
 
 \section{Bloque de conexi\'on con aplicaciones JdeRobot} 
 \label{sec:bloque_jderobot_uavc}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.50]{img/jderobot_uavc.png}
-  \caption{Diseño de \texttt{UAV Commander} m\'as en profundidad}
-  \label{fig:apms_design}
-\end{figure}
 
-En \'este bloque se implementan todos los servidores Ice necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
-\'Este bloque es an\'alogo al Bloque de comunicaci\'on con aplicaciones JdeRobot del Cap\'itulo 4.1 si bien para simplificar este proceso hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez y las clases de EasyIce de Victor Arribas Raigadas ambas integradas en el framework de JdeRobot. De \'este modo \'este bloque queda simplificado \'este bloque y su inicializaci\'on queda  relegada a unas pocas l\'ineas de c\'odigo:
+En \'este bloque se implementan todos los servidores ICE necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
+\'Este bloque es an\'alogo al Bloque de comunicaci\'on con aplicaciones JdeRobot del Cap\'itulo 4.1 si bien para simplificar este proceso hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez\cite{aitor:_mediawiki} y las clases de EasyIce de Victor Arribas Raigadas\cite{varribas:_mediawiki} ambas integradas en JdeRobot. De \'este modo \'este bloque queda simplificado y su inicializaci\'on queda  relegada a unas pocas l\'ineas de c\'odigo:
+\begin{figure}[H]
 \begin{python}
     ic = EasyIce.initialize(sys.argv)
     camera = CameraClient(ic, "UavViewer.Camera", True)
@@ -1829,21 +1716,24 @@ En \'este bloque se implementan todos los servidores Ice necesarios para acceder
     extra = Extra(ic, "UavViewer.Extra")
     mission = MissionI(ic, "UavViewer.Mission")
 \end{python}
-
-En la aplicaci\'on \texttt{UAV Commander} se exponen 5 interfaces Ice a diferencia de los 4 que expon\'ia el driver \texttt{APM Server}. Adem\'as de los que expone \texttt{APM Server}, a saber:
+\caption{Creación de los servicios ICE y lincado de los mismos a sus variables}
+\end{figure}
+En la aplicaci\'on \texttt{UAV Commander} se exponen 5 interfaces ICE a diferencia de los 4 que expon\'ia el driver \texttt{APM Server}. Adem\'as de los que expone \texttt{APM Server}, a saber:
 \begin{itemize}
 \item Pose3D
-\item NavData
+\item \texttt{NavData}
 \item Extra
 \item Mission
 \end{itemize}
 Se implementan 2 m\'as: 
 \begin{itemize}
-\item El interfaz de camera para mostrar las im\'agenes que se sirvan a trav\'es de dicho interfaz, como por ejemplo a trav\'es de la aplicaci\'on cameraserver, que ir\'a corriendo junto con nuestro driver en el avi\'on real.
-\item El interfaz CmdVel. Que en la implementaci\'on actual no se utiliza pero se ha implementado para futuras realeases, donde en un futuro puedan añadirse el control por velocidades.
+\item El interfaz \texttt{camera} para mostrar las im\'agenes y vídeo.
+\item El interfaz \texttt{CmdVel}, cuya implementaci\'on actual no se utiliza pero se ha implementado para futuras realeases, donde en un futuro puedan añadirse el control por velocidades.
 \end{itemize}
 
-Con \'esto se definen los 6 objetos Ice que van a ser enviados y/o recibidos por el \texttt{APM Server}, y con el c\'odigo siguiente se los mapeamos al GUI quien los setear\'a como atributos en su clase principal.
+Con \'esto se definen los 6 objetos ICE que envían y/o reciben por el \texttt{APM Server}, y con el c\'odigo siguiente se los asignamos al GUI quien los guarda como atributos en su clase principal.
+
+\begin{figure}[H]
 \begin{python}
     screen.setCamera(camera)
     screen.setPose3D(pose)
@@ -1853,45 +1743,60 @@ Con \'esto se definen los 6 objetos Ice que van a ser enviados y/o recibidos por
     screen.setExtra(extra)
     screen.setMission(mission)
 \end{python}
-
+\caption{Pase de parámetros al interfaz gráfico}
+\end{figure}
 
 \section{Core} 
 \label{sec:core_uavc}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.50]{img/core.png}
-  \caption{Diseño de \texttt{UAV Commander} m\'as en profundidad}
-  \label{fig:apms_design}
-\end{figure}
 
 El core es el bloque m\'as complicado de la aplicaci\'on, se divide a su vez en 5 bloques:
 \begin{itemize}
 \item Obtenci\'on y actualizaci\'on de mapas. \'Este bloque es el encargado de obtener los mapas de cualquiera de las 2 fuentes actualmente implenetadas, el IGN o Google. Tambi\'en se encarga de actualizar la georeferenciaci\'on asociada a ellos una vez descargados.
-\item Utilidades de mapas. Aqu\'i se encuentran los m\'etodos de apoyo a la georeferenciaci\'on, como obtener el bounding box de una posici\'on GPS, validar si nos acercamos al l\'imite del mapa descargado o la transformaci\'on de magnitudes.
-\item Proyecci\'on. Es sin duda una de las partes m\'as complejas del aplicativo, son las clases encargadas de a partir de una posici\'on GPS obtener su posici\'on en imagen que representa el mapa de la zona y viceversa.
+\item Utilidades de mapas. Aqu\'i se encuentran los m\'etodos de apoyo a la georeferenciaci\'on como: obtener el \textit{bounding box} de una posici\'on GPS, validar si nos acercamos al l\'imite del mapa descargado o la transformaci\'on de magnitudes.
+\item Proyecci\'on. Es sin duda una de las partes m\'as complejas del aplicativo. Son las clases encargadas de a partir de una posici\'on GPS, obtener su posici\'on en imagen que representa el mapa de la zona y viceversa.
 \item Procesamiento de los datos de vuelo. En este bloque se extraen, transforman (en caso que sea necesario) y distribuyen los datos de vuelo a las ventanas correspondiente y objetos correspondientes del GUI .
-\item Control de misiones. El control de misiones orquesta llamadas al resto de bloques del core para dar soporte a las misiones. Muestra \'estas en la GUI y cuando desde la GUI se pulsa el bot\'on de ``Send to APM'' prepara los objetos del bloque de comunicaci\'on con el diver para ser enviados.
+\item Control de misiones. El control de misiones \textit{orquesta} llamadas al resto de bloques del core para dar soporte a las misiones. Muestra \'estas en la GUI y cuando desde la GUI se pulsa el bot\'on de ``Send to APM'' prepara los objetos del bloque de comunicaci\'on con el diver para ser enviados.
 
 \subsection{Obtenci\'on y actualizaci\'on de mapas}
 
-Para obtener los mapas geo-referenciados necesitamos, como vimos en el cap\'itulo 3, principalmente 4 cosas:
+Para obtener los mapas geo-referenciados necesitamos principalmente 4 cosas como vimos en el cap\'itulo 3:
 \begin{enumerate}
-\item Bounding Box
-\item Tamaño de la imagen
-\item Proyecci\'on
+\item La posición.
+\item El \textit{Bounding Box}.
+\item El tamaño de la imagen.
+\item La proyecci\'on a utilizar.
 \end{enumerate}
 
-Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia owslib que nos ayudar\'a con \'estos tr\'amites. El c\'odigo para obtener un nuevo mapa ser\'ia:
+Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayudar\'a con \'estos tr\'amites. El c\'odigo para obtener un nuevo mapa ser\'ia:
+\begin{figure}
 \begin{python}
 def retrieve_new_map(lat, lon, radius, width, heigth):
     bbox = getBoundingBox(lat, lon, radius)
+    wms = WebMapService('http://www.ign.es/wms-inspire/pnoa-ma', version='1.3.0')
+    img = wms.getmap(layers=['OI.OrthoimageCoverage'],
+                     styles=['default'],
+                     srs='EPSG:4326',
+                     bbox=(bbox),
+                     size=(width, heigth),
+                     format='image/png',
+                     transparent=True)
     ...
-\end{python}
+    ImageUtils.prepareInitialImage(img.read(), width, heigth)
+    opencv_image = cv2.imread("images/imageWithDisclaimer.png", 1)
+    image = {'bytes': opencv_image, 'bbox': bbox, 'size': (width, heigth)}
+    return image
 
-En el c\'odigo mostrado podemos obserbar como recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WMS en 'http://www.ign.es/wms-inspire/pnoa-ma'.
-Primero obtenemos el bounding box. El bounding box es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio.
-El c\'odigo para calcularlo ser\'ia:
+\end{python}
+\caption{Método \texttt{retrieve\_new\_map(lat, lon, radius, width, heigth)} }
+\end{figure}
+
+En el c\'odigo mostrado en la Figura 5.5 podemos observar como recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WMS en 'http://www.ign.es/wms-inspire/pnoa-ma'.
+Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio, (el c\'odigo para calcularlo podemos obserbarlo en la Figura 5.6).
+Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto del objeto WMS y lanzamos la request que devuelve una imagen en bytes a la que debemos añadir el disclaimer que nos indica el IGN.
+Creamos la petición WMS con la URL del WMA PNOA y asignamos lso parámetros necesarios para obtener el mapa. al final montamos la imagen geo-referenciada recibida, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV el \textit{bounding box}, y el tamaño de la imagen. 
+
+\begin{figure}[H]
 \begin{python}
 def getBoundingBox(lat, lon, distance):
     radValues = from_degrees(lat, lon)
@@ -1917,36 +1822,18 @@ def getBoundingBox(lat, lon, distance):
     northEastpoint = from_radians(max_lat, max_lon)
     return southWestPoint[1], southWestPoint[0], northEastpoint[1], northEastpoint[0]
 \end{python}
+\caption{Método getBoundingBox(lat, lon, distance) encargado de calcular esquina inferior izquierda y esquina  superior derecha de un cuadrado de ancho distance}
+\end{figure}
 
-Una vez obtenido el bounding box \'unicamente rellenamos el resto del objeto WMS y lanzamos la request que devuelve una imagen en bytes a la que debemos añadir el disclaimer que nos indica el IGN.
-Al final montamos la imagen geo-referenciada que en nuestro caso ser\'a un diccionario con la imagen en OpenCV el bounding box, y el tamaño de la imagen. 
 
-\begin{python}
-def retrieve_new_map(lat, lon, radius, width, heigth):
-    ...
-    wms = WebMapService('http://www.ign.es/wms-inspire/pnoa-ma', version='1.3.0')
-    img = wms.getmap(layers=['OI.OrthoimageCoverage'],
-                     styles=['default'],
-                     srs='EPSG:4326',
-                     bbox=(bbox),
-                     size=(width, heigth),
-                     format='image/png',
-                     transparent=True)
-    ...
-    ImageUtils.prepareInitialImage(img.read(), width, heigth)
-    opencv_image = cv2.imread("images/imageWithDisclaimer.png", 1)
-    image = {'bytes': opencv_image, 'bbox': bbox, 'size': (width, heigth)}
-    return image
-
-\end{python}
 \subsection{Utilidades de mapas}
-
-Aqu\'i se encuentran los m\'etodos necesarios para trabajar con geo-posicionamiento como el m\'etodo de c\'alculo de bounding box que se ha visto anteriormente.
+Aqu\'i se encuentran los m\'etodos necesarios para trabajar con geo-posicionamiento, como el m\'etodo de c\'alculo de \textit{bounding box} que se ha visto anteriormente.
 Se encuentran tambi\'en transformaciones de radianes a grados, o el c\'alculo de la distancia entre 2 puntos.
 
-Como ejemplo vamos a ver el c\'odigo para calcular distancias siempre u cuando utilicemos la proyecci\'on WGS84.
+Como ejemplo tenemos el c\'odigo para calcular distancias siempre u cuando utilicemos la proyecci\'on WGS84 en la Figura 5.7.
+\begin{figure}
 \begin{python}
-def distance_to(valores, other ):
+def distance_to(valores, other):
     radius = EARTH_RADIUS_WGS84
     radValuesIni = from_degrees(valores[0], valores[1])
     radValuesOther = from_degrees(other[0], other[1])
@@ -1957,19 +1844,22 @@ def distance_to(valores, other ):
         cos(radValuesIni[1] - radValuesOther[1])
     )
 \end{python}
+\caption{Método \texttt{distance\_to(valores, other)}, que calcula distancia entre puntos}
+\end{figure}
 
 \subsection{Proyecci\'on}
 
-La proyecci\'on se basa en ``ubicar'' un punto en un determinado sistema de coordenadas en otro sistema completamente distinto.
+La proyecci\'on se basa en ``ubicar'' un punto dado en un determinado sistema de coordenadas en otro sistema completamente distinto.
 En nuestro caso trabajamos hasta con 3 sistemas de coordenadas distintos el de las im\'agenes con X[0, MAX\_WIDHT] creciente de izquierda a derecha e Y[0, MAX\_HEIGHT] creciente de arriba a abajo, el sistema de coordenadas geogr\'aficas y el cartesiano.
 
 Ambas se mueven en \'ordenes de magnitud diferentes y un movimiento de $1 * 10^{-5}$ puede suponer varias decenas de p\'ixeles.
 
-Para abordar este problema y dado que se ha trabajado con robots a\'ereos con una autonom\'ia relativamente reducida se ha asumido que la tierra es plana en bounding box de menos de 2 kil\'ometros de ancho. Con \'esta convenci\'on conseguimos simplificar notablemente la complejidad del problema, que pr\'acticamente se convierte en una normalizaci\'on de un sistema a otro.
-Si en un futuro se decidiese utilizar la aplicaci\'on para vuelos de mayor envergadura, y con el fin de obtener una mayor precisi\'on, se deber\'ia tener en cuenta la curvatura de la tierra y por tanto habr\'ia que reescribir \'estos m\'etodos teni\'endolo en cuenta.
+Para abordar este problema, y dado que se ha trabajado con robots a\'ereos con una autonom\'ia relativamente reducida, se ha asumido que la tierra es plana en \textit{bounding box} de menos de 2 kil\'ometros de ancho. Con \'esta convenci\'on conseguimos simplificar notablemente la complejidad del problema, que pr\'acticamente se convierte en una normalizaci\'on de un sistema a otro.
+Si en un futuro se decidiese utilizar la aplicaci\'on para vuelos de mayor envergadura se deber\'ia tener en cuenta la curvatura de la tierra.
 La proyecci\'on en \texttt{UAV Commander} se realiza en ambos sentidos, de imagen a posicion geogr\'afica y de sistema de coordenadas a imagen.
 
-A continuaci\'on podemos ver la proyecci\'on de posici\'on geogr\'afica a imagen:
+Podemos ver la proyecci\'on de posici\'on geogr\'afica a imagen en la Figura 5.8.
+\begin{figure}
 \begin{python}
 def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY):
     distCoordX = round(latMax - latMin,7)
@@ -1978,26 +1868,25 @@ def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImag
     y = ((lon-lonMin) *(tamImageY))/distCoordY
     return round(y), round(x)
 \end{python}
+\caption{Método \texttt{posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY)}, encargado de calcular la proyección de un punto en coordenadas geográficas a la matrix de píxeles de la imagen que representa el mapa}
+\end{figure}
 
 \subsection{Procesamiento de los datos de vuelo}
 
-Este bloque se encarga de extraer los datos de vuelo y proporcion\'arselos a los componentes del GUI que o necesiten, as\'i como recogerlos del GUI y transformarlos a objetos de interfaz Ice. Este bloque ser\'ia muy similar al bloque de interpretaci\'on del driver \texttt{APM Server}.
-Aqu\'i se encontrar\'ian los m\'etodos de refresco de datos, getters y setters.
+Este bloque se encarga de extraer los datos de vuelo y proporcion\'arselos a los componentes del GUI que o necesiten, as\'i como recogerlos del GUI y transformarlos a objetos de interfaz ICE. Este bloque ser\'ia muy similar al bloque de interpretaci\'on del driver \texttt{APM Server}.
+Aqu\'i se encontrar\'ian los m\'etodos de refresco de datos, \textit{getters} y \textit{setters}.
 
 \subsection{Control de misiones}
 
-Este bloque incluye todos lo m\'etodos necesarios para dar soporte a misiones, se apoya fuertemente en los bloques de GUI y de conexi\'on con drivers JdeRobot y realiza la transfromaci\'on de datos y el env\'io de estos de una capa a otra.
-M\'etodos como update\_waypoints() o sendWP(send2APM) estar\'ian englobados en \'este bloque, \'este \'ultimo es sin duda alguna el m\'etodo m\'as importante del bloque, se apoya en el GUI para obtener los Waypoints de la vista de la tabla, interpretarlos, y rellenar el objeto de interfaz missi\'on con ella.
-Se puede ver a continuaci\'on:
+Este bloque incluye todos lo m\'etodos necesarios para dar soporte a misiones. Se apoya fuertemente en los bloques de GUI y de conexi\'on con drivers JdeRobot, y realiza la transfromaci\'on de datos y el env\'io de estos de una capa a otra.
+M\'etodos como update\_waypoints() o sendWP(send2APM) estar\'ian englobados en \'este bloque siendo \'este \'ultimo es sin duda alguna el m\'etodo m\'as importante del bloque. Se apoya en el GUI para obtener los Waypoints de la vista de la tabla, interpretarlos, y rellenar el objeto de interfaz missi\'on con ella.
+Se puede ver en la Figura 5.9 cómo se realiza este tratamiento.
+\begin{figure}
 \begin{python}
     def sendWP(self, send2APM):
-        colCount = self.table.rowCount()
-        mission = jderobot.MissionData()
-        mission.mission = []
-        i = 0
+    	...
         for row in range(colCount):
-            pose = jderobot.Pose3DData(0,0,0,0,0,0,0,0)
-            text = self.table.item(row, 0).text()
+        	...
             pos_lat = text.find("lat:")
             pos_lon = text.find("lon:")
             if pos_lat != -1:
@@ -2007,40 +1896,26 @@ Se puede ver a continuaci\'on:
                 pose.y = float(lon)
             else:
                 if "LAND in " in text:
-                    pos = text.find("LAND in ") + 8
-                    position = text[pos:].split(" ")
-                    lat = position[0]
-                    lon = position[1]
-                    pose.x = float(lat)
-                    pose.y = float(lon)
+                	...
                     self.extra.land()
                 else:
                     pos = text.find("TAKE OFF to ") + 12
-                    position = text[pos:].split(" ")
-                    lat = position[0]
-                    lon = position[1]
-                    pose.x = float(lat)
-                    pose.y = float(lon)
+                    ...
                     self.extra.takeoff()
             alt = self.table.item(row, 1)
             pose.h = int(alt.text())
-            print(mission.mission)
             mission.mission.append(pose)
             if i==0:
                 mission.mission.append(pose)
             i += 1
 \end{python}
+\caption{Método \texttt{sendWP(self, send2APM)}, encargado de enviar la misión creada por el usuario al driver}
+\end{figure}
 \end{itemize}
 
 \section{Interfaz de usuario} 
 \label{sec:interfaz_uavc}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.50]{img/gui.png}
-  \caption{Diseño de \texttt{UAV Commander} m\'as en profundidad}
-  \label{fig:apms_design}
-\end{figure}
 
 La interfaz de usuario es una del las partes m\'as importantes de toda aplicaci\'on, se trata de la parte que interact\'ua con el usuario, con lo que la informaci\'on se ha de mostrar de forma agradable, arm\'onica y de forma precisa, para que no genere confusi\'on en el usuario final.
 
@@ -2057,7 +1932,7 @@ Las pantallas de actitud y el visor de c\'amara se han integrado del desarrollo 
 
 Para su correcto desarrollo se comenz\'o dibujando varios bocetos que fueron descart\'andose y puliendo hasta que se fij\'o el aspecto visual de la pantalla. 
 
-\begin{figure}[h]
+\begin{figure}
 \centering
   \subfloat[Boceto en papel de uno de los diseños de \texttt{UAV Commander}]{
    \label{f:boceto}
@@ -2067,7 +1942,7 @@ Para su correcto desarrollo se comenz\'o dibujando varios bocetos que fueron des
     \includegraphics[width=0.50\textwidth]{img/uavc_comp.png}}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
   \centering
   \includegraphics[scale=0.396]{img/uavc.png}
   \caption{Pantalla principal de \texttt{UAV Commander}}
@@ -2098,6 +1973,7 @@ Un simple click desencadenar\'ia:
 \item \pythoninline{set_waypoints(self, wayPoints, current=True)} quien pinta el nuevo waypoint y la ruta a seguir en el mapa.
 \end{enumerate}
 Las siguientes l\'ineas de c\'odigo muestran la implementaci\'on del m\'etodo encargado de pintar los waypoints y las rutas en el mapa \pythoninline{set_waypoints(self, wayPoints, current=True)}
+\begin{figure}
 \begin{python}
     def set_waypoints(self, wayPoints, current=True):
         n=0
@@ -2111,10 +1987,12 @@ Las siguientes l\'ineas de c\'odigo muestran la implementaci\'on del m\'etodo en
             cv2.putText(self.cvImageShadow, s, (waypoint[0] + 3, waypoint[1]), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, [0, 0, 255], thickness=1)
         self.refreshImage()
 \end{python}
+\caption{Método \texttt{set\_waypoints(self, wayPoints, current\=True)}, encargado de pintar los puntos de paso en el mapa}
+\end{figure}
 \item Bot\'on de ``Take Off''/``Land''. \'Este bot\'on apoya al mapa para crear misiones con aterrizaje y despegue, si se quiere despegar hacia un punto, bastar\'ia con pulsarlo y pulsar despu\'es hacia d\'onde se quiere despegar. El comportamiento para el aterrizaje ser\'ia an\'alogo.
 \item Tabla de seguimiento de waypoints. En \'esta tabla se almacenan los waypoints que se van creando al hacer click sobre el mapa, cada fila es editable, de tal forma que ofrece una gran precisi\'on en caso que sea necesario.
 \item Campo ``default altitude'' Establece la altitud de crucero, el valor de \'este campo se ir\'a propagando en cada waypoint creado en el atributo altitude.
-\item Bot\'on ``Send''. \'Este bot\'on llama al m\'etodo \pythoninline{sendWP(self, send2APM)} del core quien recoge los objetos de misi\'on, los procesa y los env\'ia al bloque de comunicaci\'on con drivers JdeRobot para su env\'io a trav\'es de los interfaces Ice necesarios, a saber, mission y extra en el caso en el que haya aterrizaje o despegue en la misi\'on.
+\item Bot\'on ``Send''. \'Este bot\'on llama al m\'etodo \pythoninline{sendWP(self, send2APM)} del core quien recoge los objetos de misi\'on, los procesa y los env\'ia al bloque de comunicaci\'on con drivers JdeRobot para su env\'io a trav\'es de los interfaces ICE necesarios, a saber, mission y extra en el caso en el que haya aterrizaje o despegue en la misi\'on.
 \end{itemize}
 
 \subsection{Control de misiones}
@@ -2160,6 +2038,7 @@ En cada iteraci\'on del hilo threadMap se articula el siguiente \'arbol con las 
 	\end{itemize}
 \end{itemize}
 A continuaci\'on se muestran las implementaciones de los m\'etodos con m\'as peso de \'este bloque:
+\begin{figure}
 \begin{python}
     def update_position(self):
 
@@ -2189,7 +2068,8 @@ A continuaci\'on se muestran las implementaciones de los m\'etodos con m\'as pes
 
 
 \end{python}
-
+\caption{Métodos encargados de actualizar la posición y el recorrido efectuado en el mapa}
+\end{figure}
 
 \cleardoublepage
 \chapter{Experimentos}
@@ -2211,7 +2091,7 @@ En este apartado se presentan todos los experimentos realizados en simulación un
 
 \subsection{Experimento de integración de todo el software}
 
-El objetivo de éste experimento es probar que la integración del sistema y SITL se ha realizado correctamente. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que la integración del sistema y SITL se ha realizado correctamente. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque de la máquina virtual donde hemos instalado SITL.
 \item Se arranca SITL.
@@ -2229,7 +2109,7 @@ Se comprueba que funciona correctamente y se evidencia en el siguiente vídeo \ur
 
 \subsection{Experimento envío de misión con avión en vuelo}
 
-El objetivo de éste experimento es probar que el envío de misiones a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que el envío de misiones a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque y configuración de SITL.
 \item Se carga una misión de prueba.
@@ -2243,7 +2123,7 @@ El objetivo de éste experimento es probar que el envío de misiones a \texttt{APM
 Una vez realizada la secuencia arriba descrita se comprobará el seguimiento de la misión enviada a través del mapa validando su correcto cumplimiento. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=_X8WGSMIxug}
 
 \subsection{Experimento de envío de misión con despegue y varios waypoints}
-El objetivo de éste experimento es probar que el envío de misiones y maniobra de despegue a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que el envío de misiones y maniobra de despegue a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque y configuración de SITL.
 \item Se arranca \texttt{APM Server}.
@@ -2255,7 +2135,7 @@ El objetivo de éste experimento es probar que el envío de misiones y maniobra de
 Una vez realizada la secuencia arriba descrita se comprobará el seguimiento de la misión enviada a través del mapa validando su correcto cumplimiento. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=0j3QttXIRbg}
 
 \subsection{Experimento de envío de misión con despegue y aterrizaje}
-El objetivo de éste experimento es probar que el envío de misiones con maniobra de despegue y aterrizaje a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que el envío de misiones con maniobra de despegue y aterrizaje a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque y configuración de SITL.
 \item Se arranca \texttt{APM Server}.
@@ -2268,7 +2148,7 @@ Una vez realizada la secuencia arriba descrita se comprobará el seguimiento de l
 
 
 \subsection{Experimento de autozoom forzando la salida del avión del mapa}
-El objetivo de éste experimento es probar que el autozoom de \texttt{UAV Commander} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que el autozoom de \texttt{UAV Commander} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque y configuración de SITL.
 \item Se carga una misión de prueba que dirija al avión fuera de los márgenes del mapa.
@@ -2292,7 +2172,7 @@ En este apartado se presentan todos los experimentos realizados con el avión rea
 \end{enumerate}
 
 \subsection{Pruebas de envío recepción del sistema de radiofrecuencias}
-El objetivo de éste experimento es probar que se reciben correctamente las órdenes de la emisora de radiocontrol y probar el alcance del wifi del ordenador de abordo. Ésto nos delimitará el alcance al que vamos a volar. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que se reciben correctamente las órdenes de la emisora de radiocontrol y probar el alcance del wifi del ordenador de abordo. Ésto nos delimitará el alcance al que vamos a volar. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque de la emisora de radicontrol.
 \item Arranque del avión a radiocontrol y del ordenador de abordo.
@@ -2301,7 +2181,7 @@ El objetivo de éste experimento es probar que se reciben correctamente las órden
 Este experimento nos va a permitir conocer a qué distancia vamos a poder volar.
 
 \subsection{Experimento de integración con \texttt{APM Server} y \texttt{UAV Commander}}
-El objetivo de éste experimento es probar que la integración del sistema y el avión real a radiocontrol se ha realizado correctamente. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que la integración del sistema y el avión real a radiocontrol se ha realizado correctamente. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque de la emisora de radicontrol.
 \item Arranque del avión a radiocontrol y del ordenador de abordo.
@@ -2317,7 +2197,7 @@ Una vez realizada la secuencia arriba descrita se comprobará desde \texttt{UAV C
 La prueba se evidencia en el vídeo \url{******************}
 
 \subsection{Experimento de seguimiento del avión a través del \texttt{UAV Commander}}
-El objetivo de éste experimento es probar el seguimiento de misiones a través de \texttt{UAV Commander} con avión real a radiocontrol. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar el seguimiento de misiones a través de \texttt{UAV Commander} con avión real a radiocontrol. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate} 
 \item Arranque de la emisora de radicontrol.
 \item Arranque del avión a radiocontrol y del ordenador de abordo.
@@ -2328,17 +2208,6 @@ El objetivo de éste experimento es probar el seguimiento de misiones a través de
 \end{enumerate}
 Una vez realizada la secuencia arriba descrita se comprobará que \texttt{UAV Commander} muestra la trayectoria descrita por el avión a radiocontrol en el mapa. La prueba se evidencia en el vídeo \url{******************}
 
-\subsection{Experimento de envío de misión desde el avión en vuelo}
-El objetivo de éste experimento es probar el envío de misiones al avión real a radiocontrol. Para ello se van a realizar los siguiente pasos:
-\begin{enumerate}
-\item Arranque de la emisora de radicontrol.
-\item Arranque del avión a radiocontrol y del ordenador de abordo.
-\item Se arranca \texttt{APM Server}.
-\item Se arranca \texttt{UAV Commander}
-\item Se pone el avión a radiocontrol en el aire mediante el sistema de radiocontrol.
-\item Se crea una midión desde \texttt{UAV Commander} y se envía a \texttt{APM Server} a través del botón ``Send''
-\end{enumerate}
-Una vez realizada la secuencia arriba descrita se comprobará desde \texttt{UAV Commander} el cumplimiento de la misión enviada. La prueba se evidencia en el vídeo \url{******************}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2353,7 +2222,7 @@ Una vez realizada la secuencia arriba descrita se comprobará desde \texttt{UAV C
 \section{Consecuci\'on de objetivos}
 \label{sec:consecucion-objetivos}
 
-Como se ha podido ir viendo a lo largo de éste PFC: S
+Como se ha podido ir viendo a lo largo de este PFC: S
 Se ha presentado el problema, los objetivos y los requisitos que deben cumplir en el capítulo dos.
 En el capítulo tres ha analizado y profundizado en la infraestructura que se iba a utilizar y se ha decidido que infraestructura era la mejor para abordar nuestros desarrollos.
 Se ha abordado cada objetivo por separado planteando un diseño que nos permita abordar de una forma sencilla y eficaz el desarrollo y se han implementado las soluciones planteadas. Con estos desarrollos, descritos en los capítulos 4 y 5, se han cubierto los requisitos presentados en el capítulo 2.
@@ -2366,14 +2235,14 @@ Y por último se ha validado su funcionamiento mediante los experimentos del capí
   \item Se ha validado el funcionamiento de ambos tanto en un ambiente simulado como con el avión real mediante sendos experimentos.
 \end{enumerate}
 
-El seguimiento y evolución de éste PFC, así como el código, vídeos y material utilizado puede encontrarse en la web \url{http://jderobot.org/Jafernandez}
+El seguimiento y evolución de este PFC, así como el código, vídeos y material utilizado puede encontrarse en la web \url{http://jderobot.org/Jafernandez}
 
 
 \section{Trabajos futuros}
 \label{sec:trabajos_futuros}
 
 
-Este PFC abre las puertas a futuros desarrollos con éste tipo de robots aéreos, que hasta ahora JdeRobot no soportaba, sentando las bases del desarrollo de aviones autónomos en JdeRobot.
+Este PFC abre las puertas a futuros desarrollos con este tipo de robots aéreos, que hasta ahora JdeRobot no soportaba, sentando las bases del desarrollo de aviones autónomos en JdeRobot.
 Se han identificado varias evoluciones de los desarrollos aquí expuestos, comenzaremos con \texttt{APM Server}
 
 \subsection{Futuros evolutivos de \texttt{APM Server}}
@@ -2418,6 +2287,7 @@ Como desarrollo adicional se podría conectar SITL a Gazebo, de ésta forma tendrí
 % http://texblog.org/2014/04/22/using-google-scholar-to-download-bibtex-citations/
 
 \end{document}
+\grid
 \grid
 \grid
 \grid
