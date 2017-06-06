@@ -1642,7 +1642,7 @@ En estas líneas de código, extaídas de los métodos que recogen la actitud, podem
 \chapter{AUV Commander}
 
 UAV Commander es una aplicaci\'on JdeRobot que hace las veces de estaci\'on de tierra o GCS (Ground Control Station) para robots a\'ereos.
-Desde \texttt{UAV Commander} se pueden programar missiones, enviar \'estas al driver MavLink, verificar el cumplimiento de las mismas y visualizar los sensores a bordo del robot a\'ereo.
+Desde \texttt{UAV Commander} se pueden programar misiones, enviar \'estas al driver de un avión autónomo MAVLink, verificar el cumplimiento de las mismas y visualizar los sensores a bordo del robot a\'ereo. Sirve de cliente del driver desarrollado en la primera parte de este Proyecto Fin de Carrera y proporciona la primera validación experimental.
 
 \section{Diseño} 
 \label{sec:diseno_uavc}
@@ -1665,11 +1665,11 @@ La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
 
 
 
-La aplicaci\'on debe cumplir los requisitos descritos en el cap\'itulo 2.2.3 que pueden resumirse en 4 grandes milestones:
+La aplicaci\'on debe cubrir las siguientes funcionalidades:
 
 \begin{enumerate}
-\item Premitir la creaci\'on de misiones
-\item Enviar misiones a trav\'es de interfaces ICE al driver conectado.
+\item Premitir la creaci\'on de misiones como secuencias de puntos por los que debe pasar el drone.
+\item Enviar misiones a trav\'es de interfaces ICE al driver conectado de JdeRobot que ofrece acceso al avión.
 \item Presentar toda la informaci\'on sensorial que nos ofrezca el driver.
 	\begin{itemize}
 	\item Actitud
@@ -1691,33 +1691,22 @@ La aplicaci\'on debe cumplir los requisitos descritos en el cap\'itulo 2.2.3 que
 
 
 En \'este bloque se implementan todos los servidores ICE necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
-\'Este bloque es an\'alogo al Bloque de comunicaci\'on con aplicaciones JdeRobot del Cap\'itulo 4.1 si bien para simplificar este proceso hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez\cite{aitor:_mediawiki} y las clases de EasyIce de Victor Arribas Raigadas\cite{varribas:_mediawiki} ambas integradas en JdeRobot. De \'este modo \'este bloque queda simplificado y su inicializaci\'on queda  relegada a unas pocas l\'ineas de c\'odigo:
+\'Este bloque es an\'alogo al Bloque de comunicaci\'on con aplicaciones JdeRobot del Cap\'itulo 4.1 si bien para simplificar este proceso hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez\cite{aitor:_mediawiki} y las clases de EasyIce de Victor Arribas Raigadas\cite{varribas:_mediawiki} ambas integradas en JdeRobot. De \'este modo este bloque queda simplificado y su inicializaci\'on queda  relegada a unas pocas l\'ineas de c\'odigo:
 \begin{figure}[H]
 \begin{python}
     ic = EasyIce.initialize(sys.argv)
     camera = CameraClient(ic, "UavViewer.Camera", True)
     navdata = NavDataClient(ic, "UavViewer.Navdata", True)
     pose = Pose3DClient(ic, "UavViewer.Pose3D", True)
-    cmdvel = CMDVel(ic, "UavViewer.CMDVel")
     extra = Extra(ic, "UavViewer.Extra")
     mission = MissionI(ic, "UavViewer.Mission")
 \end{python}
 \caption{Creación de los servicios ICE y lincado de los mismos a sus variables}
 \end{figure}
-En la aplicaci\'on \texttt{UAV Commander} se exponen 5 interfaces ICE a diferencia de los 4 que expon\'ia el driver \texttt{APM Server}. Adem\'as de los que expone \texttt{APM Server}, a saber:
-\begin{itemize}
-\item Pose3D
-\item \texttt{NavData}
-\item Extra
-\item Mission
-\end{itemize}
-Se implementan 2 m\'as: 
-\begin{itemize}
-\item El interfaz \texttt{camera} para mostrar las im\'agenes y vídeo.
-\item El interfaz \texttt{CmdVel}, cuya implementaci\'on actual no se utiliza pero se ha implementado para futuras realeases, donde en un futuro puedan añadirse el control por velocidades.
-\end{itemize}
+En la aplicaci\'on \texttt{UAV Commander} se utilizan 5 interfaces ICE a diferencia de los 4 que expon\'ia el driver \texttt{APM Server}. Adem\'as de los que expone \texttt{APM Server}, a saber: \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra} y \texttt{Mission}
+Se implementa uno m\'as, el interfaz \texttt{camera}, para regoger las im\'agenes y vídeo que se muestran en la interfaz gráfica.
 
-Con \'esto se definen los 6 objetos ICE que envían y/o reciben por el \texttt{APM Server}, y con el c\'odigo siguiente se los asignamos al GUI quien los guarda como atributos en su clase principal.
+Con esto se definen los 6 objetos ICE que envían y/o reciben por el \texttt{APM Server}, y con el c\'odigo siguiente se los asignamos al GUI quien los guarda como atributos en su clase principal.
 
 \begin{figure}[H]
 \begin{python}
@@ -1725,7 +1714,6 @@ Con \'esto se definen los 6 objetos ICE que envían y/o reciben por el \texttt{AP
     screen.setPose3D(pose)
     screen.set_initial_pose3D(pose3D)
     screen.setNavData(navdata)
-    screen.setCMDVel(cmdvel) # Not used yet
     screen.setExtra(extra)
     screen.setMission(mission)
 \end{python}
@@ -1736,9 +1724,9 @@ Con \'esto se definen los 6 objetos ICE que envían y/o reciben por el \texttt{AP
 \label{sec:core_uavc}
 
 
-El core es el bloque m\'as complicado de la aplicaci\'on, se divide a su vez en 5 bloques:
+El core es el bloque m\'as complicado de la aplicaci\'on, se divide a su vez en 5 partes:
 \begin{itemize}
-\item Obtenci\'on y actualizaci\'on de mapas. \'Este bloque es el encargado de obtener los mapas de cualquiera de las 2 fuentes actualmente implenetadas, el IGN o Google. Tambi\'en se encarga de actualizar la georeferenciaci\'on asociada a ellos una vez descargados.
+\item Obtenci\'on y actualizaci\'on de mapas. \'Este bloque es el encargado de obtener los mapas de cualquiera de las 2 fuentes implementadas, el IGN o Google. Tambi\'en se encarga de actualizar la georeferenciaci\'on asociada a ellos una vez descargados.
 \item Utilidades de mapas. Aqu\'i se encuentran los m\'etodos de apoyo a la georeferenciaci\'on como: obtener el \textit{bounding box} de una posici\'on GPS, validar si nos acercamos al l\'imite del mapa descargado o la transformaci\'on de magnitudes.
 \item Proyecci\'on. Es sin duda una de las partes m\'as complejas del aplicativo. Son las clases encargadas de a partir de una posici\'on GPS, obtener su posici\'on en imagen que representa el mapa de la zona y viceversa.
 \item Procesamiento de los datos de vuelo. En este bloque se extraen, transforman (en caso que sea necesario) y distribuyen los datos de vuelo a las ventanas correspondiente y objetos correspondientes del GUI .
@@ -1746,15 +1734,9 @@ El core es el bloque m\'as complicado de la aplicaci\'on, se divide a su vez en 
 
 \subsection{Obtenci\'on y actualizaci\'on de mapas}
 
-Para obtener los mapas geo-referenciados necesitamos principalmente 4 cosas como vimos en el cap\'itulo 3:
-\begin{enumerate}
-\item La posición.
-\item El \textit{Bounding Box}.
-\item El tamaño de la imagen.
-\item La proyecci\'on a utilizar.
-\end{enumerate}
+Para obtener los mapas geo-referenciados necesitamos principalmente 4 cosas: la posición, el \textit{bounding box}, el tamaño de la imagen y la proyecci\'on a utilizar.
 
-Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayudar\'a con \'estos tr\'amites. El c\'odigo para obtener un nuevo mapa ser\'ia:
+Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayudar\'a con \'estos tr\'amites. El c\'odigo para obtener un nuevo mapa puede verse en la figura 5.5.
 \begin{figure}
 \begin{python}
 def retrieve_new_map(lat, lon, radius, width, heigth):
@@ -1777,10 +1759,10 @@ def retrieve_new_map(lat, lon, radius, width, heigth):
 \caption{Método \texttt{retrieve\_new\_map(lat, lon, radius, width, heigth)} }
 \end{figure}
 
-En el c\'odigo mostrado en la Figura 5.5 podemos observar como recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WMS en 'http://www.ign.es/wms-inspire/pnoa-ma'.
+En el c\'odigo mostrado en la Figura 5.5 podemos observar como recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WebMapService (WMS) en 'http://www.ign.es/wms-inspire/pnoa-ma'.
 Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio, (el c\'odigo para calcularlo podemos obserbarlo en la Figura 5.6).
-Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto del objeto WMS y lanzamos la request que devuelve una imagen en bytes a la que debemos añadir el disclaimer que nos indica el IGN.
-Creamos la petición WMS con la URL del WMA PNOA y asignamos lso parámetros necesarios para obtener el mapa. al final montamos la imagen geo-referenciada recibida, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV el \textit{bounding box}, y el tamaño de la imagen. 
+Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto del objeto WMS y lanzamos la petición que devuelve una imagen en bytes a la que debemos añadir el \textit{disclaimer} que nos indica el IGN para poder utlizar los mapas de forma gratuíta.
+Creamos la petición WMS con la URL del WMA PNOA y asignamos los parámetros necesarios para obtener el mapa. al final montamos la imagen geo-referenciada recibida, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV el \textit{bounding box}, y el tamaño de la imagen. 
 
 \begin{figure}[H]
 \begin{python}
@@ -1840,7 +1822,7 @@ En nuestro caso trabajamos hasta con 3 sistemas de coordenadas distintos el de l
 
 Ambas se mueven en \'ordenes de magnitud diferentes y un movimiento de $1 * 10^{-5}$ puede suponer varias decenas de p\'ixeles.
 
-Para abordar este problema, y dado que se ha trabajado con robots a\'ereos con una autonom\'ia relativamente reducida, se ha asumido que la tierra es plana en \textit{bounding box} de menos de 2 kil\'ometros de ancho. Con \'esta convenci\'on conseguimos simplificar notablemente la complejidad del problema, que pr\'acticamente se convierte en una normalizaci\'on de un sistema a otro.
+Para abordar este problema, y dado que se ha trabajado con robots a\'ereos con una autonom\'ia relativamente reducida, se ha asumido que la tierra es plana en un área rectangular de menos de 2 kil\'ometros de ancho. Con \'esta convenci\'on conseguimos simplificar notablemente la complejidad del problema, que pr\'acticamente se convierte en una normalizaci\'on de un sistema a otro.
 Si en un futuro se decidiese utilizar la aplicaci\'on para vuelos de mayor envergadura se deber\'ia tener en cuenta la curvatura de la tierra.
 La proyecci\'on en \texttt{UAV Commander} se realiza en ambos sentidos, de imagen a posicion geogr\'afica y de sistema de coordenadas a imagen.
 
@@ -1854,7 +1836,7 @@ def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImag
     y = ((lon-lonMin) *(tamImageY))/distCoordY
     return round(y), round(x)
 \end{python}
-\caption{Método \texttt{posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY)}, encargado de calcular la proyección de un punto en coordenadas geográficas a la matrix de píxeles de la imagen que representa el mapa}
+\caption{Método \texttt{posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY)}, encargado de calcular la proyección de un punto en coordenadas geográficas a la matriz de píxeles de la imagen que representa el mapa}
 \end{figure}
 
 \subsection{Procesamiento de los datos de vuelo}
@@ -1864,8 +1846,8 @@ Aqu\'i se encontrar\'ian los m\'etodos de refresco de datos, \textit{getters} y 
 
 \subsection{Control de misiones}
 
-Este bloque incluye todos lo m\'etodos necesarios para dar soporte a misiones. Se apoya fuertemente en los bloques de GUI y de conexi\'on con drivers JdeRobot, y realiza la transfromaci\'on de datos y el env\'io de estos de una capa a otra.
-M\'etodos como update\_waypoints() o sendWP(send2APM) estar\'ian englobados en \'este bloque siendo \'este \'ultimo es sin duda alguna el m\'etodo m\'as importante del bloque. Se apoya en el GUI para obtener los Waypoints de la vista de la tabla, interpretarlos, y rellenar el objeto de interfaz missi\'on con ella.
+Este bloque incluye todos lo m\'etodos necesarios para dar soporte a misiones. Se apoya fuertemente en los bloques de GUI y de conexi\'on con drivers JdeRobot, y realiza la transformaci\'on de datos y el env\'io de estos de una capa a otra.
+M\'etodos como update\_waypoints() o sendWP(send2APM) estar\'ian englobados en \'este bloque siendo \'este \'ultimo es sin duda alguna el m\'etodo m\'as importante del bloque. Se apoya en el GUI para obtener los Waypoints de la vista de la tabla, interpretarlos, y rellenar el objeto de interfaz \texttt{mission} con ella.
 Se puede ver en la Figura 5.9 cómo se realiza este tratamiento.
 \begin{figure}
 \begin{python}
@@ -1899,33 +1881,23 @@ Se puede ver en la Figura 5.9 cómo se realiza este tratamiento.
 \end{figure}
 \end{itemize}
 
-\section{Interfaz de usuario} 
+\section{Interfaz gráfica de usuario} 
 \label{sec:interfaz_uavc}
 
 
-La interfaz de usuario es una del las partes m\'as importantes de toda aplicaci\'on, se trata de la parte que interact\'ua con el usuario, con lo que la informaci\'on se ha de mostrar de forma agradable, arm\'onica y de forma precisa, para que no genere confusi\'on en el usuario final.
+La interfaz gráfica es una de las partes m\'as importantes de toda aplicaci\'on, es la parte que interact\'ua con el usuario, con lo que la informaci\'on se ha de mostrar de forma agradable, arm\'onica y de forma precisa, para que no genere confusi\'on en el usuario final.
 
-Es por tanto el bloque donde m\'as horas se han invertido en su desarrollo junto con el bloque core de la aplicaci\'on.
-
-La aplicaci\'on consta de 3 pantallas:
-\begin{enumerate}
-\item Pantalla principal.
-\item Ventana de actitud.
-\item Ventana visor de c\'amara.
-\end{enumerate}
+La aplicaci\'on ofrece 3 pantallas: pantalla principal, ventana de actitud y ventana visor de c\'amara.
 
 Las pantallas de actitud y el visor de c\'amara se han integrado del desarrollo de UAV Viewer de Alberto Mart\'in Florido, con lo que nos centraremos en la pantalla principal, la encargada del control y creaci\'on de misiones.
 
 Para su correcto desarrollo se comenz\'o dibujando varios bocetos que fueron descart\'andose y puliendo hasta que se fij\'o el aspecto visual de la pantalla. 
 
 \begin{figure}
-\centering
-  \subfloat[Boceto en papel de uno de los diseños de \texttt{UAV Commander}]{
-   \label{f:boceto}
-    \includegraphics[width=0.486\textwidth]{img/boceto.jpg}}
-  \subfloat[Vista general de \texttt{UAV Commander}]{
-   \label{f:uavc}
-    \includegraphics[width=0.50\textwidth]{img/uavc_comp.png}}
+  \centering
+  \includegraphics[scale=0.396]{img/uavc_comp.png}
+  \caption{Vista general de \texttt{UAV Commander}}
+  \label{fig:uavc_ppal}
 \end{figure}
 
 \begin{figure}
@@ -1933,7 +1905,6 @@ Para su correcto desarrollo se comenz\'o dibujando varios bocetos que fueron des
   \includegraphics[scale=0.396]{img/uavc.png}
   \caption{Pantalla principal de \texttt{UAV Commander}}
   \label{fig:uavc_ppal}
-
 \end{figure}
 Para facilitar su disecci\'on vamos a dividir \'esta ventana en 3 bloques:
 \begin{enumerate}
