@@ -1648,6 +1648,22 @@ Desde \texttt{UAV Commander} se pueden programar misiones, enviar \'estas al dri
 \label{sec:diseno_uavc}
 
 
+La aplicaci\'on debe cubrir las siguientes funcionalidades:
+
+\begin{enumerate}
+\item Premitir la creaci\'on de misiones como secuencias de puntos por los que debe pasar el drone.
+\item Enviar misiones a trav\'es de interfaces ICE al driver conectado de JdeRobot que ofrece acceso al avión.
+\item Presentar toda la informaci\'on sensorial que nos ofrezca el driver.
+	\begin{itemize}
+	\item Actitud
+	\item C\'amaras de abordo
+	\end{itemize}
+\item Validar el cumplimiento de misiones.
+\end{enumerate}
+
+La aplicación recibe como entradas los interfaces \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra}, \texttt{mission} y \texttt{camera}. Con los datos de posición recibidos en el interfaz \texttt{Pose3D} recupera, o bien de Google o bien del Instituto Geográfico Nacional de España (IGN), el mapa georeferenciado de esa zona y los presenta por pantalla al usuario a través del interfaz gráfico. 
+
+
 \begin{figure}
 \centering{
    \label{f:diseno_uavc_caja_negra}
@@ -1662,21 +1678,6 @@ La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
 \item Core. El core de la aplicaci\'on ser\'a quien haga de orquestador entre los datos recibidos del bloque de comunicaci\'on con los driver JdeRobot y el interfaz de usuario. Se har\'a cargo tambi\'en de obtener, de la fuente que sea preciso, IGN, Google o el bloque de conexi\'on de drivers de JdeRobot la informaci\'on necesaria y procesarla para ser mostrada por el GUI.
 \item Bloque de conexi\'on con los driver JdeRobot.
 \end{itemize}
-
-
-
-La aplicaci\'on debe cubrir las siguientes funcionalidades:
-
-\begin{enumerate}
-\item Premitir la creaci\'on de misiones como secuencias de puntos por los que debe pasar el drone.
-\item Enviar misiones a trav\'es de interfaces ICE al driver conectado de JdeRobot que ofrece acceso al avión.
-\item Presentar toda la informaci\'on sensorial que nos ofrezca el driver.
-	\begin{itemize}
-	\item Actitud
-	\item C\'amaras de abordo
-	\end{itemize}
-\item Validar el cumplimiento de misiones.
-\end{enumerate}
 
 \begin{figure}
 \centering{
