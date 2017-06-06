@@ -1703,8 +1703,8 @@ En \'este bloque se implementan todos los servidores ICE necesarios para acceder
 \end{python}
 \caption{Creación de los servicios ICE y lincado de los mismos a sus variables}
 \end{figure}
-En la aplicaci\'on \texttt{UAV Commander} se utilizan 5 interfaces ICE a diferencia de los 4 que expon\'ia el driver \texttt{APM Server}. Adem\'as de los que expone \texttt{APM Server}, a saber: \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra} y \texttt{Mission}
-Se implementa uno m\'as, el interfaz \texttt{camera}, para regoger las im\'agenes y vídeo que se muestran en la interfaz gráfica.
+En la aplicaci\'on \texttt{UAV Commander} se utilizan 5 interfaces ICE a diferencia de los 4 que expon\'ia el driver \texttt{APM Server}. Adem\'as de los que expone \texttt{APM Server}, a saber: \texttt{Pose3D} y \texttt{NavData}  para recibir la posición medida por los sensores a bordo como el GPS y su orientación, y \texttt{Mission} y \texttt{Extra} para enviar órdenes al avión, entendidas como secuencias de puntos de paso y maniobras de despegue o aterrizaje respectivamente.
+Se implementa uno m\'as, el interfaz \texttt{camera}, para regoger las im\'agenes y vídeo que se muestran en el interfaz gráfico.
 
 Con esto se definen los 6 objetos ICE que envían y/o reciben por el \texttt{APM Server}, y con el c\'odigo siguiente se los asignamos al GUI quien los guarda como atributos en su clase principal.
 
