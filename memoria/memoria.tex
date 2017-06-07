@@ -1674,10 +1674,12 @@ La aplicación recibe como entradas los interfaces \texttt{Pose3D}, \texttt{NavDa
 
 La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
 \begin{itemize}
-\item GUI. La interfaz de usuario, es la parte de la aplicaci\'on que va a interactuar con el usuario.
-\item Core. El core de la aplicaci\'on ser\'a quien haga de orquestador entre los datos recibidos del bloque de comunicaci\'on con los driver JdeRobot y el interfaz de usuario. Se har\'a cargo tambi\'en de obtener, de la fuente que sea preciso, IGN, Google o el bloque de conexi\'on de drivers de JdeRobot la informaci\'on necesaria y procesarla para ser mostrada por el GUI.
-\item Bloque de conexi\'on con los driver JdeRobot.
+\item El bloque de sensores. Encargado de recuperar de los servicios ICE, tratar y mostrar toda la información sensorial.
+\item El bloque de Localización. Encargado de obtener los mapas geo-referenciados, realizar las proyecciones entre sistemas de coordenadas y mostrar de forma interactiva éstos a través de la interfaz gráfica de usuario.
+\item Bloque de control de misiones. El bloque de control de misiones es quien se encarga de facilitar la creación de misiones a través del interfaz gráfico de usuario, realiza las transformaciones necesarias en éstas y las envía a través de los servicios ICE involucrados. 
 \end{itemize}
+
+Cada uno de estos bloques se detalla a continuación en las secciones siguientes.
 
 \begin{figure}
 \centering{
@@ -1687,12 +1689,28 @@ La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
   
 \end{figure}
 
-\section{Bloque de conexi\'on con aplicaciones JdeRobot} 
-\label{sec:bloque_jderobot_uavc}
 
+\section{Bloque de sensores} 
+\label{sec:bloque_sensores_uavc}
 
 En \'este bloque se implementan todos los servidores ICE necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
-\'Este bloque es an\'alogo al Bloque de comunicaci\'on con aplicaciones JdeRobot del Cap\'itulo 4.1 si bien para simplificar este proceso hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez\cite{aitor:_mediawiki} y las clases de EasyIce de Victor Arribas Raigadas\cite{varribas:_mediawiki} ambas integradas en JdeRobot. De \'este modo este bloque queda simplificado y su inicializaci\'on queda  relegada a unas pocas l\'ineas de c\'odigo:
+
+
+
+\subsection{Cámara}
+
+\begin{figure}[H]
+\begin{python}
+    ic = EasyIce.initialize(sys.argv)
+    camera = CameraClient(ic, "UavViewer.Camera", True)
+    screen.setCamera(camera)
+\end{python}
+\caption{Creación del servicio ICE \texttt{camera} y asignación al GUI}
+\end{figure}
+
+
+\subsection{Sensores de vuelo}
+Para simplificar el proceso de creación y lincado de los servicios ICE hemos optado por utilizar las clases implementadas por Aitor Martinez Fernandez\cite{aitor:_mediawiki} y las clases de EasyIce de Victor Arribas Raigadas\cite{varribas:_mediawiki} ambas integradas en JdeRobot. De \'este modo este bloque queda simplificado y su inicializaci\'on queda relegada a unas pocas l\'ineas de c\'odigo como vemos en la Figura 5.12
 \begin{figure}[H]
 \begin{python}
     ic = EasyIce.initialize(sys.argv)
@@ -1701,43 +1719,30 @@ En \'este bloque se implementan todos los servidores ICE necesarios para acceder
     pose = Pose3DClient(ic, "UavViewer.Pose3D", True)
     extra = Extra(ic, "UavViewer.Extra")
     mission = MissionI(ic, "UavViewer.Mission")
-\end{python}
-\caption{Creación de los servicios ICE y lincado de los mismos a sus variables}
-\end{figure}
-En la aplicaci\'on \texttt{UAV Commander} se utilizan 5 interfaces ICE a diferencia de los 4 que expon\'ia el driver \texttt{APM Server}. Adem\'as de los que expone \texttt{APM Server}, a saber: \texttt{Pose3D} y \texttt{NavData}  para recibir la posición medida por los sensores a bordo como el GPS y su orientación, y \texttt{Mission} y \texttt{Extra} para enviar órdenes al avión, entendidas como secuencias de puntos de paso y maniobras de despegue o aterrizaje respectivamente.
-Se implementa uno m\'as, el interfaz \texttt{camera}, para regoger las im\'agenes y vídeo que se muestran en el interfaz gráfico.
-
-Con esto se definen los 6 objetos ICE que envían y/o reciben por el \texttt{APM Server}, y con el c\'odigo siguiente se los asignamos al GUI quien los guarda como atributos en su clase principal.
-
-\begin{figure}[H]
-\begin{python}
-    screen.setCamera(camera)
     screen.setPose3D(pose)
     screen.set_initial_pose3D(pose3D)
     screen.setNavData(navdata)
     screen.setExtra(extra)
     screen.setMission(mission)
 \end{python}
-\caption{Pase de parámetros al interfaz gráfico}
+\caption{Creación de servicios ICE y asignación al GUI}
 \end{figure}
 
-\section{Core} 
-\label{sec:core_uavc}
 
+\section{Bloque de Localización}
+\label{sec:bloque_localización_uavc}
 
-El core es el bloque m\'as complicado de la aplicaci\'on, se divide a su vez en 5 partes:
-\begin{itemize}
-\item Obtenci\'on y actualizaci\'on de mapas. \'Este bloque es el encargado de obtener los mapas de cualquiera de las 2 fuentes implementadas, el IGN o Google. Tambi\'en se encarga de actualizar la georeferenciaci\'on asociada a ellos una vez descargados.
-\item Utilidades de mapas. Aqu\'i se encuentran los m\'etodos de apoyo a la georeferenciaci\'on como: obtener el \textit{bounding box} de una posici\'on GPS, validar si nos acercamos al l\'imite del mapa descargado o la transformaci\'on de magnitudes.
-\item Proyecci\'on. Es sin duda una de las partes m\'as complejas del aplicativo. Son las clases encargadas de a partir de una posici\'on GPS, obtener su posici\'on en imagen que representa el mapa de la zona y viceversa.
-\item Procesamiento de los datos de vuelo. En este bloque se extraen, transforman (en caso que sea necesario) y distribuyen los datos de vuelo a las ventanas correspondiente y objetos correspondientes del GUI .
-\item Control de misiones. El control de misiones \textit{orquesta} llamadas al resto de bloques del core para dar soporte a las misiones. Muestra \'estas en la GUI y cuando desde la GUI se pulsa el bot\'on de ``Send to APM'' prepara los objetos del bloque de comunicaci\'on con el diver para ser enviados.
+\subsection{Obtención de Mapas}
 
-\subsection{Obtenci\'on y actualizaci\'on de mapas}
+Para obtener los mapas geo-referenciados vamos a recurrir al uso de WebMapService (WMS) que es el método más empleado para la obtención de estos mapas. Vamos a utilizar 2 WMS como fuentes, el PNOA del Instituto Geogr\'afico Nacional (IGN) como fuente principal y Google como fuente secundaria.
 
-Para obtener los mapas geo-referenciados necesitamos principalmente 4 cosas: la posición, el \textit{bounding box}, el tamaño de la imagen y la proyecci\'on a utilizar.
+Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayudar\'a con \'estos tr\'amites. 
+En el c\'odigo mostrado en la Figura 5.5 podemos observar como recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WebMapService (WMS) en 'http://www.ign.es/wms-inspire/pnoa-ma'.
+Para obtener un mapa geo-referenciado necesitamos principalmente 4 cosas: la posición, el \textit{bounding box}, el tamaño de la imagen y la proyecci\'on a utilizar. 
+Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio, (el c\'odigo para calcularlo podemos obserbarlo en la Figura 5.6).
+Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto parámetros del objeto WMS y lanzamos la petición que devuelve una imagen en bytes a la que debemos añadir el \textit{disclaimer} que nos indica el IGN para poder utlizar los mapas de forma gratuíta.
+Creamos la petición WMS con la URL del WMS PNOA y asignamos los parámetros necesarios para obtener el mapa. al final montamos la imagen geo-referenciada recibida, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV el \textit{bounding box}, y el tamaño de la imagen.
 
-Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayudar\'a con \'estos tr\'amites. El c\'odigo para obtener un nuevo mapa puede verse en la figura 5.5.
 \begin{figure}
 \begin{python}
 def retrieve_new_map(lat, lon, radius, width, heigth):
@@ -1759,11 +1764,7 @@ def retrieve_new_map(lat, lon, radius, width, heigth):
 \end{python}
 \caption{Método \texttt{retrieve\_new\_map(lat, lon, radius, width, heigth)} }
 \end{figure}
-
-En el c\'odigo mostrado en la Figura 5.5 podemos observar como recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WebMapService (WMS) en 'http://www.ign.es/wms-inspire/pnoa-ma'.
-Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio, (el c\'odigo para calcularlo podemos obserbarlo en la Figura 5.6).
-Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto del objeto WMS y lanzamos la petición que devuelve una imagen en bytes a la que debemos añadir el \textit{disclaimer} que nos indica el IGN para poder utlizar los mapas de forma gratuíta.
-Creamos la petición WMS con la URL del WMA PNOA y asignamos los parámetros necesarios para obtener el mapa. al final montamos la imagen geo-referenciada recibida, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV el \textit{bounding box}, y el tamaño de la imagen. 
+ 
 
 \begin{figure}[H]
 \begin{python}
@@ -1794,34 +1795,10 @@ def getBoundingBox(lat, lon, distance):
 \caption{Método getBoundingBox(lat, lon, distance) encargado de calcular esquina inferior izquierda y esquina  superior derecha de un cuadrado de ancho distance}
 \end{figure}
 
+\subsection{Conversión de coordenadas}
 
-\subsection{Utilidades de mapas}
-Aqu\'i se encuentran los m\'etodos necesarios para trabajar con geo-posicionamiento, como el m\'etodo de c\'alculo de \textit{bounding box} que se ha visto anteriormente.
-Se encuentran tambi\'en transformaciones de radianes a grados, o el c\'alculo de la distancia entre 2 puntos.
-
-Como ejemplo tenemos el c\'odigo para calcular distancias siempre u cuando utilicemos la proyecci\'on WGS84 en la Figura 5.7.
-\begin{figure}
-\begin{python}
-def distance_to(valores, other):
-    radius = EARTH_RADIUS_WGS84
-    radValuesIni = from_degrees(valores[0], valores[1])
-    radValuesOther = from_degrees(other[0], other[1])
-    return radius * acos(
-        sin(radValuesIni[0]) * sin(radValuesOther[0]) +
-        cos(radValuesIni[0]) *
-        cos(radValuesOther[0]) *
-        cos(radValuesIni[1] - radValuesOther[1])
-    )
-\end{python}
-\caption{Método \texttt{distance\_to(valores, other)}, que calcula distancia entre puntos}
-\end{figure}
-
-\subsection{Proyecci\'on}
-
-La proyecci\'on se basa en ``ubicar'' un punto dado en un determinado sistema de coordenadas en otro sistema completamente distinto.
-En nuestro caso trabajamos hasta con 3 sistemas de coordenadas distintos el de las im\'agenes con X[0, MAX\_WIDHT] creciente de izquierda a derecha e Y[0, MAX\_HEIGHT] creciente de arriba a abajo, el sistema de coordenadas geogr\'aficas y el cartesiano.
-
-Ambas se mueven en \'ordenes de magnitud diferentes y un movimiento de $1 * 10^{-5}$ puede suponer varias decenas de p\'ixeles.
+La conversión de coordenadas o proyecci\'on se basa en ``ubicar'' un punto dado en un determinado sistema de coordenadas en otro sistema completamente distinto.
+Los datos recibidos del GPS y los solicitados al WMS referencian a una proyección geográfica, la más extendida y utlizamos aquí es la WGS84. Los datos del GPS los recibimos con éste sistema de referencia y solicitamos los mapas en base a él. En nuestro caso trabajamos hasta con 3 sistemas de coordenadas distintos el de las im\'agenes con X[0, MAX\_WIDHT] creciente de izquierda a derecha e Y[0, MAX\_HEIGHT] creciente de arriba a abajo, el sistema de coordenadas geogr\'aficas WGS84 y el cartesiano. Ambas se mueven en \'ordenes de magnitud diferentes y un movimiento de $1 * 10^{-5}$ puede suponer varias decenas de p\'ixeles.
 
 Para abordar este problema, y dado que se ha trabajado con robots a\'ereos con una autonom\'ia relativamente reducida, se ha asumido que la tierra es plana en un área rectangular de menos de 2 kil\'ometros de ancho. Con \'esta convenci\'on conseguimos simplificar notablemente la complejidad del problema, que pr\'acticamente se convierte en una normalizaci\'on de un sistema a otro.
 Si en un futuro se decidiese utilizar la aplicaci\'on para vuelos de mayor envergadura se deber\'ia tener en cuenta la curvatura de la tierra.
@@ -1840,82 +1817,21 @@ def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImag
 \caption{Método \texttt{posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY)}, encargado de calcular la proyección de un punto en coordenadas geográficas a la matriz de píxeles de la imagen que representa el mapa}
 \end{figure}
 
-\subsection{Procesamiento de los datos de vuelo}
+\subsection{Visualización de mapas}
+El mapa se presenta como un elemento más del control de misiones de la aplicación. Para visualizarlo por pantalla se ha creado una capa en PyQt5 con un QLabel que carga la imagen. Para realizar esta tarea de forma ágil y evitar el colápso de los recursos de la máquina donde se ejecuta, trabajamos con OpenCv, con lo que para mostrarla por pantalla hay que realizar ciertas transformaciones. El código encargado de mostrar por pantalla el mapa se puede ver en la Figura 5.9.
 
-Este bloque se encarga de extraer los datos de vuelo y proporcion\'arselos a los componentes del GUI que o necesiten, as\'i como recogerlos del GUI y transformarlos a objetos de interfaz ICE. Este bloque ser\'ia muy similar al bloque de interpretaci\'on del driver \texttt{APM Server}.
-Aqu\'i se encontrar\'ian los m\'etodos de refresco de datos, \textit{getters} y \textit{setters}.
-
-\subsection{Control de misiones}
-
-Este bloque incluye todos lo m\'etodos necesarios para dar soporte a misiones. Se apoya fuertemente en los bloques de GUI y de conexi\'on con drivers JdeRobot, y realiza la transformaci\'on de datos y el env\'io de estos de una capa a otra.
-M\'etodos como update\_waypoints() o sendWP(send2APM) estar\'ian englobados en \'este bloque siendo \'este \'ultimo es sin duda alguna el m\'etodo m\'as importante del bloque. Se apoya en el GUI para obtener los Waypoints de la vista de la tabla, interpretarlos, y rellenar el objeto de interfaz \texttt{mission} con ella.
-Se puede ver en la Figura 5.9 cómo se realiza este tratamiento.
 \begin{figure}
 \begin{python}
-    def sendWP(self, send2APM):
-    	...
-        for row in range(colCount):
-        	...
-            pos_lat = text.find("lat:")
-            pos_lon = text.find("lon:")
-            if pos_lat != -1:
-                lat = (text[pos_lat + 4:pos_lon])
-                pose.x = float(lat)
-                lon = (text[pos_lon + 4:])
-                pose.y = float(lon)
-            else:
-                if "LAND in " in text:
-                	...
-                    self.extra.land()
-                else:
-                    pos = text.find("TAKE OFF to ") + 12
-                    ...
-                    self.extra.takeoff()
-            alt = self.table.item(row, 1)
-            pose.h = int(alt.text())
-            mission.mission.append(pose)
-            if i==0:
-                mission.mission.append(pose)
-            i += 1
+...
 \end{python}
-\caption{Método \texttt{sendWP(self, send2APM)}, encargado de enviar la misión creada por el usuario al driver}
-\end{figure}
-\end{itemize}
-
-\section{Interfaz gráfica de usuario} 
-\label{sec:interfaz_uavc}
-
-
-La interfaz gráfica es una de las partes m\'as importantes de toda aplicaci\'on, es la parte que interact\'ua con el usuario, con lo que la informaci\'on se ha de mostrar de forma agradable, arm\'onica y de forma precisa, para que no genere confusi\'on en el usuario final.
-
-La aplicaci\'on ofrece 3 pantallas: pantalla principal, ventana de actitud y ventana visor de c\'amara.
-
-Las pantallas de actitud y el visor de c\'amara se han integrado del desarrollo de UAV Viewer de Alberto Mart\'in Florido, con lo que nos centraremos en la pantalla principal, la encargada del control y creaci\'on de misiones.
-
-Para su correcto desarrollo se comenz\'o dibujando varios bocetos que fueron descart\'andose y puliendo hasta que se fij\'o el aspecto visual de la pantalla. 
-
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.396]{img/uavc_comp.png}
-  \caption{Vista general de \texttt{UAV Commander}}
-  \label{fig:uavc_ppal}
+\caption{Código encargado de mostrar por pantalla el mapa}
 \end{figure}
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.396]{img/uavc.png}
-  \caption{Pantalla principal de \texttt{UAV Commander}}
-  \label{fig:uavc_ppal}
-\end{figure}
-Para facilitar su disecci\'on vamos a dividir \'esta ventana en 3 bloques:
-\begin{enumerate}
-\item Creaci\'on y env\'io de misiones.
-\item Control de misiones.
-\item Conexi\'on con sensores. \'Este bloque tan solo conecta con las integraciones de las pantallas de actitud y visor de c\'amara integradas desde UAV Viewer.
-\end{enumerate}
+\section{Bloque de misiones} 
+\label{sec:bloque_misiones_uavc}
 
 
-\subsection{Creaci\'on y env\'io de misiones}
+\subsection{Creación y envío de misiones}
 
 Para poder dar \'esta funcionalidad de una forma intuitiva y sencilla se han implementado:
 \begin{itemize}
@@ -1950,11 +1866,41 @@ Las siguientes l\'ineas de c\'odigo muestran la implementaci\'on del m\'etodo en
 \item Bot\'on de ``Take Off''/``Land''. \'Este bot\'on apoya al mapa para crear misiones con aterrizaje y despegue, si se quiere despegar hacia un punto, bastar\'ia con pulsarlo y pulsar despu\'es hacia d\'onde se quiere despegar. El comportamiento para el aterrizaje ser\'ia an\'alogo.
 \item Tabla de seguimiento de waypoints. En \'esta tabla se almacenan los waypoints que se van creando al hacer click sobre el mapa, cada fila es editable, de tal forma que ofrece una gran precisi\'on en caso que sea necesario.
 \item Campo ``default altitude'' Establece la altitud de crucero, el valor de \'este campo se ir\'a propagando en cada waypoint creado en el atributo altitude.
-\item Bot\'on ``Send''. \'Este bot\'on llama al m\'etodo \pythoninline{sendWP(self, send2APM)} del core quien recoge los objetos de misi\'on, los procesa y los env\'ia al bloque de comunicaci\'on con drivers JdeRobot para su env\'io a trav\'es de los interfaces ICE necesarios, a saber, mission y extra en el caso en el que haya aterrizaje o despegue en la misi\'on.
+\item Bot\'on ``Send''. \'Este bot\'on llama al m\'etodo \pythoninline{sendWP(self, send2APM)} (Figura 5.10) del core quien recoge los objetos de misi\'on, los procesa y los env\'ia al bloque de comunicaci\'on con drivers JdeRobot para su env\'io a trav\'es de los interfaces ICE necesarios, a saber, mission y extra en el caso en el que haya aterrizaje o despegue en la misi\'on.
 \end{itemize}
 
-\subsection{Control de misiones}
+\begin{figure}
+\begin{python}
+    def sendWP(self, send2APM):
+    	...
+        for row in range(colCount):
+        	...
+            pos_lat = text.find("lat:")
+            pos_lon = text.find("lon:")
+            if pos_lat != -1:
+                lat = (text[pos_lat + 4:pos_lon])
+                pose.x = float(lat)
+                lon = (text[pos_lon + 4:])
+                pose.y = float(lon)
+            else:
+                if "LAND in " in text:
+                	...
+                    self.extra.land()
+                else:
+                    pos = text.find("TAKE OFF to ") + 12
+                    ...
+                    self.extra.takeoff()
+            alt = self.table.item(row, 1)
+            pose.h = int(alt.text())
+            mission.mission.append(pose)
+            if i==0:
+                mission.mission.append(pose)
+            i += 1
+\end{python}
+\caption{Método \texttt{sendWP(self, send2APM)}, encargado de enviar la misión creada por el usuario al driver}
+\end{figure}
 
+\subsection{Control}
 El control de misiones es la parte m\'as tediosa de todo el desarrollo, en ella se muestra el comportamiento del robot a\'ereo sobre el mapa; la ruta que ha seguido, la posici\'on actual y su orientaci\'on.
 
 Para llevar \'esto a cabo se ha tenido que dividir el mapa en capas, tenemos 3 capas:
@@ -2028,6 +1974,25 @@ A continuaci\'on se muestran las implementaciones de los m\'etodos con m\'as pes
 \end{python}
 \caption{Métodos encargados de actualizar la posición y el recorrido efectuado en el mapa}
 \end{figure}
+
+\section{Interfaz gráfica de usuario} 
+\label{sec:interfaz_uavc}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.396]{img/uavc_comp.png}
+  \caption{Vista general de \texttt{UAV Commander}}
+  \label{fig:uavc_ppal}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.396]{img/uavc.png}
+  \caption{Pantalla principal de \texttt{UAV Commander}}
+  \label{fig:uavc_ppal}
+\end{figure}
+
 
 \cleardoublepage
 \chapter{Experimentos}
