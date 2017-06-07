@@ -1694,10 +1694,13 @@ Cada uno de estos bloques se detalla a continuación en las secciones siguientes.
 \label{sec:bloque_sensores_uavc}
 
 En \'este bloque se implementan todos los servidores ICE necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
-
-
+La aplicación UAV Commander utiliza 5 interfaces ICE a diferencia de los 4 que usaban en el driver APM Server. Además de los que expone APM Server, a saber: \textt{Pose3D} y \textt{NavData} para recibir la posición medida por los sensores a bordo como el GPS o la actitud y \textt{Extra} y \textt{Mission} para el envío de misiones con puntos de paso y maniobras de aterrizaje o despegue.
+También se utiliza el interfaz \textt{Camera} para recoger las imágenes y vídeo que se muestran en el interfaz gráfico.
 
 \subsection{Cámara}
+
+\texttt{UAV Commander} el interfaz \textt{Camera} para mostrar en el interfaz de usuario las imágenes y vídeos recogidos desde el driver. Para esto primero se crea el servicio ICE y se asigna al interfaz de usuario como podemos observar en la Figura 5.3.
+Una vez asignado al Interfaz de usuario, cuando el usuario hace \textit{click} en el \textit{checkBox} de camera, se abre la ventana de cámara integrada del desarrollo de \texttt{UAV Viewer}. En esta pantalla se recogen los datos de imagen y se asignan al área designado a mostrar las imágenes tal y como se puede ver en la Figura 5.4
 
 \begin{figure}[H]
 \begin{python}
