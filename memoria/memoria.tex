@@ -1644,6 +1644,13 @@ En estas líneas de código, extaídas de los métodos que recogen la actitud, podem
 UAV Commander es una aplicaci\'on JdeRobot que hace las veces de estaci\'on de tierra o GCS (Ground Control Station) para robots a\'ereos.
 Desde \texttt{UAV Commander} se pueden programar misiones, enviar \'estas al driver de un avión autónomo MAVLink, verificar el cumplimiento de las mismas y visualizar los sensores a bordo del robot a\'ereo. Sirve de cliente del driver desarrollado en la primera parte de este Proyecto Fin de Carrera y proporciona la primera validación experimental.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.40]{img/uavc_comp.png}
+  \caption{Vista general de \texttt{UAV Commander}}
+  \label{fig:uavc_ppal}
+\end{figure}
+
 \section{Diseño} 
 \label{sec:diseno_uavc}
 
@@ -1661,16 +1668,15 @@ La aplicaci\'on debe cubrir las siguientes funcionalidades:
 \item Validar el cumplimiento de misiones.
 \end{enumerate}
 
-La aplicación recibe como entradas los interfaces \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra}, \texttt{mission} y \texttt{camera} y recupera, o bien de Google o bien del Instituto Geográfico Nacional de España (IGN), el mapa geo-referenciado de esa zona. Estos datos se presentan por pantalla al usuario a través de las distintas ventanas que coforman el interfaz gráfico. 
-
-
-\begin{figure}
+\begin{figure}[H]
 \centering{
    \label{f:diseno_uavc_caja_negra}
-    \includegraphics[width=1\textwidth]{img/diseno2_uavc.jpg}}
+    \includegraphics[width=0.9\textwidth]{img/diseno2_uavc.jpg}}
     \caption{Diseño de caja negra de \texttt{UAV Commander}}
   
 \end{figure}
+La aplicación recibe como entradas los interfaces \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra}, \texttt{mission} y \texttt{camera} y recupera, o bien de Google o bien del Instituto Geográfico Nacional de España (IGN), el mapa geo-referenciado de esa zona. Estos datos se presentan por pantalla al usuario a través de las distintas ventanas que coforman el interfaz gráfico. 
+
 
 La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
 \begin{itemize}
@@ -1706,6 +1712,14 @@ También se utiliza el interfaz \texttt{Camera} para recoger las imágenes y vídeo
 Una vez hecho esto, cuando el usuario hace \textit{click} en el \textit{checkBox} de camera, se abre la ventana de cámara integrada del desarrollo de \texttt{UAV Viewer}. En esta pantalla se recogen los datos de imagen y se asignan al área designado a mostrar las imágenes tal y como se puede ver en la Figura 5.4
 
 \begin{figure}[H]
+\centering{
+   \label{f:diseno_uavc_caja_trans}
+    \includegraphics[width=0.5\textwidth]{img/ventana_camera.png}}
+    \caption{Ventana Camera de \texttt{UAV Commander}}
+  
+\end{figure}
+
+\begin{figure}[H]
 \begin{python}
     ic = EasyIce.initialize(sys.argv)
     camera = CameraClient(ic, "UavViewer.Camera", True)
@@ -1716,18 +1730,18 @@ Una vez hecho esto, cuando el usuario hace \textit{click} en el \textit{checkBox
 
 
 
+\subsection{Sensores de vuelo}
+Para simplificar el proceso de creación y lincado de los servicios ICE hemos optado por utilizar los servidores ya implementadas en JdeRobot, \texttt{CameraClient}, \texttt{NavDataClient}, \texttt{Pose3DClient} y \texttt{Extra} y la clase \texttt{easyiceconfig}. De \'este modo este bloque queda simplificado y su inicializaci\'on queda relegada a unas pocas l\'ineas de c\'odigo como vemos en la Figura 5.5
+
 
 \begin{figure}[H]
 \centering{
-   \label{f:diseno_uavc_caja_trans}
-    \includegraphics[width=0.7\textwidth]{img/ventana_camera.png}}
-    \caption{Ventana Camera de \texttt{UAV Commander}}
+   \label{f:actitud_uavc}
+    \includegraphics[width=1\textwidth]{img/actitud.png}}
+    \caption{Ventana actitud de \texttt{UAV Commander}}
   
 \end{figure}
-
-\subsection{Sensores de vuelo}
-Para simplificar el proceso de creación y lincado de los servicios ICE hemos optado por utilizar los servidores ya implementadas en JdeRobot, \texttt{CameraClient}, \texttt{NavDataClient}, \texttt{Pose3DClient} y \texttt{Extra} y la clase \texttt{easyiceconfig}. De \'este modo este bloque queda simplificado y su inicializaci\'on queda relegada a unas pocas l\'ineas de c\'odigo como vemos en la Figura 5.5
-\begin{figure}[H]
+\begin{figure}
 \begin{python}
     ic = EasyIce.initialize(sys.argv)
     camera = CameraClient(ic, "UavViewer.Camera", True)
@@ -1757,16 +1771,16 @@ Para obtener los mapas geo-referenciados vamos a recurrir al uso de WebMapServic
 Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayudar\'a con \'estos tr\'amites. 
 En el c\'odigo mostrado en la Figura 5.6 podemos observar como recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WebMapService (WMS) en 'http://www.ign.es/wms-inspire/pnoa-ma'.
 Para obtener un mapa geo-referenciado necesitamos principalmente 4 cosas: la posición, el \textit{bounding box}, el tamaño de la imagen y la proyecci\'on a utilizar. 
-Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio, (el c\'odigo para calcularlo podemos obserbarlo en el método \texttt{getBoundingBox(lat, lon, distance)} de la Figura 5.6).
+Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio, (el c\'odigo para calcularlo podemos obserbarlo en el método \texttt{getBoundingBox(lat, lon, distance)} de la Figura 5.7).
 Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto parámetros del objeto WMS y lanzamos la petición que devuelve una imagen en bytes a la que debemos añadir el \textit{disclaimer} que nos indica el IGN para poder utlizar los mapas de forma gratuíta.
 Creamos la petición WMS con la URL del WMS PNOA y asignamos los parámetros necesarios para obtener el mapa. al final montamos la imagen geo-referenciada recibida, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV el \textit{bounding box}, y el tamaño de la imagen.
 
-\begin{figure}[H]
+\begin{figure}
 \begin{python}
 def retrieve_new_map(lat, lon, radius, width, heigth):
     bbox = getBoundingBox(lat, lon, radius)
     wms = WebMapService('http://www.ign.es/wms-inspire/pnoa-ma', version='1.3.0')
-    img = wms.getmap(layers=['OI.OrthoimageCoverage'],
+    img = wms.getmap(layers=['OI.OrthoimageCoverage'], 
                      styles=['default'],
                      srs='EPSG:4326',
                      bbox=(bbox),
@@ -1778,7 +1792,12 @@ def retrieve_new_map(lat, lon, radius, width, heigth):
     opencv_image = cv2.imread("images/imageWithDisclaimer.png", 1)
     image = {'bytes': opencv_image, 'bbox': bbox, 'size': (width, heigth)}
     return image
+\end{python}
+    \caption{Método \texttt{retrieve\_new\_map(lat, lon, radius, width, heigth)}}
+\end{figure}
 
+\begin{figure}
+\begin{python}
 def getBoundingBox(lat, lon, distance):
     radValues = from_degrees(lat, lon)
     rad_dist = distance / EARTH_RADIUS_WGS84
@@ -1797,7 +1816,7 @@ def getBoundingBox(lat, lon, distance):
     northEastpoint = from_radians(max_lat, max_lon)
     return southWestPoint[1], southWestPoint[0], northEastpoint[1], northEastpoint[0]
 \end{python}
-\caption{Métodos \texttt{retrieve\_new\_map(lat, lon, radius, width, heigth)} y \texttt{getBoundingBox(lat, lon, distance)} encargado de calcular esquina inferior izquierda y esquina  superior derecha de un cuadrado de ancho \texttt{distance}}
+\caption{Métodos\texttt{getBoundingBox(lat, lon, distance)} encargado de calcular esquina inferior izquierda y esquina  superior derecha de un cuadrado de ancho \texttt{distance}}
 \end{figure}
 
 \subsection{Conversión de coordenadas}
@@ -1823,7 +1842,7 @@ Para abordar este problema, y dado que se ha trabajado con robots a\'ereos con u
 Si en un futuro se decidiese utilizar la aplicaci\'on para vuelos de mayor envergadura se deber\'ia tener en cuenta la curvatura de la tierra.
 La proyecci\'on en \texttt{UAV Commander} se realiza en ambos sentidos, de imagen a posicion geogr\'afica y de sistema de coordenadas a imagen.
 
-Podemos ver la proyecci\'on de posici\'on geogr\'afica a imagen en la Figura 5.7.
+Podemos ver la proyecci\'on de posici\'on geogr\'afica a imagen en la Figura 5.9.
 \begin{figure}
 \begin{python}
 def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY):
@@ -1837,9 +1856,9 @@ def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImag
 \end{figure}
 
 \subsection{Visualización de mapas}
-El mapa se presenta como un elemento más del control de misiones de la aplicación. Para visualizarlo por pantalla se ha creado una capa en PyQt5 con un QLabel que carga la imagen. Para realizar esta tarea de forma ágil y evitar el colápso de los recursos de la máquina donde se ejecuta, trabajamos con opencv, con lo que para mostrarla por pantalla hay que realizar ciertas transformaciones. El código encargado de mostrar por pantalla el mapa se puede ver en la Figura 5.8.
+El mapa se presenta como un elemento más del control de misiones de la aplicación. Para visualizarlo por pantalla se ha creado una capa en PyQt5 con un QLabel que carga la imagen. Para realizar esta tarea de forma ágil y evitar el colápso de los recursos de la máquina donde se ejecuta, trabajamos con opencv, con lo que para mostrarla por pantalla hay que realizar ciertas transformaciones. El código encargado de mostrar por pantalla el mapa se puede ver en la Figura 5.10.
 
-\begin{figure}{H}
+\begin{figure}[H]
 \begin{python}
     def refreshImage(self):
         height, width, channel = self.cvImage.shape
@@ -1854,7 +1873,14 @@ El mapa se presenta como un elemento más del control de misiones de la aplicació
 \section{Bloque de misiones} 
 \label{sec:bloque_misiones_uavc}
 
-Este bloque es el encargado de facilitar la creación y envío de misiones. Ha de permitir crear misiones de forma interactiva además de permitir indentificar y convertir en objetos de interfaz ICE \texttt{mission} las maniobras de despegue y aterrizaje y los puntos de pase.
+Este bloque es el encargado de facilitar la creación y envío de misiones. Ha de permitir crear misiones de forma interactiva además de permitir indentificar y convertir en objetos de interfaz ICE \texttt{mission} las maniobras de despegue y aterrizaje y los puntos de paso.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.396]{img/uavc.png}
+  \caption{Pantalla principal de \texttt{UAV Commander}}
+  \label{fig:uavc_ppal}
+\end{figure}
 
 \subsection{Creación y envío de misiones}
 
@@ -1928,12 +1954,6 @@ Las siguientes l\'ineas de c\'odigo muestran la implementaci\'on del m\'etodo en
 \subsection{Control}
 El control de misiones es la parte m\'as tediosa de todo el desarrollo, en ella se muestra el comportamiento del robot a\'ereo sobre el mapa; la ruta que ha seguido, la posici\'on actual y su orientaci\'on.
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.396]{img/uavc.png}
-  \caption{Pantalla principal de \texttt{UAV Commander}}
-  \label{fig:uavc_ppal}
-\end{figure}
 
 Para llevar \'esto a cabo se ha tenido que dividir el mapa en capas, tenemos 3 capas:
 \begin{enumerate}
@@ -2008,12 +2028,7 @@ En la figura  se muestran las implementaciones de los m\'etodos con m\'as peso d
 \end{figure}
 
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.396]{img/uavc_comp.png}
-  \caption{Vista general de \texttt{UAV Commander}}
-  \label{fig:uavc_ppal}
-\end{figure}
+
 
 \cleardoublepage
 \chapter{Experimentos}
