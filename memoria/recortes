@@ -1,0 +1,86 @@
+\section{Requisitos}
+\label{requisitos}
+
+Para abordar con \'exito los milestones expuestos anteriormente debemos cubrir los siguientes requisitos:
+\begin{enumerate}
+	\item Preparaci\'on del hardware necesario.
+	\begin{enumerate}
+		\item Compra del hardware necesario:
+		\begin{itemize}
+			\item Raspberry Pi, se empez\'o por la Raspberry 2 y se ha adquirido posteriormente la 3.
+			\item C\'amara Picam.
+			\item Ardupilot Mega junto con GPS.
+			\item Avi\'on de radiocontrol Bix3.
+			\item Kit de motorizaci\'on m\'as potente.
+		\end{itemize}
+		\item Instalaci\'on de Raspbian y JdeRobot en Raspberry Pi.
+		\item Pruebas de v\'ideo en Raspberry Pi con cameraserver.
+	\end{enumerate}
+	\item \texttt{APM Server}
+	\begin{enumerate}
+		\item Dar acceso a los sensores del APM y servir en forma de \texttt{Pose3D} y \texttt{NavData}:
+		\begin{enumerate}
+			\item Conectar con el APM
+			\item Leer los mensajes que env\'ian sus sensores.
+			\item Implementar los interfaces \texttt{Pose3D} y \texttt{NavData} con esta informaci\'on.
+			\item Servir a trav\'es de ICE todos los interfaces.
+		\end{enumerate}
+		\item Dar acceso a instrucciones de actuaci\'on a trav\'es del interfaz mission.
+		\begin{enumerate}
+			\item Recibir a trav\'es de ICE un objeto de misi\'on.
+			\item Construir los comandos MAVLink necesarios para que el APM sepa interpretar y realizar la misi\'on.
+			\item Recibir los comandos de despegue y aterrizaje a trav\'es del interfaz Extra.
+			\item Construir los comandos MAVLink necesarios para que el APM sepa interpretarlos y añadirlos a la misi\'on.
+		\end{enumerate}
+	\end{enumerate}
+	\item \texttt{UAV Commander}
+	\begin{enumerate}	
+		\item Recibir toda la informaci\'on sensorial a partir de los interfaces ICE \texttt{Pose3D} y \texttt{NavData}.
+		\item Funcionalidad de creaci\'on de misiones:
+		\begin{enumerate}
+			\item Recuperar mapa georeferenciado de un servicio WMS.
+			\item Capacidad de actuar sobre \'el para añadir puntos de misi\'on.
+			\item Añadir botones de despegue y aterrizaje que interact\'uen con el mapa.
+			\item Borrado de misi\'on actual.
+			\item Env\'io de misi\'on al APM.
+		\end{enumerate}
+		\item Funcionalidad de seguimiento de misiones:
+		\begin{enumerate}
+			\item Pintar estela del avi\'on en el mapa.
+			\item Recuperar nuevo mapa con mayor zoom si se prevee la salida del actual mapa.
+		\end{enumerate}
+		\item Acceso a la informaci\'on de actitud de forma visual.
+		\item Acceso a las c\'amaras de abordo.
+	\end{enumerate}	
+	\item Experimentos en simulaci\'on.
+	\begin{enumerate}
+		\item Montaje de m\'aquina virtual para el simulador
+		\item Instalaci\'on de SITL.
+		\item Conectar \texttt{APM Server} a SITL.
+		\item Ejecuci\'on de plan de pruebas simuladas:
+		\begin{enumerate}
+			\item Prueba de integraci\'on de todo el software.
+			\item Prueba env\'io de misi\'on con avi\'on en vuelo.
+			\item Prueba de env\'io de misi\'on con despegue y varios puntos de paso.
+			\item Prueba de env\'io de misi\'on con despegue y aterrizaje.
+			\item Prueba de autozoom forzando la salida del avi\'on del mapa.
+		\end{enumerate}
+	\end{enumerate}
+	\item Experimentos en el avi\'on real.
+	\begin{enumerate}
+		\item Pruebas de env\'io recepci\'on del sistema de radiofrecuencias.
+		\item Pruebas de conexi\'on con \texttt{APM Server} y \texttt{UAV Commander}.
+		\item Ejecuci\'on de plan de pruebas:
+		\begin{enumerate}
+			\item Pruebas de seguimiento del avi\'on a trav\'es del \texttt{UAV Commander}.	
+		\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+C\'omo requisitos no funcionales debemos:
+\begin{enumerate}
+\item Ser multiplataforma.
+\item Utilizar \'unicamente librer\'ias de software libre.
+\item Ser 100\% compatibles con los actuales interfaces JdeRobot.
+\end{enumerate}
+
