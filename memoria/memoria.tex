@@ -532,15 +532,14 @@ La memoria de este PFC se ha vertebrado en 7 cap\'itulos. En el segundo se fijan
 \label{sec:objetivos}
 
 
-\section{Problema a abordar}
+\section{Problema abordado}
 \label{problema}
-Los objetivos de este proyecto final de carrera es dar un soporte en la plataforma software JdeRobot para drones de ala fija que utilicen como interfaz de comunicaci\'on MAVLink. Para abordar el problema lo hemos divido en 5 grandes Milestones:
+El objetivo general de este proyecto final de carrera es dar soporte en la plataforma software JdeRobot a drones de ala fija que utilicen el protocolo de comunicaci\'on MAVLink. Este objetivo general lo hemos articulado en 5 subobjetivos:
 \begin{enumerate}
-\item Preparaci\'on del hardware necesario para abordar el problema con un avi\'on real.
-\item Desarrollo de un driver que acceda a los sensores y actuadores de drones de ala fija que utlicen MAVLink y dar soporte a la actuaci\'on de misiones que hasta ahora no soportaba JdeRobot el driver se llamara \texttt{APM Server} siglas de Ardupilot Mega Server.
-\item Desarrollo de una aplicaci\'on GCS Ground Control Station que permita al operador introducir misiones y seguir el cumplimiento de las mismas a trav\'es de el. Permitiendo el acceso a toda la actitud y a las c\'amaras de abordo. Se llamar\'a \texttt{UAV Commander}.
-\item Experimentos en simulaci\'on. Conectaremos nuestro driver \texttt{APM Server} al simulador SITL y el \texttt{UAV Commander} al \texttt{APM Server} para poder simular el seguimiento de misiones.
-\item Experimentos en el avi\'on real. Montaremos la avi\'onica en el avi\'on real y lo llevaremos al campo de vuelo para validar su comportamiento.
+\item Contruir a partir de un avión de radiocontrol un prototipo de drone y validar la visualización de sensores del avión real en la aplicación.
+\item Desarrollo de un driver que acceda a los sensores y actuadores de drones de ala fija que utilicen MAVLink y dar soporte a la actuaci\'on de misiones que hasta ahora no soportaba JdeRobot.
+\item Desarrollo de una aplicaci\'on GCS \texttt{Ground Control Station} que permita al operador humano introducir misiones y seguir el cumplimiento de las mismas a trav\'es de ella. Permitiendo el acceso a toda la actitud y a las c\'amaras de abordo.
+\item Hacer experimentos con aviones MAVLink simulados. Conectaremos nuestro driver al simulador SITL y la aplicación al servidor para verificar la correcta especificación y materialización de las misiones.
 \end{enumerate}
 
 \section{Requisitos}
@@ -629,10 +628,10 @@ C\'omo requisitos no funcionales debemos:
 \item Ser 100\% compatibles con los actuales interfaces JdeRobot.
 \end{enumerate}
 
-\section{Metodolog\'ia y plan de trabajo}
+\section{Metodolog\'ia
 \label{metodolog\'ia}
 
-Este proyecto se ha abordado en con 2 metodolog\'ias de trabajo distintas que combinadas, la primera metodolog\'ia de desarroll\'o aplicada es el desarrollo en espiral que se ha utilizado como metodolog\'ia principal, y la segunda que se ha aplicado la metodolog\'ia \'agil Kanban, para un control de tareas y subtareas m\'as eficiente.
+Este proyecto se ha abordado con dos metodolog\'ias de trabajo distintas combinadas, la primera es el desarrollo en espiral que se ha utilizado como metodolog\'ia principal, y la segunda la metodolog\'ia \'agil Kanban, para un control de tareas y subtareas m\'as eficiente.
 
 \begin{figure}[h]
 \centering
@@ -645,17 +644,24 @@ Este proyecto se ha abordado en con 2 metodolog\'ias de trabajo distintas que co
 \end{figure}
 
 
-El modelo de desarrollo en espiral define una serie de ciclos que se repiten en un bucle hasta el final del proyecto, dividi\'endolo
+El modelo de desarrollo en espiral define una serie de ciclos que se repiten en bucle hasta el final del proyecto, dividi\'endolo
 en varias subtareas m\'as sencillas y estableciendo puntos de control al final de cada iteraci\'on en los que se
 eval\'ua el trabajo realizado y se enfocan las nuevas tareas para continuar.
 Esta metodolog\'ia recibe su nombre por la forma de espiral que tiene su representaci\'on gr\'afica o diagrama
 de flujo, que podemos ver en la figura 2.1. En cada iteraci\'on se llevan a cabo las siguientes actividades:
 Determinar los objetivos, dividir en subobjetivos y fijar requisitos.
 Analizar los riesgos y factores que impidan o dificulten el trabajo y las consecuencias negativas
-que este pueda ocasionar.
+que éste pueda ocasionar.
+
+
+Durante el ciclo de vida del proyecto se han llevado a cabo reuniones semanales de seguimiento con el tutor. En ellas
+se evaluaban las tareas realizadas y se marcaba qu\'e direcci\'on tomar para la siguiente iteraci\'on o incremento. Si los
+puntos marcados en la anterior reuni\'on no se hab\'ian alcanzado se ampliaba el plazo o se discut\'ian otras
+v\'ias para avanzar. En caso contrario se propon\'ian nuevos subobjetivos.
+
 
 Para desarrollar las tareas especificadas en cada incremento, fijadas en cada reuni\'on de seguimiento, se utiliz\'o la metodolog\'ia kanban. Esta metodolog\'ia de desarrollo no es m\'as que una adaptaci\'on de su versi\'on industrial que surgi\'o en Toyota. A finales de los años 40, Toyota empez\'o a optimizar sus procesos de ingenier\'ia a partir del modelo que empleaban los supermercados para llenar los estantes. Los supermercados almacenan los productos suficientes para suplir la demanda del cliente, una pr\'actica que optimiza el flujo entre el supermercado y el cliente. 
-En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on industrial, en el just in time y permite ver de una forma muy visual tas tareas que hay en vuelo, desarrolladas, pendientes o bloqueadas pudiendo anticiparnos a cuellos de botella o bloqueos de forma sencilla. Esta metodolog\'ia nos permite visualizar tareas que a priori no tienen relaci\'on pero se relacionan a un nivel m\'as profundo y agruparlas para optimizar el tiempo.
+En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on industrial, en el \textit{just in time} y permite apreciar de una forma muy visual las tareas que hay en vuelo, desarrolladas, pendientes o bloqueadas pudiendo anticiparnos a cuellos de botella o bloqueos de forma sencilla. Esta metodolog\'ia permite visualizar tareas que a priori no tienen relaci\'on pero se relacionan a un nivel m\'as profundo y agruparlas para optimizar el tiempo.
 
 \begin{figure}[h]
 \centering
@@ -677,22 +683,15 @@ En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on in
     \includegraphics[width=0.31\textwidth]{img/IMG_1249.jpg}
    \label{f:kanban}
     \includegraphics[width=0.31\textwidth]{img/IMG_0063.jpg}
-\caption{Evoluci\'on de nuestra}
+\caption{Evoluci\'on de nuestra pizarra Kanban}
 \end{figure}
 
 
-Durante el ciclo de vida del proyecto se han llevado a cabo reuniones semanales de seguimiento con el tutor. En ellas
-se evaluaban las tareas realizadas y se marcaba qu\'e direcci\'on tomar para la siguiente iteraci\'on o incremento. Si los
-puntos marcados en la anterior reuni\'on no se hab\'ian alcanzado se ampliaba el plazo o se discut\'ian otras
-v\'ias para avanzar. En caso contrario se propon\'ian nuevos subobjetivos.
-
-
-Para apoyarnos en nuestro desarrollo hemos utilizado principalmente 4 herramientas:
+Para apoyarnos en nuestro desarrollo hemos utilizado cuatro herramientas:
 \begin{itemize} 
-\item GitHub como forja y control de versiones. En el repositorio https://github.com/RoboticsURJC-students/2014-pfc-JoseAntonio-Fernandez  se almacenan todos los desarrollos que son objetivo de \'este PFC as\'i como \'esta memoria. Tambi\'en se encuentran subproductos de desarrollo que han ido surgiendo como apoyo o pruebas a los desarrollos principales.
-\item Contamos tambi\'en con un mediawiki en JdeRobot d\'onde hemos actualizado peri\'odicamente nuestros avances acompañados con explicaciones, v\'ideos e im\'agenes. Aqu\'i se puede contemplar con m\'as detalle la construcci\'on del UAV.
-\item Como apoyo principalmente al mediawiki dispusimos de una carpeta en el FTP de JdeRobot hasta que colgamos los videos en Youtube.
-\item Youtube. Muchos de los v\'ideos del mediawiki han sido compartidos en youtube.com.
+\item GitHub como forja y control de versiones. En el repositorio https://github.com/RoboticsURJC-students/2014-pfc-JoseAntonio-Fernandez  se almacenan todos los desarrollos de este PFC. Tambi\'en se encuentran subproductos de desarrollo que han ido surgiendo como apoyo o pruebas a los desarrollos principales.
+\item Bitácora web en JdeRobot donde hemos actualizado peri\'odicamente nuestros avances acompañados con explicaciones, v\'ideos e im\'agenes. Su url es \url{http://jderobot.org/Jafernandez} y aqu\'i se puede contemplar con m\'as detalle la construcci\'on del UAV.
+\item Youtube y ftp. como herramientas de almacenamiento de los vídeos de nuestra bitácora web y de nuestros experimentos.
 \end{itemize}
 
 
