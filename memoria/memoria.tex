@@ -2037,6 +2037,16 @@ Para ello se van a realizar los mismos pasos que en el experimento 6.1.1 estable
 
 Una vez realizada la secuencia arriba descrita se comprobará que \texttt{UAV Commander} descarga un nuevo mapa con una perspectiva mas amplia para seguir al avión. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=vEcMbJoJ-Qo}
 
+\begin{figure}[h]
+\centering{
+   \label{f:autozoom1}
+    \includegraphics[width=0.483\textwidth]{img/antes.png}
+   \label{f:autozoom2}
+    \includegraphics[width=0.507\textwidth]{img/despues.png}
+    \caption{Autozoom en UAV Commander}}
+\end{figure}
+
+
 \section{Interconexión del driver y aplicación con avión}
 \label{sec:experimentos_real}
 
@@ -2054,10 +2064,19 @@ El objetivo de este experimento es verificar que el envío del vídeo capturado de
 
 \begin{enumerate}
 \item Arranque del ordenador de abordo.
-\item Arranque del driver \texttt{cameraserver}
+\item Arranque del driver \texttt{cameraserver}.
 \item Arranque de la aplicación \texttt{UAV Commander} donde clicaremos en el \textit{checkbox camera} y validaremos que se recibe correctamente el video transmitido.
 \end{enumerate}
+Esta prueba valida la recepción por parte de \texttt{AUV Commander} del vídeo que en este caso se emite desde otro driver distinto de \texttt{APM Server}. 
+\begin{figure}[H]
+\centering{
+   \label{f:pruebavideo}
+    \includegraphics[width=0.7\textwidth]{img/ventana_camera.png}}
+    \caption{Prueba de recepción de vídeo desde cameraserver a \texttt{UAV Commander}}
+  
+\end{figure}
 
+La prueba se evidencia en el vídeo \url{https://youtu.be/U-y8xstytuY}
 
 \subsection{Pruebas de alcance del enlace entre el avión simulado y el ordenador base}
 El objetivo de este experimento es probar que se reciben correctamente los datos de actitud del avión desde el ordenador base, según nos vamos alejando. Ésto nos delimitará el alcance al que vamos a volar. Para ello se van a realizar los siguiente pasos:
@@ -2072,10 +2091,10 @@ Este experimento nos va a permitir conocer a qué distancia vamos a poder volar, 
 \centering
   \subfloat[Alcance logrado en la primera prueba de alcance.]{
    \label{f:alcance1}
-    \includegraphics[width=0.49\textwidth]{img/1.png}}
+    \includegraphics[width=0.51\textwidth]{img/1.png}}
   \subfloat[Alcance logrado en la segunda prueba de alcance.]{
    \label{f:alcance2}
-    \includegraphics[width=0.49\textwidth]{img/2.png}}
+    \includegraphics[width=0.485\textwidth]{img/2.png}}
     \caption~{Resultados de las pruebas de alcance}
 \end{figure}
 
@@ -2175,6 +2194,7 @@ Durante el desarrollo de \texttt{APM Server} y \texttt{UAV Commander} se han ide
 % http://texblog.org/2014/04/22/using-google-scholar-to-download-bibtex-citations/
 
 \end{document}
+\grid
 \grid
 \grid
 \grid
