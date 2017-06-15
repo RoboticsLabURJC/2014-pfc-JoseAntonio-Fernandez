@@ -545,8 +545,14 @@ El objetivo general de este proyecto final de carrera es dar soporte en la plata
 
 Tanto el driver como la aplicación, han de ser multiplataforma, utilizar \'unicamente librer\'ias de software libre y ser 100\% compatibles con los actuales interfaces JdeRobot
 
+<<<<<<< HEAD
 \section{Metodolog\'ia}
 \label{metodolog\'ia}
+=======
+
+\section{Metodolog\'ia}
+\label{metodologia}
+>>>>>>> a13dda94fa6977251c855abc28b4ca73e2aee84f
 
 Este proyecto se ha abordado con dos metodolog\'ias de trabajo distintas combinadas, la primera es el desarrollo en espiral que se ha utilizado como metodolog\'ia principal, y la segunda la metodolog\'ia \'agil Kanban, para un control de tareas y subtareas m\'as eficiente.
 
@@ -558,6 +564,7 @@ Este proyecto se ha abordado con dos metodolog\'ias de trabajo distintas combina
   \subfloat[Representaci\'on de una pizarra kanban]{
    \label{f:kanban}
     \includegraphics[width=0.52\textwidth]{img/kanban.png}}
+    \caption~{Metodologías empleadas}
 \end{figure}
 
 
@@ -566,9 +573,13 @@ en varias subtareas m\'as sencillas y estableciendo puntos de control al final d
 eval\'ua el trabajo realizado y se enfocan las nuevas tareas para continuar.
 Esta metodolog\'ia recibe su nombre por la forma de espiral que tiene su representaci\'on gr\'afica o diagrama
 de flujo, que podemos ver en la figura 2.1. En cada iteraci\'on se llevan a cabo las siguientes actividades:
-Determinar los objetivos, dividir en subobjetivos y fijar requisitos.
-Analizar los riesgos y factores que impidan o dificulten el trabajo y las consecuencias negativas
-que éste pueda ocasionar.
+\begin{enumerate}
+	\item Determinar los objetivos, dividir en subobjetivos y fijar requisitos.
+	\item Analizar los riesgos y factores que impidan o dificulten el trabajo y las consecuencias negativas que éste pueda ocasionar.
+	\item Desarrollar los objetivos cubriendo todos los requisitos analizados anteriormente.
+	\item Se analizan los resultados del desarrollo y las pruebas y en base a esto se decide el inicio del siguiente ciclo en una reunión con el tutor.
+\end{enumerate}
+
 
 
 Durante el ciclo de vida del proyecto se han llevado a cabo reuniones semanales de seguimiento con el tutor. En ellas
@@ -578,7 +589,7 @@ v\'ias para avanzar. En caso contrario se propon\'ian nuevos subobjetivos.
 
 
 Para desarrollar las tareas especificadas en cada incremento, fijadas en cada reuni\'on de seguimiento, se utiliz\'o la metodolog\'ia kanban. Esta metodolog\'ia de desarrollo no es m\'as que una adaptaci\'on de su versi\'on industrial que surgi\'o en Toyota. A finales de los años 40, Toyota empez\'o a optimizar sus procesos de ingenier\'ia a partir del modelo que empleaban los supermercados para llenar los estantes. Los supermercados almacenan los productos suficientes para suplir la demanda del cliente, una pr\'actica que optimiza el flujo entre el supermercado y el cliente. 
-En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on industrial, en el \textit{just in time} y permite apreciar de una forma muy visual las tareas que hay en vuelo, desarrolladas, pendientes o bloqueadas pudiendo anticiparnos a cuellos de botella o bloqueos de forma sencilla. Esta metodolog\'ia permite visualizar tareas que a priori no tienen relaci\'on pero se relacionan a un nivel m\'as profundo y agruparlas para optimizar el tiempo.
+En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on industrial, en el \textit{just in time}\footnote{ El JIT es una política de mantenimiento de inventarios al mínimo nivel posible donde los suministradores entregan justo lo necesario en el momento necesario para completar el proceso productivo.} y permite apreciar de una forma muy visual las tareas que hay en vuelo, desarrolladas, pendientes o bloqueadas pudiendo anticiparnos a cuellos de botella o bloqueos de forma sencilla. Esta metodolog\'ia permite visualizar tareas que a priori no tienen relaci\'on pero se relacionan a un nivel m\'as profundo y agruparlas para optimizar el tiempo.
 
 \begin{figure}[h]
 \centering
@@ -606,9 +617,9 @@ En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on in
 
 Para apoyarnos en nuestro desarrollo hemos utilizado cuatro herramientas:
 \begin{itemize} 
-\item GitHub como forja y control de versiones. En el repositorio https://github.com/RoboticsURJC-students/2014-pfc-JoseAntonio-Fernandez  se almacenan todos los desarrollos de este PFC. Tambi\'en se encuentran subproductos de desarrollo que han ido surgiendo como apoyo o pruebas a los desarrollos principales.
+\item GitHub como forja y control de versiones. En el repositorio \url{https://github.com/RoboticsURJC-students/2014-pfc-JoseAntonio-Fernandez}  se almacenan todos los desarrollos de este PFC. Tambi\'en se encuentran subproductos de desarrollo que han ido surgiendo como apoyo o pruebas a los desarrollos principales.
 \item Bitácora web en JdeRobot donde hemos actualizado peri\'odicamente nuestros avances acompañados con explicaciones, v\'ideos e im\'agenes. Su url es \url{http://jderobot.org/Jafernandez} y aqu\'i se puede contemplar con m\'as detalle la construcci\'on del UAV.
-\item Youtube y ftp. como herramientas de almacenamiento de los vídeos de nuestra bitácora web y de nuestros experimentos.
+\item YouTube y ftp. como herramientas de almacenamiento de los vídeos de nuestra bitácora web y de nuestros experimentos.
 \end{itemize}
 
 
@@ -1953,7 +1964,7 @@ En la Figura 5.16 se muestran las implementaciones de los m\'etodos con m\'as pe
 \cleardoublepage
 \chapter{Experimentos}
 
-En este capítulo se presentan las pruebas realizadas al sistema y el hardware necesario para la reproducción de las mismas. Estos experimentos corresponden a los casos de prueba descritos en el capítulo 2.2. y se dividen en nueve pruebas repartidas en dos bloques: experimentos en simulación y experimentos con el avión real.
+En este capítulo se presentan las pruebas realizadas al sistema que proporcionan su validación experimental y el hardware necesario para la reproducción de las mismas. Estos experimentos corresponden a los casos de prueba descritos en el capítulo 2.2. y se dividen en nueve pruebas repartidas en dos bloques: experimentos en simulación y experimentos con el avión real.
 
 \section{Experimentos con misiones en simulador}
 \label{sec:experimentos_simulados}
@@ -1965,127 +1976,119 @@ En este apartado se presentan todos los experimentos realizados en simulación un
 \item Experimento de envío de misión con avión en vuelo.
 \item Experimento de envío de misión con despegue y varios puntos de paso.
 \item Experimento de envío de misión con despegue y aterrizaje.
-\item Experimento de autozoom forzando la salida del avión del mapa.
+\item Experimento de autozoom ante la salida del avión del mapa.
 \end{enumerate}
 
 \subsection{Experimento de integración de todo el software}
 
-El objetivo de este experimento es probar que la integración del sistema y SITL se ha realizado correctamente. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que la integración del sistema y SITL se ha realizado correctamente. Vamos a verificar que se realiza correctamente la conexión con el drone simulado, y constatar que el driver recoge correctamente los datos sensoriales del drone. Se verifica también que estos datos se envían correctamente desde el driver a la aplicación y que ésta los representa fielmente. 
+Para ello se han seguido los siguientes pasos:
 \begin{enumerate}
-\item Arranque de la máquina virtual donde hemos instalado SITL.
-\item Se arranca SITL.
-\item Se mapea una nueva salida en la ip 192.168.138 en el puerto 14550 UDP.
-\item Se carga una misión de prueba.
-\item Se da comienzo a la misión simulada.
-\item Se arranca \texttt{APM Server}.
-\item Se arranca \texttt{UAV Commander}
+\item Arranque y configuración de SITL.
+\item Se carga una misión de prueba en el simulador a través de \texttt{MAVProxy}, donde se le ordena al drone seguir una serie de puntos de paso.
+\item Se da comienzo a la misión simulada desde \texttt{MAVProxy}.
+\item Se arranca el driver \texttt{APM Server}, es en este momento donde validaremos que se ha realizado la conexión con el drone simulado correctamente. 
+\item Se arranca la aplicación \texttt{UAV Commander} y seguiremos la trayectoria del avión simulado a través del mapa de la aplicación, comprobando que pasa por los puntos de paso que hemos especificado en el simulador. Se comprobará que la ventana de actitud responde correctamente a los giros del drone simulado durante su misión.
 \end{enumerate}
-Los pasos 1, 2 y 3 serán recurrentes en el resto de experimentos en simulación con los que de ahora en adelante se van a englobar en una supratarea que llamaremos ``Arranque y configuración de SITL''
-
-Una vez realizada la secuencia arriba descrita se comprobará el seguimiento del avión simulado a traés del mapa y se comprobará que la ventana de actitud responde correctamente.
 
 Se comprueba que funciona correctamente y se evidencia en el siguiente vídeo \url{https://www.youtube.com/watch?v=rHTi0buUETg}
 
 \subsection{Experimento envío de misión con avión en vuelo}
 
-El objetivo de este experimento es probar que el envío de misiones a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que el envío de misiones al drone simulado funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque y configuración de SITL.
-\item Se carga una misión de prueba.
-\item Se da comienzo a la misión simulada.
-\item Se arranca \texttt{APM Server}.
-\item Se arranca \texttt{UAV Commander}
-\item Se crea una misión en \texttt{UAV Commander}
+\item Se carga una misión de prueba a través de \texttt{MAVProxy}, en este caso a diferencia del caso anterior la misión tan solo consta de un despegue. Cuando el autopiloto comprueba que se han alcanzado todas las misiones enviadas entra en modo RTL \textit{}. En este modo el drone da vueltas trazando una circunferencia de un radio establecido por defecto en el \textit{firmware} de forma indefinida permitíendonos mandarle misiones estando en el aire.
+\item Se da comienzo a la misión simulada desde \texttt{MAVProxy}.
+\item Se arranca el driver \texttt{APM Server} conectando el driver al avion simulado.
+\item Se arranca la aplicación \texttt{UAV Commander} conectándose con el driver.
+\item Se crea una misión en \texttt{UAV Commander} haciendo click en los puntos del mapa interactivo por donde queramos que pase el avión.
 \item Se envía la misión a \texttt{APM Server} a través del botón ``Send'' de \texttt{UAV Commander}
 \end{enumerate}
 
-Una vez realizada la secuencia arriba descrita se comprobará el seguimiento de la misión enviada a través del mapa validando su correcto cumplimiento. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=_X8WGSMIxug}
+En el experimento se comprueba que el avión ha seguido la ruta indicada desde \texttt{UAV Commander} correctamente.
+La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=_X8WGSMIxug}
 
 \subsection{Experimento de envío de misión con despegue y varios puntos de paso}
-El objetivo de este experimento es probar que el envío de misiones y maniobra de despegue a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
-\begin{enumerate}
-\item Arranque y configuración de SITL.
-\item Se arranca \texttt{APM Server}.
-\item Se arranca \texttt{UAV Commander}
-\item Se crea una misión en \texttt{UAV Commander}. Ésta ha de contener como primer item la maniobra de despegue.
-\item Se envía la misión a \texttt{APM Server} a través del botón ``Send'' de \texttt{UAV Commander}
-\end{enumerate}
+El objetivo de este experimento es probar que el envío de misiones y maniobra de despegue al avión simulado funciona correctamente y validar su cumplimiento. 
 
-Una vez realizada la secuencia arriba descrita se comprobará el seguimiento de la misión enviada a través del mapa validando su correcto cumplimiento. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=0j3QttXIRbg}
+Seguiremos los mismos pasos que en el experimento anterior salvo por una particularidad, antes de clicar en el primer punto de paso (que será el primer punto al que vuele tras el despegue) pulsaremos el botón de ``Take Off''. De éste modo estaremos indicando al avión simulado <<Despega hacia el punto de paso X, Y>> donde X e Y serán latitud y longitud de la proyección del pixel de la imagen a coordenadas geográficas. 
+
+Una vez realizada la secuencia arriba descrita se comprueba el seguimiento de la misión enviada a través del mapa, validando tanto que realiza la maniobra de despegue correctamente como el seguimiento de los puntos de paso. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=0j3QttXIRbg}
 
 \subsection{Experimento de envío de misión con despegue y aterrizaje}
-El objetivo de este experimento es probar que el envío de misiones con maniobra de despegue y aterrizaje a \texttt{APM Server} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
-\begin{enumerate}
-\item Arranque y configuración de SITL.
-\item Se arranca \texttt{APM Server}.
-\item Se arranca \texttt{UAV Commander}
-\item Se crea una misión en \texttt{UAV Commander}. Ésta ha de contener como primer item la maniobra de despegue y como último item la maniobra de aterrizaje.
-\item Se envía la misión a \texttt{APM Server} a través del botón ``Send'' de \texttt{UAV Commander}
-\end{enumerate}
+El objetivo de este experimento es probar que el envío de misiones con maniobra de despegue y aterrizaje al avión simulado funciona correctamente y validar su cumplimiento.
 
-Una vez realizada la secuencia arriba descrita se comprobará el seguimiento de la misión enviada a través del mapa validando su correcto cumplimiento. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=4yf_PmFgR5Y}
+Seguiremos los mismos pasos que en el experimento anterior salvo porque antes de clicar en el último punto de paso pulsaremos el botón ``Land''. De éste modo estaremos indicando al avión simulado <<Aterriza en el punto de paso X, Y>> donde X e Y serán latitud y longitud de la proyección del pixel de la imagen a coordenadas geográficas. 
 
+Durante el experimento se puede comprobar que hay que ajustar muy bien la altitud del avión en los últimos puntos de paso, para que el avión aterrice en lo mas cerca posible del último. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=4yf_PmFgR5Y}
+\begin{figure}[H]
+\centering{
+   \label{f:diseno_uavc_caja_trans}
+    \includegraphics[width=0.7\textwidth]{img/toff-land.png}}
+    \caption{Seguimiento del experimento 6.1.4 dentro de la aplicación \texttt{UAV Commander}}
+  
+\end{figure}
 
-\subsection{Experimento de autozoom forzando la salida del avión del mapa}
-El objetivo de este experimento es probar que el autozoom de \texttt{UAV Commander} funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
-\begin{enumerate}
-\item Arranque y configuración de SITL.
-\item Se carga una misión de prueba que dirija al avión fuera de los márgenes del mapa.
-\item Se da comienzo a la misión simulada.
-\item Se arranca \texttt{APM Server}.
-\item Se arranca \texttt{UAV Commander}
-\end{enumerate}
+\subsection{Experimento de autozoom ante la salida del avión del mapa}
+El objetivo de este experimento es probar que el autozoom de \texttt{UAV Commander} funciona correctamente. 
+
+Para ello se van a realizar los mismos pasos que en el experimento 6.1.1 estableciendo desde \texttt{MAVProxy} un punto de paso que quede claramente fuera del mapa descargado por defecto por \texttt{UAV Commander}.
 
 Una vez realizada la secuencia arriba descrita se comprobará que \texttt{UAV Commander} descarga un nuevo mapa con una perspectiva mas amplia para seguir al avión. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=vEcMbJoJ-Qo}
 
-\section{Interconexión de driver y aplicación con avión}
+\section{Interconexión del driver y aplicación con avión}
 \label{sec:experimentos_real}
 
 En este apartado se presentan todos los experimentos realizados con el avión real, a saber:
 
 \begin{enumerate}
-\item Pruebas de envío recepción del sistema de radiofrecuencias.
-\item Experimento de integración con \texttt{APM Server} y \texttt{UAV Commander}.
-\item Experimento de seguimiento del avión a través del \texttt{UAV Commander}.
-\item Experimento de envío de misión desde el avión en vuelo.
+\item Experimento de recepción de vídeo.
+\item Pruebas de alcance del enlace entre el avión simulado y el ordenador base.
+\item Experimento de recepción de información sensorial y seguimiento del avión a través del \texttt{UAV Commander}.
+\item Experimento de comportamiento ante pérdidas de señal.
 \end{enumerate}
 
-\subsection{Pruebas de envío recepción del sistema de radiofrecuencias}
-El objetivo de este experimento es probar que se reciben correctamente las órdenes de la emisora de radiocontrol y probar el alcance del wifi del ordenador de abordo. Ésto nos delimitará el alcance al que vamos a volar. Para ello se van a realizar los siguiente pasos:
-\begin{enumerate}
-\item Arranque de la emisora de radicontrol.
-\item Arranque del avión a radiocontrol y del ordenador de abordo.
-\item Se separará el avión de la emisora y del ordenador hasta que se pierda la señal del wifi validando que responde correctamente a las órdenes enviadas por la emisora de radiocontrol.
-\end{enumerate}
-Este experimento nos va a permitir conocer a qué distancia vamos a poder volar.
+\subsection{Experimento de recepción de vídeo}
+El objetivo de este experimento es verificar que el envío del vídeo capturado desde el ordenador de abordo con \texttt{cameraserver} se recibe correctamente en la aplicación \texttt{UAV Commander}. Para ello se van a realizar los siguiente pasos:
 
-\subsection{Experimento de integración con \texttt{APM Server} y \texttt{UAV Commander}}
-El objetivo de este experimento es probar que la integración del sistema y el avión real a radiocontrol se ha realizado correctamente. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
-\item Arranque de la emisora de radicontrol.
-\item Arranque del avión a radiocontrol y del ordenador de abordo.
-\item Se arranca \texttt{APM Server}.
-\item Se arranca \texttt{UAV Commander}
+\item Arranque del ordenador de abordo.
+\item Arranque del driver \texttt{cameraserver}
+\item Arranque de la aplicación \texttt{UAV Commander} donde clicaremos en el \textit{checkbox camera} y validaremos que se recibe correctamente el video transmitido.
 \end{enumerate}
-Una vez realizada la secuencia arriba descrita se comprobará desde \texttt{UAV Commander}:
-\begin{enumerate}
-\item Descarga el mapa de la zona en la que nos encontramos.
-\item Se comprueba dando un paseo que se actualiza la posición en el mapa.
-\item Se comprueba la actitud desde la ventana de actitud
-\end{enumerate}
-La prueba se evidencia en el vídeo \url{https://youtu.be/HFR7JjD-ZIsws}
 
-\subsection{Experimento de seguimiento del avión a través del \texttt{UAV Commander}}
-El objetivo de este experimento es probar el seguimiento de misiones a través de \texttt{UAV Commander} con avión real a radiocontrol. Para ello se van a realizar los siguiente pasos:
-\begin{enumerate} 
-\item Arranque de la emisora de radicontrol.
+
+\subsection{Pruebas de alcance del enlace entre el avión simulado y el ordenador base}
+El objetivo de este experimento es probar que se reciben correctamente los datos de actitud del avión desde el ordenador base, según nos vamos alejando. Ésto nos delimitará el alcance al que vamos a volar. Para ello se van a realizar los siguiente pasos:
+\begin{enumerate}
 \item Arranque del avión a radiocontrol y del ordenador de abordo.
-\item Se arranca \texttt{APM Server}.
-\item Se arranca \texttt{UAV Commander}
-\item Se pone el avión a radiocontrol en el aire mediante el sistema de radiocontrol.
-\item Se vuela el avión a radiocontrol siguiendo un recorrido marcado.
+\item Arranque del driver \texttt{APM Server}, éste se conecta nada mas arrancar a la placa estabilizadora APM a través del puerto de serie.
+\item Arranque de la aplicación \texttt{UAV Commander} quien se conecta a su vez al driver.
+\item Se separará el avión del ordenador base hasta que se pierda la señal del wifi. De este modo sabremos la distancia máxima a la que podmeos volar
 \end{enumerate}
-Una vez realizada la secuencia arriba descrita se comprobará que \texttt{UAV Commander} muestra la trayectoria descrita por el avión a radiocontrol en el mapa. La prueba se evidencia en el vídeo \url{https://youtu.be/HFR7JjD-ZIs}
+Este experimento nos va a permitir conocer a qué distancia vamos a poder volar, este experimento se realizó dos veces: en la primera ocasión los datos arrojados por el experimento, apenas 10 metros, impedían cualquier tipo de vuelo del avión real. Con estos datos sobre la mesa se decidió adquirir un adaptador wifi mas potente para el ordenador de abordo, y se utilizó un \textit{router} con mas alcance para conectar ambos ordenadores. Con este nuevo hardware en una segunda prueba se alcanzó una distancia cercana a los 20 metros que permitiría un vuelo ceñido.
+\begin{figure}[h]
+\centering
+  \subfloat[Alcance logrado en la primera prueba de alcance.]{
+   \label{f:alcance1}
+    \includegraphics[width=0.49\textwidth]{img/1.png}}
+  \subfloat[Alcance logrado en la segunda prueba de alcance.]{
+   \label{f:alcance2}
+    \includegraphics[width=0.49\textwidth]{img/2.png}}
+    \caption~{Resultados de las pruebas de alcance}
+\end{figure}
+
+\subsection{Experimento de recepción de información sensorial y seguimiento del avión a través del \texttt{UAV Commander}}
+El objetivo de este experimento es probar que la integración del sistema y el avión real a radiocontrol se ha realizado correctamente. Se validará que se reciben correctamente los datos entregados por el driver y que se presentan fielmente a travñes del interfaz de usuario. Para ello se van a realizar los pasos del experimento anterior salvo que en estte caso también moveremos el prototipo en sus 3 ejes de libertad para comprobar que se reciben y se presentan correctamente los datos en la ventana de actitud.
+
+La prueba se evidencia en el vídeo \url{https://youtu.be/HFR7JjD-ZIs}
+
+\subsection{Experimento de comportamiento ante pérdidas de señal}
+El objetivo de este experimento es ver como se comporta \texttt{UAV Commander} ante la pérdida de la recepción de \texttt{APM Server}. A tenor de los datos obtenidos en el experimento 6.2.2 este experimento es imprescindible para conocer de antemano que puede pasar en un vuelo real.
+Para llevarlo a cabo se simuló una pérdida de alcance apagando el adaptador wifi del ordenador base donde corre \texttt{UAV Commander}.
+El resultado esperado era que tras la desconexión no se rompiera la ejecución de \texttt{APM Server} o de \texttt{UAV Commander} y se recuperase tras volver de nuevo a una zona de cobertura.
+El experimento demuestra la robustez de ambos desarrollos ante pérdidas de señal, la evidencia puede verse en el vídeo \url{https://youtu.be/HFR7JjD-ZIs}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2101,7 +2104,8 @@ Este PFC abre las puertas a futuros desarrollos con este tipo de robots aéreos, 
 Se ha presentado el problema, los subobjetivos y los requisitos que deben cumplir en el capítulo dos.
 En el capítulo tres ha analizado y profundizado en la infraestructura que se iba a utilizar y se ha decidido que infraestructura era la mejor para abordar nuestros desarrollos.
 Se ha abordado cada objetivo por separado planteando un diseño que nos permita abordar de una forma sencilla y eficaz el desarrollo y se han implementado las soluciones planteadas. 
-Y por último se ha validado su funcionamiento mediante los experimentos del capítulo seis, 
+Y por último se ha validado su funcionamiento mediante los experimentos del capítulo seis.
+
 
 \section{Conclusiones}
 \label{sec:conclusiones}
@@ -2112,16 +2116,18 @@ Y por último se ha validado su funcionamiento mediante los experimentos del capí
 
   \item El primer subojetivo del proyecto era el desarrollo de un driver para JdeRobot que nos permitiese conectarnos tanto al avión real como a uno simulado a través de SITL. El driver \texttt{APM Server} (ver capítulo 4) es capaz de conectarse tanto con aviones físicos que utilicen el protocolo de comunicación \texttt{MAVLink}, como con aviones simulados a través de SITL. El driver sirve los datos recogidos de los sensores del hardware de abordo del avión como el GPS y la IMU y los transforma en objetos que cumplen las interfaces ICE ya desarrolladas en JdeRobot \texttt{Pose3D} y \texttt{NavData}.
 
-Para dar soporte a la navegación por posición se ha diseñado un nuevo interfaz, el interfaz \texttt{mission}, que junto con el \texttt{Exta} completan los interfaces que este driver recibe como órdenes y que se envían a través de los comandos\texttt{MAVLink} \texttt{MISSION\_ITEM}. El driver da soporte en actuación tanto a las maniobras de despegue y aterrizaje como a la navegación por puntos intermedios.
 
-La concurrencia del componente permite que éste pueda responder a las peticiones de otros componentes mientras realiza otras acciones como la obtención de las imágenes del cuadricóptero o el envío de órdenes de movimiento.
+Para dar soporte a la navegación por posición se ha diseñado un nuevo interfaz, el interfaz \texttt{mission}, que junto con el \texttt{Exta} completan los interfaces que este driver recibe como órdenes y que se envían a través de los comandos \texttt{MAVLink} \texttt{MISSION\_ITEM}. El driver da soporte en actuación tanto a las maniobras de despegue y aterrizaje como a la navegación por puntos intermedios.
 
-  \item Se ha construido una aplicación JdeRobot, \texttt{UAV Commander} para dar soporte al control de misiones en robots aéreos de ala fija, aviones. Esta aplicación muestra un interfaz gráfico en el cual el usuario humano puede visualizar los datos de los sensores a bordo (cámaras, posición, actitud), el mapa de la zona de trabajo del avión y componer gráficamente misiones de vuelo gracias al mapa interactivo. 
+La concurrencia del componente permite que éste pueda responder a las peticiones de otros componentes mientras realiza otras acciones como la obtención de las imágenes del avión o el envío de órdenes de movimiento.
+
+  \item El segundo subobjetivo era el desarrollo de una aplicaci\'on GCS \texttt{Ground Control Station} que permita al operador humano introducir misiones y seguir el cumplimiento de las mismas a trav\'es de ella y el acceso a sus datos sensoriales. Para abordarlo se ha desarrollado la aplicación JdeRobot \texttt{UAV Commander} para dar soporte al control de misiones en robots aéreos de ala fija, aviones. Esta aplicación muestra un interfaz gráfico en el cual el usuario humano puede visualizar los datos de los sensores a bordo (cámaras, posición, actitud), el mapa de la zona de trabajo del avión y componer gráficamente misiones de vuelo gracias al mapa interactivo. 
 
 \texttt{UAV Commander} es capaz de descargar el mapa de la zona del mudo donde el avión se encuentra a través de WMS y presentarlos por pantalla en forma de mapa interactivo. Clicando sobre el mapa se pueden crear de forma sencilla las misiones que el operador humano desee. Este mapa permite validar el cumplimiento de las misiones en vuelo gracias a elementos visuales añadidos como la ruta teórica a seguir o la estela dejada por el avión durante su vuelo. El control de misiones se complementa con una tabla donde se puede ver la secuencia de puntos de paso que se va a enviar al avión junto a la altura de vuelo, esta tabla es editable para un ajuste mas exacto y con los botones de control de misiones: ``TakeOff/Land'', ``Clear'' y ``send''.
 
 \texttt{UAV Commander} ofrece toda la información sensorial del avión de forma visual en las ventanas de ``Camera'' y ``Attidude'', en ellas veremos los datos enviados por los sensores de abordo del avión como los acelerómetros, giróscopos o las cámaras de abordo.
 La aplicación hace uso de los interfaces ICE desarrollados en JdeRobot, incluyendo el interfaz mission desarrollado íntegramente en este proyecto para dar soporte al control de misiones. Ésto permite que sea compatible con el resto de aplicaciones y drivers de JdeRobot y le confiere las ventajas de este tipo de desarrollos como la independencia del lenguaje de programación empleado o de en que hardware se esté ejecutando.
+
  \item El tercer subobjetivo era la validación experimental de ambos tanto en simulación como en el prototipo de avión real construido a tal efecto. Se ha validado el funcionamiento tanto de \texttt{APM Server} como de \texttt{UAV Comander} a través experimentos diseñados a tal efecto y descritos en el capítulo 6. Los experimentos han sido diseñados para ir validando de menos a más el correcto funcionamiento del driver y la aplicación tanto en un ambiente simulado (experimentos del 6.1.1 al 6.1.5) como en el prototipo de avión MAVLink (experimentos del 6.2.1 al 6.2.3)
  
 En los experimentos con misiones en simulador se prueba de forma progresiva el comportamiento de \texttt{APM Server} y \texttt{UAV Commander} conectados a SITL. Empezamos comprobando la correcta conexión de \texttt{APM Server} a SITL, de \texttt{UAV Commander} a \texttt{APM Server} y que la aplicación \texttt{UAV Commander} presenta correctamente los datos en el experimento 6.1.1 donde queda además probada parte sensorial. En el experimento 6.1.2 se empieza a probar la actuación con el envió de puntos de paso y se le añaden progresivamente las maniobras de despegue y aterrizaje en los experimentos 6.1.3 y 6.1.4 respectivamente. El experimento 6.1.5 valida que \texttt{UAV Commander} no pierda el avión cuando éste se acerque al límite del mapa descargado.
@@ -2138,12 +2144,11 @@ El seguimiento y evolución de este PFC, así como el código, vídeos y material ut
 \label{sec:trabajos_futuros}
 
 
-Se han identificado varias evoluciones de los desarrollos aquí expuestos, comenzaremos con \texttt{APM Server}
+Durante el desarrollo de \texttt{APM Server} y \texttt{UAV Commander} se han identificado varias evoluciones de los desarrollos aquí expuestos que mejorarían las funcionalidades actuales. Las describimos a continuación.
 
 
 \begin{itemize}
 	\item Se puede ampliar el soporte de misiones de \texttt{APM Server} hasta cubrir la totalidad de los commandos de misión de MAVLink. De esta forma se podría por ejemplo enviar misiones del tipo ``dar X vueltas de Y radio en torno al punto de pasoZ'' o aumenta la velocidad durante la misión a x Km/h.
-
 	\item Se pueden ampliar en \texttt{APM Server}los interfaces para enviar información sobre la misión, el objetivo que he alcancado, el que estoy ejecutando, a qué distancia se encuentra del objetivo, etc.
 	\item \texttt{UAV Commander} se pueden mejorar los cálculos de proyección para que sean mas precisos independientemente de la zona del globo donde se encuentre, e independientemente del WSM de origen del mapa.
 	\item \texttt{UAV Commander} se pueden ampliar la lista de orígenes de mapas añadiendo los WMS de \texttt{OpenStreetMap}, \texttt{Yahoo Maps} y \texttt{Bing Maps} .
