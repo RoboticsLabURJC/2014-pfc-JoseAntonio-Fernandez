@@ -161,7 +161,7 @@ INGENIER\'IA T\'ECNICA INFORM\'ATICA EN SISTEMAS
 \vspace{0.4cm}
 
 \large
-Curso Acad\'emico 2011/2017
+Curso Acad\'emico 2016/2017
 
 \vspace{0.8cm}
 
@@ -545,7 +545,7 @@ El objetivo general de este proyecto final de carrera es dar soporte en la plata
 
 Tanto el driver como la aplicación, han de ser multiplataforma, utilizar \'unicamente librer\'ias de software libre y ser 100\% compatibles con los actuales interfaces JdeRobot
 
-\section{Metodolog\'ia
+\section{Metodolog\'ia}
 \label{metodolog\'ia}
 
 Este proyecto se ha abordado con dos metodolog\'ias de trabajo distintas combinadas, la primera es el desarrollo en espiral que se ha utilizado como metodolog\'ia principal, y la segunda la metodolog\'ia \'agil Kanban, para un control de tareas y subtareas m\'as eficiente.
@@ -2112,16 +2112,21 @@ Y por último se ha validado su funcionamiento mediante los experimentos del capí
 
   \item El primer subojetivo del proyecto era el desarrollo de un driver para JdeRobot que nos permitiese conectarnos tanto al avión real como a uno simulado a través de SITL. El driver \texttt{APM Server} (ver capítulo 4) es capaz de conectarse tanto con aviones físicos que utilicen el protocolo de comunicación \texttt{MAVLink}, como con aviones simulados a través de SITL. El driver sirve los datos recogidos de los sensores del hardware de abordo del avión como el GPS y la IMU y los transforma en objetos que cumplen las interfaces ICE ya desarrolladas en JdeRobot \texttt{Pose3D} y \texttt{NavData}.
 
-Para dar soporte a la navegación por posición se ha diseñado un nuevo interfaz, el interfaz \texttt{mission}, que junto con el \texttt{Exta} completan los interfaces que este driver recibe como órdenes y que se envían a través de lso comandos\texttt{MAVLink}: \texttt{MISSION_ITEM}. El driver da soporte en actuación tanto a las maniobras de despegue y aterrizaje como a la navegación por puntos intermedios.
+Para dar soporte a la navegación por posición se ha diseñado un nuevo interfaz, el interfaz \texttt{mission}, que junto con el \texttt{Exta} completan los interfaces que este driver recibe como órdenes y que se envían a través de los comandos\texttt{MAVLink} \texttt{MISSION\_ITEM}. El driver da soporte en actuación tanto a las maniobras de despegue y aterrizaje como a la navegación por puntos intermedios.
 
 La concurrencia del componente permite que éste pueda responder a las peticiones de otros componentes mientras realiza otras acciones como la obtención de las imágenes del cuadricóptero o el envío de órdenes de movimiento.
+
   \item Se ha construido una aplicación JdeRobot, \texttt{UAV Commander} para dar soporte al control de misiones en robots aéreos de ala fija, aviones. Esta aplicación muestra un interfaz gráfico en el cual el usuario humano puede visualizar los datos de los sensores a bordo (cámaras, posición, actitud), el mapa de la zona de trabajo del avión y componer gráficamente misiones de vuelo gracias al mapa interactivo. 
 
 \texttt{UAV Commander} es capaz de descargar el mapa de la zona del mudo donde el avión se encuentra a través de WMS y presentarlos por pantalla en forma de mapa interactivo. Clicando sobre el mapa se pueden crear de forma sencilla las misiones que el operador humano desee. Este mapa permite validar el cumplimiento de las misiones en vuelo gracias a elementos visuales añadidos como la ruta teórica a seguir o la estela dejada por el avión durante su vuelo. El control de misiones se complementa con una tabla donde se puede ver la secuencia de puntos de paso que se va a enviar al avión junto a la altura de vuelo, esta tabla es editable para un ajuste mas exacto y con los botones de control de misiones: ``TakeOff/Land'', ``Clear'' y ``send''.
 
 \texttt{UAV Commander} ofrece toda la información sensorial del avión de forma visual en las ventanas de ``Camera'' y ``Attidude'', en ellas veremos los datos enviados por los sensores de abordo del avión como los acelerómetros, giróscopos o las cámaras de abordo.
 La aplicación hace uso de los interfaces ICE desarrollados en JdeRobot, incluyendo el interfaz mission desarrollado íntegramente en este proyecto para dar soporte al control de misiones. Ésto permite que sea compatible con el resto de aplicaciones y drivers de JdeRobot y le confiere las ventajas de este tipo de desarrollos como la independencia del lenguaje de programación empleado o de en que hardware se esté ejecutando.
-  \item Se ha validado el funcionamiento de ambos, tanto en un ambiente simulado como con el prototipo de avión real, mediante sendos experimentos descritos en el capítulo 6.
+ \item El tercer subobjetivo era la validación experimental de ambos tanto en simulación como en el prototipo de avión real construido a tal efecto. Se ha validado el funcionamiento tanto de \texttt{APM Server} como de \texttt{UAV Comander} a través experimentos diseñados a tal efecto y descritos en el capítulo 6. Los experimentos han sido diseñados para ir validando de menos a más el correcto funcionamiento del driver y la aplicación tanto en un ambiente simulado (experimentos del 6.1.1 al 6.1.5) como en el prototipo de avión MAVLink (experimentos del 6.2.1 al 6.2.3)
+ 
+En los experimentos con misiones en simulador se prueba de forma progresiva el comportamiento de \texttt{APM Server} y \texttt{UAV Commander} conectados a SITL. Empezamos comprobando la correcta conexión de \texttt{APM Server} a SITL, de \texttt{UAV Commander} a \texttt{APM Server} y que la aplicación \texttt{UAV Commander} presenta correctamente los datos en el experimento 6.1.1 donde queda además probada parte sensorial. En el experimento 6.1.2 se empieza a probar la actuación con el envió de puntos de paso y se le añaden progresivamente las maniobras de despegue y aterrizaje en los experimentos 6.1.3 y 6.1.4 respectivamente. El experimento 6.1.5 valida que \texttt{UAV Commander} no pierda el avión cuando éste se acerque al límite del mapa descargado.
+
+En los experimentos de interconexión de driver y aplicación con el avión se comprueba la correcta recepción de toda la información sensorial(experimento 6.2.1 y 6.2.3). Tras probar en el experimento 6.2.2 que el alcance esra mas limitado de lo esperado en un inicio en el experimento 6.2.4 comprobamos la robustez de nuestros desarrollos ante una hipotética pérdida de señal al quedar fuera del alcance del wifi.
 
 
 \end{enumerate}
