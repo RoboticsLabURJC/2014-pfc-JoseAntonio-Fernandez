@@ -535,15 +535,16 @@ La memoria de este PFC se ha vertebrado en 7 cap\'itulos. En el segundo se fijan
 
 \section{Problema abordado}
 \label{problema}
-El objetivo general de este proyecto final de carrera es dar soporte en la plataforma software JdeRobot a drones de ala fija que utilicen el protocolo de comunicaci\'on MAVLink. Este objetivo general lo hemos articulado en 5 subobjetivos:
+El objetivo general de este proyecto final de carrera es dar soporte en la plataforma software JdeRobot a drones de ala fija que utilicen el protocolo de comunicaci\'on MAVLink. Este objetivo general lo hemos articulado en 3 subobjetivos:
 \begin{enumerate}
-\item Contruir, a partir de un avión de radiocontrol, un prototipo de drone y validar la visualización de sensores del avión real en la aplicación.
-\item Desarrollo de un driver que acceda a los sensores y actuadores de drones de ala fija que utilicen MAVLink y dar soporte a la actuaci\'on de misiones que hasta ahora no soportaba JdeRobot.
+\item Desarrollo de un driver que acceda a los sensores y actuadores de drones de ala fija que utilicen \texttt{MAVLink} y dar soporte a la actuaci\'on de misiones que hasta ahora no soportaba JdeRobot.
 \item Desarrollo de una aplicaci\'on GCS \texttt{Ground Control Station} que permita al operador humano introducir misiones y seguir el cumplimiento de las mismas a trav\'es de ella. Permitiendo el acceso a toda la actitud y a las c\'amaras de abordo.
-\item Hacer experimentos con aviones MAVLink simulados. Conectaremos nuestro driver al simulador SITL y la aplicación al servidor para verificar la correcta especificación y materialización de las misiones.
+\item Hacer experimentos con aviones MAVLink: Conectaremos nuestro driver al simulador SITL y la aplicación al servidor para verificar la correcta especificación y materialización de las misiones. Construiremos un prototipo de avión \texttt{MAVLink} y comprobaremos la conexión con el driver y la recepción de toda la información sensorial.
+
 \end{enumerate}
 
 Tanto el driver como la aplicación, han de ser multiplataforma, utilizar \'unicamente librer\'ias de software libre y ser 100\% compatibles con los actuales interfaces JdeRobot
+
 
 \section{Metodolog\'ia}
 \label{metodologia}
@@ -2111,21 +2112,33 @@ Una vez realizada la secuencia arriba descrita se comprobará que \texttt{UAV Com
 \chapter{Conclusiones}
 \label{chap:conclusiones}
 
-
-\section{Consecuci\'on de objetivos}
-\label{sec:consecucion-objetivos}
-
-Como se ha podido ir viendo a lo largo de este PFC: 
-Se ha presentado el problema, los objetivos y los requisitos que deben cumplir en el capítulo dos.
+Este PFC abre las puertas a futuros desarrollos con este tipo de robots aéreos, que hasta ahora JdeRobot no soportaba. Sienta las bases del desarrollo de aviones autónomos en JdeRobot. El objetivo general de dar soporte en JdeRobot a drones tipo avión, incluyendo misiones como secuencia de puntos de paso se ha cumplido satisfactoriamente. 
+Se ha presentado el problema, los subobjetivos y los requisitos que deben cumplir en el capítulo dos.
 En el capítulo tres ha analizado y profundizado en la infraestructura que se iba a utilizar y se ha decidido que infraestructura era la mejor para abordar nuestros desarrollos.
-Se ha abordado cada objetivo por separado planteando un diseño que nos permita abordar de una forma sencilla y eficaz el desarrollo y se han implementado las soluciones planteadas. Con estos desarrollos, descritos en los capítulos 4 y 5, se han cubierto los requisitos presentados en el capítulo 2.
-Y por último se ha validado su funcionamiento mediante los experimentos del capítulo seis. Resumiendo:
+Se ha abordado cada objetivo por separado planteando un diseño que nos permita abordar de una forma sencilla y eficaz el desarrollo y se han implementado las soluciones planteadas. 
+Y por último se ha validado su funcionamiento mediante los experimentos del capítulo seis, 
+
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+
 
 \begin{enumerate}
-  \item Se ha preparado un avión real con el hardware necesario para dotarle de autonomía a través de JdeRobot
-  \item Se ha desarrollado un driver para JdeRobot, \texttt{APM Server} que nos permite conectarnos tanto al avión real como a uno simulado a través de SITL
-  \item Se ha construido una aplicación JdeRobot, \texttt{UAV Commander} para dar soporte al control de misiones en robots aéreos de ala fija, aviones.
-  \item Se ha validado el funcionamiento de ambos, tanto en un ambiente simulado como con el avión real, mediante sendos experimentos.
+
+  \item El primer subojetivo del proyecto era el desarrollo de un driver para JdeRobot que nos permitiese conectarnos tanto al avión real como a uno simulado a través de SITL. El driver \texttt{APM Server} (ver capítulo 4) es capaz de conectarse tanto con aviones físicos que utilicen el protocolo de comunicación \texttt{MAVLink}, como con aviones simulados a través de SITL. El driver sirve los datos recogidos de los sensores del hardware de abordo del avión como el GPS y la IMU y los transforma en objetos que cumplen las interfaces ICE ya desarrolladas en JdeRobot \texttt{Pose3D} y \texttt{NavData}.
+
+Para dar soporte a la navegación por posición se ha diseñado un nuevo interfaz, el interfaz \texttt{mission}, que junto con el \texttt{Exta} completan los interfaces que este driver recibe como órdenes y que se envían a través de lso comandos\texttt{MAVLink}: \texttt{MISSION_ITEM}. El driver da soporte en actuación tanto a las maniobras de despegue y aterrizaje como a la navegación por puntos intermedios.
+
+La concurrencia del componente permite que éste pueda responder a las peticiones de otros componentes mientras realiza otras acciones como la obtención de las imágenes del cuadricóptero o el envío de órdenes de movimiento.
+  \item Se ha construido una aplicación JdeRobot, \texttt{UAV Commander} para dar soporte al control de misiones en robots aéreos de ala fija, aviones. Esta aplicación muestra un interfaz gráfico en el cual el usuario humano puede visualizar los datos de los sensores a bordo (cámaras, posición, actitud), el mapa de la zona de trabajo del avión y componer gráficamente misiones de vuelo gracias al mapa interactivo. 
+
+\texttt{UAV Commander} es capaz de descargar el mapa de la zona del mudo donde el avión se encuentra a través de WMS y presentarlos por pantalla en forma de mapa interactivo. Clicando sobre el mapa se pueden crear de forma sencilla las misiones que el operador humano desee. Este mapa permite validar el cumplimiento de las misiones en vuelo gracias a elementos visuales añadidos como la ruta teórica a seguir o la estela dejada por el avión durante su vuelo. El control de misiones se complementa con una tabla donde se puede ver la secuencia de puntos de paso que se va a enviar al avión junto a la altura de vuelo, esta tabla es editable para un ajuste mas exacto y con los botones de control de misiones: ``TakeOff/Land'', ``Clear'' y ``send''.
+
+\texttt{UAV Commander} ofrece toda la información sensorial del avión de forma visual en las ventanas de ``Camera'' y ``Attidude'', en ellas veremos los datos enviados por los sensores de abordo del avión como los acelerómetros, giróscopos o las cámaras de abordo.
+La aplicación hace uso de los interfaces ICE desarrollados en JdeRobot, incluyendo el interfaz mission desarrollado íntegramente en este proyecto para dar soporte al control de misiones. Ésto permite que sea compatible con el resto de aplicaciones y drivers de JdeRobot y le confiere las ventajas de este tipo de desarrollos como la independencia del lenguaje de programación empleado o de en que hardware se esté ejecutando.
+  \item Se ha validado el funcionamiento de ambos, tanto en un ambiente simulado como con el prototipo de avión real, mediante sendos experimentos descritos en el capítulo 6.
+
+
 \end{enumerate}
 
 El seguimiento y evolución de este PFC, así como el código, vídeos y material utilizado puede encontrarse en la web \url{http://jderobot.org/Jafernandez}
@@ -2135,30 +2148,18 @@ El seguimiento y evolución de este PFC, así como el código, vídeos y material ut
 \label{sec:trabajos_futuros}
 
 
-Este PFC abre las puertas a futuros desarrollos con este tipo de robots aéreos, que hasta ahora JdeRobot no soportaba. Sienta las bases del desarrollo de aviones autónomos en JdeRobot.
 Se han identificado varias evoluciones de los desarrollos aquí expuestos, comenzaremos con \texttt{APM Server}
 
-\subsection{Futuros evolutivos de \texttt{APM Server}}
+
 \begin{itemize}
 	\item Se puede ampliar el soporte de misiones de \texttt{APM Server} hasta cubrir la totalidad de los commandos de misión de MAVLink. De esta forma se podría por ejemplo enviar misiones del tipo ``dar X vueltas de Y radio en torno al punto de pasoZ'' o aumenta la velocidad durante la misión a x Km/h.
 
-	\item Se pueden ampliar los interfaces para enviar información sobre la misión, el objetivo que he alcancado, el que estoy ejecutando, a qué distancia se encuentra del objetivo, etc.
+	\item Se pueden ampliar en \texttt{APM Server}los interfaces para enviar información sobre la misión, el objetivo que he alcancado, el que estoy ejecutando, a qué distancia se encuentra del objetivo, etc.
+	\item \texttt{UAV Commander} se pueden mejorar los cálculos de proyección para que sean mas precisos independientemente de la zona del globo donde se encuentre, e independientemente del WSM de origen del mapa.
+	\item \texttt{UAV Commander} se pueden ampliar la lista de orígenes de mapas añadiendo los WMS de \texttt{OpenStreetMap}, \texttt{Yahoo Maps} y \texttt{Bing Maps} .
+	\item En \texttt{UAV Commander} se puede añadir el control por velocidades CMDVel para dar soporte a todo tipo de drones. y que esta aplicación se pudiera emplear con drones tipo cuadricóptero, capaces de cernirse en un sitio fijo y obedecer órdenes de velocidad en varios ejes.
+	\item Como desarrollo adicional se podría conectar SITL a Gazebo, de ésta forma tendríamos la simulación completa incluyendo el sensor de cámara y se podrían probar las misiones en entornos más realistas. Esto facilitaría la simulación de desarrollos que utilicen la visión en aviones. 
 \end{itemize}
-
-\subsection{Futuros evolutivos de \texttt{UAV Commander}}
-
-\begin{itemize}
-	\item Se puede mejorar la proyección en los mapas recibidos de Google para aumentar la precisión en los mapas.
-	\item Se pueden mejorar los cálculos de proyección para que sean mas precisos independientemente de la zona del globo donde se encuentre.
-	\item Se puede dar soporte a través de \texttt{UAV Commander} a nuevos desarrollos permitiendo la ejecución de los mismos, ecritos en determinado archivo, a través de un botón en la aplicación. 
-	\item Se puede añadir el control por velocidades CMDVel para dar soporte a todo tipo de drones.
-	\item Se puede ampliar la creación de puntos de paso dibujando, además de la ruta a seguir, la distancia entre los puntos de control.
-\end{itemize}
-
-\subsection{Futuros evolutivos generales}
-
-Como desarrollo adicional se podría conectar SITL a Gazebo, de ésta forma tendríamos la simulación completa y se podrían probar las misiones en entornos más realistas. Esto facilitaría la simulación de desarrollos que utilicen la visión en aviones. 
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
