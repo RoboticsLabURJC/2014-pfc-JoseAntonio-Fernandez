@@ -248,9 +248,9 @@ Fuenlabrada, a \qquad$\;\,$ de \qquad\qquad\qquad\qquad de 20XX
 \markboth{RESUMEN}{RESUMEN} % encabezado
 
 Los UAV o Drones se han popularizado en los \'ultimos años hasta es punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ambitos de nuestra vida. 
-El objetivo de este trabajo final es desarrollar tecnolog\'ia que permita la programaci\'on de aplicaciones rob\'oticas con un avi\'on aut\'onomo, que se ha adaptado a partir de un avión comercial a radiocontrol y se ha simulado. Este proyecto se ubica por lo  tanto en el contexto de rob\'otica y drones, en rob\'otica a\'erea.
+El objetivo de este trabajo final es desarrollar tecnolog\'ia que permita la programaci\'on de aplicaciones rob\'oticas con un avi\'on aut\'onomo. Este proyecto se ubica por lo  tanto en el contexto de rob\'otica y drones, en rob\'otica a\'erea.
 En este PFC se documenta el análisis, diseño e implementación de un driver y una aplicación de teleoperación por puntos de paso en JdeRobot. A lo largo del mismo se detalla tanto el hardware como el software utilizado para la implementación de ambos y se describen los puntos mas importante de ambos desarrollos. 
-Como plataforma robótica se ha empleado JdeRobot 5.3. El lenguaje de programación ha sido Python y se han empleado las bibliotecas OpenCV, OWSLib y PyQt, para tratamiento de imágenes y para construir la GUI respectivamente.
+Como plataforma robótica se ha empleado JdeRobot 5.3. El lenguaje de programación ha sido Python y se han empleado las bibliotecas OpenCV, OWSLib y PyQt, para tratamiento de imágenes, apoyo a la descarga de mapas y para construir la interfaz gráfica de usuario.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -545,14 +545,8 @@ El objetivo general de este proyecto final de carrera es dar soporte en la plata
 
 Tanto el driver como la aplicación, han de ser multiplataforma, utilizar \'unicamente librer\'ias de software libre y ser 100\% compatibles con los actuales interfaces JdeRobot
 
-<<<<<<< HEAD
-\section{Metodolog\'ia}
-\label{metodolog\'ia}
-=======
-
 \section{Metodolog\'ia}
 \label{metodologia}
->>>>>>> a13dda94fa6977251c855abc28b4ca73e2aee84f
 
 Este proyecto se ha abordado con dos metodolog\'ias de trabajo distintas combinadas, la primera es el desarrollo en espiral que se ha utilizado como metodolog\'ia principal, y la segunda la metodolog\'ia \'agil Kanban, para un control de tareas y subtareas m\'as eficiente.
 
@@ -589,7 +583,7 @@ v\'ias para avanzar. En caso contrario se propon\'ian nuevos subobjetivos.
 
 
 Para desarrollar las tareas especificadas en cada incremento, fijadas en cada reuni\'on de seguimiento, se utiliz\'o la metodolog\'ia kanban. Esta metodolog\'ia de desarrollo no es m\'as que una adaptaci\'on de su versi\'on industrial que surgi\'o en Toyota. A finales de los años 40, Toyota empez\'o a optimizar sus procesos de ingenier\'ia a partir del modelo que empleaban los supermercados para llenar los estantes. Los supermercados almacenan los productos suficientes para suplir la demanda del cliente, una pr\'actica que optimiza el flujo entre el supermercado y el cliente. 
-En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on industrial, en el \textit{just in time}\footnote{ El JIT es una política de mantenimiento de inventarios al mínimo nivel posible donde los suministradores entregan justo lo necesario en el momento necesario para completar el proceso productivo.} y permite apreciar de una forma muy visual las tareas que hay en vuelo, desarrolladas, pendientes o bloqueadas pudiendo anticiparnos a cuellos de botella o bloqueos de forma sencilla. Esta metodolog\'ia permite visualizar tareas que a priori no tienen relaci\'on pero se relacionan a un nivel m\'as profundo y agruparlas para optimizar el tiempo.
+En su versi\'on TIC \'esta metodolog\'ia se centra, al igual que su versi\'on industrial, en el \textit{just in time}\footnote{ El JIT es una política de mantenimiento de inventarios al mínimo nivel posible donde los suministradores entregan justo lo necesario en el momento necesario para completar el proceso productivo.} y permite apreciar de una forma muy visual las tareas que hay en vuelo, desarrolladas, pendientes o bloqueadas pudiendo anticiparnos a cuellos de botella o bloqueos de forma sencilla.
 
 \begin{figure}[h]
 \centering
@@ -943,16 +937,16 @@ En nuestro caso este driver se ejecuta sobre una Raspberry Pi3 con raspbian a la
 \section{Diseño} 
 \label{sec:diseno_apms}
 
-Los requerimientos hablados en el cap\'itulo 2 son a grandes rasgos:
+El driver tiene que cubrir las siguientes funcionalidasdes:
 \begin{itemize}
-\item El driver debe ser capaz de conectar con dispositivos f\'isicos de estabilizaci\'on c\'omo APM 2.8 o PixHawnk as\'i como al simulador SITL
-\item El driver debe acceder a los sensores y actuadores del robot a\'ereo, interpretarlos y servirlos en forma de interfaz ICE a las aplicaciones de control.
-\item EL driver debe ser capar de recibir a trav\'es de interfaces JdeRobot interfaces que \'este interprete y env\'ie a los actuadores del robot a\'ereo.
+\item Debe sebe ser capaz de conectar con dispositivos f\'isicos de estabilizaci\'on c\'omo APM 2.8 o PixHawk as\'i, como al simulador SITL
+\item Debe acceder a los sensores y actuadores del robot a\'ereo, interpretarlos y servirlos en forma de interfaz ICE a las aplicaciones de control.
+\item Debe ser capar de recibir a trav\'es de interfaces JdeRobot órdenes que \'este interprete y env\'ie a los actuadores del robot a\'ereo.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.75]{img/diseno.jpg}
+  \includegraphics[scale=0.65]{img/diseno.jpg}
   \caption{Diseño de \texttt{APM Server}}
   \label{fig:diseno_apms_caja_negra}
 \end{figure}
@@ -965,7 +959,7 @@ Se ha diseñado y programado un componente de JdeRobot en Python que hace de driv
 \item Capa de comunicaci\'on con aplicaciones JdeRobot. En \'esta capa se materializan los servicios ICE necesarios para la recepci\'on y env\'io de los interfaces ICE que implementa.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[H]
 \centering{
    \label{f:diseno_apms_caja_trans}
     \includegraphics[width=0.7\textwidth]{img/diseno1.jpg}}
@@ -1245,7 +1239,7 @@ from pymavlink.dialects.v10 import ardupilotmega as mavlink
 Se importa mavutil para ardupilotmega para obtener los interfaces en python desde pymavlink y mavwp y quaternion como soporte a la transformaci\'on a quaterniones y viceversa.
 
 
-El primer paso para poder interactuar con el APM es el proceso de conexi\'on. En el comando de conexi\'on se le indica una de las siguiente tuplas:
+El primer paso para poder interactuar con el APM es el proceso de conexi\'on (Figura 4.3). En el comando de conexi\'on se le indica una de las siguiente tuplas:
 \begin{itemize}
 \item Dispositivo\_serie, baudrate
 \item Tipo\_de\_puerto:IP:puerto, baudrate. En este caso baudrate es obligatorio pero se desecha.
@@ -1272,7 +1266,7 @@ test = Server("udp:192.168.1.133:14558",57600) # Connection to SITL
 Con estas l\'ineas se inicia el servidor de \texttt{APM Server} y se realiza la conexi\'on con el dispositivo APM o con el simulador. Se puede apreciar c\'omo se realiza la conexi\'on en el m\'etodo \_\_init\_\_  del servidor. Y la creaci\'on de 2 objetos de servidor, una que conectar\'ia con el dispositivo real y la que se realiza con SITL.
 
 
-Una vez conectado, se debe indicar al APM qu\'e mensajes se quieren recibir y la frecuencia con la que se quieren recibir. Debido a que se trata de un prototipo y se trata de extraer el m\'aximo potencial del mismo, se indicar\'a el set de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo m\'aximo que soporta el APM adquirido.
+Una vez conectado, se debe indicar al APM qu\'e mensajes se quieren recibir y la frecuencia con la que se quieren recibir (Figura 4.4). Debido a que se trata de un prototipo y se trata de extraer el m\'aximo potencial del mismo, se indicar\'a el set de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo m\'aximo que soporta el APM adquirido.
 
 \begin{figure}
 \begin{python}[
@@ -1299,15 +1293,20 @@ Una vez establecida la conexi\'on y fijados los par\'ametros de configuraci\'on 
 MsgHandler = threading.Thread(target=self.mavMsgHandler, args=(self.master,), name='msg_Handler')
 MsgHandler.start()
 
+
 def mavMsgHandler(self, m):
+
     while True:
         msg = m.recv_msg()
+
 	if time.time() - self.lastSentHeartbeat > 1.0:
 	    self.master.mav.heartbeat_send(mavlink.MAV_TYPE_GCS, mavlink.MAV_AUTOPILOT_INVALID, 0, 0, 0)
 	    self.lastSentHeartbeat = time.time()
+
 	    # refresh the attitude
 	    self.refreshAPMPose3D()
 	    self.refreshAPMnavdata()
+
 	elif msg is None or msg.get_type() == "BAD_DATA":
 	    time.sleep(0.01)
 	    continue
@@ -1317,7 +1316,7 @@ def mavMsgHandler(self, m):
 
 \subsection{Env\'io de misiones al APM}
 
-Con el fin de entender mejor el c\'odigo en la figura 4.2 podemos observar un gr\'afico de c\'omo es el protocolo de env\'io de misiones al APM a trav\'es de MAVLink obtenido de la universidad University of Colorado Boulder\cite{colorado:_mission}
+Con el fin de entender mejor el c\'odigo en la Figura 4.6 podemos observar un gr\'afico de c\'omo es el protocolo de env\'io de misiones al APM a trav\'es de MAVLink obtenido de la universidad University of Colorado Boulder\cite{colorado:_mission}
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.70]{img/waypoint-protocol-sendlist.png}
@@ -1385,15 +1384,15 @@ Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on
 \end{python}
 
 
-Como se puede observar en el c\'odigo, en caso de tener \texttt{takeOffDecision} o \texttt{landDecision} activos en el atributo extra (mapeado a trav\'es de Ice) se añaden los comandos de despegue y aterrizaje, que interpreta son el primero y el \'ultimo. 
+Como se puede observar en el c\'odigo, en caso de tener \texttt{takeOffDecision} o \texttt{landDecision} activos en el atributo extra (enlazado a trav\'es de ICE) se añaden los comandos de despegue y aterrizaje, que interpreta son el primero y el \'ultimo. 
 Se puede observar tambi\'en al final del c\'odigo como se arman los motores con la l\'inea \pythoninline{self.master.arducopter_arm()}
 y como se pone el dispositivo en modo autom\'atico con \pythoninline{self.master.set_mode_auto()}.
-El driver est\'a implementado para ejecutarse en modo auto, se puede ejecutar tambi\'en en modo guided pero el modo auto a diferencia del guided no inhabilita la radio y se puede recuperar en cualquier momento el control del robot a\'ereo. Si bien hay que decir que el modo guided o modo guiado es m\'as preciso que el modo auto.
+El driver est\'a implementado para ejecutarse en modo ``auto'', se puede ejecutar tambi\'en en modo ``guided'' pero el modo ``auto'' a diferencia del ``guided'' no inhabilita la radio y se puede recuperar en cualquier momento el control del robot a\'ereo. Si bien hay que decir que el modo ``guided'' o modo guiado es m\'as preciso que el modo auto.
 
 \section{Capa de conexi\'on con aplicaciones JdeRobot}
 
 
-En \'esta capa se sirven y reciben los objetos de interfaces JdeRobot a través de los cuales se habla con la aplicación, que es el destino final de la información de sensores y la fuente original de los comandos de actuación para el avión, de modo que sean entendibles por el resto del driver.
+En \'esta capa se sirven y reciben los objetos de interfaces JdeRobot a través de los cuales se habla con la aplicación (que es el destino final de la información de sensores y la fuente original de los comandos de actuación para el avión), de modo que sean entendibles por el resto del driver.
 Para \'esto se han implementado 4 hilos, uno por cada interfaz JdeRobot que se sirve o se recibe. En cada uno de \'estos hilos se levanta un servidor ICE para recibir o servir objetos de interfaces JdeRobot mapeando atributos de la clase del servidor al estos servicios ICE.
 
 Los 4 interfaces que van a ser servidos desde \texttt{APM Server} son:
@@ -1409,19 +1408,19 @@ Pose3D, \texttt{NavData} y Extra se describieron en el cap\'itulo 3.1.1, adicion
 \begin{verbatim}
 class Pose3DData  //we consumes Pose3DData
   {
-		float x;
-		float y;
-		float z;
-  	float h;
-		float q0;
-		float q1;
-		float q2;
-		float q3;
+	float x;  //latitude
+	float y;  //longitude
+	float z;  //altitude
+	float h;  //not used now
+	float q0; //quaternion component 1
+	float q1; //quaternion component 2
+	float q2; //quaternion component 3
+	float q3; //quaternion component 4
   };
 
-  ["python:seq:list"] sequence<Pose3DData> PoseSequence;
+  ["python:seq:list"] sequence<Pose3DData> PoseSequence; // list of Pose3DData
   /**
-  * Mission data information 
+  * Mission data information, Pose3DData sequence. 
   */
   class MissionData
   {
@@ -1459,7 +1458,7 @@ class Pose3DData  //we consumes Pose3DData
 
 
 Cada hilo abre un servicio Ice, como todos los servicios ICE que implementamos son similares podremos como ejemplo de implementaci\'on el servicio de Pose3D.
-Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos sirviendo objetos ICE a trav\'es de servidores como el que sigue a \'estas l\'ineas. En paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta \'estos objetos ICE con lo que se ha tenido que cuidar el c\'odigo para evitar problemas de concurrencia.  
+Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos sirviendo objetos ICE a trav\'es de servidores como el que sigue a \'estas l\'ineas. En paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta \'estos objetos ICE con lo que se ha tenido que cuidar el c\'odigo para evitar problemas de concurrencia. En las Figuras 4.7 y 4.8 Se puede observar como se crea un hilo asocado a un servidor ICE y cómo se implementa un servidor ICE respectivamente.
 
 \begin{figure}[H]
 \begin{python}[
@@ -1500,7 +1499,7 @@ Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos
 
 En \'esta capa se interpretan los mensajes recibidos de una y otra capa y se transforman en el formato que sea necesario para que o interprete la opuesta.
 
-El m\'etodo setMission() se llama al recibir v\'ia ICE una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, se ha construido un \textit{listener} que valida el valor de la variable \texttt{mission} y si tiene contenido articula el m\'etodo \pythoninline{setMission(mission)}.
+Al m\'etodo \pythoninline{setMission(mission)} se llama al recibir v\'ia ICE una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, se ha construido un \textit{listener} que valida el valor de la variable \texttt{mission} y si tiene contenido articula el m\'etodo \pythoninline{setMission(mission)}.
 
 \begin{figure}
 \begin{python}[
@@ -1527,7 +1526,7 @@ El m\'etodo setMission() se llama al recibir v\'ia ICE una mission. Para identif
 
 Ya se visto c\'omo se realiza la transformaci\'on entre mensajes de misi\'on en el m\'etodo \pythoninline{setMission(mission)}, ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretaci\'on por JdeRobot.
 Esto lo realizamos principalmente en 2 m\'etodos, \pythoninline{refreshAPMPose3D()} y \pythoninline{refreshAPMnavdata()}.
-Estos m\'etodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informci\'on relevante, ya descritos en el cap\'itulo 4.2, analizarlos y extraer de ellos la informaci\'on necesaria y guardarla en objetos de interfaces JdeRobot para ser servidos a trav\'es de ICE.
+Estos m\'etodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informaci\'on relevante, los descritos en el cap\'itulo 4.2, analizarlos y extraer de ellos la informaci\'on necesaria y guardarla en objetos de interfaces JdeRobot para ser servidos a trav\'es de ICE.
 
 \begin{figure}
 \begin{python}[
@@ -1636,8 +1635,7 @@ La aplicación \texttt{UAV Commander} utiliza 5 interfaces ICE a diferencia de lo
 
 \subsection{Cámara}
 
-\texttt{UAV Commander} utiliza el interfaz \texttt{Camera} para obtener las imágenes y vídeos recogidos desde el driver y mostrarlos en su interfaz gráfico. Para esto primero se crea el servicio ICE y se asigna al interfaz de usuario, como podemos observar en la Figura 5.3.
-Una vez hecho esto, cuando el usuario hace \textit{click} en el \textit{checkBox} de camera, se abre la ventana de cámara. En esta pantalla se recogen los datos de imagen y se asignan al área designado a mostrar las imágenes tal y como se puede ver en la Figura 5.4
+\texttt{UAV Commander} utiliza el interfaz \texttt{Camera} para obtener las imágenes y vídeos recogidos desde el driver y mostrarlos en su interfaz gráfico. Para esto primero se crea el servicio ICE y se asigna al interfaz de usuario, una vez hecho esto, cuando el usuario hace \textit{click} en el \textit{checkBox} de camera, se abre la ventana de cámara. En esta pantalla se recogen los datos de imagen y se asignan al área designado a mostrar las imágenes tal y como se puede ver en la Figura 5.4
 
 \begin{figure}[H]
 \centering{
@@ -1964,7 +1962,7 @@ En la Figura 5.16 se muestran las implementaciones de los m\'etodos con m\'as pe
 \cleardoublepage
 \chapter{Experimentos}
 
-En este capítulo se presentan las pruebas realizadas al sistema que proporcionan su validación experimental y el hardware necesario para la reproducción de las mismas. Estos experimentos corresponden a los casos de prueba descritos en el capítulo 2.2. y se dividen en nueve pruebas repartidas en dos bloques: experimentos en simulación y experimentos con el avión real.
+En este capítulo se presentan las pruebas realizadas al sistema que proporcionan su validación experimental y el hardware necesario para la reproducción de las mismas. Estos experimentos han de validar los subobjetivos descritos en el Capítulo 2 y se dividen en nueve pruebas repartidas en dos bloques: experimentos en simulación y experimentos con el avión real.
 
 \section{Experimentos con misiones en simulador}
 \label{sec:experimentos_simulados}
@@ -2084,9 +2082,9 @@ El objetivo de este experimento es probar que se reciben correctamente los datos
 \item Arranque del avión a radiocontrol y del ordenador de abordo.
 \item Arranque del driver \texttt{APM Server}, éste se conecta nada mas arrancar a la placa estabilizadora APM a través del puerto de serie.
 \item Arranque de la aplicación \texttt{UAV Commander} quien se conecta a su vez al driver.
-\item Se separará el avión del ordenador base hasta que se pierda la señal del wifi. De este modo sabremos la distancia máxima a la que podmeos volar
+\item Se separará el avión del ordenador base hasta que se pierda la señal del wifi. De este modo sabremos la distancia máxima a la que podemos volar
 \end{enumerate}
-Este experimento nos va a permitir conocer a qué distancia vamos a poder volar, este experimento se realizó dos veces: en la primera ocasión los datos arrojados por el experimento, apenas 10 metros, impedían cualquier tipo de vuelo del avión real. Con estos datos sobre la mesa se decidió adquirir un adaptador wifi mas potente para el ordenador de abordo, y se utilizó un \textit{router} con mas alcance para conectar ambos ordenadores. Con este nuevo hardware en una segunda prueba se alcanzó una distancia cercana a los 20 metros que permitiría un vuelo ceñido.
+Este experimento nos va a permitir conocer a qué distancia vamos a poder volar. Este experimento se realizó dos veces: en la primera ocasión los datos arrojados por el experimento, apenas 10 metros, impedían cualquier tipo de vuelo del avión real. Con estos datos sobre la mesa se decidió adquirir un adaptador wifi mas potente para el ordenador de abordo, y se utilizó un \textit{router} con mas alcance para conectar ambos ordenadores. Con este nuevo hardware en una segunda prueba se alcanzó una distancia cercana a los 20 metros que permitiría un vuelo ceñido.
 \begin{figure}[h]
 \centering
   \subfloat[Alcance logrado en la primera prueba de alcance.]{
@@ -2099,7 +2097,7 @@ Este experimento nos va a permitir conocer a qué distancia vamos a poder volar, 
 \end{figure}
 
 \subsection{Experimento de recepción de información sensorial y seguimiento del avión a través del \texttt{UAV Commander}}
-El objetivo de este experimento es probar que la integración del sistema y el avión real a radiocontrol se ha realizado correctamente. Se validará que se reciben correctamente los datos entregados por el driver y que se presentan fielmente a travñes del interfaz de usuario. Para ello se van a realizar los pasos del experimento anterior salvo que en estte caso también moveremos el prototipo en sus 3 ejes de libertad para comprobar que se reciben y se presentan correctamente los datos en la ventana de actitud.
+El objetivo de este experimento es probar que la integración del sistema y el avión real a radiocontrol se ha realizado correctamente. Se validará que se reciben correctamente los datos entregados por el driver y que se presentan fielmente a través del interfaz de usuario. Para ello se van a realizar los pasos del experimento anterior salvo que en este caso también moveremos el prototipo en sus 3 ejes de libertad para comprobar que se reciben y se presentan correctamente los datos en la ventana de actitud.
 
 La prueba se evidencia en el vídeo \url{https://youtu.be/HFR7JjD-ZIs}
 
@@ -2120,8 +2118,8 @@ El experimento demuestra la robustez de ambos desarrollos ante pérdidas de señal
 \label{chap:conclusiones}
 
 Este PFC abre las puertas a futuros desarrollos con este tipo de robots aéreos, que hasta ahora JdeRobot no soportaba, sentando las bases del desarrollo de aplicaciones en JdeRobot para aviones autónomos. 
-A lo largo del documento se han descrito los objetivos de este Proyecto Fin de Carrera, la plataforma hardware utilizada y la infraestructura software realizada para abordar el problema descrito en el capítulo dos. Se ha detallado el diseño e implementación de todos los desarrollos implementados en este proyecto, \texttt{APM Server} y \texttt{UAV Commander}, y se han validado con sendos experimentos en el cpítulo seis.
-El objetivo general de dar soporte en JdeRobot a drones tipo avión, incluyendo misiones como secuencia de puntos de paso se ha cumplido satisfactoriamente, al igual que los 3 subobjetivos definidos en el capítulo dos. 
+A lo largo del documento se han descrito los objetivos de este Proyecto Fin de Carrera, la plataforma hardware utilizada y la infraestructura software realizada para abordar el problema descrito en el capítulo dos. Se ha detallado el diseño e implementación de todos los desarrollos implementados en este proyecto, \texttt{APM Server} y \texttt{UAV Commander}, y se han validado con sendos experimentos en el capítulo seis.
+El objetivo general de dar soporte en JdeRobot a drones tipo avión, incluyendo misiones como secuencia de puntos de paso se ha cumplido satisfactoriamente, al igual que los tres subobjetivos definidos en el capítulo dos. 
 
 
 
