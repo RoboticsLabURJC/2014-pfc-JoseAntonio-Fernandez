@@ -158,6 +158,9 @@ breaklines=true,
 \Large
 INGENIER\'IA T\'ECNICA INFORM\'ATICA EN SISTEMAS
 
+\Large
+INGENIER\'IA T\'ECNICA EN INFORM\'ATICA DE SISTEMAS
+
 \vspace{0.4cm}
 
 \large
@@ -208,7 +211,7 @@ Navegación por posición para un avión autónomo con JdeRobot
 \end{center}
 
 \vspace{1cm}
-La defensa del presente Proyecto Fin de Carrera se realiz\'o el d\'ia \qquad$\;\,$ de \qquad\qquad\qquad\qquad \newline de 20XX, siendo calificada por el siguiente tribunal:
+La defensa del presente Proyecto Fin de Carrera se realiz\'o el d\'ia \qquad$\;\,$ de \qquad\qquad\qquad\qquad \newline de 2017, siendo calificada por el siguiente tribunal:
 
 
 \vspace{0.5cm}
@@ -230,7 +233,7 @@ y habiendo obtenido la siguiente calificaci\'on:
 
 \vspace{1cm}
 \begin{flushright}
-Fuenlabrada, a \qquad$\;\,$ de \qquad\qquad\qquad\qquad de 20XX
+Fuenlabrada, a \qquad$\;\,$ de \qquad\qquad\qquad\qquad de 2017
 \end{flushright}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -247,10 +250,10 @@ Fuenlabrada, a \qquad$\;\,$ de \qquad\qquad\qquad\qquad de 20XX
 %\addcontentsline{toc}{chapter}{Resumen} % si queremos que aparezca en el \'indice
 \markboth{RESUMEN}{RESUMEN} % encabezado
 
-Los UAV o Drones se han popularizado en los \'ultimos años hasta es punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ambitos de nuestra vida. 
-El objetivo de este trabajo final es desarrollar tecnolog\'ia que permita la programaci\'on de aplicaciones rob\'oticas con un avi\'on aut\'onomo. Este proyecto se ubica por lo  tanto en el contexto de rob\'otica y drones, en rob\'otica a\'erea.
-En este PFC se documenta el análisis, diseño e implementación de un driver y una aplicación de teleoperación por puntos de paso en JdeRobot. A lo largo del mismo se detalla tanto el hardware como el software utilizado para la implementación de ambos y se describen los puntos mas importante de ambos desarrollos. 
-Como plataforma robótica se ha empleado JdeRobot 5.3. El lenguaje de programación ha sido Python y se han empleado las bibliotecas OpenCV, OWSLib y PyQt, para tratamiento de imágenes, apoyo a la descarga de mapas y para construir la interfaz gráfica de usuario.
+Los UAV o Drones se han popularizado en los \'ultimos años hasta el punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ámbitos de nuestra vida. 
+El objetivo de este trabajo final es desarrollar tecnolog\'ia que permita la programaci\'on de aplicaciones rob\'oticas con un avi\'on aut\'onomo. Este proyecto se ubica en el contexto de rob\'otica y drones, en rob\'otica a\'erea.
+En él se documenta el análisis, diseño e implementación de un driver y una aplicación de teleoperación por puntos de paso en JdeRobot. A lo largo del mismo se detallan tanto el hardware como el software utilizados para la implementación y se describen los puntos más importantes. 
+Como plataforma robótica se ha empleado JdeRobot 5.3. El lenguaje de programación ha sido Python y se han empleado las bibliotecas OpenCV, OWSLib y PyQt, para tratamiento de imágenes, apoyo a la descarga de mapas y para construir la interfaz gráfica de usuario de la aplicación.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -284,26 +287,26 @@ Como plataforma robótica se ha empleado JdeRobot 5.3. El lenguaje de programació
 \label{sec:intro} % etiqueta para poder referenciar luego en el texto con ~\ref{sec:intro}
 \pagenumbering{arabic} % para empezar la numeraci\'on de p\'agina con n\'umeros
 
-Los UAV o Drones se han popularizado en los \'ultimos años hasta es punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ambitos de nuestra vida. Si bien se est\'an utilizando ya de forma habitual en sectores como el cine o la ingenier\'ia civil, a\'un se est\'an explorando muchas de las posibles utilidades que estos robots pueden llegar a ofrecer.
+Los UAV o Drones se han popularizado en los \'ultimos años hasta el punto de formar parte de nuestro d\'ia a d\'ia con aplicaciones en muchos ámbitos de nuestra vida. Si bien se est\'an utilizando ya de forma habitual en sectores como el cine o la ingenier\'ia civil, a\'un se est\'an explorando muchas de las posibles utilidades que estos robots pueden ofrecer.
 
-El objetivo de este trabajo final es desarrollar tecnolog\'ia que permita la programaci\'on de aplicaciones rob\'oticas con un avi\'on aut\'onomo. Este proyecto se ubica por lo  tanto en el contexto de rob\'otica y drones, en rob\'otica a\'erea.
+El objetivo de este trabajo es desarrollar tecnolog\'ia que permita la programaci\'on de aplicaciones rob\'oticas con un avi\'on aut\'onomo. Este proyecto se ubica por lo  tanto en el contexto de rob\'otica y drones, en rob\'otica a\'erea.
 
 \section{Rob\'otica A\'erea}
 \label{sec:robotica_aerea}
 
-Los or\'igenes de la rob\'otica aerea tienen origen militar y su avance ha estado intr\'insecamente ligado a este \'ambito durante todo el siglo XX. Se consideran el origen de los aviones no tripulados los experimentos llevados a cabo a principios del siglo XX durante la 1ª guerra mundial como el \textit{``Aerial Target''} desarrollado por el capit\'an A. H. Low para para su uso como blanco a\'ereo. Si bien eran veh\'iculos no tripulados (\textit{Unmaned Aereal Vehicles}) no eran aut\'onomos y eran manejados desde tierra a trav\'es de una radio. 
-No es hasta el final del siglo XX cuando bajo el escenario de la guerra de Vietnam y ante la creciente p\'erdida de vidas de los pilotos estos veh\'iculos vuelvan de nuevo a ser objeto de desarrollo y se conviertan en veh\'iculos aut\'onomos.
+Los or\'igenes de la rob\'otica aérea tienen origen militar y su avance ha estado intr\'insecamente ligado a este \'ambito durante todo el siglo XX. Se consideran el origen de los aviones no tripulados los experimentos llevados a cabo a principios del siglo XX durante la 1ª guerra mundial como el \textit{``Aerial Target''} desarrollado por el capit\'an A. H. Low para su uso como blanco a\'ereo. Si bien eran veh\'iculos no tripulados (\textit{Unmaned Aereal Vehicles}) no eran aut\'onomos y eran manejados desde tierra a trav\'es de una radio. 
+No es hasta el final del siglo XX cuando bajo el escenario de la guerra de Vietnam y ante la creciente p\'erdida de vidas de los pilotos, estos veh\'iculos vuelven de nuevo a ser objeto de desarrollo y se conviertan en veh\'iculos aut\'onomos.
 
 Desde ese momento y hasta nuestros d\'ias se utilizan de forma habitual en el \'ambito militar en misiones de reconocimiento, bombardeos o apoyo sin arriesgar vidas humanas.
 
-A los largo de los primeros años de este siglo debido al abaratamiento de los componentes electr\'onicos y a su minituarizaci\'on y potencia, la rob\'otica a\'erea se ha 'desmilitarizado' y est\'a experimentado un enorme crecimiento en el \'ambito de las aplicaciones civiles.
+A los largo de los primeros años de este siglo, debido al abaratamiento de los componentes electr\'onicos y a su minituarizaci\'on y potencia, la rob\'otica a\'erea se ha 'desmilitarizado' y est\'a experimentado un enorme crecimiento en aplicaciones civiles.
 
 Hoy en d\'ia es com\'un encontrar en cualquier jugueter\'ia quadrac\'opetros radio-pilotados por poco menos de 30 euros y en tiendas especializadas podemos encontrarlos ya con el hardware y software integrados que les permiten seguir una serie de puntos de control y comportarse de forma aut\'onoma por poco m\'as de 200 \euro.
 
-En la actualidad el uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que m\'as ha crecido su inversi\'on, y es que seg\'un la empresa analista especializada en drones Droneii con sede en Hamburgo, en un estudio sobre la inversi\'on en el sector\cite{Droneii:_drone_Invest} en europa se invirti\'o en proyectos dom\'esticos en 2016 cerca de 65 millones de d\'olares increment\'andose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
+El uso de AUV o drones se ha popularizado tanto que es una de las industrias en las que m\'as ha crecido la inversi\'on, y es que, seg\'un la empresa analista especializada en drones Droneii con sede en Hamburgo en un estudio sobre la inversi\'on en el sector\cite{Droneii:_drone_Invest}, en europa se invirti\'o en proyectos dom\'esticos en 2016 cerca de 65 millones de d\'olares increment\'andose esta cifra hasta los 314 millones si atendemos al mercado norteamericano.
 
 Estos datos se asientan en un mercado cada vez m\'as extendido y con una gran proyecci\'on de crecimiento. La publicaci\'on BI Intelligence\footnote{\url{http://www.businessinsider.com}}\cite{businessinsider:_drones_5_years} espera que las ventas de drones alcancen los 12.000 millones en 2021.
-La venta de drones es s\'olo una de las piezas de \'este negocio incipiente, empresas como DJI, Xiaomy o 3DR estan en la punta de lanza de la  innovaci\'on desarrollo de \'estos, pero es t\'an solo la punta del iceberg. Esta industria est\'a potenciando otras como la de las videoc\'amaras deportivas GoPRO e incluso estan surgiendo nuevos puestos de trabajo como el de operador de drones.
+La venta de drones es s\'olo una de las piezas de este negocio incipiente, empresas como DJI, Xiaomy o 3DR están en la vanguardiaa de la  innovaci\'on de \'estos, pero es tan solo la punta del iceberg. Esta industria est\'a potenciando otras como la de las videoc\'amaras deportivas GoPRO e incluso están surgiendo nuevos puestos de trabajo como el de operador de drones.
 Las grandes empresas tecnol\'ogicas ven el potencial econ\'omico que pueden aportar a sus balances y se est\'a produciendo una pugna por adquirir las principales empresas esecializadas en drones, Verizon compr\'o en febrero Skyward, FaceBook compr\'o Acenta y Google Titan Aeroespace.
 
 La enorme aceptaci\'on y expansi\'on de los drones se ha producido de un modo tan explosivo que en ciertos aspectos de la sociedad no se ha avanzado lo suficiente como para que su utilizaci\'on se haga de forma segura.
@@ -311,18 +314,14 @@ La enorme aceptaci\'on y expansi\'on de los drones se ha producido de un modo ta
 \begin{itemize}
 \item Problemas de seguridad. Los drones y en especial los drones de gran envergadura, m\'as all\'a de su uso profesional o l\'udico, pueden ser muy peligrosos. Sus palas giran a m\'as de 1000RPM y pueden producir cortes o amputaciones o producir daños personales y/o materiales en el caso de una p\'erdida de control del mismo o una ca\'ida. Esto se hizo patente cuando durante la filmaci\'on de un concierto del cantante Enrique Iglesias en Tijuana (M\'exico) \'este agarr\'o el drone que le grababa de forma espont\'anea y \'esto le produjo severos cortes en su mano derecha que hizo que sangrase profusamente.
 
-Tambi\'en pueden utilizarse con fines terroristas como se sospech\'o en Francia cuando se detectaron en octubre de 2014 volando en las proximidades de varias centrales nucleares. Adem\'as, en la noche del 19 al 20 de enero de 2015 otro 'drone' sobrevol\'o el Palacio del El\'iseo, donde tiene su residencia el presidente de la rep\'ublica francesa. Y a ellos hay que sumar los 19 'drones' que han sido avistados sobrevolando 17 centrales nucleares francesas de octubre a febrero de 2015.
+Tambi\'en pueden utilizarse con fines terroristas, como se sospech\'o en Francia cuando se detectaron en octubre de 2014 volando en las proximidades de varias centrales nucleares. Adem\'as, en la noche del 19 al 20 de enero de 2015 otro drone sobrevol\'o el Palacio del El\'iseo, donde tiene su residencia el presidente de la rep\'ublica francesa. Y a ellos hay que sumar los 19 drones que han sido avistados sobrevolando 17 centrales nucleares francesas de octubre a febrero de 2015.
 Su bajo coste y su versatilidad producen que proliferen muchos drones construidos para fines oscuros.
 
 Algunas empresas del sector se han hecho eco de estos ataques y han deshabilitado sus drones en zonas de conflicto para evitar que se utilicen como armas de guerra como es el caso de la empresa china DJI, l\'ider en el sector.\footnote{\url{http://clipset.20minutos.es/dji-bloquea-drones-guerra-irak-siria/}}
 
-A estos problemas de seguridad hay que unir el problema del \textit{hacking}, muchos de los m\'as extendidos drones comerciales no tienen protecci\'on alguna contra el ataque de un ciberdelincuente. Por poner un ejemplo, el modo en el que el Parrot AR-Drone se empareja con el m\'ovil es una conexi\'on plana sin contraseña, haciendo posible conectarse a \'el por un tercero con unas pocas l\'ineas de c\'odigo.
-\begin{itemize}
-\item Gu\'ia sencilla de hacking del AR-Drone 2.0 - http://www.xdrones.es/guia-para-hackear-el-ar-drone-2-0/
-\item C\'omo atacar el AR-Drone 2.0 con nodecopter - http://www.nodecopter.com/hack
-\item Entorno para \textit{hackear} drones a trav\'es de WIFI - https://github.com/samyk/skyjack
-\end{itemize}
-Existen t\'ecnicas como el GPS Spoofing que pueden ``secuestrar'' cualquier drone que se gu\'ie por GPS como ocurri\'o en Ir\'an en 2011 d\'onde hackers iran\'ies se hicieron con el control de un drone militar americano Lockheed Martin RQ-170 Sentinel\footnote{\url{https://en.wikipedia.org/wiki/Iran\%E2\%80\%93U.S._RQ-170_incident}} mediante \'esta t\'ecnica que engaña a la antena GPS del UAV haci\'endole pensar que se encuentra en otro lugar. Si bien para este ataque se necesit\'o un hardware caro que har\'ia el ataque prohibitivo, hoy es posible realizarlo por unos pocos cientos de euros con placas como hackrf o braderf como se demostr\'o por la compañ\'ia china Qihoo 360 en las conferencias de Haking DEFCON de 2015.\cite{rtl-sdr:_gps_spoofing}
+A estos problemas de seguridad hay que unir el problema del \textit{hacking}. Muchos de los m\'as extendidos drones comerciales no tienen protecci\'on alguna contra el ataque de un ciberdelincuente. Por poner un ejemplo, el modo en el que el Parrot AR-Drone se empareja con el m\'ovil es una conexi\'on plana sin contraseña, hace posible conectarse a \'el por un tercero con unas pocas l\'ineas de c\'odigo\footnote{Gu\'ia sencilla de hacking del AR-Drone 2.0 - http://www.xdrones.es/guia-para-hackear-el-ar-drone-2-0/}\footnote{C\'omo atacar el AR-Drone 2.0 con nodecopter - http://www.nodecopter.com/hack}\footnote{Entorno para \textit{hackear} drones a trav\'es de WIFI - https://github.com/samyk/skyjack}.
+
+Existen t\'ecnicas como el \textit{GPS Spoofing} que pueden ``secuestrar'' cualquier drone que se gu\'ie por GPS como ocurri\'o en Ir\'an en 2011 d\'onde hackers iran\'ies se hicieron con el control de un drone militar americano Lockheed Martin RQ-170 Sentinel\footnote{\url{https://en.wikipedia.org/wiki/Iran\%E2\%80\%93U.S._RQ-170_incident}} mediante \'esta t\'ecnica que engaña a la antena GPS del UAV haci\'endole pensar que se encuentra en otro lugar. Si bien para este ataque se necesit\'o un hardware caro que har\'ia el ataque prohibitivo, hoy es posible realizarlo por unos pocos cientos de euros con placas como hackrf o braderf como se demostr\'o por la compañ\'ia china Qihoo 360 en las conferencias de Haking DEFCON de 2015.\cite{rtl-sdr:_gps_spoofing}
 
 \item Problemas regulatorios. Otro problema importante que apenas se est\'a empezando a abordar es el regulatorio. Con el fin de minimizar el riesgo para las personas se est\'a llevando a cabo una regulaci\'on del sector en todo el mundo. En España por ejemplo hasta abril de 2014, volar un drone para uso civil estaba absolutamente prohibido. La no regulaci\'on no indicaba que se pudiese volar, indicaba m\'as bien todo lo contrario.
 En este marco regulatorio no se puede por ejemplo, volar un drone en n\'ucleos urbanos, s\'olo debe hacerse en zonas previstas a tal efecto. Tampoco es posible volar un drone de m\'as de 2Kg m\'as all\'a de donde puedas verlo (500m), y es que antes era muy usual ponerle una c\'amara y volar varios kil\'ometros con \'el.
@@ -331,17 +330,17 @@ Para hacernos una idea clara del marco regulatorio actual para su uso no profesi
 1.1 publicada por la agencia EFE.
 \begin{figure}
   \centering
-  \includegraphics[scale=0.40]{img/infografia_legislacion_drones.jpg}
+  \includegraphics[scale=0.55]{img/infografia_legislacion_drones.jpg}
   \caption{Infograf\'ia de la Agencia EFE con la regulaci\'on}
   \label{fig:infografia_efe}
 \end{figure}
 
 Para poder utilizar los drones con fines profesionales la ley es a\'un m\'as restrictiva. La Agencia Española de Seguridad A\'erea AESA exige el registro de las aeronaves civiles pilotadas por control remoto cuya masa m\'axima al despegue exceda de 25 kg, que deber\'an estar inscritas en el Registro de matr\'icula de aeronaves y disponer de certificado de aeronavegabilidad.
-Para drones de menor peso, el piloto deber\'a presentar ante la Agencia Estatal de Seguridad A\'erea una comunicaci\'on previa y declaraci\'on responsable) con una antelaci\'on m\'inima de cinco d\'ias al d\'ia del inicio de la operaci\'on y \'este ha de estar habilitado como operador de drones. La ley completa se puede consultar el BOE\footnote{\url{ http://www.seguridadaerea.gob.es/media/4243006/rdl_8_2014_4julio.pdf}}
+Para drones de menor peso, el piloto deber\'a presentar ante la Agencia Estatal de Seguridad A\'erea una comunicaci\'on previa y declaraci\'on responsable con una antelaci\'on m\'inima de cinco d\'ias al d\'ia del inicio de la operaci\'on, y \'este ha de estar habilitado como operador de drones. La ley completa se puede consultar el BOE\footnote{\url{ http://www.seguridadaerea.gob.es/media/4243006/rdl_8_2014_4julio.pdf}}
 
 \end{itemize}
 
-Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, forestal, ingenier\'ia civil y presencia en sectores como el de salvamento o seguridad y protecci\'on, el nicho de mercado de los UAV esta lejos de su cima. D\'ia a d\'ia se investigan nuevos usos en sectores como el de la log\'istica o las telecomunicaciones, como veremos m\'as adelante, suponiendo un reto constante para investigadores, desarrolladores, ingenieros, inversores y entidades regulatorias.
+Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, fotograf\'ia, agropecuario, forestal, ingenier\'ia civil y presencia en sectores como el de salvamento o seguridad y protecci\'on, el nicho de mercado de los UAV está lejos de su cima. D\'ia a d\'ia se investigan nuevos usos en sectores como el de la log\'istica o las telecomunicaciones, como veremos m\'as adelante, suponiendo un reto constante para investigadores, desarrolladores, ingenieros, inversores y entidades regulatorias.
 
 
 
@@ -349,21 +348,21 @@ Con su uso ya ampliamente extendido en sectores como el cine, la televisi\'on, f
 \label{sec:tipos_aeronaves}
 
 
-Las aeronaves son la base que permite que nuestro robot vuele, de ah\'i que convenga dedicar unas l\'ineas a entender la base de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC, los llamados aerodinos.
+Las aeronaves son la base que permite que nuestro robot vuele, de ah\'i que convenga dedicar unas l\'ineas a entender los fundamentos de las mismas y en particular las que son objeto de estudio y desarrollo en este PFC, los llamados aerodinos.
 
 Los aerodinos son aquellas aeronaves que vuelan a pesar de pesar m\'as que el aire, son capaces de generar sustentaci\'on por sus propios medios a diferencia de los aerostatos como por ejemplo los globos aerost\'aticos. Existen principalmente 2 tipos de aerodinos si atendemos al modo en que generan su sustentaci\'on con sus alas: de ala fija y las de ala rotatoria.
 
-Dentro de los primeros tenemos aquellos aerodinos que tienes sus alas fijas al fuselaje, y que comunmente conocemos como aviones. Seg\'un la OACI, un avi\'on es un «Aerodino propulsado por motor, que debe su sustentaci\'on en vuelo principalmente a reacciones aerodin\'amicas ejercidas sobre superficies que permanecen fijas en determinadas condiciones de vuelo»
+Dentro de los primeros tenemos aquellos aerodinos que tienes sus alas fijas al fuselaje, y que comúnnmente conocemos como aviones. Seg\'un la OACI, un avi\'on es un «Aerodino propulsado por motor, que debe su sustentaci\'on en vuelo principalmente a reacciones aerodin\'amicas ejercidas sobre superficies que permanecen fijas en determinadas condiciones de vuelo».
 Algunos ejemplos de aerodinos de ala fija son los aeroplanos, planeadores/veleros, aladeltas, parapentes, paramotores y ultraligeros.
 
-Este tipo de aerodinos tienen como principal ventaja que la carga de aire que necesitan en sus alas puede ser producida de muchas formas distinta (los veleros no tienen ning\'un tipo de propulsi\'on). Esta carga es variable en funci\'on de la superficie alar del mismo y permite por tanto cargas m\'as grandes que si instal\'asemos el mismo propulsor en un ala rotatoria.
+Este tipo de aerodinos tienen como principal ventaja que la carga de aire que necesitan en sus alas puede ser producida de muchas formas distintas (los veleros no tienen ning\'un tipo de propulsi\'on). Esta carga es variable en funci\'on de la superficie alar del mismo y permite por tanto cargas m\'as grandes que si instal\'asemos el mismo propulsor en un ala rotatoria.
 Pongamos como ejemplo el A380 de Airbus, es el avi\'on de pasajeros m\'as grande del mundo y cuenta con 4 motores que producen un empuje de entre 70.000 y 80.000lbs, unas 32-36 toneladas de empuje cada uno generando por  tanto entre los 4 a m\'aximo rendimiento y optim\'as condiciones alrededor de 144 toneladas de empuje. Este avi\'on tiene un peso m\'aximo al despegue\footnote{Peso m\'aximo que es capaz de soportar un avi\'on en su maniobra de despegue}\ de entre 560 y 590 toneladas. Tenemos por tanto que necesitamos en este caso \nicefrac{1}{4} del peso total en empuje para despegar este avi\'on.
 Si hici\'esemos este mismo ejercicio con un aerodino de ala rotatoria como el Boing AH-64 o Apache con un peso m\'aximo al despegue de 9,5 toneladas necesitar\'iamos que la combinaci\'on que realizan empuje y palas superase esos 9,5 toneladas para siguiera levantar del suelo.
 Este tipo de aerodinos son por tanto m\'as eficientes, r\'apidos, con mayor carga de pago, mayor alcance debido a su menor consumo y m\'as estables.
 
-Dentro de la tipificaci\'on de ala rotatoria tenemos aquellas aerodinos que producen su sustentaci\'on con el movimiento (rotaci\'on) de sus alas. En este tipo de aerodinos las alas, tambi\'en llamadas 'palas', que giran en torno a un eje produciendo con este giro la sustentaci\'on necesaria para despegar del suelo.
-Algunos ejemplos de este tipo de aerodinos son los helic\'opteros, autogiros, convertibles o los ampliamente conocidos en rob\'otica aerea los quadric\'opteros.
-Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su versatilidad a la hora de realizar las maniobras de despegue y aterrizaje que pueden realizarse de forma vertical (VTOL\footnote{Vertical take off and landing }), adem\'as de la capacidad de realizar vuelo estacionario\footnote{Mantenerse est\'aticamente en un punto elevado} que le hacen imprescindible en escenarios poco accesibles o donde no es posible aterrizar como el rescate mar\'itimo.
+Dentro de la tipificaci\'on de ala rotatoria tenemos aquellos aerodinos que producen su sustentaci\'on con el movimiento (rotaci\'on) de sus alas. En este tipo de aerodinos las alas, tambi\'en llamadas 'palas', que giran en torno a un eje produciendo con este giro la sustentaci\'on necesaria para despegar del suelo.
+Algunos ejemplos de este tipo de aerodinos son los helic\'opteros, autogiros, convertibles o los, ampliamente conocidos en rob\'otica aérea, quadric\'opteros.
+Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su versatilidad a la hora de realizar las maniobras de despegue y aterrizaje que pueden realizarse de forma vertical (VTOL\footnote{Vertical take off and landing }), adem\'as de la capacidad de realizar vuelo estacionario\footnote{Mantenerse est\'aticamente en un punto elevado} que le hacen imprescindible en escenarios poco accesibles o donde no es posible aterrizar, como el rescate mar\'itimo.
 
 
 \section{Aplicaciones}
@@ -372,17 +371,17 @@ Este tipo de aerodino tiene como principal ventaja frente a los ala fija en su v
 La rob\'otica a\'erea ha experimentado un crecimiento exponencial en los \'ultimos años, se ha popularizado su uso y se ha extendido la comercializaci\'on de drones.
 
 El sector donde m\'as r\'apida acogida ha tenido la rob\'otica a\'erea ha sido el sector audiovisual, se usa de forma habitual en cine, grabaci\'on de espect\'aculos en directo televisi\'on y fotograf\'ia. El porqu\'e de tal acogida se basa principalmente en dos factores, los costes y la viabilidad t\'ecnica. 
-Los costes de realizar una toma a\'erea en una producci\'on antes pasaban por el alquiler de un helic\'optero, dependiendo de la toma, as\'i como del material y la contrataci\'on de los medios humanos a bordo para realizarlas pod\'ia ascender a entre 4000 y 6000 euros la hora. Hoy en d\'ia basta con un pequeño dron de entre 400 y 1800 euros\footnote{Precios aproximados extra\'idos de la empresa especializada World Aviation Helicopters \url{https://www.worldaviation.es/es/servicio-drones.aspx}} por jornada, e incluir\'ian en el tramo m\'as elevado piloto y operador de c\'amara.
-Como se puede constatar f\'acilmente, el ahorro incurrido no es desdeñable y ofrece a pequeñas productoras acceder a \'este tipo de grabaciones que de otro modo ser\'ian privativas.
-Aunque el aspecto econ\'omico es especialmente importante para decantarse por el uso de este tipo de medios, existen en el mundo audiovisual trabajos que no hubiesen sido posibles sin los drones. Grabaciones en las que el riesgo humano y material que habr\'ia que asumir es tan alto que tan solo son factibles de este modo. Debemos por tanto a los drones fotograf\'ias como la de la Figura 1.2 que si bien nos se tom\'o como parte de ning\'un proyecto cinematogr\'afico nos hace una idea de lo que la rob\'otica a\'erea puede ofrecernos.
+Los costes de realizar una toma a\'erea en una producci\'on antes pasaban por el alquiler de un helic\'optero, dependiendo de la toma, as\'i como del material y la contrataci\'on de los medios humanos a bordo para realizarlas pod\'ia ascender a entre 4000 y 6000 euros la hora. Hoy en d\'ia basta con un pequeño drone de entre 400 y 1800 euros\footnote{Precios aproximados extra\'idos de la empresa especializada World Aviation Helicopters \url{https://www.worldaviation.es/es/servicio-drones.aspx}} por jornada, e incluir\'ian en el tramo m\'as elevado piloto y operador de c\'amara.
+Como se puede constatar f\'acilmente, el ahorro no es desdeñable y ofrece a pequeñas productoras acceder a este tipo de grabaciones que de otro modo ser\'ian privativas.
+Aunque el aspecto econ\'omico es especialmente importante para decantarse por el uso de este tipo de medios, existen en el mundo audiovisual trabajos que no hubiesen sido posibles sin los drones. Grabaciones en las que el riesgo humano y material que habr\'ia que asumir es tan alto que tan sólo son factibles de este modo. Debemos por tanto a los drones fotograf\'ias como la de la Figura 1.2 que si bien no se tom\'o como parte de ning\'un proyecto cinematogr\'afico nos hace una idea de lo que la rob\'otica a\'erea puede ofrecernos.
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.45]{img/drone_volcan.jpg}
-  \caption{Drone grabando en el interior de un crater}
+  \caption{Drone grabando en el interior de un cráter}
   \label{fig:drone_volcan}
 \end{figure}
-Otro sector que ha adaptado r\'apidamente el uso de \'estas pequeñas aeronaves es el agropecuario donde se utiliza para medir la condiciones del terreno, con el fin de recoger informaci\'on sobre la hidrataci\'on, la temperatura o el ritmo de crecimiento de los cultivos. Con el punto de vista e im\'agenes de los drones el agricultor puede tener en tiempo real una foto del estado de su viñedo localizando con facilidad zonas afectadas por plagas o incluso vigilar el cultivo para evitar la entrada de intrusos. Controlan el riego e incluso esparcen los pesticidas de manera eficiente siendo un arma eficaz contra las plagas, se utilizan incluso como espantap\'ajaros.
-La aplicaci\'on de drones en este sector se remonta a 1983 cuando el Ministerio de Agricultura de Jap\'on preocupado por el envejecimiento de su poblaci\'on rural encarg\'o a Yamaha el desarrollo de una aeronave no tripulada capaz de realizar varias tareas de las anteriormente descritas, a fin de atraer m\'as gente al medio rural. En 1990 se entregaron las primeras unidades del Yamaha RMAX y actualmente el 40\% de los arrozales japoneses cuentan con un drone sobrevol\'andolos. Como m\'etodo de riego, el drone tiene dos contenedores que pueden albergar una cantidad de 8 litros cada uno y en caso de utilizarse para esparcimiento de semillas o material granulado, posee otros dos contenedores que se pueden adaptar los cuales tienen una capacidad de 13 litros cada uno. Puede elevarse a una altura de 400 metros y dispone de un sistema de GPS que no solo le permite mayor estabilidad durante el vuelo, sino que tambi\'en le proporciona al usuario la posibilidad de programar la ruta desde antes de ser lanzado. Tiene una autonom\'ia de una hora durante el vuelo.
+Otro sector que ha adaptado r\'apidamente el uso de \'estas pequeñas aeronaves es el agropecuario, donde se utiliza para medir la condiciones del terreno, con el fin de recoger informaci\'on sobre la hidrataci\'on, la temperatura o el ritmo de crecimiento de los cultivos. Con el punto de vista e im\'agenes de los drones el agricultor puede tener en tiempo real una foto del estado de su viñedo localizando con facilidad zonas afectadas por plagas o incluso vigilar el cultivo para evitar la entrada de intrusos. Controlan el riego e incluso esparcen los pesticidas de manera eficiente siendo un arma eficaz contra las plagas, se utilizan incluso como espantap\'ajaros.
+La aplicaci\'on de drones en este sector se remonta a 1983 cuando el Ministerio de Agricultura de Jap\'on preocupado por el envejecimiento de su poblaci\'on rural encarg\'o a Yamaha el desarrollo de una aeronave no tripulada capaz de realizar varias tareas de las anteriormente descritas, a fin de atraer m\'as gente al medio rural. En 1990 se entregaron las primeras unidades del Yamaha RMAX y actualmente el 40\% de los arrozales japoneses cuentan con un drone sobrevol\'andolos. Como m\'etodo de riego, el drone tiene dos contenedores que pueden albergar una cantidad de 8 litros cada uno y en caso de utilizarse para esparcimiento de semillas o material granulado, posee otros dos contenedores que se pueden adaptar los cuales tienen una capacidad de 13 litros cada uno. Puede elevarse a una altura de 400 metros y dispone de un sistema de GPS que no sólo le permite mayor estabilidad durante el vuelo, sino que tambi\'en le proporciona al usuario la posibilidad de programar la ruta desde antes de ser lanzado. Tiene una autonom\'ia de una hora durante el vuelo.
 
 \begin{figure}[H]
   \centering
@@ -408,54 +407,51 @@ En España varias empresas de vigilancia privada ofrecen sus servicios con drones
 \item SkyDron - https://www.skydron.es/seguridad-aerea-privada-drones/
 \end{itemize}
 
-Son utilizados tambi\'en por los servicios de rescate tras una cat\'astrofe para evaluar los daños experimentados y ayudas a encontrar supervivientes entre los escombros. Algunos son capaces de enviar a los supervivientes paquetes de supervivencia con salvavidas, alimentos o agua mientras esperan su rescate\footnote{\url{http://www.elmundo.es/economia/2015/09/15/55f8239546163fc6598b45c3.html}}
+Son utilizados tambi\'en por los servicios de rescate tras una cat\'astrofe para evaluar los daños experimentados y ayudar a encontrar supervivientes entre los escombros. Algunos son capaces de enviar a los supervivientes paquetes de supervivencia con salvavidas, alimentos o agua mientras esperan su rescate\footnote{\url{http://www.elmundo.es/economia/2015/09/15/55f8239546163fc6598b45c3.html}}
 
-Es muy extendido en el mantenimiento de infraestructuras, como su uso en trabajos como:
+Es muy extendido en el mantenimiento de infraestructuras, en trabajos como:
 \begin{itemize}
-\item La inspecci\'on de tendidos el\'ectricos, d\'onde antes se utilizaban helic\'opteros. Ahora con los drones se obtienen mejores im\'agenes e inspecciones mas precisas y meticulosas sin arriesgar vidas humanas y por una m\'inima parte del coste que se asum\'ia. 
+\item La inspecci\'on de tendidos el\'ectricos. Donde antes se utilizaban helic\'opteros ahora con los drones se obtienen mejores im\'agenes e inspecciones más precisas y meticulosas sin arriesgar vidas humanas y por una m\'inima parte del coste que se asum\'ia. 
 \item Estos mismos drones tambi\'en se utilizan para la revisi\'on de las palas de los aerogeneradores, evitando que el personal de mantenimiento tenga que descolgarse desde ellos para su an\'alisis.
 \item Se utilizan tambi\'en drones para revisar oleoductos, especialmente en zonas de dif\'icil acceso.
 \item Conservaci\'on de carreteras, detectando el estado de conservaci\'on de las calzadas, obst\'aculos o potenciales situaciones de peligro debido a accidentes o condiciones meteorol\'ogicas adversas.
 \item Supervisi\'on y mantenimiento de presas y embalses.
 \end{itemize}
-La empresa española Ferrovial fue la pionera en España en obtener la licencia para este tipo de trabajos\footnote{\url{http://www.ferrovial.com/es/prensa/noticias/ferrovial-servicios-obtiene-la-licencia-para-operar-drones-en-espana/}}
+La empresa española Ferrovial fue la pionera en España en obtener la licencia para este tipo de trabajos\footnote{http://www.ferrovial.com/es/prensa/noticias/ferrovial-servicios-obtiene-la-licencia-para-operar-drones-en-espana/}
 
-Es muy importante su uso en topograf\'ia principalmente para obtener topograf\'ia a\'erea mediante t\'ecnicas de fotogrametr\'ia\footnote{T\'ecnica para obtener mapas y planos de grandes extensiones de terreno por medio de la fotograf\'ia a\'erea.}, la empresa española OHL dispone de varios drones a tal efecto y tiene varios proyectos de i+d+i para seguir profundizando en esta materia. 
+Es muy importante su uso en topograf\'ia, principalmente para obtener topograf\'ia a\'erea mediante t\'ecnicas de fotogrametr\'ia\footnote{T\'ecnica para obtener mapas y planos de grandes extensiones de terreno por medio de la fotograf\'ia a\'erea.}. La empresa española OHL dispone de varios drones a tal efecto y tiene varios proyectos de I+D+I para seguir profundizando en esta materia. 
 De esta manera se pueden estudiar obras en su fase de licitaci\'on, realizar c\'alculos de vol\'umenes y superficies en acopios, control de certificaciones, estudio de patolog\'ias como deslizamiento de taludes y realizar seguimientos.
-OHL 
+ 
 Se utilizan en minas a cielo abierto para entre otras muchas funciones:
 \begin{itemize}
 \item Control y monitorizaci\'on de explotaci\'on de minerales y su impacto ambiental
-\item Observaci\'on de operaciones con necesidad de supervisi\'on a\'erea y realizar seguimientos de movimientos de tierra y acumulaci\'on de residuos.
-\item Seguimiento de movimientos de tierra, residuos, balsas, control de relaves,control de pilas,transporte de implementos de un punto a otro.
-\item Realizar la reconstrucci\'on de una mina mediante fotogametr\'ia para medir los vol\'umenes extra\'idos.
+\item Observaci\'on de operaciones con necesidad de supervisi\'on a\'erea y seguimiento de movimientos de tierra, residuos, balsas, control de relaves,control de pilas,transporte de implementos de un punto a otro.
+\item Realizar la reconstrucci\'on de una mina mediante fotogrametr\'ia para medir los vol\'umenes extra\'idos.
 \item Analizar la variaci\'on de alturas entre periodos para determinar los vol\'umenes explotados por periodo.
 \end{itemize}
-E incluso se han empezado a utilizar por el Ministerio de Hacienda de España con fines recaudatorios, sobrevuelan las viviendas o fincas localizando edificaciones no registradas por el catastro con el fin de regularizar su situaci\'on.
+E incluso se han empezado a utilizar por el Ministerio de Hacienda de España con fines recaudatorios. Sobrevuelan las viviendas o fincas localizando edificaciones no registradas por el catastro con el fin de regularizar su situaci\'on.
 
-El uso de drones es especialmente importante en el \'ambito cient\'ifico para por ejemplo tomar medidas de temperatura y CO2 en zonas peligrosas\footnote{\url{http://www.igepn.edu.ec/servicios/noticias/1395-medidas-de-temperatura-y-co2-de-las-fumarolas-muestreo-y-fotografias-con-drone}}, estudiar las nubes volc\'anicas\footnote{\url{https://www.nasa.gov/topics/earth/earthmonth/volcanic-plume-uavs.html}} o volar dentro de una grieta en un glaciar\footnote{\url{http://tn.com.ar/tecno/recomendados/increible-un-drone-volo-dentro-de-un-glaciar_648661}}. 
+El uso de drones es especialmente importante en el \'ambito cient\'ifico para, por ejemplo, tomar medidas de temperatura y CO2 en zonas peligrosas\footnote{http://www.igepn.edu.ec/servicios/noticias/1395-medidas-de-temperatura-y-co2-de-las-fumarolas-muestreo-y-fotografias-con-drone}, estudiar las nubes volc\'anicas\footnote{https://www.nasa.gov/topics/earth/earthmonth/volcanic-plume-uavs.html} o volar dentro de una grieta en un glaciar\footnote{http://tn.com.ar/tecno/recomendados/increible-un-drone-volo-dentro-de-un-glaciar\_648661}. 
 
-El futuro del uso de los drones se est\'a escribiendo en este mismo momento y es que poco a poco se investigan con nuevos usos o c\'omo mejorar los ya actuales. 
-
-Uno de los usos m\'as prometedores que est\'a siendo investigado es el de log\'istica y paqueter\'ia, Amazon estudi\'o en 2105 la viabilidad de utilizar drones para el reparto, especialmente en zonas de dif\'icil acceso o bien alejadas de las zonas habituales de reparto. A finales de dicho año realiz\'o pruebas de entregas en el reino unido y desarroll\'o un prototipo de alrededor de 25Kg de peso. El objetivo de Amazon, en \'este experimento, era realizar entregas de hasta 3Kg de peso en menos de 30 minutos y ver la viabilidad de la entrega de paquetes en zonas pobladas.
+El futuro del uso de los drones se est\'a escribiendo en este mismo momento y es que poco a poco se investigan con nuevos usos o c\'omo mejorar los ya actuales. Uno de los usos m\'as prometedores que est\'a siendo investigado es el de log\'istica y paqueter\'ia. Amazon estudi\'o en 2105 la viabilidad de utilizar drones para el reparto, especialmente en zonas de dif\'icil acceso o bien alejadas de las zonas habituales de reparto. A finales de dicho año realiz\'o pruebas de entregas en el Reino Unido y desarroll\'o un prototipo de alrededor de 25Kg de peso. El objetivo de Amazon en \'este experimento era realizar entregas de hasta 3Kg de peso en menos de 30 minutos y ver la viabilidad de la entrega de paquetes en zonas pobladas.
 
 Esto ha dado pie a las principales empresas de log\'istica y paqueter\'ia a realizar sus propios desarrollos y construir sus propios prototipos. 
 DHL ha realizado sendas pruebas con drones de cerca de 5 Kg para la entrega de paquetes de hasta 1,2 Kg.
-La empresa francesa GeoPost ha comprado recientemente la empresa Atechsys, especializada en el desarrollo de sistem\'as aut\'onomos para aeronaves no tripuladas. Operaci\'on que ha dado como resultado un drone que cuenta con seis rotores el\'ectricos y estructura de fibra de carbono, con capacidad para llevar paquetes de un peso aproximado de hasta 2 kilos.
+La empresa francesa GeoPost ha comprado recientemente la empresa Atechsys, especializada en el desarrollo de sistemas aut\'onomos para aeronaves no tripuladas. Operaci\'on que ha dado como resultado un drone que cuenta con seis rotores el\'ectricos y estructura de fibra de carbono, con capacidad para llevar paquetes de un peso aproximado de hasta 2 kilos.
 UPS ha realizado un experimento en Tampa con un octoc\'optero que despegar\'ia desde el techo de la furgoneta de reparto para entregar los paquetes en zonas rurales y ahorrar en kilometraje el drone tend\'ia una carga de pago de unos 4,5Kg.
 
 Otro de los estudios que m\'as llama la atenci\'on es el de Google y Facebook que compiten en llevar internet a zonas aisladas a trav\'es de una red de drones y sat\'elites.
-Facebook present\'o en su F8 en Marzo de 2015 su prototipo de drone a tal efecto, Aquila, fruto de la adquisici\'on de la empresa especializa en rob\'otica a\'erea Acenta. Este proyecto se enmarca dentro del plan internet.org y liderado Connectivity Lab\footnote{Un equipo formado por 50 expertos en aeron\'autica y ciencia espacial} que pretende ofrecer internet con un coste reducido a todo aquel que no lo tenga.
+Facebook present\'o en su F8 en Marzo de 2015 su prototipo de drone a tal efecto, Aquila, fruto de la adquisici\'on de la empresa especializa en rob\'otica a\'erea Acenta. Este proyecto se enmarca dentro del plan internet.org y está liderado por Connectivity Lab\footnote{Un equipo formado por 50 expertos en aeron\'autica y ciencia espacial} que pretende ofrecer internet con un coste reducido a todo aquel que no lo tenga.
 
-En 2014 Google por su parte compr\'o Titan Aeroespace para crear una flota de drones propulsados por energ\'ia solar, capaces de volar m\'as de una semana mientras tomaban fotos de la superficie y prove\'ian de acceso a Internet a lugares remotos y proveer nueva informaci\'on para sus mapas. Este desarrollo sin embargo se ha abandonado en enero de este año en pro de la utlizacion de globos aerost\'aticos para tal prop\'osito.
+En 2014 Google por su parte compr\'o Titan Aeroespace para crear una flota de drones propulsados por energ\'ia solar, capaces de volar m\'as de una semana mientras tomaban fotos de la superficie y prove\'ian de acceso a Internet a lugares remotos y aportar nueva informaci\'on para sus mapas. Este desarrollo sin embargo se ha abandonado en enero de este año en pro de la utlizacion de globos aerost\'aticos para tal prop\'osito.
  
 \section{Rob\'otica a\'erea en el laboratorio de Rob\'otica de la URJC}
 \label{sec:lab_robotica}
 
-Dentro del laboratorio de rob\'otica de la Universidad Rey Juan Carlos cabe destacar varios trabajos realizados para profundizar investigar y experimentar con drones y que han servido de antecedentes directos y base para este Proyecto Fin de Carrera. Todos ellos han usado como plataforma software JdeRobot \url{http://jderobot.org/Main_Page}. Se resumen a continuaci\'on los m\'as importantes.
+Dentro del laboratorio de rob\'otica de la Universidad Rey Juan Carlos cabe destacar varios trabajos realizados para profundizar, investigar y experimentar con drones y que han servido de antecedentes directos y base para este Proyecto Fin de Carrera. Todos ellos han usado como plataforma software JdeRobot \url{http://jderobot.org/}. Se resumen a continuaci\'on los m\'as importantes.
 
-Trabajos como el de Alberto Mart\'inez\cite{amartinflorido:_mediawiki} permiti\'o controlar un AR-Drone 2 de Parrot real desde una aplicaci\'on cliente, desarrollando para ello un driver para el dron, \texttt{ardrone\_server} y una aplicacci\'on cliente \texttt{UAV Viewer}.
-El driver \texttt{ardrone\_server} es capaz de conectar con el AR-DRONE a trav\'es de comandos AT tanto para obtener los datos de todos sus sensores como para controlarlo y expone todo ello en interfaces JdeRobot para su interconexi\'on con todo el software disponible en el entorno.
+Trabajos como el de Alberto Mart\'in\cite{amartinflorido:_mediawiki} que permiti\'o controlar un AR-Drone 2 de Parrot real desde una aplicaci\'on cliente, desarrollando para ello un driver para el dron, \texttt{ardrone\_server} y una aplicacci\'on cliente \texttt{UAV Viewer}.
+El driver \texttt{ardrone\_server} es capaz de conectar con el AR-DRONE a trav\'es de comandos AT tanto para obtener los datos de todos sus sensores como para controlarlo y expone todo ello en interfaces JdeRobot para su interconexi\'on con el software del entorno.
 
 El AR-Drone es un quadric\'optero que en su versi\'on actual cuenta con aceler\'ometros, gir\'oscopos y magnet\'ometros en 3 ejes que determinan junto con su bar\'ometro y un sensor de ultrasonidos la actitud del mismo, dispone adem\'as de 2 c\'amaras, una ventral y otra frontal, y algunos modelos traen sensor GPS.
 
@@ -466,7 +462,7 @@ El AR-Drone es un quadric\'optero que en su versi\'on actual cuenta con aceler\'
   \label{fig:ardrone2}
 \end{figure}
 
-Alberto desarroll\'o tambi\'en el software de control UAV Viewer, esta aplicaci\'on cliente es capaz de controlar con cualquier drone y mostrar de forma visual su actitud, lo que captan sus c\'amaras.
+Alberto desarroll\'o tambi\'en el software de control \texttt{UAV Viewer}. Esta aplicaci\'on cliente es capaz de controlar con cualquier drone y mostrar de forma visual su actitud, lo que captan sus c\'amaras.
 
 \begin{figure}[H]
   \centering
@@ -475,8 +471,8 @@ Alberto desarroll\'o tambi\'en el software de control UAV Viewer, esta aplicaci\
   \label{fig:uavviewer}
 \end{figure}
 
-Daniel Yague desarroll\'o un driver (plugin) para simular el comportamiento del AD-Drone en el simulador Gazebo, de referencia en el Laboratorio de Rob\'otica de la universidad y contenido dentro de la suite JdeRobot\cite{daniyague:_mediawiki}. Con este driver se hizo posible probar, anticipar los problemas que puedan surgir en el vuelo del drone antes siquiera de volarlo f\'isicamente. De esta forma es posible el desarrollo de aplicaciones de navegaci\'on complejas sin disponer de \'el, sin arriesgarlo e independientemente de factores externos como la climatolog\'ia.
-Para mostrar las posibilidades que se abr\'ian desarroll\'o varias aplicaciones en el ar-drone simulado como un gato-rat\'on donde un drone teleoperado trataba de huir de otro que le segu\'ia o una aplicaci\'on donde el drone segu\'ia una carretera.
+Daniel Yague\cite{daniyague:_mediawiki} desarroll\'o un driver (plugin) para emular el comportamiento del AD-Drone en el simulador Gazebo, de referencia en el Laboratorio de Rob\'otica de la universidad y contenido dentro de la suite JdeRobot. Con este driver se hizo posible probar, anticipar los problemas que puedan surgir en el vuelo del drone antes siquiera de volarlo f\'isicamente. De esta forma es posible el desarrollo de aplicaciones de navegaci\'on complejas sin disponer de \'el, sin arriesgarlo e independientemente de factores externos como la climatolog\'ia.
+Para mostrar las posibilidades que se abr\'ian desarroll\'o varias aplicaciones en el ar-drone simulado como un gato-rat\'on donde un drone trataba de perseguir autónomommanete a otro que se teleloperaba o una aplicaci\'on donde el drone segu\'ia una carretera.
 
 \begin{figure}[H]
   \centering
@@ -485,8 +481,8 @@ Para mostrar las posibilidades que se abr\'ian desarroll\'o varias aplicaciones 
   \label{fig:ardrone_gazebo}
 \end{figure}
 
-Jorge Cano construy\'o propio su drone utilizando como base un quadric\'optero con un procesador Intel Compute Stick (ICS) STCK1A8LFC como ordenador de abordo y una placa Pixhawk como placa estabilizadora/piloto autom\'atico\cite{jocano:_mediawiki}. Esta placa utiliza como protocolo de comunicaci\'on MAVLink\footnote{Micro Air Vehicle Link \url{https://en.wikipedia.org/wiki/MAVLink}} y dispone de aceler\'ometros, gir\'oscopos y magnet\'ometros para determinar la actitud.
-Adem\'as de la construcci\'on del drone Jorge desarroll\'o el driver MAVLinkServer donde apoy\'andose en MAVProxy adapt\'o los comandos MAVLink a interfaces JdeRobot permitiendo acceder a la actitud y controlar el drone con comandos tipo GotoXY enviados a trav\'es del interfaz Pose3D\footnote{Ver cap\'itulo 3 Arquitectura utilizada}
+Jorge Cano construy\'o físicamente su propio drone utilizando como base un quadric\'optero con un procesador Intel Compute Stick (ICS) STCK1A8LFC como ordenador de abordo y una placa Pixhawk como estabilizadora/piloto autom\'atico\cite{jocano:_mediawiki}. Esta placa utiliza como protocolo de comunicaci\'on MAVLink\footnote{Micro Air Vehicle Link \url{https://en.wikipedia.org/wiki/MAVLink}} y dispone de aceler\'ometros, gir\'oscopos y magnet\'ometros para determinar la actitud.
+Adem\'as de la construcci\'on del drone Jorge, desarroll\'o el driver MAVLinkServer donde apoy\'andose en MAVProxy adapt\'o los comandos MAVLink a interfaces JdeRobot permitiendo acceder a la actitud y controlar el drone con comandos tipo GotoXY enviados a trav\'es del interfaz Pose3D\footnote{Ver cap\'itulo 3 Arquitectura utilizada}
 
 \begin{figure}[h]
 \centering
@@ -499,9 +495,9 @@ Adem\'as de la construcci\'on del drone Jorge desarroll\'o el driver MAVLinkServ
  \label{f:drone_cano}
 \end{figure}
 
-En la actualidad se est\'an desarrollando nuevos trabajos sobre este tipo de placas estabilizadoras que tiene como software base ArduCopter/Ardupilot o son compatibles. Por un lado Diego Jim\'enez\cite{jimenez:_mediawiki} trabaja en controlar un Solo Drone de la empresa 3DR\footnote{Empresa norteamericana con sede en California especializada en rob\'otica a\'erea. Se sit\'ua en 2017 como la 3ª empresa del sector} mediante el interfaz de velocidades CMDVel\footnote{Ver cap\'itulo 3 Arquitectura utilizada}, este quadrac\'otero tiene como placa de control una Pixhawk como la utilizada por Jorge Vela en el drone que se construy\'o y utiliza tambi\'en comamdos MAVLink.
+En la actualidad se est\'an desarrollando varios trabajos sobre este tipo de placas estabilizadoras que tiene como software base ArduCopter/Ardupilot o son compatibles. Por un lado Diego Jim\'enez\cite{jimenez:_mediawiki} trabaja en controlar un Solo Drone de la empresa 3DR\footnote{Empresa norteamericana con sede en California especializada en rob\'otica a\'erea. Se sit\'ua en 2017 como la 3ª empresa del sector} mediante el interfaz de velocidades \texttt{CMDVel}\footnote{Ver cap\'itulo 3 Arquitectura utilizada}. Este quadrac\'otero tiene como placa de control una Pixhawk como la utilizada por Jorge Cano en el drone que se construy\'o y utiliza tambi\'en comamdos MAVLink.
 
-Por otro lado Jorge Vela se encuentra desarrollando c\'omo realizar la maniobra de aterrizaje de forma autom\'atica al localizar un patr\'on o baliza localizado visi\'on\cite{jvela:_mediawiki}. Como drone de referencia est\'a utilizando un Solo Drone con una Intel Stick como ordenador de abordo.
+Por otro lado, Jorge Vela se encuentra desarrollando c\'omo realizar la maniobra de aterrizaje de forma autom\'atica al localizar un patr\'on o baliza mediante visi\'on\cite{jvela:_mediawiki}. Como drone de referencia est\'a utilizando un Solo Drone con un procesador Intel Stick como ordenador de abordo.
 
 \begin{figure}[H]
   \centering
@@ -510,13 +506,7 @@ Por otro lado Jorge Vela se encuentra desarrollando c\'omo realizar la maniobra 
   \label{fig:3dr_solo}
 \end{figure}
 
-Crear clientes web para las principales aplicaciones JdeRobot fue tarea de Aitor Mart\'inez\cite{aitor:_mediawiki}. En desarroll\'o 6 clientes: CameraViewJS, que recibe datos de CameraServer
-RgbdViewerJS, que recibe datos de Openni1Server
-KobukiViewerJS, que permite teleoperar robots Kobuki
-UavViewerJS: Creaci\'on del cliente web similar a la herramienta UavViewer para teleoperar drones tanto reales como simulados y ver los datos de sus sensores.
-IntrorobKobukiJS, que permite programar comportamientos como introrob en una interfaz Web
-IntrorobUavJS, permite programar comportamientos aut\'onomos en una en una interfaz Web similar a UAV Viewer
-Gracias a \'estos desarrollos, se pod\'ia teleoperar un drone desde cualquier dispositivo que tenga un navegador web, como un m\'ovil o una tablet.
+Crear clientes web para las principales aplicaciones JdeRobot, incluyendo una con drones, fue tarea de Aitor Mart\'inez\cite{aitor:_mediawiki}. En desarroll\'o seis clientes entre los que destaca la creaci\'on del cliente web similar a la herramienta UavViewer para teleoperar drones tanto reales como simulados y ver los datos de sus sensores. También la creacion de \texttt{IntrorobUavJS} que permite programar comportamientos aut\'onomos en JavaScript una en una interfaz Web similar a UAV Viewer. Gracias a estos desarrollos, se pod\'ia teleoperar un drone desde cualquier dispositivo que tenga un navegador web, como un m\'ovil o una tablet.
 
 \begin{figure}[H]
   \centering
@@ -525,9 +515,9 @@ Gracias a \'estos desarrollos, se pod\'ia teleoperar un drone desde cualquier di
   \label{fig:js_jderobot1}
 \end{figure}
 
-En este contexto este PFC aborda el soporte de un nuevo robot \'aereo, diferentes a todos los usados en el Laboratorio de Rob\'otica hasta la fecha: un avi\'on de ala fija. Adem\'as se integrar\'a con las herramientas ya existentes para robots a\'ereos dentro de la plataforma JdeRobot.
+En este contexto este PFC aborda el soporte de un nuevo robot \'aereo, diferente a todos los usados en el Laboratorio de Rob\'otica hasta la fecha: un avi\'on de ala fija. Adem\'as se integrar\'a con las herramientas ya existentes para robots a\'ereos dentro de la plataforma JdeRobot.
 
-La memoria de este PFC se ha vertebrado en 7 cap\'itulos. En el segundo se fijan los objetivos concretos que se persiguen y los requisitos marcados. A continuaci\'on se describe la infraestructura, tanto hardware como software, utilizada en el desarrollo de este trabajo. En el cap\'itulo 4 se detalla el desarrollo del driver \texttt{APM Server} y se desgrana la aplicaci\'on \texttt{UAV Commander} en el cap\'itulo 5. En el sexto se muestran los experimentos realizados y en el s\'eptimo las conclusiones alcanzadas.
+La memoria de este PFC se ha vertebrado en siete cap\'itulos. En el segundo se fijan los objetivos concretos que se persiguen y los requisitos deseables. A continuaci\'on se describe la infraestructura, tanto hardware como software, utilizada en el desarrollo de este trabajo. En el cap\'itulo 4 se detalla el desarrollo del driver \texttt{APM Server} y se desgrana la aplicaci\'on \texttt{UAV Commander} en el cap\'itulo 5. En el sexto se muestran los experimentos realizados con todo el software desarrollado y en el s\'eptimo las conclusiones alcanzadas.
 
 \chapter{Objetivos}
 \label{sec:objetivos}
@@ -635,7 +625,7 @@ Se describen en este capítulo las herramientas, ingredientes hardware y software
 Este PFC utiliza principalmente tres componentes hardware: un avión de radio control, un procesador Raspberry PI 3 y una placa estabilizadora.
 
 
-Como el avi\'on de radio-control hemos elegido el avi\'on Bix3 distribuido por la empresa china \url{www.hobbyking.com}. Hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Otro aspecto importante de la construcci\'on del avi\'on es que el propulsor no se encuentra en el frontal del avi\'on lo que nos permitir\'a aprovechar al m\'aximo esa zona pudiendo poner incluso una c\'amara frontal.
+Como el avi\'on de radio-control hemos elegido el avi\'on Bix3, distribuido por la empresa china \url{www.hobbyking.com}. Hemos elegido este modelo por ser un avi\'on muy estable debido principalmente a sus cualidades como velero y su alta superficie alar. Otro aspecto importante de la construcci\'on del avi\'on es que el propulsor no se encuentra en el frontal del avi\'on lo que nos permitir\'a aprovechar al m\'aximo esa zona pudiendo poner incluso una c\'amara frontal.
 
 \begin{figure}[h]
 \centering
@@ -653,10 +643,10 @@ Como el avi\'on de radio-control hemos elegido el avi\'on Bix3 distribuido por l
 
 Para poder cargar con el equipo necesario a bordo ha sido necesario cambiar el motor, el variador y las bater\'ias de serie por otras de mayor rendimiento que nos permitan volar con tanta carga de pago.
 
-Una raspberry PI3 que es el ordenador de abordo y en el que se ha instalado la infraestructura necesaria para dotarle de inteligencia. Hemos elegido \'este dispositivo debido al compromiso peso/potencia que otorga, as\'i como porque es de un hardware muy asequible  y extendido. Conectado a esta PI3 va una PiCam que nos permitira ver lo que el avi\'on vea.
+Una raspberry PI3 es el ordenador de abordo y en el que se ha instalado el software necesario para dotarle de inteligencia. Hemos elegido este dispositivo debido al compromiso peso/potencia que otorga, as\'i como porque es un hardware muy asequible  y extendido. Conectado a esta PI3 va una PiCam que nos permitirá ver lo que el avi\'on vea.
 
-Para este PFC hemos utlizado una placa Ardupilot Mega\footnote{\url{http://www.ardupilot.co.uk/}} como estabilizador/piloto automático. Este dispositivo tiene como base una placa Arduino Mega a la que se le han incoorporado gir\'oscopos y acerel\'ometros en 3 ejes para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula. El kit que adquirimos incluye tambi\'en todo lo necesario para integrarlo en nuestro avión y proporcionarle la alimentación necesaria. 
-Esta placa ataca directamente sobre los actuadores del avi\'on (los servos y el motor) a trav\'es de señales PWM. 
+Para este PFC hemos utlizado una placa Ardupilot Mega\footnote{\url{http://www.ardupilot.co.uk/}} como estabilizador/piloto automático. Este dispositivo tiene como base una placa Arduino Mega a la que se le han incorporado gir\'oscopos y acerel\'ometros en 3 ejes para su estabilizaci\'on y que trae de serie un receptor GPS con br\'ujula. El kit que adquirimos incluye tambi\'en todo lo necesario para integrarlo en nuestro avión y proporcionarle la alimentación necesaria. 
+Esta placa actúa directamente sobre los los servos y el motor del avión a trav\'es de señales PWM. 
 
 \begin{figure}[H]
   \centering
@@ -665,7 +655,7 @@ Esta placa ataca directamente sobre los actuadores del avi\'on (los servos y el 
   \label{fig:ardupilot}
 \end{figure}
 
-Esta placa ha de \textit{flashearse} con un \textit{firmware} en funci\'on del tipo de aeronave que utilicemos como base, Arducopter para alas rotatorias o Ardupilot para alas fijas. Esta y otras placas similares como PixHawk, se se comunican y aceptan comandos a travñes de un proticolo llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, a los que incorpora la placa o a los que le añadamos a la misma, como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar órdenes al piloto autom\'atico, quien las ejecutar\'a. M\'as adelante trataremos el protocolo MAVLink en profundidad. Cabe destacar que algunos de los comando que mandemos tendran distinto comportamiento en la placa en funcion del \textit{firmware} escogido, y que hay un conjunto de comandos que no pueden ser utilizados en uno o en otro.
+Esta placa ha de \textit{flashearse} con un \textit{firmware} en funci\'on del tipo de aeronave que utilicemos como base, Arducopter para alas rotatorias o Ardupilot para alas fijas. Ésta y otras placas similares como PixHawk, se comunican y aceptan comandos a través de un protocolo llamado MAVLink. A trav\'es de comandos MAVLink se puede acceder a los sensores, tanto los que incorpora la placa nativa cómo a los que le añadamos a la misma, como el GPS o sensores de velocidad del aire. A trav\'es de estos comandos se le puede tambi\'en enviar órdenes al piloto autom\'atico, quien las ejecutar\'a. M\'as adelante trataremos el protocolo MAVLink en profundidad. Cabe destacar que algunos de los comandos que mandemos tendrán distinto comportamiento en la placa en función del \textit{firmware} escogido, y que hay un conjunto de comandos que no pueden ser utilizados en uno o en otro.
 El objetivo de este PFC es crear un driver que nos permita comunicarnos con esta placa y una aplicación en JdeRobot para el manejo de un avión robotizado.
 
 
@@ -673,24 +663,24 @@ El objetivo de este PFC es crear un driver que nos permita comunicarnos con esta
 \label{sec:jderobot}
 
 JdeRobot es un entorno de software creado por el laboratorio de rob\'otica de la Universidad Rey Juan Carlos, para el desarrollo de aplicaciones de rob\'otica. Su \'ultima versión, la 5.5, se liber\'o el 15 de Marzo de 2017 pudiendo ver los detalles de \'esta en el github oficial\footnote{\url{https://github.com/JdeRobot/JdeRobot/wiki/JdeRobot-5.5.0}}.
-JdeRobot se compone de interfaces, drivers, utilidades y aplicaciones para el desarrollo de cualquier proyecto de rob\'otica. Se apoya en estos interfaces para interconectar entre s\'i todos los componentes de una aplicación robótica y en Zeroc ICE para la comunicaci\'on entre ellos.
-Algunos de los drivers m\'as importantes que contiene y mas relacionado con este trabajo son:
+JdeRobot se compone de interfaces, drivers, utilidades y aplicaciones para el desarrollo de cualquier proyecto de rob\'otica. Gracias a estos interfaces y al \textit{middleware} ICE (de la empresa ZeroC) se interconectan entre s\'i todos los componentes de una aplicación robótica.
+Algunos de los drivers m\'as importantes que contiene, y más relacionados con este trabajo, son:
 \begin{enumerate}
 \item \texttt{Cameraserver}. Un driver para enviar im\'agenes y video a trav\'es del interfaz \texttt{camera}
-\item \texttt{Gazeboserver}. Driver para conectar las aplicaciones con distintos robots simulados (con ruedas, cuadricópteros, etc.
+\item \texttt{Gazeboserver}. Conjunto de \textit{plugins} de Gazebo para conectar las aplicaciones con distintos robots simulados (con ruedas, cuadricópteros, etc).
 \item \texttt{MAVLinkServer}. Driver desarrollado para intercomunicar JdeRobot con placas de estabilización y autopiloto que utilicen el protocolo de comunicaci\'on MAVLink.
 \item \texttt{Ardrone\_server}. Driver que conecta el Parrot Ar-Drone a JdeRobot. Este driver escrito en c++ transforma el conjunto de comandos AT del drone en interfaces ICE y viceversa. Implementa los interfaces \texttt{camera}, \texttt{cmdvel}, \texttt{navdata}, \texttt{extra} y \texttt{pose3D} y permite acceder a la actitud del drone as\'i como a sus 2 c\'amaras. Sirve tambi\'en datos como el nivel de la bater\'ia y permite grabar v\'ideo o tomar fotos.
 \end{enumerate}
 Algunas de las herramientas contenidas en JdeRobot y más relacionadas con este PFC son:
 \begin{enumerate}
-\item \texttt{Cameraview}. Se trata de una aplicaci\'on desarrollada en c++ capaz de recibir v\'ideo a trav\'es del interfaz \texttt{camera}.
+\item \texttt{Cameraview}. Es una aplicaci\'on desarrollada en c++ capaz de recibir v\'ideo a trav\'es del interfaz \texttt{camera}.
 \item \texttt{UAV viewer}. Aplicaci\'on desarrollada para teleoperar robots a\'ereos. Esta aplicaci\'on permite teleoperar cualquier tipo de robot a\'ereo y ofrece de forma visualmente atractiva datos como la actitud, velocidades lineales y angulares, ofrece tambi\'en la posibilidad de visualizar imágenes servidas por el interfaz \texttt{camera}.
 \end{enumerate}
 \subsection{Interfaces}
 
 JdeRobot expone m\'as de 30 interfaces pero en este cap\'itulo explicaremos los que durante nuestro desarrollo hemos implementado en el driver para el avión o usado en la aplicación:
 \begin{itemize}
-\item \texttt{Pose3D}. Utilizado para recoger los datos de actitud y la posici\'on de la aeronave. Devuelve la posición del robot y su orientacion en el espacio, empleando para la orientación cuaterniones. Comparados con los ángulos de Euler, son más simples de componer y evitan el problema del bloqueo del cardán\footnote{El bloqueo del cardán consiste en la pérdida de un grado de libertad en una suspensión cardán de tres rotores, que ocurre cuando los ejes de dos de los tres rotores se colocan en paralelo, bloqueando el sistema en una rotación en un espacio bidimensional degenerado.}, \texttt{pymavlink} nos permite transformar de uno a otro de forma sencilla.
+\item \texttt{Pose3D}. Utilizado para recoger los datos de actitud y la posici\'on 3D de la aeronave. Devuelve la posición del robot y su orientacion en el espacio, empleando para expresar la orientación cuaterniones. Comparados con los ángulos de Euler, son más simples de componer y evitan el problema del bloqueo del cardán\footnote{El bloqueo del cardán consiste en la pérdida de un grado de libertad en una suspensión cardán de tres rotores, que ocurre cuando los ejes de dos de los tres rotores se colocan en paralelo, bloqueando el sistema en una rotación en un espacio bidimensional degenerado.}, \texttt{pymavlink} nos permite transformar de uno a otro de forma sencilla.
 {\scriptsize
 \begin{verbatim}
 Pose3DData
@@ -730,24 +720,8 @@ Pose3DData
 \end{verbatim}}
 Los parámetros del interfaz se pueden dividir en 2 bloques: intrínsecos y extrínsecos. 
 \begin{itemize}
-	\item Intrínsecos.
-	\begin{itemize}
-		\item fdistx
-		\item fdisty
-		\item u0
-		\item v0
-		\item skew
-	\end{itemize}
-	\item Extrínsecos.
-	\begin{itemize}
-		\item posx
-		\item posy
-		\item posz
-		\item foax
-		\item foay
-		\item foaz
-		\item roll
-	\end{itemize}
+\item Intrínsecos: fdistx, fdisty, u0, v0 y skew.
+\item Extrínsecos: posx, posy, posz, foax, foay, foaz y roll.
 \end{itemize}
 \item \texttt{NavData}. Utilizado para servir datos secundarios de actuaci\'on como velocidades lineales o angulares o el estado de la bater\'ia.
 {\scriptsize
@@ -819,10 +793,10 @@ class NavdataData
 \section{Protocolo \texttt{MAVLink}}
 \label{sec:mavlink}
 
-MAVLink siglas de Micro Air Vehicle Link es un protocolo de comunicaci\'on desarrollado para comunicar las placas estabilizadoras dotadas de piloto autom\'atico con los GCS o \textit{Ground control} station, es decir, con las aplicaciones desde las que se pod\'ia enviar misiones y seguir el cumplimiento de las mismas desde tierra.
+MAVLink son siglas de Micro Air Vehicle Link, un protocolo de comunicaci\'on desarrollado para comunicar las placas estabilizadoras dotadas de piloto autom\'atico con los GCS o \textit{Ground control station}, es decir, con las aplicaciones desde las que se pod\'ia enviar misiones y seguir el cumplimiento de las mismas desde tierra.
 MAVLink se public\'o en 2009 por Lorenz Meier, publicado bajo licencia LGPL. Aspira a convertirse en el protocolo standard en rob\'otica a\'erea y se ha probado su funcionamiento en PX4, PIXHAWK, APM\footnote{Ardupilot Mega} y Parrot AR.Drone.
 
-Un ejemplo de comando MAVLink ser\'ia este mensaje trae la informaci\'on del GPS y se env\'ia peri\'odicamente en ciclos que decidimos en par\'ametros de conexi\'on con el dispositivo.
+Un ejemplo de comando MAVLink ser\'ia este mensaje que porta la informaci\'on del GPS y se env\'ia peri\'odicamente en ciclos que decidimos según la configuración de conexi\'on con el dispositivo.
 {\scriptsize
 \begin{verbatim}
 type GpsStatus struct {
@@ -835,7 +809,7 @@ type GpsStatus struct {
 }
 \end{verbatim}}
 
-Otro mensaje, esta vez vinculado a la actuaci\'on ser\'ia:
+Otro mensaje, esta vez vinculado a la actuaci\'on es:
 {\scriptsize
 \begin{verbatim}
 type MissionItem struct {
@@ -855,12 +829,12 @@ type MissionItem struct {
     Autocontinue    uint8      Autocontinuar al siguiente objeto de misión.
 }
 \end{verbatim}}
-Este mensaje representa in item de misión, una misión se compone de uno o varios de estos items. Un item de misión en MAVLink puede ser un punto de paso o \textit{waypoint}, una maniobra de despegue o aterrizaje, o instrucciones de cambio de altura o velocidad del robot. 
+Este mensaje representa in hito de misión, una misión se compone de uno o varios de estos hitos. Un hito de misión en MAVLink puede ser un punto de paso (o \textit{waypoint}), una maniobra de despegue o aterrizaje, o instrucciones de cambio de altura o velocidad del robot. 
 
 \section{Biblioteca pymavlink}
 \label{sec:mavlink}
 
-Pymavlink trae la definici\'on de los comandos a utilizar en python. Gracias a esta biblioteca no se tienen que construir los comandos MAVLink a mano, evitando cometer errores y simplificando la creación y envío de los mismos. Su uso facitita también la identificación de los comandos recibidos. Para instalarla tan s\'olo se necesita ejecutar:
+Pymavlink trae la definici\'on de los comandos MAVLink a utilizar desde un programa escrito en python. Gracias a esta biblioteca no se tienen que construir los comandos MAVLink a mano, evitando cometer errores y simplificando la creación y envío de los mismos. Su uso facitita también la identificación de los comandos recibidos. Para instalarla tan s\'olo se necesita ejecutar:
  
 \begin{verbatim}
 sudo pip2 install -U pymavlink
@@ -869,7 +843,7 @@ sudo pip2 install -U pymavlink
 Y tiene como dependencias:
 \begin{itemize}
 \item future. Se necesita future como soporte en Python 3.X de Python 2.7 (http://python-future.org/)
-\item lxml. Para parsear xml (http://lxml.de/installation.html)
+\item lxml. Para analizar xml (http://lxml.de/installation.html)
 \item python-dev
 \item MavLink. (http://qgroundcontrol.org/mavlink/start)
 \end{itemize}
@@ -889,26 +863,26 @@ Para nuestro desarrollo hemos utilizado PyQt5 para desarrollar el interfaz gr\'a
 \section{Mapas y Geo-referenciaci\'on}
 \label{sec:mapas}
 
-En la aplicación de navegación autónoma hemos tenido que trabajar con mapas geo-referenciados. Estos mapas, que tanto se han popularizado gracias a Google, son una herramienta imprescindible en rob\'otica a\'erea si se quiere trabajar con largas distancias. Un mapa geo-referenciado es aquel en el que conocemos o podemos calcular la posici\'on en el planeta que representa cada píxel del mismo.
+En la aplicación de navegación autónoma hemos tenido que trabajar con mapas geo-re\-fe\-ren\-cia\-dos. Estos mapas, que tanto se han popularizado gracias a Google, son una herramienta imprescindible en rob\'otica a\'erea si se quiere trabajar con largas distancias. Un mapa geo-referenciado es aquel en el que conocemos o podemos calcular la posici\'on en el planeta que representa cada píxel del mismo.
 
-La forma m\'as com\'un de obtener estos mapas geo-referenciado es a trav\'es de WMS, siglas de \textit{Web Map Service}. Un WMS nos es m\'as que un servicio web que recibe como entrada unas coordenadas y una serie de par\'ametros y devuelve una imagen encuadrada en los datos enviados.
+La forma m\'as com\'un de obtener estos mapas geo-referenciados es a trav\'es de WMS, siglas de \textit{Web Map Service}. Un WMS nos es m\'as que un servicio web que recibe como entrada unas coordenadas y una serie de par\'ametros y devuelve una imagen encuadrada en los datos enviados.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.501]{img/imageWithDisclaimer.png}
   \caption{Imágen geo-referenciada del club de aeromodelismo Icaro}
   \label{fig:sitl}
 \end{figure}
 
-En nuestro desarrollo hemos utilizado dos WMS: el del IGN\footnote{Instrituto Geogr\'afico Nacional de españa} y el de Google.
+En nuestro desarrollo hemos utilizado dos WMS: el del Instrituto Geogr\'afico Nacional de España (IGN) y el de Google.
 A continuaci\'on vamos a desgranar un WMS, el de PNOA del IGN. PNOA son las siglas de Plan Nacional de Ortofotografía Aérea y contiene los mapas más actuales del territorio español. El WMS de PNOA requiere como entrada cuatro atributos principales:
 \begin{enumerate}
 \item La posici\'on GPS.
-\item \textit{bounding box}. El \textit{bounding box} son dos puntos que corresponden con la posici\'on GPS que queremos que sea el extremo inferior izquierdo de nuestra imagen y con el punto superior derecho de la misma.
-\item Datum. El datum es el sistema de referencia o proyecci\'on de la tierra a utilizar. En el caso de IGN pese a que soporta varias utilizamos WGS84 que es el estandar.
+\item \textit{Bounding box}. El \textit{bounding box} son dos puntos que corresponden con la posici\'on GPS que queremos que sea el extremo inferior izquierdo de nuestra imagen y con el punto superior derecho de la misma.
+\item Datum. El datum es el sistema de referencia o proyecci\'on de la tierra a utilizar. En el caso de IGN pese a que soporta varias utilizamos WGS84 que es el estándar.
 \item Tamaño de la imagen, el tamaño que queremos que tenga la imagen obtenida.
 \end{enumerate}
-El resultado de la consulta es un mapa del que conocemos el punto central, y los extremos inferior izquierdo y superior derecho y los píxeles que tiene a lo ancho y alto del mismo, es decir, un mapa geo-referenciado.
+El resultado de la consulta es un mapa del que conocemos el punto central, y los extremos inferior izquierdo y superior derecho y el número de píxeles que tiene a lo ancho y alto del mismo, es decir, un mapa geo-referenciado.
 
 Con el fin de facilitar el montaje y envío de las peticiones al WMS de PNOA utlizamos la librería OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}} en su versión 0.14.0.
 
@@ -916,10 +890,10 @@ Con el fin de facilitar el montaje y envío de las peticiones al WMS de PNOA utli
 \section{Simulador SITL}
 \label{sec:SITL}
 
-SITL\footnote{\url{http://ardupilot.org/dev/docs/sitl-simulator-software-in-the-loop.html}} siglas de \textit{Software In The Loop} es un simulador que permite a cualquier programa que env\'ie o reciba comandos MAVLink ejecutar pruebas sin necesidad de tener ninguna placa estabilizadora real y evitando la p\'erdida de la aeronave en caso de error del programa.
-SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto f\'isico de la simulaci\'on y con MAVProxy para el env\'io de comandos y seguimento de misiones.
+\textit{Software In The Loop} (o SITL\footnote{\url{http://ardupilot.org/dev/docs/sitl-simulator-software-in-the-loop.html}}) es un simulador que permite a cualquier programa que env\'ie o reciba comandos MAVLink ejecutar pruebas sin necesidad de tener ninguna placa estabilizadora real y evitando la p\'erdida de la aeronave en caso de error del programa.
+SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto f\'isico de la simulaci\'on y con MAVProxy para el env\'io de comandos y seguimiento de misiones.
 Se trata de una compilaci\'on en C++ de ardupilot y se podr\'ia asemejar al driver para cuadricópteros existente en JdeRobot \texttt{gazeboserver}, pero para aviones de ala fija.
-SITL puede conectarse tambi\'en con Gazebo o a FlightGear para hacer m\'as completa su simulaci\'on mostrando el vuelo en un entorno desarrollado para pruebas con elementos del mundo real.
+SITL puede conectarse tambi\'en con Gazebo o con FlightGear para hacer m\'as completa su simulaci\'on mostrando el vuelo en un entorno desarrollado para pruebas con elementos del mundo real.
 \begin{figure}
   \centering
   \includegraphics[scale=0.50]{img/SITL.jpg}
