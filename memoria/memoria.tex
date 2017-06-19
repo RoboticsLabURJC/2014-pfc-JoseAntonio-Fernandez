@@ -527,9 +527,9 @@ La memoria de este PFC se ha vertebrado en siete cap\'itulos. En el segundo se f
 \label{problema}
 El objetivo general de este proyecto final de carrera es dar soporte en la plataforma software JdeRobot a drones de ala fija que utilicen el protocolo de comunicaci\'on MAVLink. Este objetivo general lo hemos articulado en 3 subobjetivos:
 \begin{enumerate}
-\item Desarrollo de un driver que acceda a los sensores y actuadores de drones de ala fija que utilicen \texttt{MAVLink} y dar soporte a la actuaci\'on de misiones que hasta ahora no soportaba JdeRobot.
-\item Desarrollo de una aplicaci\'on GCS \texttt{Ground Control Station} que permita al operador humano introducir misiones y seguir el cumplimiento de las mismas a trav\'es de ella. Permitiendo el acceso a toda la actitud y a las c\'amaras de abordo.
-\item Hacer experimentos con aviones MAVLink: Conectaremos nuestro driver al simulador SITL y la aplicación al servidor para verificar la correcta especificación y materialización de las misiones. Construiremos un prototipo de avión \texttt{MAVLink} y comprobaremos la conexión con el driver y la recepción de toda la información sensorial.
+\item Desarrollo de un driver que acceda a los sensores y actuadores de drones de ala fija que utilicen \texttt{MAVLink}, y dar soporte a la actuaci\'on de misiones, que hasta ahora no soportaba JdeRobot.
+\item Desarrollo de una aplicaci\'on GCS \textit{Ground Control Station} que permita al operador humano introducir misiones y seguir el cumplimiento de las mismas a trav\'es de ella. Permitiendo el acceso a la actitud y a las c\'amaras de abordo.
+\item Hacer experimentos con aviones MAVLink tanto simulados como con un prototipo real. Conectaremos nuestro driver al simulador SITL y la aplicación al servidor para verificar la correcta especificación y materialización de las misiones. Construiremos un prototipo de avión \texttt{MAVLink} y comprobaremos la conexión con el driver y la recepción de toda la información sensorial.
 
 \end{enumerate}
 
@@ -553,14 +553,14 @@ Este proyecto se ha abordado con dos metodolog\'ias de trabajo distintas combina
 
 
 El modelo de desarrollo en espiral define una serie de ciclos que se repiten en bucle hasta el final del proyecto, dividi\'endolo
-en varias subtareas m\'as sencillas y estableciendo puntos de control al final de cada iteraci\'on en los que se
+en varias subtareas m\'as sencillas y estableciendo puntos de control al final de cada iteraci\'on, en los que se
 eval\'ua el trabajo realizado y se enfocan las nuevas tareas para continuar.
 Esta metodolog\'ia recibe su nombre por la forma de espiral que tiene su representaci\'on gr\'afica o diagrama
 de flujo, que podemos ver en la figura 2.1. En cada iteraci\'on se llevan a cabo las siguientes actividades:
 \begin{enumerate}
 	\item Determinar los objetivos, dividir en subobjetivos y fijar requisitos.
 	\item Analizar los riesgos y factores que impidan o dificulten el trabajo y las consecuencias negativas que éste pueda ocasionar.
-	\item Desarrollar los objetivos cubriendo todos los requisitos analizados anteriormente.
+	\item Desarrollar los objetivos cubriendo los requisitos analizados anteriormente.
 	\item Se analizan los resultados del desarrollo y las pruebas y en base a esto se decide el inicio del siguiente ciclo en una reunión con el tutor.
 \end{enumerate}
 
