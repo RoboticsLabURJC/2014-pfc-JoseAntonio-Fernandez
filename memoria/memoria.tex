@@ -1571,10 +1571,19 @@ La aplicaci\'on debe cubrir las siguientes funcionalidades:
 \begin{figure}
 \centering{
    \label{f:diseno_uavc_caja_negra}
-    \includegraphics[width=1.05\textwidth]{img/diseno2_uavc.jpg}}
+    \includegraphics[width=0.8\textwidth]{img/diseno2_uavc.jpg}}
     \caption{Diseño de caja negra de \texttt{UAV Commander}, entradas y salidas}
+
   
 \end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.60]{img/arquitectura.jpg}
+  \caption{Esquema de conexión \texttt{UAV Commander}}
+  \label{fig:uavc_ppal}
+\end{figure}
+
 La aplicación utiliza los interfaces \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra}, \texttt{camera} y \texttt{mission} y recupera, o bien de Google o bien del Instituto Geográfico Nacional de España (IGN), el mapa geo-referenciado de esa zona. Estos datos se presentan por pantalla al usuario a través de las distintas ventanas que conforman el interfaz gráfico. 
 
 
@@ -1590,8 +1599,9 @@ La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
    \label{f:diseno_uavc_caja_trans}
     \includegraphics[width=0.9\textwidth]{img/diseno_uavc.jpg}}
     \caption{Bloques dentro de la aplicación \texttt{UAV Commander}}
+    \end{figure}
+
   
-\end{figure}
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.40]{img/uavc_comp.png}
