@@ -794,9 +794,12 @@ class NavdataData
 \label{sec:mavlink}
 
 MAVLink son siglas de Micro Air Vehicle Link, un protocolo de comunicaci\'on desarrollado para comunicar las placas estabilizadoras dotadas de piloto autom\'atico con los GCS o \textit{Ground control station}, es decir, con las aplicaciones desde las que se pod\'ia enviar misiones y seguir el cumplimiento de las mismas desde tierra.
+
 MAVLink se public\'o en 2009 por Lorenz Meier, publicado bajo licencia LGPL. Aspira a convertirse en el protocolo standard en rob\'otica a\'erea y se ha probado su funcionamiento en PX4, PIXHAWK, APM\footnote{Ardupilot Mega} y Parrot AR.Drone.
 
 Un ejemplo de comando MAVLink ser\'ia este mensaje que porta la informaci\'on del GPS y se env\'ia peri\'odicamente en ciclos que decidimos según la configuración de conexi\'on con el dispositivo.
+
+
 {\scriptsize
 \begin{verbatim}
 type GpsStatus struct {
@@ -891,7 +894,7 @@ Con el fin de facilitar el montaje y envío de las peticiones al WMS de PNOA utli
 \label{sec:SITL}
 
 \textit{Software In The Loop} (o SITL\footnote{\url{http://ardupilot.org/dev/docs/sitl-simulator-software-in-the-loop.html}}) es un simulador que permite a cualquier programa que env\'ie o reciba comandos MAVLink ejecutar pruebas sin necesidad de tener ninguna placa estabilizadora real y evitando la p\'erdida de la aeronave en caso de error del programa.
-SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto f\'isico de la simulaci\'on y con MAVProxy para el env\'io de comandos y seguimiento de misiones.
+SITL se conecta con JSBSim, un simulador de vuelo de software libre para ejecutar el aspecto f\'isico de la simulaci\'on y con MAVProxy para el env\'io de comandos y seguimiento de misiones. Desde MAVProxy podemos enviar directamente comandos de vuelo al simulador sin necesidad de ninguna herramienta externa, y ha sido muy útil a la hora de articular nuestras pruebas.
 Se trata de una compilaci\'on en C++ de ardupilot y se podr\'ia asemejar al driver para cuadricópteros existente en JdeRobot \texttt{gazeboserver}, pero para aviones de ala fija.
 SITL puede conectarse tambi\'en con Gazebo o con FlightGear para hacer m\'as completa su simulaci\'on mostrando el vuelo en un entorno desarrollado para pruebas con elementos del mundo real.
 \begin{figure}
@@ -1547,17 +1550,11 @@ Estos m\'etodos se centran en buscar dentro de los paquetes recibidos del APM aq
 En la Figura 4.10 se pueden observar los métodos que recogen la actitud, podemos ver cómo se buscan los mensajes que necesitamos para extraer la información de los sensores desde \pythoninline{self.master.messages}. En esta variable se vuelcan los datos de todos loscmensajes recibidos de la placa estabilizadora.
 
 \cleardoublepage
-\chapter{AUV Commander}
+\chapter{Aplicación AUV Commander}
 
 \texttt{UAV Commander} es una aplicaci\'on JdeRobot que hace las veces de estaci\'on de tierra o GCS (\textit{Ground Control Station}) para robots a\'ereos y que ha sido íntegramente desarrollada dentro de este proyecto.
 Desde \texttt{UAV Commander} se pueden programar misiones, enviar \'estas al driver de un avión autónomo MAVLink, verificar el cumplimiento de las mismas y visualizar los sensores a bordo del robot a\'ereo. Sirve de cliente del driver desarrollado en la primera parte de este Proyecto Fin de Carrera y proporciona su primera validación experimental.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.40]{img/uavc_comp.png}
-  \caption{Vista general del interfaz gráfico de \texttt{UAV Commander}}
-  \label{fig:uavc_ppal}
-\end{figure}
 
 \section{Diseño} 
 \label{sec:diseno_uavc}
@@ -1566,17 +1563,12 @@ Desde \texttt{UAV Commander} se pueden programar misiones, enviar \'estas al dri
 La aplicaci\'on debe cubrir las siguientes funcionalidades:
 
 \begin{enumerate}
-\item Presentar toda la informaci\'on sensorial que nos ofrezca el driver.
-\begin{itemize}
-	\item Actitud
-	\item C\'amaras de abordo
-\end{itemize}
+\item Presentar toda la informaci\'on sensorial que nos ofrezca el driver, la actitud y las c\'amaras de abordo
 \item Permitir la creaci\'on de misiones como secuencias de puntos por los que debe pasar el drone, ubicándolos dentro de un mapa geo-referenciado.
 \item Enviar misiones a trav\'es de interfaces ICE al driver de JdeRobot que ofrece acceso al avión y es capaz de materializar esas misiones, de gobernar al avión para que las cumpla.
-\item Validar el cumplimiento de misiones con algún ejemplo en el avión simulado.
 \end{enumerate}
 
-\begin{figure}[H]
+\begin{figure}
 \centering{
    \label{f:diseno_uavc_caja_negra}
     \includegraphics[width=1.05\textwidth]{img/diseno2_uavc.jpg}}
@@ -1588,36 +1580,40 @@ La aplicación utiliza los interfaces \texttt{Pose3D}, \texttt{NavData}, \texttt{
 
 La aplicaci\'on \texttt{UAV Commander} se estructura en 3 grandes bloques:
 \begin{itemize}
-\item El bloque de sensores es el encargado de recuperar de los servicios ICE, tratar y mostrar toda la información sensorial a bordo del avión: la cámara, el GPS, unidad inercial, etc.
+\item El bloque de sensores es el encargado de recuperar desde los interfaces ICE toda la información sensorial a bordo del avión, tratarla y mostrarla
 \item El bloque de Localización es el encargado de obtener los mapas geo-referenciados de la zona del mundo donde va a trabajar el avión, realizar las transformaciones entre sistemas de coordenadas y mostrar de forma interactiva éstos a través de la interfaz gráfica de usuario.
-\item Bloque de control de misiones es quien se encarga de facilitar la creación de misiones a través del interfaz gráfico de usuario y las envía a través de los servicios ICE involucrados. 
+\item Bloque de control de misiones es quien se encarga de facilitar la creación de misiones a través del interfaz gráfico de usuario y las envía a través de los interfaces ICE involucrados. 
 \end{itemize}
 
 \begin{figure}[H]
 \centering{
    \label{f:diseno_uavc_caja_trans}
-    \includegraphics[width=0.7\textwidth]{img/diseno_uavc.jpg}}
+    \includegraphics[width=0.9\textwidth]{img/diseno_uavc.jpg}}
     \caption{Bloques dentro de la aplicación \texttt{UAV Commander}}
   
 \end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.40]{img/uavc_comp.png}
+  \caption{Vista general del interfaz gráfico de \texttt{UAV Commander}}
+  \label{fig:uavc_ppal}
+\end{figure}
 
-La aplicación contiene cinco hilos asociados a cada uno de los servicios ICE que utiliza y dos hilos más para actualizar en el interfáz gráfico de usuario la posición en el mapa del avión, y los datos recibidos de los sensores.
+La aplicación contiene cinco hilos asociados a cada uno de los servicios ICE que utiliza y dos hilos más para actualizar en el interfáz gráfico de usuario, la posición en el mapa del avión (\texttt{threadMap}), y los datos recibidos de los sensores (threadGUI).
 
 Cada uno de estos bloques se detalla a continuación en las secciones siguientes.
-
-
 
 
 \section{Bloque de sensores} 
 \label{sec:bloque_sensores_uavc}
 
-En este bloque se implementan todos los servidores ICE necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
-La aplicación \texttt{UAV Commander} utiliza 5 interfaces ICE a diferencia de los 4 que usa en el driver APM Server. Además de los que expone APM Server (a saber: \texttt{Pose3D} y \texttt{NavData} para recibir la posición medida por los sensores a bordo como el GPS y \texttt{Extra} y \texttt{Mission} para el envío de misiones con puntos de paso y maniobras de aterrizaje o despegue), también utiliza el interfaz \texttt{Camera} para recoger las imágenes y vídeo de la cámara de abordo del avión que se muestran en el interfaz gráfico.
+En este bloque se implementan todos los servidores ICE necesarios para acceder a la informaci\'on sensorial y para enviar los comandos de actuaci\'on.
+La aplicación \texttt{UAV Commander} utiliza 5 interfaces ICE a diferencia de los cuatro que usa en el driver APM Server. Además de los que expone APM Server (a saber: \texttt{Pose3D} y \texttt{NavData} para recibir la posición medida por los sensores a bordo como el GPS y \texttt{Extra} y \texttt{Mission} para el envío de misiones con puntos de paso y maniobras de aterrizaje o despegue), también utiliza el interfaz \texttt{Camera} para recoger las imágenes y vídeo de la cámara abordo del avión que se muestran en el interfaz gráfico.
 
 
 \subsection{Cámara}
 
-\texttt{UAV Commander} utiliza el interfaz \texttt{Camera} para obtener las imágenes y vídeos recogidos desde el driver y mostrarlos en su interfaz gráfico. Para esto primero se crea el servicio ICE y se asigna al interfaz de usuario, una vez hecho esto, cuando el usuario hace \textit{click} en el \textit{checkBox} de camera, se abre la ventana de camera. En esta pantalla se recogen los datos de imagen y se asignan al área designado a mostrar las imágenes tal y como se puede ver en la Figura 5.4
+\texttt{UAV Commander} utiliza el interfaz \texttt{Camera} para obtener las imágenes y vídeos recogidos desde el driver y mostrarlos en su interfaz gráfico. Para esto primero se crea el servicio ICE y se asigna al interfaz de usuario. Una vez hecho esto, cuando el usuario hace \textit{click} en el \textit{checkBox} de camera, se abre la ventana de camera. En esta pantalla se recogen los datos de imagen y se asignan al área dedicado a mostrar las imágenes tal, y como se puede ver en la Figura 5.4
 
 \begin{figure}[H]
 \centering{
@@ -1639,7 +1635,7 @@ La aplicación \texttt{UAV Commander} utiliza 5 interfaces ICE a diferencia de lo
 
 
 \subsection{Sensores de vuelo}
-Para simplificar el proceso de creación y enlazado de los servicios ICE hemos optado por utilizar los servidores (en el sentido de servidores de ICE, sin atender al sentido en el que se transmiten los datos) ya implementadas en JdeRobot, \texttt{CameraClient}, \texttt{NavDataClient}, \texttt{Pose3DClient} y \texttt{Extra} y la clase \texttt{easyiceconfig}. De \'este modo este bloque queda simplificado y su inicializaci\'on queda relegada a unas pocas l\'ineas de c\'odigo como vemos en la Figura 5.7.
+Para simplificar el proceso de creación y enlazado de los servicios ICE hemos optado por utilizar los servidores (en el sentido de servidores de ICE, sin atender al sentido en el que se transmiten los datos) ya implementadas en JdeRobot, \texttt{CameraClient}, \texttt{NavDataClient}, \texttt{Pose3DClient} y \texttt{Extra} y la clase \texttt{easyiceconfig}. De este modo este bloque queda simplificado y su inicializaci\'on queda reducida a unas pocas l\'ineas de c\'odigo como vemos en la Figura 5.7.
 
 
 \begin{figure}[H]
@@ -1670,19 +1666,19 @@ Para simplificar el proceso de creación y enlazado de los servicios ICE hemos op
 \section{Bloque de Mapas}
 \label{sec:bloque_mapas_uavc}
 
-Este bloque es el encargado de la obtención de los mapas geo-referenciados y la interpretación de la posición actual sobre ellos. Este bloque realiza las conversiones de sistemas de referencia necesarios para inferir la posición de un punto geográfico en el planeta a partir de un píxel de la imagen y viceversa, así como las operaciones necesarias para representar ese punto en la imagen.
+Este bloque es el encargado de la obtención de los mapas geo-referenciados y la interpretación de la posición actual sobre ellos. Este bloque realiza las conversiones de sistemas de referencia necesarios para inferir la posición de un punto geográfico en el planeta a partir de un píxel de la imagen y viceversa, así como las operaciones requeridas para representar ese punto geográfico en la imagen.
 
 \subsection{Obtención de Mapas}
 
-Para obtener los mapas geo-referenciados se ha recurrido al uso de WebMapService (WMS) que es el método más empleado para la obtención de estos mapas. Se han utilizado dos WMS como fuentes, el PNOA del Instituto Geogr\'afico Nacional (IGN) como fuente principal y Google como fuente secundaria.
+Para obtener los mapas geo-referenciados se ha recurrido a WebMapService (WMS) que es el método más empleado para la obtención de estos mapas. Se han utilizado dos WMS como fuentes, el PNOA del Instituto Geogr\'afico Nacional (IGN) como fuente principal y Google como fuente secundaria.
 
-Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayudar\'a con \'estos tr\'amites. 
+Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizamos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayuda con estos tr\'amites. 
 En el c\'odigo mostrado en la Figura 5.8 podemos observar cómo recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WebMapService (WMS) en `http://www.ign.es/wms-inspire/pnoa-ma'.
 Para obtener un mapa geo-referenciado necesitamos principalmente cuatro cosas: la posición, el \textit{bounding box}, el tamaño de la imagen y la proyecci\'on a utilizar. 
-Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso un radio. El c\'odigo para calcularlo podemos observarlo en el método \texttt{getBoundingBox(lat, lon, distance)} de la Figura 5.10.
+Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso su lado (\texttt{radius}). El c\'odigo para calcularlo podemos observarlo en el método \texttt{getBoundingBox(lat, lon, distance)} de la Figura 5.10.
 
-Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto parámetros del objeto WMS y lanzamos la petición. El WMS devuelve una imagen en bytes a la que debemos añadir el \textit{disclaimer} que nos indica el IGN para poder utlizar los mapas de forma gratuita.
-Creamos la petición WMS con la URL del WMS PNOA y asignamos los parámetros necesarios para obtener el mapa. Al final montamos la imagen geo-referenciada, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV, el \textit{bounding box}, y el tamaño de la imagen.
+Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto de parámetros del objeto WMS y lanzamos la petición. El WMS devuelve una imagen en bytes a la que debemos añadir el \textit{disclaimer} que nos indica el IGN para poder utlizar los mapas de forma gratuita.
+Creamos la petición WMS con la URL del WMS PNOA y asignamos los parámetros necesarios para obtener el mapa. Al final montamos la imagen geo-referenciada, que se implementa como un diccionario con la imagen en OpenCV, el \textit{bounding box}, y el tamaño de la imagen.
 
 \begin{figure}
 \begin{python}
@@ -1725,7 +1721,7 @@ def getBoundingBox(lat, lon, distance):
     northEastpoint = from_radians(max_lat, max_lon)
     return southWestPoint[1], southWestPoint[0], northEastpoint[1], northEastpoint[0]
 \end{python}
-\caption{Métodos\texttt{getBoundingBox(lat, lon, distance)} encargado de calcular esquina inferior izquierda y esquina  superior derecha de un cuadrado de ancho \texttt{distance}}
+\caption{Método \texttt{getBoundingBox(lat, lon, distance)} encargado de calcular la esquina inferior izquierda y la esquina superior derecha de un cuadrado de ancho \texttt{distance}}
 \end{figure}
 
 \subsection{Conversión de coordenadas}
@@ -1750,9 +1746,9 @@ Podemos ver la proyecci\'on de posici\'on geogr\'afica a imagen en la Figura 5.1
 \end{figure}
 
 
-Para abordar este problema, y dado que se ha trabajado con robots a\'ereos con una autonom\'ia relativamente reducida, se ha asumido que la tierra es plana en un área rectangular de menos de 2 kil\'ometros de ancho. Con \'esta convenci\'on conseguimos simplificar notablemente la complejidad del problema, que pr\'acticamente se convierte en una normalizaci\'on de un sistema a otro.
+Para abordar este problema, y dado que se ha trabajado con robots a\'ereos con una autonom\'ia relativamente reducida, se ha asumido que la tierra es plana en un área rectangular de menos de 2 kil\'ometros de ancho. Con esta convenci\'on conseguimos simplificar notablemente la complejidad del problema, que pr\'acticamente se convierte en una normalizaci\'on de un sistema a otro.
 Si en un futuro se decidiese utilizar la aplicaci\'on para vuelos de mayor envergadura se deber\'ia tener en cuenta la curvatura de la tierra.
-La proyecci\'on en \texttt{UAV Commander} se realiza en ambos sentidos, de imagen a posición geogr\'afica y de sistema de coordenadas a imagen.
+La proyecci\'on en \texttt{UAV Commander} se realiza en ambos sentidos, de imagen a posición geogr\'afica y de sistema de coordenadas geográficas a imagen.
 
 \begin{figure}[H]
 \begin{python}
@@ -1763,7 +1759,7 @@ def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImag
     y = ((lon-lonMin) *(tamImageY))/distCoordY
     return round(y), round(x)
 \end{python}
-\caption{Método \texttt{posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY)}, encargado de calcular la proyección de un punto en coordenadas geográficas a la matriz de píxeles de la imagen que representa el mapa}
+\caption{Método \texttt{posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY)}, encargado de calcular la proyección de un punto en coordenadas geográficas sobre la matriz de píxeles de la imagen que representa el mapa}
 \end{figure}
 
 \subsection{Visualización de mapas}
@@ -1784,7 +1780,7 @@ El mapa se presenta como un elemento más del control de misiones de la aplicació
 \section{Bloque de misiones} 
 \label{sec:bloque_misiones_uavc}
 
-Este bloque es el encargado de facilitar la creación y envío de misiones. Las misiones se definen con una secuencia de puntos de paso (waypoints) que se quiere que el drone recorra, incluyendo un punto inicial de despegue y un punto final de aterrizaje. Ha de permitir crear misiones de forma interactiva además de identificar y convertir en objetos de interfaz ICE \texttt{mission} las maniobras de despegue y aterrizaje y los puntos de paso.
+Este bloque es el encargado de facilitar la creación y envío de misiones. Las misiones se definen con una secuencia de puntos de paso (\textit{waypoints}) que se quiere que el drone recorra, incluyendo un punto inicial de despegue y un punto final de aterrizaje. Ha de permitir crear misiones de forma interactiva además de identificar y convertir en objetos de interfaz ICE \texttt{mission} las maniobras de despegue y aterrizaje y los propios puntos de paso.
 
 \begin{figure}[H]
   \centering
@@ -1795,20 +1791,19 @@ Este bloque es el encargado de facilitar la creación y envío de misiones. Las mi
 
 \subsection{Creación y envío de misiones}
 
-Para poder dar esta funcionalidad de una forma intuitiva y sencilla se han implementado varios ingredientes:
+Para dar esta funcionalidad de una forma intuitiva y sencilla se han implementado varios ingredientes:
 \begin{itemize}
-\item Un mapa interactivo d\'onde un click crea un punto de misi\'on, dibujando un número secuencial que muestra el orden la misi\'on. Adem\'as, seg\'un van añadi\'endose nuevos puntos \texttt{UAV Commander} va dibujando la ruta que ``deber\'ia'' seguir el robot para el cumplimiento de su misi\'on.
+\item Un mapa interactivo donde un click crea un punto de misi\'on, dibujando un número secuencial que muestra el orden la misi\'on. Adem\'as, seg\'un van añadi\'endose nuevos puntos, la aplicación \texttt{UAV Commander} va dibujando la ruta que ``deber\'ia'' seguir el robot para el cumplimiento de su misi\'on.
 Un simple click en el mapa interactivo desencadena:
 \begin{enumerate}
 \item Inclusi\'on del punto de paso en la lista de puntos de paso.
-\item Llamada al m\'etodo de proyecci\'on \pythoninline{posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)} para obtener a partir del x e y de la imagen la latitud y longitud del punto en el espacio a d\'onde se desea ir.
+\item Llamada al m\'etodo de proyecci\'on \pythoninline{posImage2Coords(x, y, sizeX, sizeY, latMin, lonMin, latMax, lonMax)} para obtener a partir del x e y de la imagen la latitud y longitud del punto en el espacio a donde se desea ir.
 \item Control de misi\'on a realizar, verificando si se trata de un despegue, aterrizaje o un punto de paso intermedio.
 \item Inserci\'on en la tabla de seguimiento de puntos de paso.
-\item En la pr\'oxima iteraci\'on del threadMap a trav\'es de la llamada a \pythoninline{update_position()}.
-\item Se llama al m\'etodo \pythoninline{setPosition(self, x, y,angle)} quien ejecuta el m\'etodo.
-\item \pythoninline{set_waypoints(self, wayPoints, current=True)} quien pinta el nuevo punto de pasoy la ruta a seguir en el mapa.
+\item En la pr\'oxima iteraci\'on del hilo \texttt{threadMap} a trav\'es de la llamada a \pythoninline{update_position()} se actualizará el mapa con éste cambio.
+\item Al actualizars el mapa se llama al método \pythoninline{set_waypoints(self, wayPoints, current=True)} quien pinta el nuevo punto de paso y la ruta a seguir en el mapa. Las l\'ineas de c\'odigo de la figura 5.14 muestran la implementaci\'on del m\'etodo encargado de pintar los puntos de paso y las rutas en el mapa \pythoninline{set_waypoints(self, wayPoints, current=True)}
 \end{enumerate}
-Las l\'ineas de c\'odigo de la figura 5.14 muestran la implementaci\'on del m\'etodo encargado de pintar los puntos de paso y las rutas en el mapa \pythoninline{set_waypoints(self, wayPoints, current=True)}
+
 \begin{figure}
 \begin{python}
     def set_waypoints(self, wayPoints, current=True):
@@ -1826,9 +1821,9 @@ Las l\'ineas de c\'odigo de la figura 5.14 muestran la implementaci\'on del m\'e
 \caption{Método \texttt{set\_waypoints(self, wayPoints, current\=True)}, encargado de pintar los puntos de paso en el mapa}
 \end{figure}
 \item Bot\'on de ``Take Off''/``Land''. Este bot\'on apoya al mapa para crear misiones con aterrizaje y despegue, si se quiere despegar hacia un punto, basta con pulsarlo y pulsar despu\'es hacia d\'onde se quiere despegar. El comportamiento para el aterrizaje es an\'alogo.
-\item Tabla de seguimiento de puntos de paso. En \'esta tabla se almacenan los puntos de paso que se van creando al hacer click sobre el mapa, cada fila es editable, de tal forma que ofrece una gran precisi\'on en caso que sea necesario.
-\item Campo ``default altitude'' Establece la altitud de crucero, el valor de \'este campo se ir\'a propagando en cada punto de paso creado en el atributo \texttt{altitude}.
-\item Bot\'on ``Send''. Este bot\'on llama al m\'etodo \pythoninline{sendWP(self, send2APM)} (Figura 5.15) quien recoge los objetos de misi\'on, los procesa y los env\'ia al bloque de comunicaci\'on con drivers también a trav\'es de los interfaces ICE necesarios, a saber, \texttt{mission} y \texttt{extra} en el caso en el que haya aterrizaje o despegue en la misi\'on.
+\item Tabla de seguimiento de puntos de paso. En esta tabla se almacenan los puntos de paso que se van creando al hacer click sobre el mapa, cada fila es editable, de tal forma que ofrece una gran precisi\'on en caso que sea necesario.
+\item Campo ``default altitude'' Establece la altitud de crucero, el valor de este campo se ir\'a propagando en cada punto de paso creado en el atributo \texttt{altitude}.
+\item Bot\'on ``Send''. Este bot\'on llama al m\'etodo \pythoninline{sendWP(self, send2APM)} (Figura 5.15) quien recoge los objetos de misi\'on, los procesa y los env\'ia al bloque de comunicaci\'on con drivers a trav\'es de los interfaces ICE necesarios, a saber, \texttt{mission} y \texttt{extra} en el caso en el que haya aterrizaje o despegue en la misi\'on.
 \end{itemize}
 
 \begin{figure}
@@ -1859,31 +1854,38 @@ Las l\'ineas de c\'odigo de la figura 5.14 muestran la implementaci\'on del m\'e
                 mission.mission.append(pose)
             i += 1
 \end{python}
-\caption{Método \texttt{sendWP(self, send2APM)}, encargado de enviar la misión creada por el usuario al driver}
+\caption{Método \texttt{sendWP(self, send2APM)}, encargado de enviar la misión creada por el usuario al driver \texttt{APM Server}}
 \end{figure}
 
 \subsection{Control del vuelo}
-El control se materializa en la placa estabilizadora a bordo del propio drone, en esta aplicación se visualiza su efecto, monitorizando en todo momento la posición 3D del avión y su relación con los puntos de paso de la misión.
+El control se materializa en la placa estabilizadora a bordo del propio drone, en la aplicación \texttt{UAV Commander} se visualiza su efecto, monitorizando en todo momento la posición 3D del avión y su relación con los puntos de paso de la misión.
 
 
 Para llevar \'esto a cabo se ha dividido el mapa en tres capas:
 \begin{enumerate}
 \item Mapa original con el disclaimer. \pythoninline{self.cvImage}
-\item Mapa original con la estela que ha dejado el robot a\'ereo. \pythoninline{self.cvImageShadow}
+\item Mapa original con la estela que ha dejado el robot a\'ereo. \pythoninline{self.cvImageShadow}, sus posiciones pasadas.
 \item Mapa que va a mostrarse, donde se pinta la posici\'on actual del robot a\'ereo \pythoninline{self.im_to_show}
 \end{enumerate}
-Este planteamiento por capas permite, por ejemplo, mantener la estela del robot y pintar la posici\'on actual, añadir puntos de paso sin alterar lo ya dibujado, etc. Pero complica la implementaci\'on de todos los m\'etodos que interact\'uan en este bloque.
+Este planteamiento por capas permite, por ejemplo, mantener la estela del robot y pintar la posici\'on actual, añadir puntos de paso sin alterar lo ya dibujado, etc. Aunque complica la implementaci\'on de todos los m\'etodos que interact\'uan en este bloque.
 Algunos de los m\'etodos más importantes del desarrollo se encuentran aqu\'i y se listan a continuaci\'on:
 
 \begin{itemize}
-\item  \pythoninline{update_position(self)}
-\item  \pythoninline{self.setPosition(self, x, y, angle)}
-\item  \pythoninline{draw_triangle(self, x, y, angle)}
-\item  \pythoninline{refresh_shadow(self,x,y)}
-\item  \pythoninline{refreshImage(self)}
+\item  \pythoninline{update_position(self)}. Este método es al que el hilo \texttt{treadMap} llama en cada iteración. Es el encargado de desencadenar las llamadas suficientes para actualizar visualmente el mapa en el interfaz de usuario.
+\item  \pythoninline{self.setPosition(self, x, y, angle)}. Este método es el encargado de realizar las modificaciones sobre el mapa y asignar el nuevo mapa al interfaz de usuario.
+\item  \pythoninline{draw_triangle(self, x, y, angle)}. Este método es el encargado de actualizar la posición actual pintando en el mapa un triángulo que muestra la posición y rumbo del avión. El centro del triángulo se sitúa en el píxel que representa la posición geográfica actual, y se gira para que marque el rumbo que sigue el avión.
+\item  \pythoninline{refresh_shadow(self,x,y)}. Este método es el encargado de actualizar el mapa de sombras con las posiciones por dónde ha pasado el avión.
+\item \pythoninline{set_wayPoints(self.wayPoints)} Este método consulta los puntos de paso pintando éstos sobre el mapa junto con la trayectoria a seguir, si en este momento hay un punto de paso nuevo se añade al mapa con el resto.
+\item  \pythoninline{refreshImage(self)}. Este método asigna el nuevo mapa en el interfaz gráfico de usuario.
 \end{itemize}
 
-En cada iteraci\'on del hilo \texttt{threadMap} se articula el siguiente \'arbol con las llamadas:
+Se ha desarrollado un hilo que actualiza periódicamente el estado del mapa \texttt{threadMap}. Este hilo da la señal al interfaz de usuario de que se tiene que refrescar el mapa, se actualiza a través del método enlazado a esta señal, el método \pythoninline{update_position(self)}.
+
+Para que se pueda ver bien el proceso de una actualización del mapa vamos a describir qué tareas se realizan en cada ciclo de actualización.
+
+En cada iteraci\'on del hilo \texttt{threadMap} se valida si el avión se encuentra en una posición del mapa cercana al borde (menor del 10\% del ancho o alto), si es así se descargará un nuevo mapa de un áera el doble que la primera. Se obtiene la nueva posición y rumbo para que el método \pythoninline{setPosition(self, x, y, angle)} la actualize en el mapa. Se actualiza el mapa de sombras con un nuevo punto correspondiente a la posición actual y se pintan sobre él los puntos de paso en \pythoninline{set_wayPoints(self.wayPoints)}. La siguiente tarea a realizar es actualizar la posición del avión actual sobre el mapa, para ello se dibuja un triángulo de color rojo con el método \pythoninline{draw_triangle(self, x, y, angle)} que representa la posición y el rumbo del avión. Por último se refresca en el interfaz de usuario el mapa que hemos ido modificando con el método \pythoninline{refreshImage(self)}.
+
+A continuación se muestra esta secuencia de llamadas en forma de árbol para que pueda verse mejor que métodos se llaman en qué momento.
 \begin{itemize}
 \item \pythoninline{update_position(self)}
 	\begin{itemize}
@@ -1944,7 +1946,7 @@ En la Figura 5.16 se muestran las implementaciones de los m\'etodos con m\'as pe
 \cleardoublepage
 \chapter{Experimentos}
 
-En este capítulo se presentan las pruebas realizadas al sistema que proporcionan su validación experimental y el hardware necesario para la reproducción de las mismas. Estos experimentos han de validar los subobjetivos descritos en el Capítulo 2 y se dividen en nueve pruebas repartidas en dos bloques: experimentos en simulación y experimentos con el avión real.
+En este capítulo se presentan las pruebas realizadas al sistema que proporcionan su validación experimental y el hardware necesario para la reproducción de las mismas. Estos experimentos han de validar los subobjetivos descritos en el capítulo 2 y se dividen en nueve pruebas repartidas en dos bloques: experimentos en simulación y experimentos con el avión real.
 
 \section{Experimentos con misiones en simulador}
 \label{sec:experimentos_simulados}
@@ -1959,13 +1961,13 @@ En este apartado se presentan todos los experimentos realizados en simulación un
 \item Experimento de autozoom ante la salida del avión del mapa.
 \end{enumerate}
 
-\subsection{Experimento de integración de todo el software}
+\subsection{Integración de todo el software}
 
-El objetivo de este experimento es probar que la integración del sistema y SITL se ha realizado correctamente. Vamos a verificar que se realiza correctamente la conexión con el drone simulado, y constatar que el driver recoge correctamente los datos sensoriales del drone. Se verifica también que estos datos se envían correctamente desde el driver a la aplicación y que ésta los representa fielmente. 
+El objetivo de este experimento es probar que la integración del sistema y el simulador SITL se ha realizado correctamente. Vamos a verificar que se realiza correctamente la conexión con el drone simulado y constatar que el driver recoge correctamente los datos sensoriales del drone. Se verifica también que estos datos se envían correctamente desde el driver a la aplicación y que ésta los representa fielmente. 
 Para ello se han seguido los siguientes pasos:
 \begin{enumerate}
 \item Arranque y configuración de SITL.
-\item Se carga una misión de prueba en el simulador a través de \texttt{MAVProxy}, donde se le ordena al drone seguir una serie de puntos de paso.
+\item Se carga una misión de prueba \textit{en el simulador} a través de \texttt{MAVProxy}, donde se le ordena al drone seguir una serie de puntos de paso. Como adelantamos en el capítulo 3 el simulador SITL se integra con MAVProxy y ésto es muy útil, con él podemos cargar misiones desde un fichero, o o comenzar o parar una misión directamente sin necesidad de utilizar nuestra aplicación y driver. 
 \item Se da comienzo a la misión simulada desde \texttt{MAVProxy}.
 \item Se arranca el driver \texttt{APM Server}, es en este momento donde validaremos que se ha realizado la conexión con el drone simulado correctamente. 
 \item Se arranca la aplicación \texttt{UAV Commander} y seguiremos la trayectoria del avión simulado a través del mapa de la aplicación, comprobando que pasa por los puntos de paso que hemos especificado en el simulador. Se comprobará que la ventana de actitud responde correctamente a los giros del drone simulado durante su misión.
@@ -1973,49 +1975,64 @@ Para ello se han seguido los siguientes pasos:
 
 Se comprueba que funciona correctamente y se evidencia en el siguiente vídeo \url{https://www.youtube.com/watch?v=rHTi0buUETg}
 
-\subsection{Experimento envío de misión con avión en vuelo}
+\subsection{Envío de misión con avión en vuelo}
 
-El objetivo de este experimento es probar que el envío de misiones al drone simulado funciona correctamente y validar su cumplimiento. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es probar que el envío de misiones al drone simulado desde nuestra aplicación funciona correctamente y validar su cumplimiento. Para ello se realizaron los siguientes pasos:
 \begin{enumerate}
 \item Arranque y configuración de SITL.
-\item Se carga una misión de prueba a través de \texttt{MAVProxy}, en este caso a diferencia del caso anterior la misión tan solo consta de un despegue. Cuando el autopiloto comprueba que se han alcanzado todas las misiones enviadas entra en modo RTL \textit{}. En este modo el drone da vueltas trazando una circunferencia de un radio establecido por defecto en el \textit{firmware} de forma indefinida permitíendonos mandarle misiones estando en el aire.
+\item Se carga una misión de prueba a través de \texttt{MAVProxy}, en este caso a diferencia del caso anterior la misión tan solo consta de un despegue. Cuando el autopiloto comprueba que se han alcanzado todas las misiones enviadas entra en modo RTL. En este modo el drone da vueltas trazando una circunferencia de un radio establecido por defecto en el \textit{firmware} de forma indefinida permitíendonos mandarle misiones estando en el aire (Figura 6.1).
 \item Se da comienzo a la misión simulada desde \texttt{MAVProxy}.
-\item Se arranca el driver \texttt{APM Server} conectando el driver al avion simulado.
+\item Se arranca el driver \texttt{APM Server} conectando el driver al avión simulado.
 \item Se arranca la aplicación \texttt{UAV Commander} conectándose con el driver.
 \item Se crea una misión en \texttt{UAV Commander} haciendo click en los puntos del mapa interactivo por donde queramos que pase el avión.
 \item Se envía la misión a \texttt{APM Server} a través del botón ``Send'' de \texttt{UAV Commander}
 \end{enumerate}
 
+\begin{figure}[H]
+\centering{
+   \label{f:experimento_en_vuelo}
+    \includegraphics[width=0.9\textwidth]{img/envuelo.png}}
+    \caption{Seguimiento del experimento 6.1.2 dentro de la aplicación \texttt{UAV Commander}}
+  
+\end{figure}
+
 En el experimento se comprueba que el avión ha seguido la ruta indicada desde \texttt{UAV Commander} correctamente.
 La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=_X8WGSMIxug}
 
-\subsection{Experimento de envío de misión con despegue y varios puntos de paso}
-El objetivo de este experimento es probar que el envío de misiones y maniobra de despegue al avión simulado funciona correctamente y validar su cumplimiento. 
+\subsection{Envío de misión con despegue y varios puntos de paso}
+El objetivo de este experimento es probar que el envío de misiones incluyendo una maniobra de despegue al avión simulado funciona correctamente y validar su cumplimiento. 
 
-Seguiremos los mismos pasos que en el experimento anterior salvo por una particularidad, antes de clicar en el primer punto de paso (que será el primer punto al que vuele tras el despegue) pulsaremos el botón de ``Take Off''. De éste modo estaremos indicando al avión simulado <<Despega hacia el punto de paso X, Y>> donde X e Y serán latitud y longitud de la proyección del pixel de la imagen a coordenadas geográficas. 
+Seguimos los mismos pasos que en el experimento anterior salvo por una particularidad, antes de clicar en el primer punto de paso (que será el primer punto al que vuele tras el despegue) pulsaremos el botón de ``Take Off''. De este modo estamos indicando al avión simulado <<Despega hacia el punto de paso X, Y>> donde X e Y serán latitud y longitud de la proyección del píxel de la imagen a coordenadas geográficas. 
 
 Una vez realizada la secuencia arriba descrita se comprueba el seguimiento de la misión enviada a través del mapa, validando tanto que realiza la maniobra de despegue correctamente como el seguimiento de los puntos de paso. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=0j3QttXIRbg}
 
-\subsection{Experimento de envío de misión con despegue y aterrizaje}
-El objetivo de este experimento es probar que el envío de misiones con maniobra de despegue y aterrizaje al avión simulado funciona correctamente y validar su cumplimiento.
 
-Seguiremos los mismos pasos que en el experimento anterior salvo porque antes de clicar en el último punto de paso pulsaremos el botón ``Land''. De éste modo estaremos indicando al avión simulado <<Aterriza en el punto de paso X, Y>> donde X e Y serán latitud y longitud de la proyección del pixel de la imagen a coordenadas geográficas. 
-
-Durante el experimento se puede comprobar que hay que ajustar muy bien la altitud del avión en los últimos puntos de paso, para que el avión aterrice en lo mas cerca posible del último. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=4yf_PmFgR5Y}
 \begin{figure}[H]
 \centering{
-   \label{f:diseno_uavc_caja_trans}
+   \label{f:experimento_despegue}
+    \includegraphics[width=0.8\textwidth]{img/despegue.png}}
+    \caption{Seguimiento del experimento 6.1.3 dentro de la aplicación \texttt{UAV Commander}}
+  
+\end{figure}
+
+\subsection{Envío de misión completa con despegue y aterrizaje}
+El objetivo de este experimento es probar que el envío de misiones completas con maniobra de despegue y aterrizaje al avión simulado funciona correctamente y validar su cumplimiento.
+
+Seguiremos los mismos pasos que en el experimento anterior salvo porque antes de clicar en el último punto de paso pulsaremos el botón ``Land''. De este modo estamos indicando al avión simulado <<Aterriza en el punto de paso X, Y>> donde X e Y serán latitud y longitud de la proyección del píxel de la imagen a coordenadas geográficas. 
+
+Durante el experimento se puede comprobar que hay que ajustar muy bien la altitud del avión en los últimos puntos de paso, para que el avión aterrice en lo más cerca posible del último. Como vemos en la Figura 6.3 el avión necesita mucho terreno para aterrizar aún ajustando la altura en sus últimos puntos de paso. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=4yf_PmFgR5Y}
+\begin{figure}[H]
+\centering{
+   \label{f:experimento completo}
     \includegraphics[width=0.7\textwidth]{img/toff-land.png}}
-    \caption{Seguimiento del experimento 6.1.4 dentro de la aplicación \texttt{UAV Commander}}
+    \caption{Seguimiento del experimento 6.1.3 dentro de la aplicación \texttt{UAV Commander}}
   
 \end{figure}
 
 \subsection{Experimento de autozoom ante la salida del avión del mapa}
-El objetivo de este experimento es probar que el autozoom de \texttt{UAV Commander} funciona correctamente. 
+El objetivo de este experimento es probar que el autozoom de \texttt{UAV Commander} funciona correctamente. Para ello se han realizado los mismos pasos que en el experimento 6.1.1 estableciendo desde \texttt{MAVProxy} un punto de paso que quede claramente fuera del mapa descargado por defecto por \texttt{UAV Commander}.
 
-Para ello se van a realizar los mismos pasos que en el experimento 6.1.1 estableciendo desde \texttt{MAVProxy} un punto de paso que quede claramente fuera del mapa descargado por defecto por \texttt{UAV Commander}.
-
-Una vez realizada la secuencia arriba descrita se comprobará que \texttt{UAV Commander} descarga un nuevo mapa con una perspectiva mas amplia para seguir al avión. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=vEcMbJoJ-Qo}
+Una vez realizada la secuencia arriba descrita se comprueba que \texttt{UAV Commander} descarga un nuevo mapa con una perspectiva más amplia para seguir al avión. Un ejemplo de este funcionamiento lo tenemos en la Figura 6.4. La prueba se evidencia en el vídeo \url{https://www.youtube.com/watch?v=vEcMbJoJ-Qo}
 
 \begin{figure}[h]
 \centering{
@@ -2027,7 +2044,7 @@ Una vez realizada la secuencia arriba descrita se comprobará que \texttt{UAV Com
 \end{figure}
 
 
-\section{Interconexión del driver y aplicación con avión}
+\section{Interconexión del driver y aplicación con el avión real}
 \label{sec:experimentos_real}
 
 En este apartado se presentan todos los experimentos realizados con el avión real, a saber:
@@ -2040,33 +2057,44 @@ En este apartado se presentan todos los experimentos realizados con el avión rea
 \end{enumerate}
 
 \subsection{Experimento de recepción de vídeo}
-El objetivo de este experimento es verificar que el envío del vídeo capturado desde el ordenador de abordo con \texttt{cameraserver} se recibe correctamente en la aplicación \texttt{UAV Commander}. Para ello se van a realizar los siguiente pasos:
+El objetivo de este experimento es verificar que el envío del vídeo capturado desde el ordenador de abordo con \texttt{cameraserver} se recibe correctamente en la aplicación \texttt{UAV Commander}. Para ello se han realizado los siguiente pasos:
 
 \begin{enumerate}
-\item Arranque del ordenador de abordo.
+\item Arranque del ordenador abordo.
 \item Arranque del driver \texttt{cameraserver}.
 \item Arranque de la aplicación \texttt{UAV Commander} donde clicaremos en el \textit{checkbox camera} y validaremos que se recibe correctamente el video transmitido.
 \end{enumerate}
-Esta prueba valida la recepción por parte de \texttt{AUV Commander} del vídeo que en este caso se emite desde otro driver distinto de \texttt{APM Server}. 
+Esta prueba valida la recepción por parte de \texttt{AUV Commander} del vídeo que en este caso se emite desde otro driver distinto de \texttt{APM Server}, tal y como se aprecia en la Figura 6.5. La prueba se evidencia en el vídeo \url{https://youtu.be/U-y8xstytuY}
 \begin{figure}[H]
 \centering{
    \label{f:pruebavideo}
-    \includegraphics[width=0.7\textwidth]{img/ventana_camera.png}}
+    \includegraphics[width=0.9\textwidth]{img/ventana_camera.png}}
     \caption{Prueba de recepción de vídeo desde cameraserver a \texttt{UAV Commander}}
   
 \end{figure}
 
-La prueba se evidencia en el vídeo \url{https://youtu.be/U-y8xstytuY}
+\subsection{Recepción de información sensorial y seguimiento del avión a través del \texttt{UAV Commander}}
+El objetivo de este experimento es probar que la integración del sistema y el avión real a radiocontrol se ha realizado correctamente. Se valida que se reciben correctamente los datos entregados por el driver y que se presentan fielmente a través del interfaz de usuario. Para ello se realizaron los pasos del experimento anterior salvo que en este caso también moveremos el prototipo en sus 3 ejes de libertad para comprobar que se reciben y se presentan correctamente los datos en la ventana de actitud.
 
-\subsection{Pruebas de alcance del enlace entre el avión simulado y el ordenador base}
-El objetivo de este experimento es probar que se reciben correctamente los datos de actitud del avión desde el ordenador base, según nos vamos alejando. Ésto nos delimitará el alcance al que vamos a volar. Para ello se van a realizar los siguiente pasos:
+\begin{figure}[H]
+\centering{
+   \label{f:experimento_sensores_real}
+    \includegraphics[width=0.9\textwidth]{img/sensores.png}}
+    \caption{Seguimiento del experimento 6.2.3 dentro de la aplicación \texttt{UAV Commander}}
+  
+\end{figure}
+
+La prueba se evidencia en el vídeo \url{https://youtu.be/HFR7JjD-ZIs}
+
+\subsection{Pruebas de alcance del enlace entre el avión y el ordenador base}
+El objetivo de este experimento es probar que se reciben correctamente los datos de actitud del avión desde el ordenador base, según nos vamos alejando. El driver (ejecutando abordo del avión real) y aplicación están conectados a través de wifi y por tanto ésto nos delimitará el alcance al que vamos a volar. Para ello se van a realizar los siguiente pasos:
 \begin{enumerate}
 \item Arranque del avión a radiocontrol y del ordenador de abordo.
-\item Arranque del driver \texttt{APM Server}, éste se conecta nada mas arrancar a la placa estabilizadora APM a través del puerto de serie.
+\item Arranque del driver \texttt{APM Server}, este se conecta nada más arrancar a la placa estabilizadora APM a través del puerto de serie.
 \item Arranque de la aplicación \texttt{UAV Commander} quien se conecta a su vez al driver.
 \item Se separará el avión del ordenador base hasta que se pierda la señal del wifi. De este modo sabremos la distancia máxima a la que podemos volar
 \end{enumerate}
-Este experimento nos va a permitir conocer a qué distancia vamos a poder volar. Este experimento se realizó dos veces: en la primera ocasión los datos arrojados por el experimento, apenas 10 metros, impedían cualquier tipo de vuelo del avión real. Con estos datos sobre la mesa se decidió adquirir un adaptador wifi mas potente para el ordenador de abordo, y se utilizó un \textit{router} con mas alcance para conectar ambos ordenadores. Con este nuevo hardware en una segunda prueba se alcanzó una distancia cercana a los 20 metros que permitiría un vuelo ceñido.
+Este experimento nos va a permitir conocer a qué distancia vamos a poder volar. Este experimento se realizó dos veces: en la primera ocasión los datos arrojados por el experimento, apenas 10 metros, impedían cualquier tipo de vuelo del avión real. Con estos datos sobre la mesa se decidió adquirir un adaptador wifi mas potente para el ordenador de abordo, y se utilizó un \textit{router} con mas alcance para conectar ambos ordenadores. Con este nuevo hardware en una segunda prueba se alcanzó una distancia cercana a los 20 metros que permitiría un vuelo ceñido. Podemos comparar los resultados de ambos experimentos en la Figura 6.6.
 \begin{figure}[h]
 \centering
   \subfloat[Alcance logrado en la primera prueba de alcance.]{
@@ -2075,19 +2103,15 @@ Este experimento nos va a permitir conocer a qué distancia vamos a poder volar. 
   \subfloat[Alcance logrado en la segunda prueba de alcance.]{
    \label{f:alcance2}
     \includegraphics[width=0.485\textwidth]{img/2.png}}
-    \caption~{Resultados de las pruebas de alcance}
+    \caption~{Resultados de las pruebas de alcance wifi}
 \end{figure}
 
-\subsection{Experimento de recepción de información sensorial y seguimiento del avión a través del \texttt{UAV Commander}}
-El objetivo de este experimento es probar que la integración del sistema y el avión real a radiocontrol se ha realizado correctamente. Se validará que se reciben correctamente los datos entregados por el driver y que se presentan fielmente a través del interfaz de usuario. Para ello se van a realizar los pasos del experimento anterior salvo que en este caso también moveremos el prototipo en sus 3 ejes de libertad para comprobar que se reciben y se presentan correctamente los datos en la ventana de actitud.
-
-La prueba se evidencia en el vídeo \url{https://youtu.be/HFR7JjD-ZIs}
-
 \subsection{Experimento de comportamiento ante pérdidas de señal}
-El objetivo de este experimento es ver como se comporta \texttt{UAV Commander} ante la pérdida de la recepción de \texttt{APM Server}. A tenor de los datos obtenidos en el experimento 6.2.2 este experimento es imprescindible para conocer de antemano que puede pasar en un vuelo real.
+El objetivo de este experimento es ver cómo se comporta \texttt{UAV Commander} ante la pérdida de la recepción de \texttt{APM Server}. A tenor de los datos obtenidos en el experimento 6.2.2 este experimento es imprescindible para conocer de antemano qué puede pasar en un vuelo real.
+
 Para llevarlo a cabo se simuló una pérdida de alcance apagando el adaptador wifi del ordenador base donde corre \texttt{UAV Commander}.
 El resultado esperado era que tras la desconexión no se rompiera la ejecución de \texttt{APM Server} o de \texttt{UAV Commander} y se recuperase tras volver de nuevo a una zona de cobertura.
-El experimento demuestra la robustez de ambos desarrollos ante pérdidas de señal, la evidencia puede verse en el vídeo \url{https://youtu.be/HFR7JjD-ZIs}
+En efecto el resultado obtenido corrobora que aplicación y driver retoman con éxito la conexión después de un tiempo sin estar conectados. El experimento demuestra la robustez de ambos desarrollos ante pérdidas de señal, la evidencia puede verse en el vídeo \url{https://youtu.be/HFR7JjD-ZIs}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
