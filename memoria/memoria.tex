@@ -1571,7 +1571,7 @@ La aplicaci\'on debe cubrir las siguientes funcionalidades:
 	\item Actitud
 	\item C\'amaras de abordo
 \end{itemize}
-\item Premitir la creaci\'on de misiones como secuencias de puntos por los que debe pasar el drone, ubicándolos dentro de un mapa geo-referenciado.
+\item Permitir la creaci\'on de misiones como secuencias de puntos por los que debe pasar el drone, ubicándolos dentro de un mapa geo-referenciado.
 \item Enviar misiones a trav\'es de interfaces ICE al driver de JdeRobot que ofrece acceso al avión y es capaz de materializar esas misiones, de gobernar al avión para que las cumpla.
 \item Validar el cumplimiento de misiones con algún ejemplo en el avión simulado.
 \end{enumerate}
@@ -1579,7 +1579,7 @@ La aplicaci\'on debe cubrir las siguientes funcionalidades:
 \begin{figure}[H]
 \centering{
    \label{f:diseno_uavc_caja_negra}
-    \includegraphics[width=0.9\textwidth]{img/diseno2_uavc.jpg}}
+    \includegraphics[width=1.05\textwidth]{img/diseno2_uavc.jpg}}
     \caption{Diseño de caja negra de \texttt{UAV Commander}, entradas y salidas}
   
 \end{figure}
@@ -1611,13 +1611,13 @@ Cada uno de estos bloques se detalla a continuación en las secciones siguientes.
 \section{Bloque de sensores} 
 \label{sec:bloque_sensores_uavc}
 
-En \'este bloque se implementan todos los servidores ICE necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
-La aplicación \texttt{UAV Commander} utiliza 5 interfaces ICE a diferencia de los 4 que usa en el driver APM Server. Además de los que expone APM Server (a saber: \texttt{Pose3D} y \texttt{NavData} para recibir la posición medida por los sensores a bordo como el GPS o la actitud y \texttt{Extra} y \texttt{Mission} para el envío de misiones con puntos de paso y maniobras de aterrizaje o despegue), también utiliza el interfaz \texttt{Camera} para recoger las imágenes y vídeo de la cámara de abordo del avión que se muestran en el interfaz gráfico.
+En este bloque se implementan todos los servidores ICE necesarios para acceder a la informaci\'on sensorial y para enviar los interfaces necesarios para la actuaci\'on.
+La aplicación \texttt{UAV Commander} utiliza 5 interfaces ICE a diferencia de los 4 que usa en el driver APM Server. Además de los que expone APM Server (a saber: \texttt{Pose3D} y \texttt{NavData} para recibir la posición medida por los sensores a bordo como el GPS y \texttt{Extra} y \texttt{Mission} para el envío de misiones con puntos de paso y maniobras de aterrizaje o despegue), también utiliza el interfaz \texttt{Camera} para recoger las imágenes y vídeo de la cámara de abordo del avión que se muestran en el interfaz gráfico.
 
 
 \subsection{Cámara}
 
-\texttt{UAV Commander} utiliza el interfaz \texttt{Camera} para obtener las imágenes y vídeos recogidos desde el driver y mostrarlos en su interfaz gráfico. Para esto primero se crea el servicio ICE y se asigna al interfaz de usuario, una vez hecho esto, cuando el usuario hace \textit{click} en el \textit{checkBox} de camera, se abre la ventana de cámara. En esta pantalla se recogen los datos de imagen y se asignan al área designado a mostrar las imágenes tal y como se puede ver en la Figura 5.4
+\texttt{UAV Commander} utiliza el interfaz \texttt{Camera} para obtener las imágenes y vídeos recogidos desde el driver y mostrarlos en su interfaz gráfico. Para esto primero se crea el servicio ICE y se asigna al interfaz de usuario, una vez hecho esto, cuando el usuario hace \textit{click} en el \textit{checkBox} de camera, se abre la ventana de camera. En esta pantalla se recogen los datos de imagen y se asignan al área designado a mostrar las imágenes tal y como se puede ver en la Figura 5.4
 
 \begin{figure}[H]
 \centering{
@@ -1670,19 +1670,19 @@ Para simplificar el proceso de creación y enlazado de los servicios ICE hemos op
 \section{Bloque de Mapas}
 \label{sec:bloque_mapas_uavc}
 
-Este bloque es el encargado de la obtención de los mapas geo-referenciados y la interpretación de la posición actual soobre ellos. Este bloque realiza las conversiones de sistemas de referencia necesarios para inferir la posición de un punto geográfico en el planeta a partir de un píxel de la imagen y viceversa, así como las operaciones necesarias para representar ese punto en la imagen.
+Este bloque es el encargado de la obtención de los mapas geo-referenciados y la interpretación de la posición actual sobre ellos. Este bloque realiza las conversiones de sistemas de referencia necesarios para inferir la posición de un punto geográfico en el planeta a partir de un píxel de la imagen y viceversa, así como las operaciones necesarias para representar ese punto en la imagen.
 
 \subsection{Obtención de Mapas}
 
 Para obtener los mapas geo-referenciados se ha recurrido al uso de WebMapService (WMS) que es el método más empleado para la obtención de estos mapas. Se han utilizado dos WMS como fuentes, el PNOA del Instituto Geogr\'afico Nacional (IGN) como fuente principal y Google como fuente secundaria.
 
 Con el fin de abstraernos del montaje de la URL y env\'io y tratamiento de la respuesta utilizaremos la librer\'ia OWSLib\footnote{\url{https://geopython.github.io/OWSLib/}}, en su versión 0.14.0, que nos ayudar\'a con \'estos tr\'amites. 
-En el c\'odigo mostrado en la Figura 5.8 podemos observar cómo recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WebMapService (WMS) en 'http://www.ign.es/wms-inspire/pnoa-ma'.
-Para obtener un mapa geo-referenciado necesitamos principalmente 4 cosas: la posición, el \textit{bounding box}, el tamaño de la imagen y la proyecci\'on a utilizar. 
-Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso al mostrar im\'agenes cuadradas, un radio. El c\'odigo para calcularlo podemos observarlo en el método \texttt{getBoundingBox(lat, lon, distance)} de la Figura 5.10.
+En el c\'odigo mostrado en la Figura 5.8 podemos observar cómo recuperamos un nuevo mapa del IGN\footnote{Instituto geogr\'afico nacional}, que publica uno de sus numerosos WebMapService (WMS) en `http://www.ign.es/wms-inspire/pnoa-ma'.
+Para obtener un mapa geo-referenciado necesitamos principalmente cuatro cosas: la posición, el \textit{bounding box}, el tamaño de la imagen y la proyecci\'on a utilizar. 
+Primero obtenemos el \textit{bounding box}. El \textit{bounding box} es la zona geogr\'afica que vamos a recuperar, se calcula a partir de la posici\'on GPS central y, en nuestro caso un radio. El c\'odigo para calcularlo podemos observarlo en el método \texttt{getBoundingBox(lat, lon, distance)} de la Figura 5.10.
 
-Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto parámetros del objeto WMS y lanzamos la petición que devuelve una imagen en bytes a la que debemos añadir el \textit{disclaimer} que nos indica el IGN para poder utlizar los mapas de forma gratuita.
-Creamos la petición WMS con la URL del WMS PNOA y asignamos los parámetros necesarios para obtener el mapa. Al final montamos la imagen geo-referenciada recibida, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV, el \textit{bounding box}, y el tamaño de la imagen.
+Una vez obtenido el \textit{bounding box} \'unicamente rellenamos el resto parámetros del objeto WMS y lanzamos la petición. El WMS devuelve una imagen en bytes a la que debemos añadir el \textit{disclaimer} que nos indica el IGN para poder utlizar los mapas de forma gratuita.
+Creamos la petición WMS con la URL del WMS PNOA y asignamos los parámetros necesarios para obtener el mapa. Al final montamos la imagen geo-referenciada, que en nuestro caso ser\'a un diccionario con la imagen en OpenCV, el \textit{bounding box}, y el tamaño de la imagen.
 
 \begin{figure}
 \begin{python}
@@ -1754,7 +1754,7 @@ Para abordar este problema, y dado que se ha trabajado con robots a\'ereos con u
 Si en un futuro se decidiese utilizar la aplicaci\'on para vuelos de mayor envergadura se deber\'ia tener en cuenta la curvatura de la tierra.
 La proyecci\'on en \texttt{UAV Commander} se realiza en ambos sentidos, de imagen a posición geogr\'afica y de sistema de coordenadas a imagen.
 
-\begin{figure}
+\begin{figure}[H]
 \begin{python}
 def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImageY):
     distCoordX = round(latMax - latMin,7)
@@ -1767,7 +1767,7 @@ def posCoords2Image(lonMin, latMin, lonMax, latMax, lat, lon, tamImageX, tamImag
 \end{figure}
 
 \subsection{Visualización de mapas}
-El mapa se presenta como un elemento más del control de misiones de la aplicación. Para visualizarlo por pantalla se ha creado una capa en PyQt5 con un QLabel que carga la imagen. Para realizar esta tarea de forma ágil y evitar el colapso de los recursos de la máquina donde se ejecuta, trabajamos con la biblioteca de visión artificial \texttt{open cv}, con lo que para mostrarla por pantalla hay que realizar ciertas transformaciones. El código encargado de mostrar por pantalla el mapa se puede ver en la Figura 5.12 y la apariencia de un mapa visualizado como ejemlplo en la Figura 5.13.
+El mapa se presenta como un elemento más del control de misiones de la aplicación. Para visualizarlo por pantalla se ha creado una capa en PyQt5 con un QLabel que carga la imagen. Para realizar esta tarea de forma ágil y evitar el colapso de los recursos de la máquina donde se ejecuta, trabajamos con la biblioteca de visión artificial \texttt{OpenCV}, con lo que para mostrarla por pantalla hay que realizar ciertas transformaciones. El código encargado de mostrar por pantalla el mapa se puede ver en la Figura 5.12 y la apariencia de un mapa visualizado como ejemlplo en la Figura 5.13.
 
 \begin{figure}[H]
 \begin{python}
@@ -2112,25 +2112,25 @@ El objetivo general de dar soporte en JdeRobot a drones tipo avión, incluyendo m
 
 \begin{enumerate}
 
-  \item El primer subojetivo del proyecto era el desarrollo de un driver para JdeRobot que nos permitiese conectarnos tanto al avión real como a uno simulado a través de SITL. El driver \texttt{APM Server} (ver capítulo 4) es capaz de conectarse tanto con aviones físicos que utilicen el protocolo de comunicación \texttt{MAVLink}, como con aviones simulados a través de SITL. El driver sirve los datos recogidos de los sensores del hardware de abordo del avión como el GPS y la IMU y los transforma en objetos que cumplen las interfaces ICE ya desarrolladas en JdeRobot \texttt{Pose3D} y \texttt{NavData}.
+  \item El primer subojetivo del proyecto era el desarrollo de un driver para JdeRobot que nos permitiese conectarnos tanto al avión real como a uno simulado a través de SITL. El driver \texttt{APM Server} (ver capítulo 4) es capaz de conectarse tanto con aviones físicos que utilicen el protocolo de comunicación \texttt{MAVLink}, como con aviones simulados a través de SITL. El driver recupera los datos recogidos de los sensores del hardware de abordo del avión como el GPS y la IMU y los transforma en objetos que cumplen las interfaces ICE ya desarrolladas en JdeRobot \texttt{Pose3D} y \texttt{NavData}.
 
 
 Para dar soporte a la navegación por posición se ha diseñado un nuevo interfaz, el interfaz \texttt{mission}, que junto con el \texttt{Exta} completan los interfaces que este driver recibe como órdenes y que se envían a través de los comandos \texttt{MAVLink} \texttt{MISSION\_ITEM}. El driver da soporte en actuación tanto a las maniobras de despegue y aterrizaje como a la navegación por puntos intermedios.
 
 La concurrencia del componente permite que éste pueda responder a las peticiones de otros componentes mientras realiza otras acciones como la obtención de las imágenes del avión o el envío de órdenes de movimiento.
 
-  \item El segundo subobjetivo era el desarrollo de una aplicaci\'on GCS \texttt{Ground Control Station} que permita al operador humano introducir misiones y seguir el cumplimiento de las mismas a trav\'es de ella y el acceso a sus datos sensoriales. Para abordarlo se ha desarrollado la aplicación JdeRobot \texttt{UAV Commander} para dar soporte al control de misiones en robots aéreos de ala fija, aviones. Esta aplicación muestra un interfaz gráfico en el cual el usuario humano puede visualizar los datos de los sensores a bordo (cámaras, posición, actitud), el mapa de la zona de trabajo del avión y componer gráficamente misiones de vuelo gracias al mapa interactivo. 
+  \item El segundo subobjetivo era el desarrollo de una aplicaci\'on GCS \textit{Ground Control Station} que permita al operador humano introducir misiones y seguir el cumplimiento de las mismas a trav\'es de ella y el acceso a sus datos sensoriales. Para abordarlo se ha desarrollado la aplicación JdeRobot \texttt{UAV Commander}, para dar soporte al control de misiones en robots aéreos de ala fija, aviones. Esta aplicación muestra un interfaz gráfico en el cual el usuario humano puede visualizar los datos de los sensores a bordo (cámaras, posición, actitud), el mapa de la zona de trabajo del avión y componer gráficamente misiones de vuelo gracias al mapa interactivo. 
 
-\texttt{UAV Commander} es capaz de descargar el mapa de la zona del mudo donde el avión se encuentra a través de WMS y presentarlos por pantalla en forma de mapa interactivo. Clicando sobre el mapa se pueden crear de forma sencilla las misiones que el operador humano desee. Este mapa permite validar el cumplimiento de las misiones en vuelo gracias a elementos visuales añadidos como la ruta teórica a seguir o la estela dejada por el avión durante su vuelo. El control de misiones se complementa con una tabla donde se puede ver la secuencia de puntos de paso que se va a enviar al avión junto a la altura de vuelo, esta tabla es editable para un ajuste mas exacto y con los botones de control de misiones: ``TakeOff/Land'', ``Clear'' y ``send''.
+\texttt{UAV Commander} es capaz de descargar el mapa de la zona del mudo donde el avión se encuentra a través de WMS, y presentarlos por pantalla en forma de mapa interactivo. Clicando sobre el mapa se pueden crear de forma sencilla las misiones que el operador humano desee. Este mapa permite validar el cumplimiento de las misiones en vuelo gracias a elementos visuales añadidos como la ruta teórica a seguir o la estela dejada por el avión durante su vuelo. El control de misiones se complementa con una tabla donde se puede ver la secuencia de puntos de paso que se va a enviar al avión junto a la altura de vuelo. Esta tabla es editable para un ajuste mas exacto, y junto con los botones ``TakeOff/Land'', ``Clear'' y ``send'' completan el interfaz de creación de misiones.
 
 \texttt{UAV Commander} ofrece toda la información sensorial del avión de forma visual en las ventanas de ``Camera'' y ``Attidude'', en ellas veremos los datos enviados por los sensores de abordo del avión como los acelerómetros, giróscopos o las cámaras de abordo.
-La aplicación hace uso de los interfaces ICE desarrollados en JdeRobot, incluyendo el interfaz mission desarrollado íntegramente en este proyecto para dar soporte al control de misiones. Ésto permite que sea compatible con el resto de aplicaciones y drivers de JdeRobot y le confiere las ventajas de este tipo de desarrollos como la independencia del lenguaje de programación empleado o de en que hardware se esté ejecutando.
+La aplicación hace uso de los interfaces ICE desarrollados en JdeRobot, incluyendo el interfaz \texttt{mission} desarrollado íntegramente en este proyecto para dar soporte al control de misiones. Ésto permite que sea compatible con el resto de aplicaciones y drivers de JdeRobot y le confiere las ventajas de este tipo de desarrollos como la independencia del lenguaje de programación empleado o del hardware en que se esté ejecutando.
 
  \item El tercer subobjetivo era la validación experimental de ambos tanto en simulación como en el prototipo de avión real construido a tal efecto. Se ha validado el funcionamiento tanto de \texttt{APM Server} como de \texttt{UAV Comander} a través experimentos diseñados a tal efecto y descritos en el capítulo 6. Los experimentos han sido diseñados para ir validando de menos a más el correcto funcionamiento del driver y la aplicación tanto en un ambiente simulado (experimentos del 6.1.1 al 6.1.5) como en el prototipo de avión MAVLink (experimentos del 6.2.1 al 6.2.3)
  
 En los experimentos con misiones en simulador se prueba de forma progresiva el comportamiento de \texttt{APM Server} y \texttt{UAV Commander} conectados a SITL. Empezamos comprobando la correcta conexión de \texttt{APM Server} a SITL, de \texttt{UAV Commander} a \texttt{APM Server} y que la aplicación \texttt{UAV Commander} presenta correctamente los datos en el experimento 6.1.1 donde queda además probada parte sensorial. En el experimento 6.1.2 se empieza a probar la actuación con el envió de puntos de paso y se le añaden progresivamente las maniobras de despegue y aterrizaje en los experimentos 6.1.3 y 6.1.4 respectivamente. El experimento 6.1.5 valida que \texttt{UAV Commander} no pierda el avión cuando éste se acerque al límite del mapa descargado.
 
-En los experimentos de interconexión de driver y aplicación con el avión se comprueba la correcta recepción de toda la información sensorial(experimento 6.2.1 y 6.2.3). Tras probar en el experimento 6.2.2 que el alcance esra mas limitado de lo esperado en un inicio en el experimento 6.2.4 comprobamos la robustez de nuestros desarrollos ante una hipotética pérdida de señal al quedar fuera del alcance del wifi.
+En los experimentos de interconexión de driver y aplicación con el avión se comprueba la correcta recepción de toda la información sensorial(experimento 6.2.1 y 6.2.3). Tras probar en el experimento 6.2.2 que el alcance es mas limitado de lo esperado en un inicio, en el experimento 6.2.4 comprobamos la robustez de nuestros desarrollos ante una hipotética pérdida de señal al quedar fuera del alcance del wifi.
 
 
 \end{enumerate}
@@ -2146,11 +2146,11 @@ Durante el desarrollo de \texttt{APM Server} y \texttt{UAV Commander} se han ide
 
 
 \begin{itemize}
-	\item Se puede ampliar el soporte de misiones de \texttt{APM Server} hasta cubrir la totalidad de los commandos de misión de MAVLink. De esta forma se podría por ejemplo enviar misiones del tipo ``dar X vueltas de Y radio en torno al punto de pasoZ'' o aumenta la velocidad durante la misión a x Km/h.
-	\item Se pueden ampliar en \texttt{APM Server}los interfaces para enviar información sobre la misión, el objetivo que he alcancado, el que estoy ejecutando, a qué distancia se encuentra del objetivo, etc.
-	\item \texttt{UAV Commander} se pueden mejorar los cálculos de proyección para que sean mas precisos independientemente de la zona del globo donde se encuentre, e independientemente del WSM de origen del mapa.
-	\item \texttt{UAV Commander} se pueden ampliar la lista de orígenes de mapas añadiendo los WMS de \texttt{OpenStreetMap}, \texttt{Yahoo Maps} y \texttt{Bing Maps} .
-	\item En \texttt{UAV Commander} se puede añadir el control por velocidades CMDVel para dar soporte a todo tipo de drones. y que esta aplicación se pudiera emplear con drones tipo cuadricóptero, capaces de cernirse en un sitio fijo y obedecer órdenes de velocidad en varios ejes.
+	\item Se puede ampliar el soporte de misiones de \texttt{APM Server} hasta cubrir la totalidad de los commandos de misión de MAVLink. De esta forma se podría por ejemplo enviar misiones del tipo ``dar X vueltas de Y radio en torno al punto de paso Z'' o ``aumenta la velocidad durante la misión a X Km/h''.
+	\item Se pueden ampliar en \texttt{APM Server} los interfaces para enviar información sobre la misión, el objetivo que he alcancado, el que estoy ejecutando, a qué distancia se encuentra del objetivo, etc.
+	\item En \texttt{UAV Commander} se pueden mejorar los cálculos de proyección para que sean mas precisos independientemente de la zona del globo donde se encuentre, e independientemente del WSM de origen del mapa.
+	\item En \texttt{UAV Commander} se puede ampliar la lista de orígenes de mapas añadiendo los WMS de \texttt{OpenStreetMap}, \texttt{Yahoo Maps} y \texttt{Bing Maps} .
+	\item En \texttt{UAV Commander} se puede añadir el control por velocidades \texttt{CMDVel} para dar soporte a todo tipo de drones. Y que esta aplicación se pudiera emplear con drones tipo cuadricóptero, capaces de cernirse en un sitio fijo y obedecer órdenes de velocidad en varios ejes.
 	\item Como desarrollo adicional se podría conectar SITL a Gazebo, de ésta forma tendríamos la simulación completa incluyendo el sensor de cámara y se podrían probar las misiones en entornos más realistas. Esto facilitaría la simulación de desarrollos que utilicen la visión en aviones. 
 \end{itemize}
 
