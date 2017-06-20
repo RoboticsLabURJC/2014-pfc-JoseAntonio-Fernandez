@@ -902,35 +902,35 @@ SITL puede conectarse tambi\'en con Gazebo o con FlightGear para hacer m\'as com
 \end{figure}
 
 \cleardoublepage
-\chapter{APM Server}
+\chapter{Driver APM Server}
 
-El driver \texttt{APM Server} es quien va a mediar entre las aplicaciones de JdeRobot y el robot a\'ereo con sus sensores y actuadores f\'isicos o simulados a trav\'es de SITL. De esta manera las aplicaciones pueden correr en m\'aquinas distintas, no obligatoriamente a bordo, y pueden estar implementadas en distintos lenguajes de programaci\'on. Estas ventajas vienen de utilizar la divisi\'on habitual en JdeRobot entre componentes drivers y componentes aplicaci\'on.
+El driver \texttt{APM Server} es quien va a mediar entre las aplicaciones de JdeRobot y el robot a\'ereo con sus sensores y actuadores f\'isicos o simulados a trav\'es de SITL. De esta manera las aplicaciones pueden correr en m\'aquinas distintas, no obligatoriamente a bordo, y pueden estar implementadas en distintos lenguajes de programaci\'on. Estas ventajas vienen de utilizar la divisi\'on habitual en JdeRobot entre componentes drivers y componentes aplicaci\'on, que se pueden conectar entre sí remotamente.
 
-En nuestro caso este driver se ejecuta sobre una Raspberry Pi3 con raspbian a la que hemos instalado el entorno JdeRobot y el driver \texttt{APM Server}, e ir\'a abordo del robot f\'isico conectado por puerto serie.
+En nuestro caso este driver se ejecuta sobre una Raspberry Pi3 con raspbian a la que hemos instalado el entorno JdeRobot y el driver \texttt{APM Server}, e ir\'a abordo del robot f\'isico conectado por puerto serie a la placa estabilizadora (APM).
 
 \section{Diseño} 
 \label{sec:diseno_apms}
 
-El driver tiene que cubrir las siguientes funcionalidasdes:
+El driver tiene que cubrir las siguientes funcionalidades:
 \begin{itemize}
-\item Debe sebe ser capaz de conectar con dispositivos f\'isicos de estabilizaci\'on c\'omo APM 2.8 o PixHawk as\'i, como al simulador SITL
-\item Debe acceder a los sensores y actuadores del robot a\'ereo, interpretarlos y servirlos en forma de interfaz ICE a las aplicaciones de control.
-\item Debe ser capar de recibir a trav\'es de interfaces JdeRobot órdenes que \'este interprete y env\'ie a los actuadores del robot a\'ereo.
+\item Debe sebe ser capaz de conectar con dispositivos f\'isicos de estabilizaci\'on como APM 2.8 o PixHawk, as\'i como al simulador SITL
+\item Debe acceder a los sensores del robot a\'ereo, interpretar sus datos y servirlos en forma de interfaz ICE a las aplicaciones de control.
+\item Debe ser capar de recibir órdenes y comandos a trav\'es de interfaces JdeRobot codificarlas y enviarlas los actuadores del robot a\'ereo.
 \end{itemize}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.65]{img/diseno.jpg}
-  \caption{Diseño de \texttt{APM Server}}
+  \caption{Diseño de entradas y salidas de \texttt{APM Server}}
   \label{fig:diseno_apms_caja_negra}
 \end{figure}
 
 
-Se ha diseñado y programado un componente de JdeRobot en Python que hace de driver y que satisface esos requirimientos. Se ha organizado en tres capas desde la m\'as cercana al hardware hasta la m\'as cercana a JdeRobot:
+Se ha diseñado y programado un componente de JdeRobot en Python que hace de driver y que satisface esos requirimientos. Se ha organizado en tres capas, desde la m\'as cercana al hardware hasta la m\'as cercana a las aplicaciones:
 \begin{itemize}
 \item Capa de comunicaci\'on con el dispositivo APM. Esta capa se encarga de la comunicaci\'on del driver con el dispositivo APM a trav\'es del protocolo de comunicaci\'on MavLink.
 \item Capa de negocio e interpretaci\'on. En esta capa el driver transforma los comandos MAVLink y los interfaces JdeRobot interpretando la informaci\'on de ambas capas y haciendo \'esta legible en ambos sentidos.
-\item Capa de comunicaci\'on con aplicaciones JdeRobot. En \'esta capa se materializan los servicios ICE necesarios para la recepci\'on y env\'io de los interfaces ICE que implementa.
+\item Capa de comunicaci\'on con aplicaciones JdeRobot. En \'esta capa se materializan los servicios ICE necesarios para la recepci\'on y env\'io desde/hacia las aplicaciones, a través de los interfaces ICE que implementa.
 \end{itemize}
 
 \begin{figure}[H]
@@ -948,7 +948,7 @@ autopiloto y se van a consumir y enviar los siguientes mensajes. Para cada uno d
 
 \subsection{Listado de mensajes MAVLink}
 \begin{itemize}
-\item RAW\_IMU donde recibimos la informaci\'on de los aceler\'ometros gir\'oscopos y magnetr\'ometros en crudo par el \texttt{NavData}.
+\item Mensaje RAW\_IMU, donde recibimos la informaci\'on de los aceler\'ometros gir\'oscopos y magnetr\'ometros en crudo para el \texttt{NavData}.
 {\scriptsize
 \begin{verbatim}
 <message id="27" name="RAW_IMU">
@@ -971,7 +971,7 @@ autopiloto y se van a consumir y enviar los siguientes mensajes. Para cada uno d
 Un ejemplo de mensaje recibido ser\'ia: 
 RAW\_IMU \{time\_usec : 480794000, xacc : 244, yacc : 0, zacc : -968, xgyro : 1, ygyro : 1, zgyro : 1, xmag : 335, ymag : 60, zmag : -452\}
 
-\item VFR\_HUD D\'onde se  presentan los t\'ipicos datos de navegaci\'on en ala fija como, la velocidad en el aire, velocidad en tierra o la velocidad de ascenso. De aqu\'i obtendremos la altitud
+\item Mensaje VFR\_HUD, donde se  presentan los t\'ipicos datos de navegaci\'on en ala fija como, la velocidad en el aire, velocidad en tierra o la velocidad de ascenso. De aqu\'i obtendremos la altitud
 {\scriptsize
 \begin{verbatim}
 <message id="74" name="VFR_HUD">
@@ -987,7 +987,7 @@ RAW\_IMU \{time\_usec : 480794000, xacc : 244, yacc : 0, zacc : -968, xgyro : 1,
 </message>
 \end{verbatim}}
 Un ejemplo de mensaje recibido ser\'ia: VFR\_HUD \{airspeed : 0.022061701864004135, groundspeed : 0.08534427732229233, heading : 356, throttle : 0, alt : 584.1099853515625, climb : -0.33149993419647217\} 
-\item ATTITUDE donde recibimos la actitud del avi\'on.
+\item Mensaje ATTITUDE, donde recibimos la actitud del avi\'on.
 {\scriptsize
 \begin{verbatim}
 <message id="30" name="ATTITUDE">
@@ -1006,7 +1006,7 @@ Un ejemplo de mensaje recibido ser\'ia: VFR\_HUD \{airspeed : 0.0220617018640041
 Un ejemplo de mensaje recibido ser\'ia:
 ATTITUDE \{time\_boot\_ms : 480794, roll : -0.005003694910556078, pitch : 0.2430807501077652, yaw : -0.06844368577003479, rollspeed : -0.0010073177982121706, pitchspeed : -0.0008516315137967467, yawspeed : -0.0006909647490829229\}
 
-\item SYS\_STATUS donde se obtiene el nivel de bater\'ia.
+\item Mensaje SYS\_STATUS, donde se obtiene el nivel de bater\'ia.
 {\scriptsize
 \begin{verbatim}
 <message id="1" name="SYS_STATUS">
@@ -1060,7 +1060,7 @@ ATTITUDE \{time\_boot\_ms : 480794, roll : -0.005003694910556078, pitch : 0.2430
 \end{verbatim}}
 Un mensaje recibido ser\'ia: 
 SYS\_STATUS \{onboard\_control\_sensors\_present : 23198783, onboard\_control\_sensors\_enabled : 23198783, onboard\_control\_sensors\_health : 24247359, load : 0, voltage\_battery : 12587, current\_battery : 0, battery\_remaining : 100, drop\_rate\_comm : 0, errors\_comm : 0, errors\_count1 : 0, errors\_count2 : 0, errors\_count3 : 0, errors\_count4 : 0\}
-\item SCALED\_PRESSURE donde obtendremos la presi\'on absoluta y la temperatura.
+\item Mensaje SCALED\_PRESSURE, donde obtendremos la presi\'on absoluta y la temperatura.
 {\scriptsize
 \begin{verbatim}
 <message id="29" name="SCALED_PRESSURE">
@@ -1076,7 +1076,7 @@ SYS\_STATUS \{onboard\_control\_sensors\_present : 23198783, onboard\_control\_s
 \end{verbatim}}
 Un mensaje recibido ser\'ia: 
 SCALED\_PRESSURE \{time\_boot\_ms : 480794, press\_abs : 945.0001831054688, press\_diff : 0.021015625447034836, temperature : 2600\}
-\item WIND donde se obtienen las lecturas del viento estimadas.
+\item Mensaje WIND, donde se obtienen las lecturas del viento estimadas.
 {\scriptsize
 \begin{verbatim}
 <message id="168" name="WIND">
@@ -1088,7 +1088,7 @@ SCALED\_PRESSURE \{time\_boot\_ms : 480794, press\_abs : 945.0001831054688, pres
 \end{verbatim}}
 Un mensaje recibido ser\'ia: 
 WIND \{direction : -179.99998474121094, speed : 0.0, speed\_z : 0.0\}
-\item GLOBAL\_POSITION\_INT donde obtendremos la posici\'on GPS.
+\item Mensaje GLOBAL\_POSITION\_INT, donde obtendremos la posici\'on GPS.
 {\scriptsize
 \begin{verbatim}
 <message id="33" name="GLOBAL_POSITION_INT">
@@ -1116,7 +1116,7 @@ WIND \{direction : -179.99998474121094, speed : 0.0, speed\_z : 0.0\}
 \end{verbatim}}
 Un mensaje recibido ser\'ia: 
 GLOBAL\_POSITION\_INT \{time\_boot\_ms : 480614, lat : -353632612, lon : 1491652301, alt : 584110, relative\_alt : -179, vx : 0, vy : 0, vz : 0, hdg : 35608\}
-\item MISSION\_ITEM Son objetos de misi\'on, en ellos se mandan los puntos de paso o comandos como fijar una velocidad o una altitud o bien aterrizar o despegar en funci\'on del par\'ametro \texttt{command}.
+\item Mensaje MISSION\_ITEM, son objetos de misi\'on, en ellos se mandan los puntos de paso o comandos, como fijar una velocidad o una altitud o bien aterrizar o despegar en funci\'on del par\'ametro \texttt{command}.
 {\scriptsize
 \begin{verbatim}
 <message id="39" name="MISSION_ITEM">
@@ -1148,7 +1148,7 @@ GLOBAL\_POSITION\_INT \{time\_boot\_ms : 480614, lat : -353632612, lon : 1491652
 </message>
 \end{verbatim}}
 Un mensaje enviado ser\'ia: MISSION\_ITEM \{target\_system : 1, target\_component : 1, seq : 0, frame : 3, command : 16, current : 0, autocontinue : 0, param1 : 0, param2 : 10, param3 : 0, param4 : 0, x : 40.33024215698242, y : -3.8008816242218018, z : 40.0\}
-\item MISSION\_REQUEST mensaje donde el estabilizador nos requiere el siguiente MISSION\_ITEM. Este comando se recibe una vez enviado al APM nuestra intenci\'on de enviale mensajes de misi\'on y cuantos objetos vamos a enviarle con el comando MISSION\_COUNT. También se recibe este comando tras la recepci\'on de alguno de estos MISSION\_ITEM, como confirmación de la recepción de éste, y solicitando el siguiente objeto de misión.
+\item Mensaje MISSION\_REQUEST, donde el estabilizador nos requiere el siguiente MISSION\_ITEM. Este comando se recibe una vez enviado al APM nuestra intenci\'on de enviarle mensajes de misi\'on y cuántos objetos vamos a enviarle con el comando MISSION\_COUNT. También se recibe este comando tras la recepci\'on de alguno de estos MISSION\_ITEM, como confirmación de la recepción de éste, y solicitando el siguiente objeto de misión.
 {\scriptsize
 \begin{verbatim}
 <message id="40" name="MISSION_REQUEST">
@@ -1163,9 +1163,9 @@ Un mensaje enviado ser\'ia: MISSION\_ITEM \{target\_system : 1, target\_componen
     see MAV_MISSION_TYPE</field>
 </message>
 \end{verbatim}}
-Un mensaje recibido ser\'ia: MISSION\_REQUEST \{target\_system : 0, target\_component : 0, seq : 2\} En este mensaje el APM nos estar\'ia solicitando el item de misi\'on 3, ya que empieza solicitando el 0. Este mensaje termina al llegar al m\'aximo de mission item que se ha indicado que le se le va a mandar.
+Un mensaje recibido ser\'ia: MISSION\_REQUEST \{target\_system : 0, target\_component : 0, seq : 2\} En este mensaje el APM nos estar\'ia solicitando el item de misi\'on 3, ya que empieza solicitando el 0. Este mensaje termina al llegar al m\'aximo de \texttt{mission item} que se ha indicado que le se le va a mandar.
 
-\item MISSION\_COUNT \'este comando se env\'ia para comenzar una comunicaci\'on con el APM con el objetivo de enviarle una misi\'on.
+\item Mensaje MISSION\_COUNT, \'este comando se env\'ia para comenzar una comunicaci\'on con el APM con el objetivo de enviarle una misi\'on.
 {\scriptsize
 \begin{verbatim}
 <message id="44" name="MISSION_COUNT">
@@ -1182,7 +1182,7 @@ Un mensaje recibido ser\'ia: MISSION\_REQUEST \{target\_system : 0, target\_comp
 \end{verbatim}}
 Un mensaje enviado ser\'ia: MISSION\_COUNT \{target\_system : 0, target\_component : 0, count : 3\} Donde comunicamos al APM nuestra intenci\'on de enviarle 3 objetos de misi\'on.
 
-\item MISSION\_CLEAR\_ALL \'este comando sirve para limpiar el APM de misiones, si \'este ten\'ia alguna misi\'on previa se desecha.
+\item Mensaje MISSION\_CLEAR\_ALL, este comando sirve para limpiar el APM de misiones, si \'este ten\'ia alguna misi\'on previa se desecha.
 {\scriptsize
 \begin{verbatim}
 <message id="45" name="MISSION_CLEAR_ALL">
@@ -1201,7 +1201,7 @@ Un mesaje enviado ser\'ia MISSION\_CLEAR\_ALL \{target\_system : 0, target\_comp
 
 De cara a facilitar la implementaci\'on del software, ahorrarnos crear los comandos MAVLink a mano, y hacer el c\'odigo m\'as legible, utilizaremos la librer\'ia \texttt{Pymavlink}. 
 
-Los import que se utilizan son los siguientes:
+Las importaciones que se utilizan son las siguientes:
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1210,10 +1210,10 @@ from pymavlink import mavutil, quaternion, mavwp
 from pymavlink.dialects.v10 import ardupilotmega as mavlink
 \end{python}
 
-Se importa mavutil para ardupilotmega para obtener los interfaces en python desde \pythoninline{pymavlink} y \pythoninline{mavwp} y \pythoninline{quaternion} como soporte a la transformaci\'on a quaterniones y viceversa.
+Se importa \pythoninline{mavutil} y \pythoninline{ardupilotmega} para obtener los interfaces en python desde \pythoninline{pymavlink} y \pythoninline{mavwp} y \pythoninline{quaternion} como soporte a la transformaci\'on a cuaterniones y viceversa.
 
 
-El primer paso para poder interactuar con el APM es el proceso de conexi\'on (Figura 4.3). En el comando de conexi\'on se le indica una de las siguiente tuplas:
+El primer paso para interactuar con el APM es el proceso de conexi\'on (Figura 4.3). En el comando de conexi\'on se le indica una de las siguiente tuplas:
 \begin{itemize}
 \item Dispositivo\_serie, velocidad de conexión en baudios (Línea 9 de la Figura 4.3).
 \item Tipo\_de\_puerto:IP:puerto, velocidad de conexión en baudios. En este caso los baudios son obligatorios pero se desechan (Línea 10 de la Figura 4.3). 
@@ -1237,10 +1237,10 @@ test = Server("udp:192.168.1.133:14558",57600) # Connection to SITL
 \caption{Conexión con el APM}
 \end{figure}
 
-Con estas l\'ineas se inicia el servidor de \texttt{APM Server} y se realiza la conexi\'on con el dispositivo APM o con el simulador. Se puede apreciar c\'omo se realiza la conexi\'on en el m\'etodo \pythoninline{__init__}  del servidor. Y la creaci\'on de 2 objetos de servidor, una que conectar\'ia con el dispositivo real y la que se realiza con SITL.
+Con estas l\'ineas se inicia el servidor de \texttt{APM Server} y se realiza la conexi\'on con el dispositivo APM o con el simulador. Se puede apreciar c\'omo se realiza la conexi\'on en el m\'etodo \pythoninline{__init__}  del servidor. Y la creaci\'on de un objeto de servidor, que conecta con el dispositivo real y en el comentario de la instrucción que hace lo propio con el dispositivo simulado en SITL (Línea 9 de la Figura 4.3).
 
 
-Una vez conectado, se debe indicar al APM qu\'e mensajes se quieren recibir y la frecuencia con la que se quieren recibir (Figura 4.4). Debido a que se trata de un prototipo y se trata de extraer el m\'aximo potencial del mismo, se indicar\'a el set de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo m\'aximo que soporta el APM adquirido.
+Una vez conectado, se debe indicar al APM qu\'e mensajes se quieren recibir y la frecuencia con la que se quieren recibir (Figura 4.4). Debido a que se trata de un prototipo y se trata de extraer el m\'aximo potencial del mismo, se indicar\'a el juego de instrucciones completo y una frecuencia de moderada a alta 50 hz, lo m\'aximo que soporta el APM adquirido.
 
 \begin{figure}
 \begin{python}[
@@ -1254,11 +1254,12 @@ self.master.mav.request_data_stream_send(self.master.target_system,
 \end{python}
 \caption{configuración de la conexión}
 \end{figure}
-Desde \'este momento se van a estar volcando a un \textit{buffer} los mensajes que manda nuestro APM, con lo que ahora ya se puede acceder a ellos para procesarlos.
+Desde este momento se van a estar volcando a un \textit{buffer} los mensajes que manda nuestro APM, con lo que ahora ya se puede acceder a ellos desde Python para procesarlos.
 
 \subsection{Lectura de datos del APM}
 
 Una vez establecida la conexi\'on y fijados los par\'ametros de configuraci\'on ya se puede acceder a los datos. Para \'esto en el bloque de transformaci\'on se levantar\'a el siguiente hilo que procesar\'a los mensajes.
+Con el fin de evitar una desconexión con el APM envíamos periódicamente \texttt{heartbeat} al mismo. \texttt{heartbeat} es un comando que sirve para conocer si el dispositivo esta disponible y atiende peticiones, de esta forma nos aseguramos cada cierto tiempo que el APM continúa activo. 
 
 \begin{figure}[H]
 \begin{python}[
@@ -1290,7 +1291,7 @@ def mavMsgHandler(self, m):
 
 \subsection{Env\'io de misiones al APM}
 
-Con el fin de entender mejor la implementación del método \pythoninline{self.setMision(mission)}, en la Figura 4.6 podemos observar un gr\'afico de c\'omo es el protocolo de env\'io de misiones al APM a trav\'es de MAVLink, obtenido de la universidad University of Colorado Boulder\cite{colorado:_mission}
+Con el fin de entender mejor la implementación del método \pythoninline{self.setMision(mission)}, en la Figura 4.6 podemos observar un gr\'afico de c\'omo es el protocolo de env\'io de misiones al APM a trav\'es de MAVLink, obtenido de la universidad University of Colorado Boulder \cite{colorado:_mission}
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.70]{img/waypoint-protocol-sendlist.png}
@@ -1298,7 +1299,7 @@ Con el fin de entender mejor la implementación del método \pythoninline{self.set
   \label{fig:misiones_mavlink}
 \end{figure}
 
-Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on que nos propone la Universidad de Colorado Boulder\cite{colorado:_mission} y la adaptamos a nuestras necesidades, recibiendo de entrada un objeto de la interfaz \texttt{mission} de JdeRobot, transform\'andolo y envi\'andolo como misi\'on. Tambi\'en revisamos si se han enviado \'ordenes de despegue y aterrizaje y en el caso de que as\'i sea añadimos sus \textit{mission item} al principio o al final de la misi\'on. En este punto se entrelazan la capa de interpretaci\'on con la capa de comunicaci\'on con el APM
+Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on que nos propone la Universidad de Colorado Boulder \cite{colorado:_mission} y la adaptamos a nuestras necesidades, recibiendo de entrada un objeto de la interfaz \texttt{mission} de JdeRobot, transform\'andolo y envi\'andolo como misi\'on de MavLink al APM. Tambi\'en revisamos si se han enviado \'ordenes de despegue y aterrizaje y en el caso de que as\'i sea añadimos sus \textit{mission item} al principio o al final de la misi\'on. En este punto se entrelazan la capa de interpretaci\'on con la capa de comunicaci\'on con el APM
 
 \begin{python}[
     basicstyle=\scriptsize, %or \small or \footnotesize etc.
@@ -1359,19 +1360,17 @@ Para abordar el problema e implementar dicho protocolo partimos de la soluci\'on
 
 
 Como se puede observar en el c\'odigo, en caso de tener \texttt{takeOffDecision} o \texttt{landDecision} activos en el atributo \pythoninline{extra} (enlazado a trav\'es de ICE) se añaden los comandos de despegue y aterrizaje, que interpreta son el primero y el \'ultimo. 
-Se puede observar tambi\'en al final del c\'odigo como se arman los motores con la l\'inea \pythoninline{self.master.arducopter_arm()}
-y como se pone el dispositivo en modo autom\'atico con \pythoninline{self.master.set_mode_auto()}.
-El driver est\'a implementado para ejecutarse en modo ``auto'', se puede ejecutar tambi\'en en modo ``guided'' pero el modo ``auto'' a diferencia del ``guided'' no inhabilita la radio y se puede recuperar en cualquier momento el control del robot a\'ereo. Si bien hay que decir que el modo ``guided'' o modo guiado es m\'as preciso que el modo ``auto''.
+Se puede observar tambi\'en al final del c\'odigo cómo se arman los motores con la l\'inea \pythoninline{self.master.arducopter_arm()}
+y cómo se pone el dispositivo en modo autom\'atico con \pythoninline{self.master.set_mode_auto()}.
+El driver est\'a implementado para ejecutarse en modo ``auto''. Se puede ejecutar tambi\'en en modo ``guided'' pero el modo ``auto'', a diferencia del ``guided'', no inhabilita la radio y se puede recuperar en cualquier momento el control del robot a\'ereo. Si bien hay que decir que el modo ``guided'' o modo guiado es m\'as preciso que el modo ``auto''.
 
 \section{Capa de conexi\'on con aplicaciones JdeRobot}
 
 
-En \'esta capa se sirven y reciben los objetos de interfaces JdeRobot a través de los cuales se habla con la aplicación (que es el destino final de la información de sensores y la fuente original de los comandos de actuación para el avión), de modo que sean entendibles por el resto del driver.
-Para \'esto se han implementado 4 hilos, uno por cada interfaz JdeRobot que se sirve o se recibe. En cada uno de \'estos hilos se levanta un servidor ICE para recibir o servir objetos de interfaces JdeRobot mapeando atributos de la clase del servidor al estos servicios ICE.
+En esta capa se sirven y reciben los objetos de interfaces ICE JdeRobot a través de los cuales se habla con la aplicación (que es el destino final de la información de sensores y la fuente original de los comandos de actuación para el avión), de modo que sean entendibles por el resto del driver.
+Para esto se han implementado cuatro hilos, uno por cada interfaz JdeRobot que se sirve o se recibe. En cada uno de estos hilos se levanta un servidor ICE para recibir o servir objetos de interfaces JdeRobot mapeando atributos de la clase del servidor a estos servicios ICE. La figura 4.7 muestra dos ejemplos.
 
-Los 4 interfaces que van a ser servidos desde \texttt{APM Server} son: \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra} y \texttt{Mission}.
-
-\texttt{Pose3D}, \texttt{NavData} y \texttt{Extra} se describieron en el cap\'itulo 3.1.1, adicionalmente a \'estos se ha desarrollado un nuevo interfaz para dar soporte al uso de misiones, el interfaz \texttt{mission}.
+Los 4 interfaces que van a ser servidos desde \texttt{APM Server} son: \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra} y \texttt{Mission}. \texttt{Pose3D}, \texttt{NavData} y \texttt{Extra} se describieron en la sección 3.1.1. Adicionalmente a \'estos se ha desarrollado un nuevo interfaz para dar soporte al uso de misiones, el interfaz \texttt{mission}.
 {\scriptsize
 \begin{verbatim}
 class Pose3DData  //we consumes Pose3DData
@@ -1425,8 +1424,8 @@ class Pose3DData  //we consumes Pose3DData
 \end{figure}
 
 
-Cada hilo abre un servicio ICE, como todos los servicios ICE que implementamos son similares podremos como ejemplo de implementaci\'on el servicio de Pose3D (Figura 4.8).
-Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos sirviendo objetos ICE a trav\'es de servidores como el que sigue a \'estas l\'ineas. En paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta estos objetos ICE, con lo que se ha tenido que cuidar el c\'odigo para evitar problemas de concurrencia. En las Figuras 4.7 y 4.8 Se puede observar como se crea un hilo asocado a un servidor ICE y cómo se implementa un servidor ICE respectivamente.
+Cada hilo abre un servicio ICE, como todos los servicios ICE que implementamos son similares podremos como ejemplo de implementaci\'on el servicio de Pose3D.
+Como se puede apreciar en esta capa tenemos cuatro hilos de ejecuci\'on simult\'aneos sirviendo objetos ICE a trav\'es de servidores como el de la FIgura 4.8. Como se ha descrito en la sección 4.2.3 en paralelo se tiene otro hilo que procesa los mensajes recibidos del APM o SITL, los interpreta y cumplimenta estos objetos ICE, con lo que se ha tenido que cuidar el c\'odigo para evitar problemas de concurrencia. En las Figuras 4.7 y 4.8 se puede observar cómo se crea un hilo asocado a un servidor ICE y cómo se implementa un servidor ICE respectivamente.
 
 \begin{figure}[H]
 \begin{python}[
@@ -1465,9 +1464,9 @@ Como se puede apreciar en esta capa tenemos 4 hilos de ejecuci\'on simult\'aneos
 
 \section{Bloque de interpretaci\'on}
 
-En \'esta capa se interpretan los mensajes recibidos de una y otra capa y se transforman en el formato que sea necesario para que lo interprete la opuesta.
+En esta capa se interpretan los mensajes recibidos de una y otra capa y se transforman en el formato que sea necesario para que lo interprete la opuesta.
 
-Al m\'etodo \pythoninline{setMission(mission)} se llama al recibir v\'ia ICE una mission. Para identificar cuando llega, debido a que tenemos mapeados las variables con Ice, se ha construido un \textit{listener} que valida el valor de la variable \texttt{mission} y si tiene contenido articula el m\'etodo \pythoninline{setMission(mission)}.
+Al m\'etodo \pythoninline{setMission(mission)} se llama al recibir v\'ia ICE una misión. Para identificar cuándo llega, debido a que tenemos mapeadas las variables con ICE, se ha construido un \textit{listener} que valida el valor de la variable \texttt{mission} y si tiene contenido articula el m\'etodo \pythoninline{setMission(mission)}.
 
 \begin{figure}
 \begin{python}[
@@ -1489,12 +1488,12 @@ Al m\'etodo \pythoninline{setMission(mission)} se llama al recibir v\'ia ICE una
             time.sleep(1)
 
 \end{python}
-\caption{Listener encargado de detectar misiones entrantes}
+\caption{Código encargado de detectar misiones entrantes}
 \end{figure}
 
-Ya se visto c\'omo se realiza la transformaci\'on entre mensajes de misi\'on en el m\'etodo \pythoninline{setMission(mission)}, ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretaci\'on por JdeRobot.
-Esto lo realizamos principalmente en 2 m\'etodos, \pythoninline{refreshAPMPose3D()} y \pythoninline{refreshAPMnavdata()}.
-Estos m\'etodos se centran en buscar dentro de los paquetes recibidos aquellos que contienen informaci\'on relevante, los descritos en el cap\'itulo 4.2, analizarlos y extraer de ellos la informaci\'on necesaria y guardarla en objetos de interfaces JdeRobot para ser servidos a trav\'es de ICE.
+Ya se visto c\'omo se realiza la transformaci\'on entre mensajes de misi\'on en el m\'etodo \pythoninline{setMission(mission)}, ahora nos centraremos en interpretar los mensajes recibidos del APM y crear los objetos de las interfaces que sean necesarias para su interpretaci\'on por las aplicaciones JdeRobot.
+Esto lo realizamos principalmente en dos m\'etodos, \pythoninline{refreshAPMPose3D()} y \pythoninline{refreshAPMnavdata()}.
+Estos m\'etodos se centran en buscar dentro de los paquetes recibidos del APM aquellos que contienen informaci\'on relevante, los descritos en la sección 4.2, analizarlos y extraer de ellos la informaci\'on necesaria y guardarla en objetos de interfaces JdeRobot para ser servidos a trav\'es de ICE.
 
 \begin{figure}
 \begin{python}[
@@ -1545,7 +1544,7 @@ Estos m\'etodos se centran en buscar dentro de los paquetes recibidos aquellos q
 \caption{Código de ejemplo de \texttt{refreshAPMPose3D()} encargado de recorrer los mensajes y obtener los datos de actitud que se van a servir a través de Pose3D}
 \end{figure}
 
-En la Figura 4.10 se pueden observar los métodos que recogen la actitud, podemos ver cómo se buscan los mensajes que necesitamos para extraer la información de los sensores desde \pythoninline{self.master.messages}. En esta variable se vuelcan los datos mensajes recibidos de la placa estabilizadora.
+En la Figura 4.10 se pueden observar los métodos que recogen la actitud, podemos ver cómo se buscan los mensajes que necesitamos para extraer la información de los sensores desde \pythoninline{self.master.messages}. En esta variable se vuelcan los datos de todos loscmensajes recibidos de la placa estabilizadora.
 
 \cleardoublepage
 \chapter{AUV Commander}
