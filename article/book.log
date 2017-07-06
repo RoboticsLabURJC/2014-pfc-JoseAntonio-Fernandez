@@ -1,0 +1,693 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.4.12)  6 JUL 2017 17:51
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**book.tex
+(./book.tex
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+(./svmono.cls
+Document Class: svmono 2009/12/17 v5.5 
+Springer Verlag global LaTeX document class for monographs
+Class Springer-SVMono Info: extra/valid Springer sub-package 
+(Springer-SVMono)           not found in option list - using "global" style.
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+\svparindent=\dimen103
+\betweenumberspace=\dimen104
+\headlineindent=\dimen105
+\c@chapter=\count87
+\mottowidth=\dimen106
+\svitemindent=\dimen107
+\verbatimindent=\dimen108
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 832.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 833.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 834.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 835.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 836.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 837.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 838.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 839.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 840.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 841.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 842.
+\tocchpnum=\dimen109
+\tocsecnum=\dimen110
+\tocsectotal=\dimen111
+\tocsubsecnum=\dimen112
+\tocsubsectotal=\dimen113
+\tocsubsubsecnum=\dimen114
+\tocsubsubsectotal=\dimen115
+\tocparanum=\dimen116
+\tocparatotal=\dimen117
+\tocsubparanum=\dimen118
+\foot@parindent=\dimen119
+\spthmsep=\dimen120
+\c@theorem=\count88
+\c@case=\count89
+\c@conjecture=\count90
+\c@corollary=\count91
+\c@definition=\count92
+\c@example=\count93
+\c@exercise=\count94
+\c@lemma=\count95
+\c@note=\count96
+\c@problem=\count97
+\c@property=\count98
+\c@proposition=\count99
+\c@question=\count100
+\c@solution=\count101
+\c@remark=\count102
+\c@prob=\count103
+\instindent=\dimen121
+\figgap=\dimen122
+\bildb@x=\box26
+\figcapgap=\dimen123
+\tabcapgap=\dimen124
+\c@merk=\count104
+LaTeX Info: Redefining \abstract on input line 1894.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/01/03 v1.1b Standard LaTeX Color (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 143.
+
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count105
+))
+(/usr/share/texlive/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip43
+\fb@frw=\dimen125
+\fb@frh=\dimen126
+\FrameRule=\dimen127
+\FrameSep=\dimen128
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/mathptmx.sty
+Package: mathptmx 2005/04/12 PSNFSS-v9.2a Times w/ Math, improved (SPQR, WaS) 
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
+LaTeX Info: Redefining \hbar on input line 50.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/helvet.sty
+Package: helvet 2005/04/12 PSNFSS-v9.2a (WaS) 
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/courier.sty
+Package: courier 2005/04/12 PSNFSS-v9.2a (WaS) 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count106
+\lst@gtempboxa=\box27
+\lst@token=\toks15
+\lst@length=\count107
+\lst@currlwidth=\dimen129
+\lst@column=\count108
+\lst@pos=\count109
+\lst@lostspace=\dimen130
+\lst@width=\dimen131
+\lst@newlines=\count110
+\lst@lineno=\count111
+\lst@maxwidth=\dimen132
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count112
+\lst@skipnumbers=\count113
+\lst@framebox=\box28
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/type1cm/type1cm.sty
+Package: type1cm 2002/09/05 v0.04 BlueSky/Y&Y Type1 CM font definitions (DPC, p
+atched RF)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 95.
+)
+\Gin@req@height=\dimen133
+\Gin@req@width=\dimen134
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2015/08/19 v1.8n multicolumn formatting (FMi)
+\c@tracingmulticols=\count114
+\mult@box=\box29
+\multicol@leftmargin=\dimen135
+\c@unbalance=\count115
+\c@collectmore=\count116
+\doublecol@number=\count117
+\multicoltolerance=\count118
+\multicolpretolerance=\count119
+\full@width=\dimen136
+\page@free=\dimen137
+\premulticols=\dimen138
+\postmulticols=\dimen139
+\multicolsep=\skip44
+\multicolbaselineskip=\skip45
+\partial@page=\box30
+\last@line=\box31
+\maxbalancingoverflow=\dimen140
+\mult@rightbox=\box32
+\mult@grightbox=\box33
+\mult@gfirstbox=\box34
+\mult@firstbox=\box35
+\@tempa=\box36
+\@tempa=\box37
+\@tempa=\box38
+\@tempa=\box39
+\@tempa=\box40
+\@tempa=\box41
+\@tempa=\box42
+\@tempa=\box43
+\@tempa=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\@tempa=\box50
+\@tempa=\box51
+\@tempa=\box52
+\c@columnbadness=\count120
+\c@finalcolumnbadness=\count121
+\last@try=\dimen141
+\multicolovershoot=\dimen142
+\multicolundershoot=\dimen143
+\mult@nat@firstbox=\box53
+\colbreak@box=\box54
+\mc@col@check@num=\count122
+)
+(/usr/share/texlive/texmf-dist/tex/latex/footmisc/footmisc.sty
+Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
+\FN@temptoken=\toks16
+\footnotemargin=\dimen144
+\c@pp@next@reset=\count123
+Package footmisc Info: Declaring symbol style bringhurst on input line 855.
+Package footmisc Info: Declaring symbol style chicago on input line 863.
+Package footmisc Info: Declaring symbol style wiley on input line 872.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 903.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
+.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count124
+\float@exts=\toks17
+\float@box=\box55
+\@float@everytoks=\toks18
+\@floatcapt=\box56
+)
+\@indexfile=\write3
+\openout3 = `book.idx'.
+
+
+Writing index file book.idx
+(./book.aux (./dedic.aux) (./foreword.aux) (./preface.aux) (./acknow.aux)
+(./acronym.aux) (./part.aux) (./chapter.aux) (./appendix.aux) (./glossary.aux)
+(./solutions.aux))
+\openout1 = `book.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 38.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count125
+\scratchdimen=\dimen145
+\scratchbox=\box57
+\nofMPsegments=\count126
+\nofMParguments=\count127
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count128
+\MPscratchDim=\dimen146
+\MPnumerator=\count129
+\makeMPintoPDFobject=\count130
+\everyMPtoPDFconversion=\toks20
+)
+\big@size=\dimen147
+\c@lstlisting=\count131
+ (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+
+]
+\openout2 = `dedic.aux'.
+
+ (./dedic.tex
+[5
+
+
+
+])
+\openout2 = `foreword.aux'.
+
+ (./foreword.tex [6
+
+
+
+
+
+]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 9.
+
+
+Package mathptmx Warning: There are no bold math fonts on input line 9.
+
+) [7]
+\openout2 = `preface.aux'.
+
+ (./preface.tex [8
+
+
+
+
+]) [9]
+\openout2 = `acknow.aux'.
+
+ (./acknow.tex [10
+
+
+
+
+]) [11] [12
+
+
+
+] (./book.toc
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 2.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 2.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 2.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 2.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 2.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 2.
+)
+\tf@toc=\write4
+\openout4 = `book.toc'.
+
+ [13]
+\openout2 = `acronym.aux'.
+
+
+(./acronym.tex [14
+
+
+
+]
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 12.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)) [15] [16
+
+
+
+]
+\openout2 = `part.aux'.
+
+ (./part.tex
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <18> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 10.
+ [1
+
+
+
+] [2])
+\openout2 = `chapter.aux'.
+
+ (./chapter.tex
+Chapter 1.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 9.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 20.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 26.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
+
+<img/diseno.jpg, id=57, 722.7pt x 542.025pt>
+File: img/diseno.jpg Graphic file (type jpg)
+ <use img/diseno.jpg>
+Package pdftex.def Info: img/diseno.jpg used on input line 32.
+(pdftex.def)             Requested size: 361.3491pt x 271.01183pt.
+
+Overfull \hbox (28.45187pt too wide) in paragraph at lines 32--33
+ [][] 
+ []
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 33.
+Missing character: There is no Ã in font ptmr7t!
+Missing character: There is no ± in font ptmr7t!
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<img/diseno1.jpg, id=58, 722.7pt x 542.025pt>
+File: img/diseno1.jpg Graphic file (type jpg)
+ <use img/diseno1.jpg>
+Package pdftex.def Info: img/diseno1.jpg used on input line 47.
+(pdftex.def)             Requested size: 233.02704pt x 174.76657pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (5.38081pt too wide) in paragraph at lines 60--62
+\OT1/ptm/m/n/10 In this layer the driver send the \OT1/pcr/m/n/10 MAVLink's \OT
+1/ptm/m/n/10 com-mands and re-cieve the \OT1/pcr/m/n/10 MAVLink's
+ []
+
+[3
+
+
+
+
+]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 63.
+ [4 <./img/diseno.jpg>]
+Overfull \hbox (3.10277pt too wide) in paragraph at lines 99--99
+ []\OT1/pcr/m/n/10 <field type="uint32_t" name="time_boot_ms" units="ms">[] 
+ []
+
+
+Overfull \hbox (15.10277pt too wide) in paragraph at lines 99--99
+ []\OT1/pcr/m/n/10 <field type="int32_t" name="lat" units="degE7">Latitude,[] 
+ []
+
+
+Overfull \hbox (21.10277pt too wide) in paragraph at lines 99--99
+ []\OT1/pcr/m/n/10 <field type="int32_t" name="lon" units="degE7">Longitude,[] 
+
+ []
+
+
+Overfull \hbox (9.10277pt too wide) in paragraph at lines 99--99
+ []\OT1/pcr/m/n/10 <field type="int32_t" name="alt" units="mm">Altitude in[] 
+ []
+
+
+Overfull \hbox (3.10277pt too wide) in paragraph at lines 99--99
+ []\OT1/pcr/m/n/10 <field type="uint16_t" name="hdg" units="cdeg">Vehicle[] 
+ []
+
+[5 <./img/diseno1.jpg>]
+Overfull \hbox (19.90636pt too wide) in paragraph at lines 137--138
+[][][][][][][][][] 
+ []
+
+
+Overfull \hbox (3.10277pt too wide) in paragraph at lines 161--161
+ []\OT1/pcr/m/n/10 MAV_DATA_STREAM_RC_CHANNELS Enable RC_CHANNELS_SCALED,[] 
+ []
+
+[6] <img/waypoint-protocol-sendlist.png, id=74, 481.8pt x 355.3275pt>
+File: img/waypoint-protocol-sendlist.png Graphic file (type png)
+
+<use img/waypoint-protocol-sendlist.png>
+Package pdftex.def Info: img/waypoint-protocol-sendlist.png used on input line 
+184.
+(pdftex.def)             Requested size: 337.25769pt x 248.72754pt.
+
+Overfull \hbox (4.36046pt too wide) in paragraph at lines 184--185
+ [][] 
+ []
+
+[7]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 205.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 205.
+ [8 <./img/waypoint-protocol-sendlist.png>] (./referenc.tex
+LaTeX Font Info:    Calculating math sizes for size <8.5> on input line 28.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6.29004> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5.10005> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
+ [9]
+Missing character: There is no ’ in font ptmr7t!
+Missing character: There is no ´ in font ptmr7t!
+ [10]))
+[11]
+\openout2 = `appendix.aux'.
+
+ (./appendix.tex [12
+
+
+
+
+]
+Appendix A.
+LaTeX Font Info:    Calculating math sizes for size <16> on input line 11.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11.84009> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 11.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9.6001> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 11.
+[13]
+Package epstopdf Info: Source file: <figure.eps>
+(epstopdf)                    date: 2007-06-29 16:34:26
+(epstopdf)                    size: 62739 bytes
+(epstopdf)             Output file: <figure-eps-converted-to.pdf>
+(epstopdf)                    date: 2017-07-06 17:51:17
+(epstopdf)                    size: 13925 bytes
+(epstopdf)             Command: <repstopdf --outfile=figure-eps-converted-to.pd
+f figure.eps>
+(epstopdf)             \includegraphics on input line 58.
+Package epstopdf Info: Output file is already uptodate.
+ <figure-eps-converted-to.pdf, id=100, 139.52126pt x 195.73125pt>
+File: figure-eps-converted-to.pdf Graphic file (type pdf)
+
+<use figure-eps-converted-to.pdf>
+Package pdftex.def Info: figure-eps-converted-to.pdf used on input line 58.
+(pdftex.def)             Requested size: 90.68773pt x 127.22379pt.
+
+Overfull \hbox (0.61853pt too wide) in paragraph at lines 70--81
+[][]
+ []
+
+) [14 <./figure-eps-converted-to.pdf>]
+\openout2 = `glossary.aux'.
+
+ (./glossary.tex) [15
+
+
+
+
+
+
+]
+\openout2 = `solutions.aux'.
+
+ (./solutions.tex
+[16
+
+
+
+
+]
+
+LaTeX Warning: Reference `intro' on page 17 undefined on input line 4.
+
+
+LaTeX Warning: Reference `prob1' on page 17 undefined on input line 6.
+
+
+LaTeX Warning: Reference `prob2' on page 17 undefined on input line 11.
+
+) [17]
+No file book.ind.
+(./book.aux (./dedic.aux) (./foreword.aux) (./preface.aux) (./acknow.aux)
+(./acronym.aux) (./part.aux) (./chapter.aux) (./appendix.aux) (./glossary.aux)
+(./solutions.aux))
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 4050 strings out of 493029
+ 57532 string characters out of 6136234
+ 139340 words of memory out of 5000000
+ 7407 multiletter control sequences out of 15000+600000
+ 66147 words of font info for 126 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 37i,11n,32p,591b,1469s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
+rw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8
+a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on book.pdf (31 pages, 291126 bytes).
+PDF statistics:
+ 141 PDF objects out of 1000 (max. 8388607)
+ 95 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+
