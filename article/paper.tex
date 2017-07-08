@@ -26,6 +26,12 @@ In our case this driver run in a \texttt{Raspberry Pi3} with \texttt{raspbian OS
 
 \section{UAV support in JdeRobot}
 
+JdeRobot is a software robotical enviroment developed in Universidad
+Rey Juan Carlos's robotics laboratory is composed by utilities, drivers, interfaces and appications.
+JdeRobot in the current version (at this time 5.5) present several drivers and applications in order to support UAVs.
+One of these drivers is \texttt{ardrone server} who bring access to Parrot's AR-Drone all sensors and actuators. 
+
+
 \section{MAVlink protocol}
 
 \texttt{MAVLink}, MAVLink Micro Air Vehicle Communication Protocol is a drone's open source comunication protocol. Pretends to be the standard in drone comunications and several drones like all the 3DRobotics company develoved drones.
@@ -113,9 +119,9 @@ In order to adress it, a Python in \texttt{JdeRobot} component has been develope
 
 The driver can read \texttt{MAVLink's} commands from a physical device as \texttt{Pixhawk} or from a simulated drone in SITL simulator. The way to connect to each devices is choosed in the object instantation moment, we can choose to input the device's serial conection URI or the URL to the SITL simulator like udp:127.0.0.1:14550 in the connection sentence.
 The driver handle eleven commands of the full set of \texttt{MAVLink's} commands (see Figure 1) to allow the \texttt{JdeRobot} integration. 
-In order to retrieve the APM sensors measures, a thread is ejecuting a message handler all the time.
-In this handler the method search for seven types of messages (like GLOBAL\_POSITION\_INT) which contains the needed data to fill the two ICE interfaces that the server serves: \texttt{Pose3D} y \texttt{NavData}.
-The driver has four threads more, one for each of these ICE's interfaces servers, which binds four objects, so if a certain values are seted in these objects automatly are seted in the remotes binded objects this is the way to send information in ICE. 
+In order to retrieve the APM sensors measures through the APM communication layer, a thread is ejecuting a message handler all the time.
+In this handler, the asociated method, searchs for seven types of messages (like GLOBAL\_POSITION\_INT) which contains the needed data to fill the two ICE interfaces that the server serves: \texttt{Pose3D} y \texttt{NavData}.
+The driver has four threads more, one for each of these ICE's interfaces servers, which binds four objects, so if a certain values are seted in these objects automatly are seted in the remotes binded objects this is the way to send information in ICE and the JdeRobot's applications comunication's layer.
 
 
 Note in order to improve the connection speed and consumption is posible to set up the messages's set as you need.
@@ -124,7 +130,7 @@ Note in order to improve the connection speed and consumption is posible to set 
 \subsection{Sending missions to APM}
 \label{sec:mission_apm}
 
-This is the most important part of the driver. The driver recieve two ICE interfaces, one developed in this project called \texttt{mission} with the waypoints to follow and the \texttt{Extra} interface with the take off and land maneuvers.
+This is the most important part of the driver. The driver recieve two ICE interfaces from comunication's layer with APM's devices, one developed in this project called \texttt{mission} with the waypoints to follow and the \texttt{Extra} interface with the take off and land maneuvers. This new ICE interface is composed from a list of \texttt{Pose3D} that contains the waypoints position that the plane has to reach.
 Once a mission is received through these interfaces objects, \texttt{APM Server} build the \texttt{MAVLink's} commands needed to sent it to the APM. To perform it, a new thread with a listener was developed in order to know if there is a incominf mission.
 Once this listener detects an incoming mission, call to \texttt{setMission(self, mission)} who build the \texttt{MAVLink's} commands and sent it as the Figure 2 diagram shows.
 The \texttt{setMission(self, mission)} method read througth the list of waypoints and if \texttt{takeOffDecision} and \texttt{landDecision} of \texttt{Extra} object are seted to True add the \texttt{MAVLink's} commands of take off and land at first and last of the list of commans which is sended to the APM.
