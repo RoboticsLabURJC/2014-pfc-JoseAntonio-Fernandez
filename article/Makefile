@@ -1,7 +1,7 @@
-all: book.pdf
+all: paper.pdf
 
-book.pdf: book.tex
-	pdflatex book.tex; bibtex book; pdflatex book.tex; pdflatex book.tex
+paper.pdf: paper.tex
+	pdflatex paper.tex; bibtex paper.bib; pdflatex paper.tex; pdflatex paper.tex
 
 clean:
-	rm -f book.dvi book.ps *.snm *.out *.nav *.log *.aux *.toc *.vrb *.pdf *~ *.lof *.blg *.bbl
+	rm -f paper.dvi paper.ps *.snm *.out *.nav *.log *.aux *.toc *.vrb *.pdf *~ *.lof *.blg *.bbl

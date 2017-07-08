@@ -4,6 +4,7 @@
 %\usepackage{graphics}
 %\usepackage[pdftex]{graphicx}
 \usepackage{listings}
+\usepackage{float}
 \usepackage{graphicx}  
 
 \begin{document}
@@ -43,7 +44,7 @@ The driver has to fullfil the following features:
 \begin{figure}[h]
   \centering
   \includegraphics[scale=0.5]{img/diseno.jpg}
-  \caption{Diseño de entradas y salidas de \texttt{APM Server}}
+  \caption{\texttt{APM Server} inputs and outputs}
   \label{fig:diseno_apms_caja_negra}
 \end{figure}
 
@@ -54,13 +55,7 @@ In order to adress it, a Python in \texttt{JdeRobot} component has been develope
 \item Bussiness Layer. In this layer the driver convert form \texttt{MAVLink's} commands to ICE interfaces objects and viceversa.
 \item \texttt{JdeRobot comunication's layer} This layer create all the ICE servers needed and handle incoming and outgoing ICE interfaces objects.
 \end{itemize}
-\begin{figure}[h]
-\centering{
-   \label{f:diseno_apms_caja_trans}
-    \includegraphics[width=0.7\textwidth]{img/diseno1.jpg}}
-    \caption{Bloques del driver \texttt{APM Server}}
-  
-\end{figure}
+
 
 \subsection{Comunication with APM devices layer}
 \label{sec:apm_comunication}
@@ -240,6 +235,73 @@ The \texttt{setMission(self, mission)} and the \texttt{refreshAPMPose3D()} and
 \texttt{refreshAPMnavdata()} are the most important methods involved in this layer.
 
 \section{UAV Commander application}
+
+\texttt{UAV Commander} is a JdeRobot application writen in python in order to offer to a human operator build and sent missions to an autonomous \texttt{MAVLink} plane.
+
+\subsection{Design}
+\label{design}
+
+The application has to fulfill the following features:
+\begin{itemize}
+\item The application have to display all the sensors measures data.
+\item Have to get a friendly end user interface what allow to build missions and follow its compliance.
+\item Have to be able to send the builded mission to the drone.
+\end{itemize}
+
+\begin{figure}
+\centering{
+   \label{f:diseno_uavc_caja_negra}
+    \includegraphics[width=0.8\textwidth]{img/diseno2_uavc.jpg}}
+    \caption{\texttt{UAV Commander} input and outputs}
+
+\end{figure}
+
+
+
+The application is composed by 3 blocks: maps's block, missions's block and sensors's block. The maps's block is who adquire the maps and converts coordinates between diferent references systems. The missions's block allow to a human operator to build and sent missions and the sensors's block displays all de received sensors's measures data, onboad camera included.
+
+\texttt{UAV Commander} connects to \texttt{APM Server} throught the  \texttt{Pose3D}, \texttt{NavData}, \texttt{Extra} and \texttt{mission} ICE interfaces, and can receive images and video throught \texttt{camera} from sources like JdeRobot's \texttt{cameraserver} driver.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.60]{img/arquitectura.jpg}
+  \caption{\texttt{UAV Commander} and \texttt{APM Server} connection schema}
+  \label{fig:uavc_ppal}
+\end{figure}
+
+\subsection{Maps's block}
+\label{maps_block}
+
+In this block the application download from Web Service Maps (WMS) a georeferenced map (the current version supports ``Instituto Geográfico Nacional de España'' (IGN) and Google as sources). For retrive these maps a few data is needed as: current possition (tatitude and longitude), the specific area to retrieve or bounding box, the desired image's resolution (in pixels) and the \textit{datum} or the Earth desired projection.
+The WMS response is a map of the bounding box delimited zone. With this image and de input data its possible to infer the coordinates of a specific pixel in the image. In the current version of \texttt{UAV Commander} we agreed to despreciate the Earth curvature as long as we suppose the drone's missions local (less than 2 kilometers of radius) and these calculations are really simple.
+
+\subsection{Missions's block}
+\label{missions_block}
+
+In this block the map is displayed and becomes interactive in order to help operator to build missions. If the maps is clicked in whatever position the application detects it, draw the waypoint mark in the map, infer the gographical possition and add that tho the waypoints table. And if a previous waypoint is created the application will draw the path from it to the new waypoint. Also is possible to make maneuvers like take off and land using the ``Take off/land'' button, pushing it and in a point of the map a take off is requested and the same in land maneuver.
+In order to display the mission's tracking a complex layer system was developed, \texttt{UAV Commander} uses three layouts,  each one enriches the others. The first layer is the original downloaded image, is needed in case of a reset request, the second one comes frim the original too but is updated with a shadow in all the reached positions with the plane. And over this last layer the waypoints and the plane tracking and heading (the plane position are represented whit a triangle who rotates in order to reveal the heading of it) is drawed. This design allows resetting the map, clear the waypoints and not lost the shadows and tracking the plane with these all information.
+In order to update all these information in the Graphical User Interface (GUI) a new thread was developed.
+All these features are available from \texttt{UAV Commander} main window.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.3]{img/uavc.png}
+  \caption{\texttt{UAV Commander} main window}
+  \label{fig:uavc_ppal}
+\end{figure}
+
+\subsection{Sensors's block}
+\label{sensors_block}
+
+Here the sensors's measures data are displayed in way to be more understandables to the operator, in order to enrich the missions's tracking. This data is recovered from the APM Server in ICE interfaces objects, exactly Pose3D and NavData but has Camera ICE interface too so can receive images and video by this way, with JdeRobot's cameraserver driver for example. All these information are interpreted and displayed in the sensor's and camera's windows.
+
+\begin{figure}
+\centering{
+   \label{f:actitud_uavc}
+    \includegraphics[width=1\textwidth]{img/actitud.png}}
+    \caption{\texttt{UAV Commander} attitude and battery load}
+  
+\end{figure}
 
 \section{Conclusions}
 
